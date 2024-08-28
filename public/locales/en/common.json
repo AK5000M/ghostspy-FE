@@ -241,6 +241,8 @@
       "setting": "Setting",
       "black-setting": "Black Screen",
       "lock-setting": "Lock Screen",
+      "privacy-screen": "Privacy screen",
+      "privacy-screen-title": "Blocking Message(Optional)",
       "mic-play": "Play",
       "mic-close": "Close",
       "screen-skeleton": "Write your text below",

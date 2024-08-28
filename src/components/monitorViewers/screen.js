@@ -216,30 +216,32 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
       }}
       onClose={onCloseModal}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: "10px",
-          cursor: "pointer",
-          width: "88%",
-          zIndex: "999",
-        }}
-        onMouseLeave={() => setHovered(false)}
-      >
-        {/* Toolbar area inside Rnd */}
-        <ScreenToolbar visible={hovered} device={device} />
-        <IconButton
-          className="modal-close-icon"
-          style={{ paddingTop: "0px" }}
-          edge="end"
-          aria-label="close"
-          onClick={() => onOpenSetting()}
-          onMouseEnter={() => setHovered(true)}
+      {screenCode != null && (
+        <div
+          style={{
+            position: "absolute",
+            top: "10px",
+            left: "10px",
+            cursor: "pointer",
+            width: "88%",
+            zIndex: "999",
+          }}
+          onMouseLeave={() => setHovered(false)}
         >
-          <MenuIcon />
-        </IconButton>
-      </div>
+          {/* Toolbar area inside Rnd */}
+          <ScreenToolbar visible={hovered} device={device} />
+          <IconButton
+            className="modal-close-icon"
+            style={{ paddingTop: "0px" }}
+            edge="end"
+            aria-label="close"
+            onClick={() => onOpenSetting()}
+            onMouseEnter={() => setHovered(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+        </div>
+      )}
 
       <div style={{ position: "relative", width: "100%", height: "100%" }}>
         {/* Your screen monitoring content here */}

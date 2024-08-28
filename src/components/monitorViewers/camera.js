@@ -106,36 +106,38 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
       }}
       onClose={onCloseModal}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: "10px",
-          cursor: "pointer",
-          width: "88%",
-          zIndex: "999",
-        }}
-        onMouseLeave={() => setHovered(false)}
-      >
-        {/* Toolbar area inside Rnd */}
-        <CameraToolbar
-          visible={hovered}
-          activeCamera={activeCamera}
-          changeLoading={changeLoading}
-          activeQuality={activeQuality}
-          onChangeCamera={onChangeCamera}
-          onQualityChange={onQualityChange}
-        />
-        <IconButton
-          className="modal-close-icon"
-          style={{ paddingTop: "0px" }}
-          edge="end"
-          aria-label="close"
-          onMouseEnter={() => setHovered(true)}
+      {screenCode != null && (
+        <div
+          style={{
+            position: "absolute",
+            top: "10px",
+            left: "10px",
+            cursor: "pointer",
+            width: "88%",
+            zIndex: "999",
+          }}
+          onMouseLeave={() => setHovered(false)}
         >
-          <MenuIcon />
-        </IconButton>
-      </div>
+          {/* Toolbar area inside Rnd */}
+          <CameraToolbar
+            visible={hovered}
+            activeCamera={activeCamera}
+            changeLoading={changeLoading}
+            activeQuality={activeQuality}
+            onChangeCamera={onChangeCamera}
+            onQualityChange={onQualityChange}
+          />
+          <IconButton
+            className="modal-close-icon"
+            style={{ paddingTop: "0px" }}
+            edge="end"
+            aria-label="close"
+            onMouseEnter={() => setHovered(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+        </div>
+      )}
 
       <div style={{ position: "relative", width: "100%", height: "100%" }}>
         <Grid

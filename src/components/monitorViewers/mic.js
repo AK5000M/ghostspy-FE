@@ -113,10 +113,6 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
             height: "100%",
           }}
         >
-          <Typography component="h2" sx={{ color: "#1dbf1a", mb: 2 }}>
-            {monitor?.title}
-          </Typography>
-
           <Grid
             sx={{
               display: "flex",
@@ -127,16 +123,17 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
               height: "100%",
               overflow: "hidden",
               borderRadius: "5px",
+              py: 2,
             }}
           >
-            <Grid className="speaker-container" sx={{ mt: 2 }}>
+            <Grid className="speaker-container">
               <div className={`speaker ${isPlaying ? "playing" : ""}`}></div>
             </Grid>
-            <div style={{ display: "flex", gap: "20px" }}>
-              <Button color="primary" onClick={onPlayAudio} sx={{ mb: 2 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "15px", width: "100%" }}>
+              <Button variant="text" color="primary" onClick={onPlayAudio}>
                 {t("devicesPage.monitors.mic-play")}
               </Button>
-              <Button onClick={onCloseAudio} sx={{ mb: 2, color: "#f1f1f1" }}>
+              <Button variant="text" onClick={onCloseAudio} sx={{ color: "#f1f1f1" }}>
                 {t("devicesPage.monitors.mic-close")}
               </Button>
             </div>

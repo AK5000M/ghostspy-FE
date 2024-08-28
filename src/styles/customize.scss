@@ -200,13 +200,13 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   background: #564fee14;
   border-radius: 50%;
   border: 3px solid #564fee;
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .speaker {
@@ -438,7 +438,7 @@ button:hover {
 }
 
 .toolbar.visible {
-  height: 100px;
+  height: 150px;
   opacity: 1;
   border: solid 1px #564fee;
 }

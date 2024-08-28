@@ -247,6 +247,8 @@
       "setting": "Configuração",
       "black-setting": "Tela preta",
       "lock-setting": "Tela de bloqueio",
+      "privacy-screen": "Privacidade Tela ",
+      "privacy-screen-title": "Mensagem de bloqueio (opcional)",
       "mic-play": "Reproduzir",
       "mic-close": "Fechar",
       "screen-skeleton": "Escreva seu texto logo abaixo",
