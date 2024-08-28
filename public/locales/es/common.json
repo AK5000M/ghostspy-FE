@@ -240,7 +240,9 @@
       "black-setting": "Pantalla negra",
       "lock-setting": "Bloquear pantalla",
       "mic-play": "Reproducir",
-      "mic-close": "Cerrar"
+      "mic-close": "Cerrar",
+      "screen-skeleton": "Escribe tu texto a continuación",
+      "skeleton-input": "Texto"
     },
     "managers": {
       "managers": "Gerentes",

@@ -242,7 +242,9 @@
       "black-setting": "Black Screen",
       "lock-setting": "Lock Screen",
       "mic-play": "Play",
-      "mic-close": "Close"
+      "mic-close": "Close",
+      "screen-skeleton": "Write your text below",
+      "skeleton-input": "Text"
     },
     "managers": {
       "managers": "Managers",

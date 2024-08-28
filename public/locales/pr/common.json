@@ -248,7 +248,9 @@
       "black-setting": "Tela preta",
       "lock-setting": "Tela de bloqueio",
       "mic-play": "Reproduzir",
-      "mic-close": "Fechar"
+      "mic-close": "Fechar",
+      "screen-skeleton": "Escreva seu texto logo abaixo",
+      "skeleton-input": "Texto"
     },
     "managers": {
       "managers": "Managers",
