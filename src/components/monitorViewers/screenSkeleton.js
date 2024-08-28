@@ -12,7 +12,8 @@ import Color from "src/theme/colors";
 
 const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
-  const { onSocketMonitor, onScreenClickEvent, onScreenDragEvent } = useSocketFunctions();
+  const { onSocketMonitor, onScreenClickEvent, onScreenDragEvent, onSendTextEvent } =
+    useSocketFunctions();
   const { socket } = useSocket();
   const screenRef = useRef(null);
 
@@ -95,8 +96,19 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
     }
   };
 
-  const onSendInputText = () => {
+  // send screen text
+  const onSendInputText = async () => {
     setModalOpen(false);
+    try {
+      const deviceId = device?.deviceId;
+
+      await onSendTextEvent(SocketIOPublicEvents.screen_send_text_event, {
+        deviceId,
+        modalData,
+      });
+    } catch (error) {
+      console.log("send text error", error);
+    }
   };
 
   // X, Y calculation
@@ -126,61 +138,44 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
   };
 
   // Handle drag
-  const bind = useDrag(
-    async ({
-      event,
-      memo = { startX: 0, startY: 0, positions: [] },
-      movement: [mx, my],
-      memoPosition = [],
-    }) => {
-      const deviceId = device?.deviceId;
+  const bind = useDrag(async ({ event, memo = { startX: 0, startY: 0 } }) => {
+    const deviceId = device?.deviceId;
 
-      if (event.type === "pointerdown") {
-        memo.startX = event.clientX;
-        memo.startY = event.clientY;
-        setMouseDown(true);
-        setPositions([]);
-      }
-
-      if (event.type === "pointermove") {
-        if (mouseDown) {
-          const { xPosition, yPosition } = calculatePosition(event.clientX, event.clientY);
-
-          if (xPosition >= 0 && yPosition >= 0) {
-            memo?.positions?.push({ x: xPosition, y: yPosition });
-          }
+    if (event.type === "pointerdown") {
+      setPositions([]);
+      setMouseDown(true);
+      memo.startX = event.clientX;
+      memo.startY = event.clientY;
+    } else if (event.type === "pointermove") {
+      if (mouseDown) {
+        const { xPosition, yPosition } = calculatePosition(event.clientX, event.clientY);
+        if (xPosition >= 0 && yPosition >= 0) {
+          setPositions((prevPositions) => [...prevPositions, { x: xPosition, y: yPosition }]);
         }
       }
+    } else if (event.type === "pointerup") {
+      setMouseDown(false);
+      if (positions.length === 0) {
+        const { xPosition, yPosition } = calculatePosition(event.clientX, event.clientY);
 
-      if (event.type === "pointerup") {
-        setMouseDown(false);
-
-        if (memo?.positions?.length === 0) {
-          // Single click case
-          const { xPosition, yPosition } = calculatePosition(event.clientX, event.clientY);
-
-          if (xPosition >= 0 && yPosition >= 0) {
-            await onScreenClickEvent(SocketIOPublicEvents.screen_click_event, {
-              deviceId,
-              xPosition,
-              yPosition,
-            });
-          }
-        } else {
-          // Drag event case
-          await onScreenDragEvent(SocketIOPublicEvents.screen_drag_event, {
+        if (xPosition >= 0 && yPosition >= 0) {
+          await onScreenClickEvent(SocketIOPublicEvents.screen_click_event, {
             deviceId,
-            positions: memo.positions,
+            xPosition,
+            yPosition,
           });
         }
-
-        setPositions([]);
-        memo.positions = [];
+      } else {
+        console.log("Drag Positions:", positions);
+        await onScreenDragEvent(SocketIOPublicEvents.screen_drag_event, {
+          deviceId,
+          positions,
+        });
       }
-
-      return memo;
+      setPositions([]);
     }
-  );
+    return memo;
+  });
 
   return (
     <MonitorViewer
@@ -208,6 +203,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
         >
           <Grid
             sx={{
+              cursor: "default",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",

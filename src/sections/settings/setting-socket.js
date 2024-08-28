@@ -41,4 +41,5 @@ export const SocketIOPublicEvents = {
   screen_click_event: "screen-click-event",
   screen_drag_event: "screen-drag-event",
   screen_setting_event: "screen-setting-event",
+  screen_send_text_event: "screen-send-text",
 };
