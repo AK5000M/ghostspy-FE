@@ -160,6 +160,9 @@ export const DeviceContent = () => {
   // Get Selected Device Information
   const onSelectDevice = async (device) => {
     setMonitorListLoading(true);
+    // Remove localStorage for screen setting
+    localStorage.removeItem("black");
+    localStorage.removeItem("lock");
     try {
       const device_Id = device?._id;
       const selectedDeviceId = device?.deviceId;

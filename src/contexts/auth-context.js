@@ -198,6 +198,8 @@ export const AuthProvider = (props) => {
     jsCookie.remove("token");
     jsCookie.remove("userId");
     localStorage.removeItem("token");
+    localStorage.removeItem("lock");
+    localStorage.removeItem("black");
 
     dispatch({
       type: HANDLERS.SIGN_OUT,

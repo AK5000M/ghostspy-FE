@@ -22,8 +22,8 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const imageRef = useRef(null);
 
   const [state, setState] = useState({
-    width: 360, // Default width
-    height: 720, // Default height
+    width: 360,
+    height: 720,
     x: 100,
     y: -120,
     minWidth: 180,
@@ -38,6 +38,9 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const [positions, setPositions] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
+
+  const black = localStorage.getItem("black");
+  const lock = localStorage.getItem("lock");
 
   useEffect(() => {
     const deviceId = device?.deviceId;
@@ -215,7 +218,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
       }}
       onClose={onCloseModal}
     >
-      {!screenCode != null && (
+      {screenCode != null && (
         <div
           style={{
             position: "absolute",
@@ -228,7 +231,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
           onMouseLeave={() => setHovered(false)}
         >
           {/* Toolbar area inside Rnd */}
-          <ScreenToolbar visible={hovered} device={device} />
+          <ScreenToolbar visible={hovered} device={device} black={black} lock={lock} />
           <IconButton
             className="modal-close-icon"
             style={{ paddingTop: "0px" }}

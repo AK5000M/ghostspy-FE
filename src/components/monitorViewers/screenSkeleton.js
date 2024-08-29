@@ -222,6 +222,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
                 key={index}
                 className="screen-body"
                 sx={{
+                  overflow: "hidden",
                   width: `${data.width * (320 / deviceWidth)}px`,
                   height: `${data.height * (660 / deviceHeight)}px`,
                   left: `${data.xposition * (320 / deviceWidth)}px`,

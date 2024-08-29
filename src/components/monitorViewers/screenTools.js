@@ -12,17 +12,33 @@ import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutli
 
 import Color from "src/theme/colors";
 
-const ScreenToolbar = ({ visible, device }) => {
+const ScreenToolbar = ({ visible, device, black, lock }) => {
   const { t } = useTranslation();
+
   const { onScreenSettingEvent } = useSocketFunctions();
-  const [blackStatus, setBlackStatus] = useState(false);
-  const [lockStatus, setLockStatus] = useState(false);
+  const [blackStatus, setBlackStatus] = useState(black != null ? black : device?.blackScreen);
+  const [openMessage, setOpenMessage] = useState(false);
+  const [lockStatus, setLockStatus] = useState(lock != null ? lock : device?.lockScreen);
   const [privacyText, setPrivacyText] = useState("");
 
   // Black Screen Option
   const onSwitchBlackScreen = async (event) => {
     const newStatus = event.target.checked;
     setBlackStatus(newStatus);
+
+    if (newStatus == true) {
+      setOpenMessage(true);
+      localStorage.setItem("black", newStatus);
+    } else {
+      setOpenMessage(false);
+      await onScreenSettingEvent(SocketIOPublicEvents.screen_setting_event, {
+        type: "blackScreen",
+        deviceId: device?.deviceId,
+        message: "none",
+        status: false,
+      });
+      localStorage.setItem("black", newStatus);
+    }
   };
 
   // Lock Screen Option
@@ -36,6 +52,8 @@ const ScreenToolbar = ({ visible, device }) => {
       status: newStatus,
       message: "lockScreen",
     });
+
+    // localStorage.setItem("lock", newStatus);
   };
 
   // Handle the Privacy Screen OK button click
@@ -48,6 +66,8 @@ const ScreenToolbar = ({ visible, device }) => {
           message: privacyText,
           status: true,
         });
+        setBlackStatus(true);
+        setOpenMessage(false);
       } else {
         setBlackStatus(false);
         toast.error(t("toast.error.send-text"), {
@@ -103,24 +123,7 @@ const ScreenToolbar = ({ visible, device }) => {
             label={t("devicesPage.monitors.black-setting")}
           />
         </li>
-        {/* <li>
-          <FormControlLabel
-            className="back-option"
-            sx={{
-              color: "white",
-              fontSize: "12px",
-              alignItems: "center",
-              justifyContent: "start",
-              display: "flex",
-              flexDirection: "row-reverse",
-            }}
-            labelPlacement="start"
-            control={
-              <Switch color="primary" checked={privacyScreen} onChange={onSwitchPrivacyScreen} />
-            }
-            label={t("devicesPage.monitors.privacy-screen")}
-          />
-        </li> */}
+
         <li>
           <FormControlLabel
             className="back-option"
@@ -140,7 +143,7 @@ const ScreenToolbar = ({ visible, device }) => {
       </ul>
 
       {/* Modal for editing */}
-      <Modal open={blackStatus}>
+      <Modal open={openMessage}>
         <Box
           sx={{
             position: "absolute",
@@ -162,7 +165,7 @@ const ScreenToolbar = ({ visible, device }) => {
               {t("devicesPage.monitors.privacy-screen-title")}
             </Typography>
             <CloseOutlinedIcon
-              onClick={() => setBlackStatus(false)}
+              onClick={() => setOpenMessage(false)}
               sx={{
                 color: Color.text.primary,
                 cursor: "pointer",
