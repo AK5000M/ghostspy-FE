@@ -19,6 +19,8 @@ import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
 
+import Color from "src/theme/colors";
+
 const style = {
   display: "flex",
   justifyContent: "center",
@@ -64,7 +66,7 @@ const CallHistoryMonitorViewer = ({ monitor, device, onClose }) => {
         reverseOrder: false,
         duration: 5000,
         style: {
-          backgroundColor: "red",
+          backgroundColor: Color.background.red_gray01,
           borderRadius: "5px",
           padding: "3px 10px",
         },

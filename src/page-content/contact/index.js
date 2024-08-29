@@ -19,7 +19,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 
 import { sendContactMessage } from "../../store/actions/contact.action";
-
+import Color from "src/theme/colors";
 export const ContactContent = () => {
   const { t } = useTranslation();
 
@@ -61,7 +61,7 @@ export const ContactContent = () => {
               reverseOrder: false,
               duration: 5000,
               style: {
-                backgroundColor: "red",
+                backgroundColor: Color.background.red_gray01,
                 borderRadius: "5px",
                 padding: "3px 10px",
               },

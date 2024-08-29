@@ -73,7 +73,8 @@
       "forgot-password-error": "Error interno del servidor",
       "send-message-failed": "Error al enviar el mensaje",
       "upgrade-plan": "Esta función está disponible con una suscripción premium.",
-      "app-info": "Por favor ingrese el nombre de la aplicación y el ícono de la aplicación correctamente"
+      "app-info": "Por favor ingrese el nombre de la aplicación y el ícono de la aplicación correctamente",
+      "send-text": "Mensaje requerido."
     }
   },
 

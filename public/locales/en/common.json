@@ -74,7 +74,8 @@
       "forgot-password-error": "Internal server error",
       "send-message": "Message sending failed.",
       "upgrade-plan": "This function is available on a premium subscription",
-      "app-info": "Please enter the app name and app icon correctly"
+      "app-info": "Please enter the app name and app icon correctly",
+      "send-text": "Message required."
     }
   },
 

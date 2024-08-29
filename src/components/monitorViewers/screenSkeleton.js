@@ -22,8 +22,8 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
     height: 720,
     x: 100,
     y: -120,
-    minWidth: 180,
-    minHeight: 360,
+    minWidth: 360,
+    minHeight: 720,
     maxWidth: 360,
     maxHeight: 720,
   });
@@ -35,7 +35,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
   const [positions, setPositions] = useState([]);
   const [mouseDown, setMouseDown] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalData, setModalData] = useState(null);
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     const deviceId = device?.deviceId;
@@ -91,7 +91,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
 
   const handleSkeletonClick = (data) => {
     if (data.type === "edit") {
-      setModalData(data);
+      setMessage(data);
       setModalOpen(true);
     }
   };
@@ -104,7 +104,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
 
       await onSendTextEvent(SocketIOPublicEvents.screen_send_text_event, {
         deviceId,
-        modalData,
+        message,
       });
     } catch (error) {
       console.log("send text error", error);
@@ -119,9 +119,10 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
     }
 
     const rect = screenElement.getBoundingClientRect();
-
+    console.log("------------------", screenElement);
     const x = clientX - rect.left;
     const y = clientY - rect.top;
+    console.log("=======>", x, y);
     const renderedWidth = rect.width;
     const renderedHeight = rect.height;
 
@@ -140,7 +141,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
   // Handle drag
   const bind = useDrag(async ({ event, memo = { startX: 0, startY: 0 } }) => {
     const deviceId = device?.deviceId;
-
+    console.log("skeleton event:", { event });
     if (event.type === "pointerdown") {
       setPositions([]);
       setMouseDown(true);
@@ -184,8 +185,8 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
         height: 720,
         x: 100,
         y: -120,
-        minWidth: 180,
-        minHeight: 360,
+        minWidth: 360,
+        minHeight: 720,
         maxWidth: 360,
         maxHeight: 720,
       }}
@@ -202,102 +203,98 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
           }}
         >
           <Grid
+            onMouseDown={preventDrag}
+            onTouchStart={preventDrag}
             sx={{
               cursor: "default",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
               height: "100%",
-              pb: 1,
-              position: "relative",
-              backgroundColor: "black",
-              border: `1px solid ${Color.background.border}`,
-            }}
-          >
-            <Grid
-              onMouseDown={preventDrag}
-              onTouchStart={preventDrag}
-              sx={{
-                height: "100%",
-                width: "100%",
-              }}
-              {...bind()}
-            >
-              {skeletonData.map((data, index) => (
-                <Box
-                  key={index}
-                  className="screen-body"
-                  sx={{
-                    cursor: data.type === "edit" ? "pointer" : "default",
-                    position: "absolute",
-                    width: `${data.width * (320 / deviceWidth)}px`,
-                    height: `${data.height * (660 / deviceHeight)}px`,
-                    left: `${data.xposition * (320 / deviceWidth)}px`,
-                    top: `${data.yposition * (660 / deviceHeight)}px`,
-                    backgroundColor: "black",
-                    border: `1px solid ${Color.background.border}`,
-                    color: Color.text.primary,
-                    fontSize: "12px",
-                  }}
-                  onClick={() => handleSkeletonClick(data)}
-                >
-                  {data.text}
-                </Box>
-              ))}
-            </Grid>
-          </Grid>
-        </Grid>
-
-        {/* Modal for editing */}
-        <Modal open={modalOpen} onClose={() => setModalOpen(false)}>
-          <Box
-            sx={{
+              width: "100%",
               position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%, -50%)",
-              width: 400,
-              border: `solid 1px ${Color.background.border}`,
-              backgroundColor: Color.background.main,
-              borderRadius: "5px",
-              p: 2,
-              zIndex: 99999,
+              top: 0,
+              left: 0,
+              zIndex: 2,
+              backgroundColor: "red",
             }}
+            {...bind()}
           >
+            {skeletonData.map((data, index) => (
+              <Box
+                key={index}
+                className="screen-body"
+                sx={{
+                  width: `${data.width * (320 / deviceWidth)}px`,
+                  height: `${data.height * (660 / deviceHeight)}px`,
+                  left: `${data.xposition * (320 / deviceWidth)}px`,
+                  top: `${data.yposition * (660 / deviceHeight)}px`,
+                  cursor: data.type === "edit" ? "pointer" : "default",
+                  color: Color.text.primary,
+                  fontSize: "12px",
+                  backgroundColor: "black",
+                  border: `1px solid ${Color.background.border}`,
+                  position: "absolute",
+                }}
+                onClick={() => handleSkeletonClick(data)}
+                ref={screenRef}
+              >
+                {data.text}
+              </Box>
+            ))}
+          </Grid>
+
+          {/* Open Input Panel */}
+          {modalOpen && (
             <Box
-              sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}
+              sx={{
+                position: "absolute",
+                bottom: "-1%",
+                left: "0.5%",
+                width: "100%",
+                border: `solid 1px ${Color.background.border}`,
+                backgroundColor: Color.background.main,
+                borderRadius: "5px",
+                p: 1,
+                zIndex: 99999,
+              }}
             >
-              <Typography component="h2" sx={{ color: Color.text.primary }}>
-                {t("devicesPage.monitors.screen-skeleton")}
-              </Typography>
-              <CloseOutlinedIcon
-                onClick={() => setModalOpen(false)}
+              <Box
                 sx={{
-                  color: Color.text.primary,
-                  cursor: "pointer",
-                  fontSize: "20px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  mb: 1,
                 }}
-              />
+              >
+                <Typography sx={{ color: Color.text.secondary, fontSize: "12px" }}>
+                  {t("devicesPage.monitors.screen-skeleton")}
+                </Typography>
+                <CloseOutlinedIcon
+                  onClick={() => setModalOpen(false)}
+                  sx={{
+                    color: Color.text.primary,
+                    cursor: "pointer",
+                    fontSize: "20px",
+                  }}
+                />
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <TextField
+                  fullWidth
+                  label={t("devicesPage.monitors.skeleton-input")}
+                  value={message?.text || ""}
+                  onChange={(e) => setMessage({ ...message, text: e.target.value })}
+                />
+                <SendOutlinedIcon
+                  onClick={() => onSendInputText()}
+                  sx={{
+                    color: Color.text.primary,
+                    cursor: "pointer",
+                    fontSize: "30px",
+                  }}
+                />
+              </Box>
             </Box>
-            <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <TextField
-                fullWidth
-                label={t("devicesPage.monitors.skeleton-input")}
-                value={modalData?.text || ""}
-                onChange={(e) => setModalData({ ...modalData, text: e.target.value })}
-              />
-              <SendOutlinedIcon
-                onClick={() => onSendInputText()}
-                sx={{
-                  color: Color.text.primary,
-                  cursor: "pointer",
-                  fontSize: "30px",
-                }}
-              />
-            </Box>
-          </Box>
-        </Modal>
+          )}
+        </Grid>
       </div>
     </MonitorViewer>
   );

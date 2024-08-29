@@ -15,6 +15,8 @@ import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 import { useTranslation } from "react-i18next";
 import FeaturesGroup from "../../components/featuresGroup";
 
+import Color from "src/theme/colors";
+
 const ScreenMonitorViewer = dynamic(() => import("../../components/monitorViewers/screen"), {
   ssr: false,
 });
@@ -60,7 +62,7 @@ export const DeviceMonitors = ({ device }) => {
           reverseOrder: false,
           duration: 5000,
           style: {
-            backgroundColor: "red",
+            backgroundColor: Color.background.red_gray01,
             borderRadius: "5px",
             padding: "3px 10px",
           },

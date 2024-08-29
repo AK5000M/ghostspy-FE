@@ -126,6 +126,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
 
     const x = clientX - rect.left;
     const y = clientY - rect.top;
+
     const intrinsicWidth = img.naturalWidth;
     const intrinsicHeight = img.naturalHeight;
     const renderedWidth = rect.width;
@@ -155,7 +156,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   // Handle drag
   const bind = useDrag(async ({ event, memo = { startX: 0, startY: 0 }, movement: [mx, my] }) => {
     const deviceId = device?.deviceId;
-
     if (event.type === "pointerdown") {
       setPositions([]);
       setMouseDown(true);
@@ -177,7 +177,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
       if (positions.length === 0) {
         // Treat as a click event
         const { xPosition, yPosition } = calculatePosition(event.clientX, event.clientY);
-
         if (xPosition >= 0 && yPosition >= 0) {
           await onScreenClickEvent(SocketIOPublicEvents.screen_click_event, {
             deviceId,
@@ -216,7 +215,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
       }}
       onClose={onCloseModal}
     >
-      {screenCode != null && (
+      {!screenCode != null && (
         <div
           style={{
             position: "absolute",
@@ -295,7 +294,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
                 width: "100%",
                 height: "100%",
                 pb: 1,
-                position: "relative", // Added position relative for parent container
+                position: "relative",
               }}
             >
               <Grid
@@ -307,8 +306,8 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
                   position: "absolute",
                   top: 0,
                   left: 0,
-                  zIndex: 2, // Ensure this grid is on top
-                  opacity: 0.5, // Optional: Add opacity to see through the red grid
+                  zIndex: 2,
+                  opacity: 0.5,
                   cursor: "default",
                 }}
                 // onClick={onPositionEvent}

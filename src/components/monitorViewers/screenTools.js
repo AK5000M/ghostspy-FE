@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import toast from "react-hot-toast";
+
 import { Box, Switch, FormControlLabel, Modal, Typography, TextField, Button } from "@mui/material";
 
 import { useSocketFunctions } from "../../utils/socket";
@@ -15,19 +17,12 @@ const ScreenToolbar = ({ visible, device }) => {
   const { onScreenSettingEvent } = useSocketFunctions();
   const [blackStatus, setBlackStatus] = useState(false);
   const [lockStatus, setLockStatus] = useState(false);
-  const [privacyScreen, setPrivacyScreen] = useState(false);
   const [privacyText, setPrivacyText] = useState("");
 
   // Black Screen Option
   const onSwitchBlackScreen = async (event) => {
     const newStatus = event.target.checked;
     setBlackStatus(newStatus);
-
-    await onScreenSettingEvent(SocketIOPublicEvents.screen_setting_event, {
-      type: "blackScreen",
-      deviceId: device?.deviceId,
-      status: newStatus,
-    });
   };
 
   // Lock Screen Option
@@ -39,24 +34,37 @@ const ScreenToolbar = ({ visible, device }) => {
       type: "lockScreen",
       deviceId: device?.deviceId,
       status: newStatus,
+      message: "lockScreen",
     });
-  };
-
-  // Privacy Screen Option
-  const onSwitchPrivacyScreen = async (event) => {
-    const newStatus = event.target.checked;
-    setPrivacyScreen(newStatus);
   };
 
   // Handle the Privacy Screen OK button click
   const onPrivacyScreen = async () => {
-    await onScreenSettingEvent(SocketIOPublicEvents.screen_setting_event, {
-      type: "privacyScreen",
-      deviceId: device?.deviceId,
-      text: privacyText,
-    });
-
-    setPrivacyScreen(false);
+    try {
+      if (privacyText != "") {
+        await onScreenSettingEvent(SocketIOPublicEvents.screen_setting_event, {
+          type: "blackScreen",
+          deviceId: device?.deviceId,
+          message: privacyText,
+          status: true,
+        });
+      } else {
+        setBlackStatus(false);
+        toast.error(t("toast.error.send-text"), {
+          position: "bottom-center",
+          reverseOrder: false,
+          duration: 5000,
+          style: {
+            backgroundColor: Color.background.red_gray01,
+            borderRadius: "5px",
+            padding: "3px 10px",
+          },
+        });
+      }
+    } catch (error) {
+      setBlackStatus(false);
+      console.log("send text error", error);
+    }
   };
 
   return (
@@ -95,23 +103,7 @@ const ScreenToolbar = ({ visible, device }) => {
             label={t("devicesPage.monitors.black-setting")}
           />
         </li>
-        <li>
-          <FormControlLabel
-            className="back-option"
-            sx={{
-              color: "white",
-              fontSize: "12px",
-              alignItems: "center",
-              justifyContent: "start",
-              display: "flex",
-              flexDirection: "row-reverse",
-            }}
-            labelPlacement="start"
-            control={<Switch color="primary" checked={lockStatus} onChange={onSwitchLockScreen} />}
-            label={t("devicesPage.monitors.lock-setting")}
-          />
-        </li>
-        <li>
+        {/* <li>
           <FormControlLabel
             className="back-option"
             sx={{
@@ -128,11 +120,27 @@ const ScreenToolbar = ({ visible, device }) => {
             }
             label={t("devicesPage.monitors.privacy-screen")}
           />
+        </li> */}
+        <li>
+          <FormControlLabel
+            className="back-option"
+            sx={{
+              color: "white",
+              fontSize: "12px",
+              alignItems: "center",
+              justifyContent: "start",
+              display: "flex",
+              flexDirection: "row-reverse",
+            }}
+            labelPlacement="start"
+            control={<Switch color="primary" checked={lockStatus} onChange={onSwitchLockScreen} />}
+            label={t("devicesPage.monitors.lock-setting")}
+          />
         </li>
       </ul>
 
       {/* Modal for editing */}
-      <Modal open={privacyScreen} onClose={() => setPrivacyScreen(false)}>
+      <Modal open={blackStatus}>
         <Box
           sx={{
             position: "absolute",
@@ -154,7 +162,7 @@ const ScreenToolbar = ({ visible, device }) => {
               {t("devicesPage.monitors.privacy-screen-title")}
             </Typography>
             <CloseOutlinedIcon
-              onClick={() => setPrivacyScreen(false)}
+              onClick={() => setBlackStatus(false)}
               sx={{
                 color: Color.text.primary,
                 cursor: "pointer",
@@ -168,6 +176,7 @@ const ScreenToolbar = ({ visible, device }) => {
               label={t("devicesPage.monitors.skeleton-input")}
               value={privacyText}
               onChange={(e) => setPrivacyText(e.target.value)} // Update the state with the inputted text
+              required
             />
             <Button
               variant="contained"

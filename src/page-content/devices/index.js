@@ -98,7 +98,7 @@ export const DeviceContent = () => {
             reverseOrder: false,
             duration: 5000,
             style: {
-              backgroundColor: "red",
+              backgroundColor: Color.background.red_gray01,
               borderRadius: "5px",
               padding: "3px 10px",
             },
@@ -112,7 +112,7 @@ export const DeviceContent = () => {
           reverseOrder: false,
           duration: 5000,
           style: {
-            backgroundColor: "red",
+            backgroundColor: Color.background.red_gray01,
             borderRadius: "5px",
             padding: "3px 10px",
           },
@@ -137,7 +137,7 @@ export const DeviceContent = () => {
               reverseOrder: false,
               duration: 5000,
               style: {
-                backgroundColor: "red",
+                backgroundColor: Color.background.red_gray01,
                 borderRadius: "5px",
                 padding: "3px 10px",
               },
@@ -183,7 +183,7 @@ export const DeviceContent = () => {
           reverseOrder: false,
           duration: 5000,
           style: {
-            backgroundColor: "red",
+            backgroundColor: Color.background.red_gray01,
             borderRadius: "5px",
             padding: "3px 10px",
           },

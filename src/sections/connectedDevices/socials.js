@@ -13,6 +13,7 @@ import { useSocketFunctions } from "../../utils/socket";
 import WhatsappManager from "../../components/socialManagers/whatsapp";
 import InstagramManager from "../../components/socialManagers/instagram";
 import FeaturesGroup from "../../components/featuresGroup";
+import Color from "src/theme/colors";
 // import TiktokManager from "../../components/socialManagers/tiktok";
 // import FacebookManager from "../../components/socialManagers/facebook";
 // import TwitterManager from "../../components/socialManagers/twitter";
@@ -66,7 +67,7 @@ export const DeviceSocials = ({ device }) => {
         reverseOrder: false,
         duration: 5000,
         style: {
-          backgroundColor: "red",
+          backgroundColor: Color.background.red_gray01,
           borderRadius: "5px",
           padding: "3px 10px",
         },
