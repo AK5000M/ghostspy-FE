@@ -160,7 +160,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
     const renderedHeight = rect.height;
 
     const xRate = intrinsicWidth / renderedWidth;
-    const yRate = intrinsicHeight / renderedHeight;
+    const yRate = 800 / renderedHeight;
 
     let xPosition = x * xRate;
     let yPosition = y * yRate;
