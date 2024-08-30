@@ -98,7 +98,7 @@ export const DeviceContent = () => {
             reverseOrder: false,
             duration: 5000,
             style: {
-              backgroundColor: "red",
+              backgroundColor: Color.background.red_gray01,
               borderRadius: "5px",
               padding: "3px 10px",
             },
@@ -112,7 +112,7 @@ export const DeviceContent = () => {
           reverseOrder: false,
           duration: 5000,
           style: {
-            backgroundColor: "red",
+            backgroundColor: Color.background.red_gray01,
             borderRadius: "5px",
             padding: "3px 10px",
           },
@@ -137,7 +137,7 @@ export const DeviceContent = () => {
               reverseOrder: false,
               duration: 5000,
               style: {
-                backgroundColor: "red",
+                backgroundColor: Color.background.red_gray01,
                 borderRadius: "5px",
                 padding: "3px 10px",
               },
@@ -160,6 +160,9 @@ export const DeviceContent = () => {
   // Get Selected Device Information
   const onSelectDevice = async (device) => {
     setMonitorListLoading(true);
+    // Remove localStorage for screen setting
+    localStorage.removeItem("black");
+    localStorage.removeItem("lock");
     try {
       const device_Id = device?._id;
       const selectedDeviceId = device?.deviceId;
@@ -183,7 +186,7 @@ export const DeviceContent = () => {
           reverseOrder: false,
           duration: 5000,
           style: {
-            backgroundColor: "red",
+            backgroundColor: Color.background.red_gray01,
             borderRadius: "5px",
             padding: "3px 10px",
           },

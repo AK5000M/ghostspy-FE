@@ -12,6 +12,7 @@ import { useAuth } from "src/hooks/use-auth";
 import GalleryManager from "../../components/fileManagers/gallery";
 import { useSocketFunctions } from "../../utils/socket";
 import FeaturesGroup from "../../components/featuresGroup";
+import Color from "src/theme/colors";
 
 export const DeviceManagers = ({ device }) => {
   const { t } = useTranslation();
@@ -40,7 +41,7 @@ export const DeviceManagers = ({ device }) => {
           reverseOrder: false,
           duration: 5000,
           style: {
-            backgroundColor: "red",
+            backgroundColor: Color.background.red_gray01,
             borderRadius: "5px",
             padding: "3px 10px",
           },
@@ -87,7 +88,7 @@ export const DeviceManagers = ({ device }) => {
           reverseOrder: false,
           duration: 5000,
           style: {
-            backgroundColor: "red",
+            backgroundColor: Color.background.red_gray01,
             borderRadius: "5px",
             padding: "3px 10px",
           },

@@ -51,14 +51,13 @@ export const LoginContent = () => {
 
     // Submit Sigin function
     onSubmit: async (values, helpers) => {
-      setLoading(true);
       try {
         if (isChecked) {
           const signInData = {
             ...values,
             role: "user", // Assuming "user" is the desired role value
           };
-
+          setLoading(true);
           const result = await auth.SignIn(signInData);
 
           if (result.status == "201") {
@@ -84,11 +83,9 @@ export const LoginContent = () => {
               reverseOrder: false,
               duration: 5000,
               style: {
-                style: {
-                  backgroundColor: Color.background.red_gray01,
-                  borderRadius: "5px",
-                  padding: "3px 10px",
-                },
+                backgroundColor: Color.background.red_gray01,
+                borderRadius: "5px",
+                padding: "3px 10px",
               },
             });
           }

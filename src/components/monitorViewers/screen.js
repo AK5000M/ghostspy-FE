@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Grid, CircularProgress, CardMedia, Tooltip, Button } from "@mui/material";
+import { Grid, CircularProgress, CardMedia, Box, TextField } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-use-gesture";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import { IconButton, Menu } from "@mui/material";
+import { IconButton } from "@mui/material";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 
 import { useSocket } from "../../hooks/use-socket";
 import { useSocketFunctions } from "../../utils/socket";
@@ -16,14 +17,19 @@ import Color from "src/theme/colors";
 
 const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
-  const { onSocketMonitor, onScreenClickEvent, onScreenDragEvent, onSocketCloseMonitor } =
-    useSocketFunctions();
+  const {
+    onSocketMonitor,
+    onScreenClickEvent,
+    onScreenDragEvent,
+    onSocketCloseMonitor,
+    onSendTextEvent,
+  } = useSocketFunctions();
   const { socket } = useSocket();
   const imageRef = useRef(null);
 
   const [state, setState] = useState({
-    width: 360, // Default width
-    height: 720, // Default height
+    width: 360,
+    height: 720,
     x: 100,
     y: -120,
     minWidth: 180,
@@ -38,6 +44,11 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const [positions, setPositions] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
+  const [messageOpen, setmessageOpen] = useState(false);
+  const [message, setMessage] = useState(null);
+
+  const black = localStorage.getItem("black");
+  const lock = localStorage.getItem("lock");
 
   useEffect(() => {
     const deviceId = device?.deviceId;
@@ -54,6 +65,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
               const base64Image = data.response?.base64Image;
               setScreenCode(base64Image);
               setChangeLoading(false);
+              setmessageOpen(true);
             }
           };
 
@@ -71,6 +83,21 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
 
     monitorDevice();
   }, [monitor]);
+
+  // send screen text
+  const onSendInputText = async () => {
+    setmessageOpen(false);
+    try {
+      const deviceId = device?.deviceId;
+
+      await onSendTextEvent(SocketIOPublicEvents.screen_send_text_event, {
+        deviceId,
+        message,
+      });
+    } catch (error) {
+      console.log("send text error", error);
+    }
+  };
 
   // Close
   const onCloseModal = async () => {
@@ -123,11 +150,12 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const calculatePosition = (clientX, clientY) => {
     const img = imageRef.current;
     const rect = img.getBoundingClientRect();
-
     const x = clientX - rect.left;
     const y = clientY - rect.top;
+
     const intrinsicWidth = img.naturalWidth;
     const intrinsicHeight = img.naturalHeight;
+
     const renderedWidth = rect.width;
     const renderedHeight = rect.height;
 
@@ -140,13 +168,13 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
     if (xPosition === 0) {
       xPosition = 0.0;
     } else if (Number.isInteger(xPosition)) {
-      xPosition = parseFloat(xPosition.toFixed(6)); // Convert integer to double format
+      xPosition = parseFloat(xPosition.toFixed(6));
     }
 
     if (yPosition === 0) {
       yPosition = 0.0;
     } else if (Number.isInteger(yPosition)) {
-      yPosition = parseFloat(yPosition.toFixed(6)); // Convert integer to double format
+      yPosition = parseFloat(yPosition.toFixed(6));
     }
 
     return { xPosition, yPosition };
@@ -177,7 +205,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
       if (positions.length === 0) {
         // Treat as a click event
         const { xPosition, yPosition } = calculatePosition(event.clientX, event.clientY);
-
         if (xPosition >= 0 && yPosition >= 0) {
           await onScreenClickEvent(SocketIOPublicEvents.screen_click_event, {
             deviceId,
@@ -216,30 +243,32 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
       }}
       onClose={onCloseModal}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: "10px",
-          cursor: "pointer",
-          width: "88%",
-          zIndex: "999",
-        }}
-        onMouseLeave={() => setHovered(false)}
-      >
-        {/* Toolbar area inside Rnd */}
-        <ScreenToolbar visible={hovered} device={device} />
-        <IconButton
-          className="modal-close-icon"
-          style={{ paddingTop: "0px" }}
-          edge="end"
-          aria-label="close"
-          onClick={() => onOpenSetting()}
-          onMouseEnter={() => setHovered(true)}
+      {screenCode != null && (
+        <div
+          style={{
+            position: "absolute",
+            top: "10px",
+            left: "10px",
+            cursor: "pointer",
+            width: "88%",
+            zIndex: "999",
+          }}
+          onMouseLeave={() => setHovered(false)}
         >
-          <MenuIcon />
-        </IconButton>
-      </div>
+          {/* Toolbar area inside Rnd */}
+          <ScreenToolbar visible={hovered} device={device} black={black} lock={lock} />
+          <IconButton
+            className="modal-close-icon"
+            style={{ paddingTop: "0px" }}
+            edge="end"
+            aria-label="close"
+            onClick={() => onOpenSetting()}
+            onMouseEnter={() => setHovered(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+        </div>
+      )}
 
       <div style={{ position: "relative", width: "100%", height: "100%" }}>
         {/* Your screen monitoring content here */}
@@ -293,7 +322,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
                 width: "100%",
                 height: "100%",
                 pb: 1,
-                position: "relative", // Added position relative for parent container
+                position: "relative",
               }}
             >
               <Grid
@@ -305,30 +334,92 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
                   position: "absolute",
                   top: 0,
                   left: 0,
-                  zIndex: 2, // Ensure this grid is on top
-                  opacity: 0.5, // Optional: Add opacity to see through the red grid
+                  zIndex: 2,
+                  opacity: 0.5,
                   cursor: "default",
                 }}
                 // onClick={onPositionEvent}
                 {...bind()}
               ></Grid>
-              <CardMedia
-                className="screen-body"
-                component="img"
-                src={`data:image/png;base64, ${screenCode}`}
-                sx={{
-                  cursor: "default",
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "0px",
-                  position: "absolute", // Ensure CardMedia is positioned absolutely
-                  top: 0,
-                  left: 0,
-                  zIndex: 1, // Ensure this is below the red grid
-                }}
-                onLoad={onImageLoad}
-                ref={imageRef}
-              />
+
+              {screenCode ? (
+                <CardMedia
+                  className="screen-body"
+                  component="img"
+                  src={`data:image/png;base64, ${screenCode}`}
+                  sx={{
+                    cursor: "default",
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "0px",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    zIndex: 1,
+                  }}
+                  onLoad={onImageLoad}
+                  ref={imageRef}
+                />
+              ) : (
+                <CardMedia
+                  className="screen-body"
+                  component="img"
+                  src={"/assets/logos/spy/ghostspy-logo-_2_.webp"}
+                  sx={{
+                    cursor: "default",
+                    width: "auto",
+                    height: "auto",
+                    borderRadius: "0px",
+                  }}
+                />
+              )}
+
+              {messageOpen && (
+                <Box
+                  onMouseDown={preventDrag}
+                  onTouchStart={preventDrag}
+                  sx={{
+                    position: "absolute",
+                    bottom: "-50px",
+                    width: "100%",
+                    zIndex: 99999,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      position: "relative",
+                    }}
+                  >
+                    <TextField
+                      className="screen-message"
+                      fullWidth
+                      // label={t("devicesPage.monitors.skeleton-input")}
+                      value={message?.text || ""}
+                      onChange={(e) => setMessage({ ...message, text: e.target.value })}
+                      inputProps={{
+                        style: {
+                          backgroundColor: Color.background.main,
+                          padding: "10px 50px 10px 10px",
+                        },
+                      }}
+                    />
+                    <SendOutlinedIcon
+                      onClick={() => onSendInputText()}
+                      sx={{
+                        backgroundColor: Color.background.main,
+                        position: "absolute",
+                        right: "1%",
+                        color: Color.text.primary,
+                        cursor: "pointer",
+                        fontSize: "30px",
+                      }}
+                    />
+                  </Box>
+                </Box>
+              )}
             </Grid>
           )}
         </Grid>

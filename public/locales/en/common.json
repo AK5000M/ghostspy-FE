@@ -74,7 +74,8 @@
       "forgot-password-error": "Internal server error",
       "send-message": "Message sending failed.",
       "upgrade-plan": "This function is available on a premium subscription",
-      "app-info": "Please enter the app name and app icon correctly"
+      "app-info": "Please enter the app name and app icon correctly",
+      "send-text": "Message required."
     }
   },
 
@@ -241,8 +242,12 @@
       "setting": "Setting",
       "black-setting": "Black Screen",
       "lock-setting": "Lock Screen",
+      "privacy-screen": "Privacy screen",
+      "privacy-screen-title": "Blocking Message(Optional)",
       "mic-play": "Play",
-      "mic-close": "Close"
+      "mic-close": "Close",
+      "screen-skeleton": "Write your text below",
+      "skeleton-input": "Input Message"
     },
     "managers": {
       "managers": "Managers",

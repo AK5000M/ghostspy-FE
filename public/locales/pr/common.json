@@ -76,7 +76,8 @@
       "forgot-password-error": "Erro interno do servidor",
       "send-message-failed": "Falha ao enviar a mensagem",
       "upgrade-plan": "Esta função está disponível em uma assinatura premium.",
-      "app-info": "Por favor, insira o nome do aplicativo e o ícone do aplicativo corretamente"
+      "app-info": "Por favor, insira o nome do aplicativo e o ícone do aplicativo corretamente",
+      "send-text": "Mensagem obrigatória."
     }
   },
 
@@ -247,8 +248,12 @@
       "setting": "Configuração",
       "black-setting": "Tela preta",
       "lock-setting": "Tela de bloqueio",
+      "privacy-screen": "Privacidade Tela ",
+      "privacy-screen-title": "Mensagem de bloqueio (opcional)",
       "mic-play": "Reproduzir",
-      "mic-close": "Fechar"
+      "mic-close": "Fechar",
+      "screen-skeleton": "Escreva seu texto logo abaixo",
+      "skeleton-input": "Mensagem de entrada"
     },
     "managers": {
       "managers": "Managers",

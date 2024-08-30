@@ -43,7 +43,7 @@ export const background = {
   purple_gray: "#4841db",
   purple_opacity: "#4841db40",
   green_gray01: "#63A113",
-  red_gray01: "#ee0979",
+  red_gray01: "#cc0a3b",
   yellow_gray01: "#f7971e",
   border: "rgb(255 255 255 / 15%)",
 };

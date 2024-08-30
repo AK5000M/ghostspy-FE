@@ -122,6 +122,21 @@ export const useSocketFunctions = () => {
     }
   };
 
+  // Screen  Send Input Text
+  const onSendTextEvent = async (event, data) => {
+    try {
+      if (socket) {
+        console.log("send text requesting:", event, data);
+        // Send into socket server
+        socket.emit(event, data);
+      } else {
+        console.log("Socket not available");
+      }
+    } catch (error) {
+      console.log("Error sending screen monitor request:", error);
+    }
+  };
+
   return {
     onSocketMonitor,
     onMobileDeviceEvent,
@@ -131,5 +146,6 @@ export const useSocketFunctions = () => {
     onScreenSettingEvent,
     onSocketManager,
     onGetGalleryEvent,
+    onSendTextEvent,
   };
 };

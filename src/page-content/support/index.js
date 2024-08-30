@@ -11,6 +11,7 @@ import ChatWindow from "./chatWindow";
 import ExplainContent from "./explain";
 
 import { sendBotFeedback, sendChatMessage } from "../../store/actions/chat.action";
+import Color from "src/theme/colors";
 
 export const SupportContent = () => {
   const { t } = useTranslation();
@@ -151,7 +152,7 @@ export const SupportContent = () => {
           reverseOrder: false,
           duration: 5000,
           style: {
-            backgroundColor: "red",
+            backgroundColor: Color.background.red_gray01,
             borderRadius: "5px",
             padding: "3px 10px",
           },
@@ -196,7 +197,7 @@ export const SupportContent = () => {
           reverseOrder: false,
           duration: 5000,
           style: {
-            backgroundColor: "red",
+            backgroundColor: Color.background.red_gray01,
             borderRadius: "5px",
             padding: "3px 10px",
           },

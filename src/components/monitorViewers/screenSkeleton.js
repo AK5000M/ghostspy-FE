@@ -1,42 +1,43 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Grid, CircularProgress, CardMedia } from "@mui/material";
+import { Grid, CircularProgress, Box, TextField, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-use-gesture";
-
-import MenuIcon from "@mui/icons-material/Menu";
-import { IconButton } from "@mui/material";
 
 import { useSocket } from "../../hooks/use-socket";
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
-import ScreenToolbar from "./screenTools";
+
 import MonitorViewer from "../monitorViewer";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 
 import Color from "src/theme/colors";
 
 const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
-  const { onSocketMonitor, onScreenClickEvent, onScreenDragEvent, onSocketCloseMonitor } =
+  const { onSocketMonitor, onScreenClickEvent, onScreenDragEvent, onSendTextEvent } =
     useSocketFunctions();
   const { socket } = useSocket();
-  const imageRef = useRef(null);
+  const screenRef = useRef(null);
 
   const [state, setState] = useState({
-    width: 360, // Default width
-    height: 720, // Default height
+    width: 360,
+    height: 720,
     x: 100,
     y: -120,
-    minWidth: 180,
-    minHeight: 360,
+    minWidth: 360,
+    minHeight: 720,
     maxWidth: 360,
     maxHeight: 720,
   });
 
-  const [screenCode, setScreenCode] = useState(null);
+  const [skeletonData, setSkeletionData] = useState([]);
+  const [deviceWidth, setDeviceWidth] = useState("");
+  const [deviceHeight, setDeviceHeight] = useState("");
   const [changeLoading, setChangeLoading] = useState(false);
-  const [hovered, setHovered] = useState(false);
   const [positions, setPositions] = useState([]);
   const [mouseDown, setMouseDown] = useState(false);
+  const [messageOpen, setmessageOpen] = useState(false);
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     const deviceId = device?.deviceId;
@@ -49,19 +50,23 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
           await onSocketMonitor(monitor, { deviceId });
 
           const handleMonitorResponse = (data) => {
-            console.log("screen skeleton:", data);
-
             if (isMounted && monitor === data.type) {
-              const base64Image = data.response?.base64Image;
-              setScreenCode(base64Image);
+              const deviceW = data.response?.deviceWidth;
+              const deviceH = data.response?.deviceHeight;
+              const skeletonRes = data.response?.skeletonData;
+
+              setDeviceWidth(deviceW);
+              setDeviceHeight(deviceH);
+              setSkeletionData(skeletonRes);
               setChangeLoading(false);
+              setmessageOpen(true);
             }
           };
 
-          socket.on(`screen-shared-${deviceId}`, handleMonitorResponse);
+          socket.on(`screen-skeleton-shared-${deviceId}`, handleMonitorResponse);
 
           return () => {
-            socket.off(`screen-shared-${deviceId}`, handleMonitorResponse);
+            socket.off(`screen-skeleton-shared-${deviceId}`, handleMonitorResponse);
             isMounted = false;
           };
         }
@@ -76,7 +81,6 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
   // Close
   const onCloseModal = async () => {
     try {
-      setScreenCode(null);
       onClose(false);
     } catch (error) {
       console.log("close monitor modal error", error);
@@ -88,39 +92,44 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
     e.stopPropagation();
   };
 
-  // Handle image load to get intrinsic and rendered size
-  const onImageLoad = (e) => {
-    const img = e.target;
-    const intrinsicWidth = img.naturalWidth;
-    const intrinsicHeight = img.naturalHeight;
-    const initialWidth = Math.round(intrinsicWidth); // Scale down if necessary
-    const initialHeight = Math.round(intrinsicHeight); // Scale down if necessary
-    const minWidth = Math.round(intrinsicWidth * 0.5);
-    const minHeight = Math.round(intrinsicHeight * 0.5);
-    const maxWidth = intrinsicWidth;
-    const maxHeight = intrinsicHeight;
-
-    setState((prevState) => ({
-      ...prevState,
-      width: initialWidth,
-      height: initialHeight,
-      minWidth,
-      minHeight,
-      maxWidth,
-      maxHeight,
-    }));
+  const handleSkeletonClick = (data) => {
+    if (data.type === "edit") {
+      setMessage(data);
+      setmessageOpen(true);
+    }
   };
 
+  // send screen text
+  const onSendInputText = async () => {
+    try {
+      const deviceId = device?.deviceId;
+
+      await onSendTextEvent(SocketIOPublicEvents.screen_send_text_event, {
+        deviceId,
+        message,
+      });
+    } catch (error) {
+      console.log("send text error", error);
+    }
+  };
+
+  // X, Y calculation
   const calculatePosition = (clientX, clientY) => {
-    const img = imageRef.current;
-    const rect = img.getBoundingClientRect();
+    const screenElement = screenRef.current;
+    if (!screenElement || !screenElement.offsetWidth || !screenElement.offsetHeight) {
+      return { xPosition: 0, yPosition: 0 };
+    }
+
+    const rect = screenElement.getBoundingClientRect();
 
     const x = clientX - rect.left;
     const y = clientY - rect.top;
-    const intrinsicWidth = img.naturalWidth;
-    const intrinsicHeight = img.naturalHeight;
+
     const renderedWidth = rect.width;
     const renderedHeight = rect.height;
+
+    const intrinsicWidth = 360;
+    const intrinsicHeight = (deviceHeight * 360) / deviceWidth;
 
     const xRate = intrinsicWidth / renderedWidth;
     const yRate = intrinsicHeight / renderedHeight;
@@ -128,23 +137,14 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
     let xPosition = x * xRate;
     let yPosition = y * yRate;
 
-    if (xPosition === 0) {
-      xPosition = 0.0;
-    } else if (Number.isInteger(xPosition)) {
-      xPosition = parseFloat(xPosition.toFixed(6)); // Convert integer to double format
-    }
-
-    if (yPosition === 0) {
-      yPosition = 0.0;
-    } else if (Number.isInteger(yPosition)) {
-      yPosition = parseFloat(yPosition.toFixed(6)); // Convert integer to double format
-    }
+    xPosition = parseFloat(xPosition.toFixed(6));
+    yPosition = parseFloat(yPosition.toFixed(6));
 
     return { xPosition, yPosition };
   };
 
   // Handle drag
-  const bind = useDrag(async ({ event, memo = { startX: 0, startY: 0 }, movement: [mx, my] }) => {
+  const bind = useDrag(async ({ event, memo = { startX: 0, startY: 0 } }) => {
     const deviceId = device?.deviceId;
 
     if (event.type === "pointerdown") {
@@ -161,10 +161,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
       }
     } else if (event.type === "pointerup") {
       setMouseDown(false);
-
-      // Handle the end of the drag event, send positions if needed
       if (positions.length === 0) {
-        // Treat as a click event
         const { xPosition, yPosition } = calculatePosition(event.clientX, event.clientY);
 
         if (xPosition >= 0 && yPosition >= 0) {
@@ -180,6 +177,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
           positions,
         });
       }
+      setPositions([]);
     }
     return memo;
   });
@@ -191,39 +189,14 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
         height: 720,
         x: 100,
         y: -120,
-        minWidth: 180,
-        minHeight: 360,
+        minWidth: 360,
+        minHeight: 720,
         maxWidth: 360,
         maxHeight: 720,
       }}
       onClose={onCloseModal}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: "10px",
-          cursor: "pointer",
-          width: "88%",
-          zIndex: "999",
-        }}
-        onMouseLeave={() => setHovered(false)}
-      >
-        {/* Toolbar area inside Rnd */}
-        <ScreenToolbar visible={hovered} device={device} />
-        <IconButton
-          className="modal-close-icon"
-          style={{ paddingTop: "0px" }}
-          edge="end"
-          aria-label="close"
-          onMouseEnter={() => setHovered(true)}
-        >
-          <MenuIcon />
-        </IconButton>
-      </div>
-
-      <div style={{ position: "relative", width: "100%", height: "100%" }}>
-        {/* Your screen monitoring content here */}
+      <div style={{ position: "relative", width: "100%", height: "100%" }} ref={screenRef}>
         <Grid
           sx={{
             display: "flex",
@@ -231,23 +204,10 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
             position: "relative",
             width: "100%",
             height: "100%",
+            overflow: "hidden",
           }}
         >
-          <div
-            style={{
-              position: "absolute",
-              width: "100px",
-              height: "100px",
-              left: `50px`,
-              top: `120px`,
-              backgroundColor: "black",
-              border: "1px solid #ccc",
-            }}
-          >
-            Skeleton Element
-          </div>
-
-          {/* {changeLoading && (
+          {changeLoading && (
             <Grid
               sx={{
                 position: "absolute",
@@ -278,55 +238,94 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
                 <CircularProgress sx={{ color: "white" }} size={20} />
               </Grid>
             </Grid>
-          )} */}
-          {/* {screenCode != null && !changeLoading && (
-            <Grid
+          )}
+          <Grid
+            onMouseDown={preventDrag}
+            onTouchStart={preventDrag}
+            sx={{
+              cursor: "default",
+              height: "100%",
+              width: "100%",
+              position: "absolute",
+              top: 0,
+              left: 0,
+              zIndex: 2,
+              opacity: 0.1,
+            }}
+            ref={screenRef}
+            {...bind()}
+          ></Grid>
+          {skeletonData.map((data, index) => (
+            <Box
+              key={index}
+              className="screen-body"
               sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100%",
-                height: "100%",
-                pb: 1,
-                position: "relative", // Added position relative for parent container
+                overflow: "hidden",
+                width: `${data.width * (320 / deviceWidth)}px`,
+                height: `${data.height * (660 / deviceHeight)}px`,
+                left: `${data.xposition * (320 / deviceWidth)}px`,
+                top: `${data.yposition * (660 / deviceHeight)}px`,
+                cursor: data.type === "edit" ? "pointer" : "default",
+                backgroundColor: "black",
+                border: `1px solid ${Color.background.border}`,
+                position: "absolute",
               }}
+              onClick={() => handleSkeletonClick(data)}
             >
-              <Grid
-                onMouseDown={preventDrag}
-                onTouchStart={preventDrag}
-                sx={{
-                  height: "100%",
-                  width: "100%",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  zIndex: 2, // Ensure this grid is on top
-                  opacity: 0.5, // Optional: Add opacity to see through the red grid
-                  cursor: "default",
-                }}
-                // onClick={onPositionEvent}
-                {...bind()}
-              ></Grid>
-              <CardMedia
-                className="screen-body"
-                component="img"
-                src={`data:image/png;base64, ${screenCode}`}
-                sx={{
-                  cursor: "default",
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "0px",
-                  position: "absolute", // Ensure CardMedia is positioned absolutely
-                  top: 0,
-                  left: 0,
-                  zIndex: 1, // Ensure this is below the red grid
-                }}
-                onLoad={onImageLoad}
-                ref={imageRef}
-              />
-            </Grid>
-          )} */}
+              <Typography variant="body1" sx={{ color: Color.text.primary, fontSize: "10px" }}>
+                {data.text}
+              </Typography>
+              {data.type == "edit" && (
+                <Typography variant="body1" sx={{ color: Color.text.secondary, fontSize: "10px" }}>
+                  {data.type}
+                </Typography>
+              )}
+            </Box>
+          ))}
         </Grid>
+        {/* Open Input Panel */}
+        {messageOpen && (
+          <Box
+            onMouseDown={preventDrag}
+            onTouchStart={preventDrag}
+            sx={{
+              position: "absolute",
+              bottom: "-50px",
+              width: "100%",
+              zIndex: 99999,
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: "10px", position: "relative" }}>
+              <TextField
+                className="screen-message"
+                fullWidth
+                // label={t("devicesPage.monitors.skeleton-input")}
+                value={message?.text || ""}
+                onChange={(e) => setMessage({ ...message, text: e.target.value })}
+                inputProps={{
+                  style: {
+                    backgroundColor: Color.background.main,
+                    padding: "10px 50px 10px 10px",
+                  },
+                }}
+              />
+              <SendOutlinedIcon
+                onClick={() => onSendInputText()}
+                sx={{
+                  backgroundColor: Color.background.main,
+                  position: "absolute",
+                  right: "1%",
+                  color: Color.text.primary,
+                  cursor: "pointer",
+                  fontSize: "30px",
+                  "&:hover": {
+                    color: Color.text.secondary,
+                  },
+                }}
+              />
+            </Box>
+          </Box>
+        )}
       </div>
     </MonitorViewer>
   );

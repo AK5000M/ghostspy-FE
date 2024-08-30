@@ -26,9 +26,9 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
     borderRadius: "8px",
     border: `solid 1px ${Color.background.purple}`,
     background: Color.background.main,
-    padding: "20px",
+    padding: "40px 20px 20px 20px",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
-    zIndex: "999999",
+    zIndex: "1000",
   };
 
   useEffect(() => {
