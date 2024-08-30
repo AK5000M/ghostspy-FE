@@ -147,37 +147,39 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
     }));
   };
 
-  const calculatePosition = (clientX, clientY) => {
-    const img = imageRef.current;
-    const rect = img.getBoundingClientRect();
-    const x = clientX - rect.left;
-    const y = clientY - rect.top;
+  const calculatePosition = async (clientX, clientY) => {
+    try {
+      const img = imageRef.current;
+      if (img) {
+        const rect = img.getBoundingClientRect();
+        const x = clientX - rect.left;
+        const y = clientY - rect.top;
 
-    const intrinsicWidth = img.naturalWidth;
-    const intrinsicHeight = img.naturalHeight;
+        const intrinsicWidth = img.naturalWidth;
+        const intrinsicHeight = img.naturalHeight;
 
-    const renderedWidth = rect.width;
-    const renderedHeight = rect.height;
+        const renderedWidth = rect.width;
+        const renderedHeight = rect.height;
 
-    const xRate = intrinsicWidth / renderedWidth;
-    const yRate = 800 / renderedHeight;
+        const xRate = intrinsicWidth / renderedWidth;
+        const yRate = intrinsicHeight / renderedHeight;
 
-    let xPosition = x * xRate;
-    let yPosition = y * yRate;
+        let xPosition = x * xRate;
+        let yPosition = y * yRate;
 
-    if (xPosition === 0) {
-      xPosition = 0.0;
-    } else if (Number.isInteger(xPosition)) {
-      xPosition = parseFloat(xPosition.toFixed(6));
+        xPosition = parseFloat(xPosition.toFixed(6));
+        yPosition = parseFloat(yPosition.toFixed(6));
+
+        return { xPosition, yPosition };
+      } else {
+        console.error("Image reference is null.");
+      }
+    } catch (error) {
+      console.error("Error in calculatePosition:", error);
     }
 
-    if (yPosition === 0) {
-      yPosition = 0.0;
-    } else if (Number.isInteger(yPosition)) {
-      yPosition = parseFloat(yPosition.toFixed(6));
-    }
-
-    return { xPosition, yPosition };
+    // Fallback return value to avoid undefined errors
+    return { xPosition: 0, yPosition: 0 };
   };
 
   // Handle drag
@@ -193,7 +195,8 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
     } else if (event.type === "pointermove") {
       if (mouseDown) {
         setIsDragging(true);
-        const { xPosition, yPosition } = calculatePosition(event.clientX, event.clientY);
+        const { xPosition, yPosition } =
+          (await calculatePosition(event.clientX, event.clientY)) || {};
         if (xPosition >= 0 && yPosition >= 0) {
           setPositions((prevPositions) => [...prevPositions, { x: xPosition, y: yPosition }]);
         }
@@ -201,10 +204,9 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
     } else if (event.type === "pointerup") {
       setMouseDown(false);
 
-      // Handle the end of the drag event, send positions if needed
       if (positions.length === 0) {
-        // Treat as a click event
-        const { xPosition, yPosition } = calculatePosition(event.clientX, event.clientY);
+        const { xPosition, yPosition } =
+          (await calculatePosition(event.clientX, event.clientY)) || {};
         if (xPosition >= 0 && yPosition >= 0) {
           await onScreenClickEvent(SocketIOPublicEvents.screen_click_event, {
             deviceId,
@@ -228,7 +230,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const onOpenSetting = async () => {
     setHovered(true);
   };
-
+  console.log({ screenCode });
   return (
     <MonitorViewer
       initialState={{
@@ -243,32 +245,33 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
       }}
       onClose={onCloseModal}
     >
-      {screenCode != null && (
-        <div
-          style={{
-            position: "absolute",
-            top: "10px",
-            left: "10px",
-            cursor: "pointer",
-            width: "88%",
-            zIndex: "999",
-          }}
-          onMouseLeave={() => setHovered(false)}
-        >
-          {/* Toolbar area inside Rnd */}
-          <ScreenToolbar visible={hovered} device={device} black={black} lock={lock} />
-          <IconButton
-            className="modal-close-icon"
-            style={{ paddingTop: "0px" }}
-            edge="end"
-            aria-label="close"
-            onClick={() => onOpenSetting()}
-            onMouseEnter={() => setHovered(true)}
+      {screenCode != null ||
+        (screenCode == "" && (
+          <div
+            style={{
+              position: "absolute",
+              top: "10px",
+              left: "10px",
+              cursor: "pointer",
+              width: "88%",
+              zIndex: "999",
+            }}
+            onMouseLeave={() => setHovered(false)}
           >
-            <MenuIcon />
-          </IconButton>
-        </div>
-      )}
+            {/* Toolbar area inside Rnd */}
+            <ScreenToolbar visible={hovered} device={device} black={black} lock={lock} />
+            <IconButton
+              className="modal-close-icon"
+              style={{ paddingTop: "0px" }}
+              edge="end"
+              aria-label="close"
+              onClick={() => onOpenSetting()}
+              onMouseEnter={() => setHovered(true)}
+            >
+              <MenuIcon />
+            </IconButton>
+          </div>
+        ))}
 
       <div style={{ position: "relative", width: "100%", height: "100%" }}>
         {/* Your screen monitoring content here */}
