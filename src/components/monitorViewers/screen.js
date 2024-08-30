@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Grid, CircularProgress, CardMedia, Tooltip, Button, Box, TextField } from "@mui/material";
+import { Grid, CircularProgress, CardMedia, Box, TextField } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-use-gesture";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import { IconButton, Menu } from "@mui/material";
+import { IconButton } from "@mui/material";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 
 import { useSocket } from "../../hooks/use-socket";
