@@ -130,7 +130,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
 
     const intrinsicWidth = 360;
     const intrinsicHeight = (deviceHeight * 360) / deviceWidth;
-
+    console.log(intrinsicHeight);
     const xRate = intrinsicWidth / renderedWidth;
     const yRate = intrinsicHeight / renderedHeight;
 
@@ -260,7 +260,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
               key={index}
               className="screen-body"
               sx={{
-                overflow: "hidden",
+                overflowY: "auto",
                 width: `${data.width * (320 / deviceWidth)}px`,
                 height: `${data.height * (660 / deviceHeight)}px`,
                 left: `${data.xposition * (320 / deviceWidth)}px`,
