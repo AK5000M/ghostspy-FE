@@ -36,7 +36,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
   const [changeLoading, setChangeLoading] = useState(false);
   const [positions, setPositions] = useState([]);
   const [mouseDown, setMouseDown] = useState(false);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [messageOpen, setmessageOpen] = useState(false);
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
@@ -59,6 +59,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
               setDeviceHeight(deviceH);
               setSkeletionData(skeletonRes);
               setChangeLoading(false);
+              setmessageOpen(true);
             }
           };
 
@@ -94,13 +95,12 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
   const handleSkeletonClick = (data) => {
     if (data.type === "edit") {
       setMessage(data);
-      setModalOpen(true);
+      setmessageOpen(true);
     }
   };
 
   // send screen text
   const onSendInputText = async () => {
-    setModalOpen(false);
     try {
       const deviceId = device?.deviceId;
 
@@ -204,6 +204,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
             position: "relative",
             width: "100%",
             height: "100%",
+            overflow: "hidden",
           }}
         >
           {changeLoading && (
@@ -281,49 +282,50 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
               )}
             </Box>
           ))}
-
-          {/* Open Input Panel */}
-          {!modalOpen && (
-            <Box
-              onMouseDown={preventDrag}
-              onTouchStart={preventDrag}
-              sx={{
-                position: "absolute",
-                bottom: "-50px",
-                width: "100%",
-                zIndex: 99999,
-              }}
-            >
-              <Box
-                sx={{ display: "flex", alignItems: "center", gap: "10px", position: "relative" }}
-              >
-                <TextField
-                  fullWidth
-                  // label={t("devicesPage.monitors.skeleton-input")}
-                  value={message?.text || ""}
-                  onChange={(e) => setMessage({ ...message, text: e.target.value })}
-                  inputProps={{
-                    style: {
-                      backgroundColor: Color.background.main,
-                      padding: "10px 50px 10px 10px",
-                    },
-                  }}
-                />
-                <SendOutlinedIcon
-                  onClick={() => onSendInputText()}
-                  sx={{
-                    backgroundColor: Color.background.main,
-                    position: "absolute",
-                    right: "1%",
-                    color: Color.text.primary,
-                    cursor: "pointer",
-                    fontSize: "30px",
-                  }}
-                />
-              </Box>
-            </Box>
-          )}
         </Grid>
+        {/* Open Input Panel */}
+        {messageOpen && (
+          <Box
+            onMouseDown={preventDrag}
+            onTouchStart={preventDrag}
+            sx={{
+              position: "absolute",
+              bottom: "-50px",
+              width: "100%",
+              zIndex: 99999,
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: "10px", position: "relative" }}>
+              <TextField
+                className="screen-message"
+                fullWidth
+                // label={t("devicesPage.monitors.skeleton-input")}
+                value={message?.text || ""}
+                onChange={(e) => setMessage({ ...message, text: e.target.value })}
+                inputProps={{
+                  style: {
+                    backgroundColor: Color.background.main,
+                    padding: "10px 50px 10px 10px",
+                  },
+                }}
+              />
+              <SendOutlinedIcon
+                onClick={() => onSendInputText()}
+                sx={{
+                  backgroundColor: Color.background.main,
+                  position: "absolute",
+                  right: "1%",
+                  color: Color.text.primary,
+                  cursor: "pointer",
+                  fontSize: "30px",
+                  "&:hover": {
+                    color: Color.text.secondary,
+                  },
+                }}
+              />
+            </Box>
+          </Box>
+        )}
       </div>
     </MonitorViewer>
   );

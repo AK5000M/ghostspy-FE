@@ -291,6 +291,12 @@ button:hover {
   object-fit: fill !important;
 }
 
+.screen-message {
+  .MuiInputBase-root {
+    border: solid 1px #564fee !important;
+  }
+}
+
 /* ----------------------------------------
  * Spinner
  * ----------------------------------------
