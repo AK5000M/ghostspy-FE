@@ -126,12 +126,12 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const calculatePosition = (clientX, clientY) => {
     const img = imageRef.current;
     const rect = img.getBoundingClientRect();
-
     const x = clientX - rect.left;
     const y = clientY - rect.top;
 
     const intrinsicWidth = img.naturalWidth;
     const intrinsicHeight = img.naturalHeight;
+
     const renderedWidth = rect.width;
     const renderedHeight = rect.height;
 
@@ -144,13 +144,13 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
     if (xPosition === 0) {
       xPosition = 0.0;
     } else if (Number.isInteger(xPosition)) {
-      xPosition = parseFloat(xPosition.toFixed(6)); // Convert integer to double format
+      xPosition = parseFloat(xPosition.toFixed(6));
     }
 
     if (yPosition === 0) {
       yPosition = 0.0;
     } else if (Number.isInteger(yPosition)) {
-      yPosition = parseFloat(yPosition.toFixed(6)); // Convert integer to double format
+      yPosition = parseFloat(yPosition.toFixed(6));
     }
 
     return { xPosition, yPosition };
@@ -159,6 +159,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   // Handle drag
   const bind = useDrag(async ({ event, memo = { startX: 0, startY: 0 }, movement: [mx, my] }) => {
     const deviceId = device?.deviceId;
+
     if (event.type === "pointerdown") {
       setPositions([]);
       setMouseDown(true);

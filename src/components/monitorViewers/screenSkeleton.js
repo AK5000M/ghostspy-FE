@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Grid, CircularProgress, Box, Modal, TextField, Button, Typography } from "@mui/material";
+import { Grid, CircularProgress, Box, TextField, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-use-gesture";
+
 import { useSocket } from "../../hooks/use-socket";
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
+
 import MonitorViewer from "../monitorViewer";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
-import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+
 import Color from "src/theme/colors";
 
 const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
@@ -119,15 +121,18 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
     }
 
     const rect = screenElement.getBoundingClientRect();
-    console.log("------------------", screenElement);
+
     const x = clientX - rect.left;
     const y = clientY - rect.top;
-    console.log("=======>", x, y);
+
     const renderedWidth = rect.width;
     const renderedHeight = rect.height;
 
-    const xRate = deviceWidth / renderedWidth;
-    const yRate = deviceHeight / renderedHeight;
+    const intrinsicWidth = 360;
+    const intrinsicHeight = (deviceHeight * 360) / deviceWidth;
+
+    const xRate = intrinsicWidth / renderedWidth;
+    const yRate = intrinsicHeight / renderedHeight;
 
     let xPosition = x * xRate;
     let yPosition = y * yRate;
@@ -141,7 +146,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
   // Handle drag
   const bind = useDrag(async ({ event, memo = { startX: 0, startY: 0 } }) => {
     const deviceId = device?.deviceId;
-    console.log("skeleton event:", { event });
+
     if (event.type === "pointerdown") {
       setPositions([]);
       setMouseDown(true);
@@ -167,7 +172,6 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
           });
         }
       } else {
-        console.log("Drag Positions:", positions);
         await onScreenDragEvent(SocketIOPublicEvents.screen_drag_event, {
           deviceId,
           positions,
@@ -202,6 +206,38 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
             height: "100%",
           }}
         >
+          {changeLoading && (
+            <Grid
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 1,
+                color: "white",
+                width: "100%",
+              }}
+            >
+              <Grid
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: Color.background.purple,
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "5px",
+                }}
+              >
+                <CircularProgress sx={{ color: "white" }} size={20} />
+              </Grid>
+            </Grid>
+          )}
           <Grid
             onMouseDown={preventDrag}
             onTouchStart={preventDrag}
@@ -213,80 +249,72 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
               top: 0,
               left: 0,
               zIndex: 2,
-              backgroundColor: "red",
+              opacity: 0.1,
             }}
+            ref={screenRef}
             {...bind()}
-          >
-            {skeletonData.map((data, index) => (
-              <Box
-                key={index}
-                className="screen-body"
-                sx={{
-                  overflow: "hidden",
-                  width: `${data.width * (320 / deviceWidth)}px`,
-                  height: `${data.height * (660 / deviceHeight)}px`,
-                  left: `${data.xposition * (320 / deviceWidth)}px`,
-                  top: `${data.yposition * (660 / deviceHeight)}px`,
-                  cursor: data.type === "edit" ? "pointer" : "default",
-                  color: Color.text.primary,
-                  fontSize: "12px",
-                  backgroundColor: "black",
-                  border: `1px solid ${Color.background.border}`,
-                  position: "absolute",
-                }}
-                onClick={() => handleSkeletonClick(data)}
-                ref={screenRef}
-              >
+          ></Grid>
+          {skeletonData.map((data, index) => (
+            <Box
+              key={index}
+              className="screen-body"
+              sx={{
+                overflow: "hidden",
+                width: `${data.width * (320 / deviceWidth)}px`,
+                height: `${data.height * (660 / deviceHeight)}px`,
+                left: `${data.xposition * (320 / deviceWidth)}px`,
+                top: `${data.yposition * (660 / deviceHeight)}px`,
+                cursor: data.type === "edit" ? "pointer" : "default",
+                backgroundColor: "black",
+                border: `1px solid ${Color.background.border}`,
+                position: "absolute",
+              }}
+              onClick={() => handleSkeletonClick(data)}
+            >
+              <Typography variant="body1" sx={{ color: Color.text.primary, fontSize: "10px" }}>
                 {data.text}
-              </Box>
-            ))}
-          </Grid>
+              </Typography>
+              {data.type == "edit" && (
+                <Typography variant="body1" sx={{ color: Color.text.secondary, fontSize: "10px" }}>
+                  {data.type}
+                </Typography>
+              )}
+            </Box>
+          ))}
 
           {/* Open Input Panel */}
-          {modalOpen && (
+          {!modalOpen && (
             <Box
+              onMouseDown={preventDrag}
+              onTouchStart={preventDrag}
               sx={{
                 position: "absolute",
-                bottom: "-1%",
-                left: "0.5%",
+                bottom: "-50px",
                 width: "100%",
-                border: `solid 1px ${Color.background.border}`,
-                backgroundColor: Color.background.main,
-                borderRadius: "5px",
-                p: 1,
                 zIndex: 99999,
               }}
             >
               <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  mb: 1,
-                }}
+                sx={{ display: "flex", alignItems: "center", gap: "10px", position: "relative" }}
               >
-                <Typography sx={{ color: Color.text.secondary, fontSize: "12px" }}>
-                  {t("devicesPage.monitors.screen-skeleton")}
-                </Typography>
-                <CloseOutlinedIcon
-                  onClick={() => setModalOpen(false)}
-                  sx={{
-                    color: Color.text.primary,
-                    cursor: "pointer",
-                    fontSize: "20px",
-                  }}
-                />
-              </Box>
-              <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
                 <TextField
                   fullWidth
-                  label={t("devicesPage.monitors.skeleton-input")}
+                  // label={t("devicesPage.monitors.skeleton-input")}
                   value={message?.text || ""}
                   onChange={(e) => setMessage({ ...message, text: e.target.value })}
+                  inputProps={{
+                    style: {
+                      backgroundColor: Color.background.main,
+                      padding: "10px 50px 10px 10px",
+                    },
+                  }}
                 />
                 <SendOutlinedIcon
                   onClick={() => onSendInputText()}
                   sx={{
+                    backgroundColor: Color.background.main,
+                    position: "absolute",
+                    right: "1%",
                     color: Color.text.primary,
                     cursor: "pointer",
                     fontSize: "30px",
