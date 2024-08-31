@@ -290,7 +290,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
             onTouchStart={preventDrag}
             sx={{
               position: "absolute",
-              bottom: "-50px",
+              bottom: { md: "-50px", xs: "0px" },
               width: "100%",
               zIndex: 99999,
             }}
