@@ -230,7 +230,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const onOpenSetting = async () => {
     setHovered(true);
   };
-  console.log({ screenCode });
+
   return (
     <MonitorViewer
       initialState={{
