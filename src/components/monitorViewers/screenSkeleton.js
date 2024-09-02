@@ -54,7 +54,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
               const deviceW = data.response?.deviceWidth;
               const deviceH = data.response?.deviceHeight;
               const skeletonRes = data.response?.skeletonData;
-              console.log("Skeleton Res:", { skeletonRes });
+              // console.log("Skeleton Res:", { skeletonRes });
               setDeviceWidth(deviceW);
               setDeviceHeight(deviceH);
               setSkeletionData(skeletonRes);
