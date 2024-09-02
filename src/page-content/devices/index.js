@@ -1,20 +1,15 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 
 import {
   Container,
   Box,
-  Grid,
   Typography,
   SvgIcon,
   List,
   ListItem,
-  Button,
-  Modal,
   CircularProgress,
-  Tabs,
-  Tab,
   ToggleButtonGroup,
   ToggleButton,
   Tooltip,
@@ -320,11 +315,17 @@ export const DeviceContent = () => {
                           cursor: "pointer",
                           py: "10px",
                           px: "5px",
+                          borderRight: "5px",
+                          border: `solid 1px ${Color.background.border}`,
+                          mb: "5px",
                           "&:hover": {
-                            bgcolor: Color.background.purple,
+                            bgcolor: Color.background.purple_opacity,
+                            border: `solid 1px ${Color.background.purple}`,
                           },
                           bgcolor:
-                            selectedKey === device?._id ? Color.background.purple : "inherit",
+                            selectedKey === device?._id
+                              ? Color.background.purple_opacity
+                              : "inherit",
                         }}
                         onClick={() => onSelectDevice(device)}
                       >
