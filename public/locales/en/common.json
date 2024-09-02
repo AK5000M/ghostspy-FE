@@ -281,7 +281,11 @@
       "information": "Information",
       "batteryStatus": "Battery Status",
       "netStatus": "Connection Status",
-      "removeDevice": "Remove a device"
+      "removeDevice": "Remove a device",
+      "confirmRemoveTitle": "Delete a device",
+      "confirmRemoveText": "Are you sure you want to remove this device?",
+      "ok": "OK",
+      "cancel": "Cancel"
     },
     "addNewDevice": {
       "addbutton": "+ Add New",

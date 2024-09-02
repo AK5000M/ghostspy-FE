@@ -279,7 +279,11 @@
       "information": "Información",
       "batteryStatus": "Estado de la Batería",
       "netStatus": "Estado de la Conexión",
-      "removeDevice": "Quitar un dispositivo"
+      "removeDevice": "Quitar un dispositivo",
+      "confirmRemoveTitle": "Eliminar un dispositivo",
+      "confirmRemoveText": "¿Está seguro de que desea eliminar este dispositivo?",
+      "ok": "OK",
+      "cancel": "Cancelar"
     },
     "addNewDevice": {
       "addbutton": "+ Agregar Nuevo",
