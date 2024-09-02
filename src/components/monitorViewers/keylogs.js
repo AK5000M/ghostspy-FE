@@ -92,7 +92,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
       setChangeLoading(false);
     }
   };
-
+  console.log("key logs:", keylogsValue);
   // Close the monitor modal
   const onCloseModal = async () => {
     try {
