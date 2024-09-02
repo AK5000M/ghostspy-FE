@@ -7,6 +7,8 @@ import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
 
+import Color from "src/theme/colors";
+
 const MicMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
 
@@ -90,8 +92,8 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
   return (
     <MonitorViewer
       initialState={{
-        width: 300,
-        height: 400,
+        width: 320,
+        height: 440,
         x: 50,
         y: -120,
         minWidth: 300,
@@ -129,12 +131,24 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
             <Grid className="speaker-container">
               <div className={`speaker ${isPlaying ? "playing" : ""}`}></div>
             </Grid>
-            <div style={{ display: "flex", flexDirection: "column", gap: "15px", width: "100%" }}>
-              <Button variant="text" color="primary" onClick={onPlayAudio}>
-                {t("devicesPage.monitors.mic-play")}
-              </Button>
-              <Button variant="text" onClick={onCloseAudio} sx={{ color: "#f1f1f1" }}>
+            <div style={{ display: "flex", gap: "15px", justifyContent: "center", width: "100%" }}>
+              <Button
+                variant="outlined"
+                onClick={onCloseAudio}
+                sx={{
+                  width: "120px",
+                  color: Color.text.primary,
+                  border: `solid 2px ${Color.text.secondary}`,
+                  "&:hover": {
+                    border: `solid 2px ${Color.text.secondary}`,
+                  },
+                }}
+              >
                 {t("devicesPage.monitors.mic-close")}
+              </Button>
+
+              <Button variant="outlined" onClick={onPlayAudio} sx={{ width: "120px" }}>
+                {t("devicesPage.monitors.mic-play")}
               </Button>
             </div>
           </Grid>

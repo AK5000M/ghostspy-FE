@@ -215,7 +215,6 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
           <Button
             variant="contained"
             onClick={handleConfirmRemove}
-            autoFocus
             sx={{
               background: Color.background.red_gray02,
               width: "120px",
