@@ -223,6 +223,7 @@
     "selectDevice": "Por favor selecione um dispositivo.",
     "devicesFunctions": "Dispositivo Serviços",
     "selectScreenMonitor": "Selecionar controle de tela",
+
     "monitors": {
       "monitors": "Monitores",
       "screenControl": "Controle de tela",
@@ -287,7 +288,11 @@
       "information": "Informações",
       "batteryStatus": "Status da Bateria",
       "netStatus": "Status da Conexão",
-      "removeDevice": "Remover um dispositivo"
+      "removeDevice": "Remover um dispositivo",
+      "confirmRemoveTitle": "Excluir um dispositivo",
+      "confirmRemoveText": "Tem certeza de que deseja remover este dispositivo?",
+      "ok": "OK",
+      "cancel": "Cancelar"
     },
     "addNewDevice": {
       "addbutton": "+ Adicionar Novo",

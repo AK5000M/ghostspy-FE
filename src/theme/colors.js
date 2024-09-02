@@ -44,6 +44,7 @@ export const background = {
   purple_opacity: "#4841db40",
   green_gray01: "#63A113",
   red_gray01: "#cc0a3b",
+  red_gray02: "#e82052",
   yellow_gray01: "#f7971e",
   border: "rgb(255 255 255 / 15%)",
 };
@@ -54,6 +55,7 @@ export const text = {
   purple: "#564FEE",
   purple_gray: "#4841db",
   red_gray01: "#ee0979",
+  red_gray02: "#e82052",
 };
 
 export const indigo = withAlphas(theme);

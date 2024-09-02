@@ -165,7 +165,7 @@ export const DeviceContent = () => {
     localStorage.removeItem("lock");
     try {
       const device_Id = device?._id;
-      const selectedDeviceId = device?.deviceId;
+
       // Close current monitor
       if (selectedDevice != null) {
         await onSocketCloseMonitor("monitor-close", {
@@ -204,6 +204,11 @@ export const DeviceContent = () => {
   const onChangeTabMenu = (event, newValue) => {
     console.log(newValue);
     settabMenuValue(newValue);
+  };
+
+  // Handle device removal
+  const handleDeviceRemove = () => {
+    fetchDevices();
   };
 
   return (
@@ -406,7 +411,10 @@ export const DeviceContent = () => {
                   px: 2,
                 }}
               >
-                <DeviceDetails selectedDevice={selectedDevice != null && selectedDevice} />
+                <DeviceDetails
+                  selectedDevice={selectedDevice != null && selectedDevice}
+                  onDeviceRemoved={handleDeviceRemove}
+                />
               </Box>
             </div>
           </div>
@@ -557,53 +565,6 @@ export const DeviceContent = () => {
           </div>
         </Box>
       </Container>
-
-      <Modal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            backgroundColor: "#212631",
-            boxShadow: 12,
-            borderRadius: "5px",
-            minWidth: 400,
-            maxWidth: "450px",
-          }}
-        >
-          <Grid
-            sx={{
-              p: 2,
-            }}
-          >
-            <Typography
-              id="modal-modal-title"
-              sx={{ mb: 5, p: 3, color: "white", fontSize: "14px", textAlign: "center" }}
-            >
-              {t("devicesPage.addNewDevice.modalExplain")}
-            </Typography>
-
-            <Box display="flex" justifyContent="center" sx={{ mb: 5 }}>
-              <img src={qrCode} alt="QR Code" />
-            </Box>
-          </Grid>
-          <Grid sx={{ display: "flex", justifyContent: "flex-end", p: 2 }}>
-            <Button
-              variant="outlined"
-              className="secondary-button"
-              onClick={() => setOpenModal(false)}
-            >
-              {t("devicesPage.addNewDevice.close")}
-            </Button>
-          </Grid>
-        </Box>
-      </Modal>
     </div>
   );
 };

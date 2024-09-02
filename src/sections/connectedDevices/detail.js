@@ -1,7 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
-import { Grid, SvgIcon, Typography, Button } from "@mui/material";
+import {
+  Grid,
+  SvgIcon,
+  Typography,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Box,
+} from "@mui/material";
 import PermDeviceInformationIcon from "@mui/icons-material/PermDeviceInformation";
 import SystemSecurityUpdateWarningIcon from "@mui/icons-material/SystemSecurityUpdateWarning";
 import DnsIcon from "@mui/icons-material/Dns";
@@ -14,12 +25,13 @@ import { removeDevice } from "../../store/actions/device.action";
 
 import Color from "src/theme/colors";
 
-export const DeviceDetails = ({ selectedDevice }) => {
+export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
   const { t } = useTranslation();
   const { socket } = useSocket();
 
   const [batteryStatus, setBatteryStatus] = useState(selectedDevice?.batteryStatus);
   const [netStatus, setNetStatus] = useState(selectedDevice?.connectStatus);
+  const [openModal, setOpenModal] = useState(false); // Modal state
 
   useEffect(() => {
     if (selectedDevice) {
@@ -54,6 +66,7 @@ export const DeviceDetails = ({ selectedDevice }) => {
             fontSize: "16px",
           },
         });
+        onDeviceRemoved();
       } else {
         toast.error(t("toast.success.delete-error"), {
           position: "bottom-center",
@@ -69,6 +82,19 @@ export const DeviceDetails = ({ selectedDevice }) => {
     } catch (error) {
       console.log("Remove Device Error", error);
     }
+  };
+
+  const handleRemoveClick = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const handleConfirmRemove = () => {
+    onRemoveDevice(selectedDevice.deviceId);
+    setOpenModal(false);
   };
 
   const DeviceDetailItem = ({ icon: Icon, label, value }) => (
@@ -142,7 +168,7 @@ export const DeviceDetails = ({ selectedDevice }) => {
       {selectedDevice && (
         <Grid sx={{ mt: 1, borderTop: `solid 2px ${Color.background.border}`, pt: 2 }}>
           <Button
-            onClick={() => onRemoveDevice(selectedDevice.deviceId)}
+            onClick={handleRemoveClick}
             sx={{
               width: "100%",
               border: `solid 1px ${Color.background.red_gray01}`,
@@ -158,6 +184,51 @@ export const DeviceDetails = ({ selectedDevice }) => {
           </Button>
         </Grid>
       )}
+
+      <Dialog
+        open={openModal}
+        onClose={handleCloseModal}
+        PaperProps={{
+          sx: {
+            backgroundColor: Color.background.main,
+            borderRadius: "8px",
+            border: `solid 1px ${Color.background.border}`,
+          },
+        }}
+      >
+        <DialogTitle sx={{ color: Color.text.red_gray01 }}>
+          {t("devicesPage.deviceInfo.confirmRemoveTitle")}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText sx={{ color: Color.text.primary }}>
+            {t("devicesPage.deviceInfo.confirmRemoveText")}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="outlined"
+            onClick={handleCloseModal}
+            sx={{ width: "120px", color: Color.text.primary }}
+          >
+            {t("devicesPage.deviceInfo.cancel")}
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleConfirmRemove}
+            autoFocus
+            sx={{
+              background: Color.background.red_gray02,
+              width: "120px",
+              color: Color.text.primary,
+              "&:hover": {
+                background: Color.background.red_gray01,
+              },
+            }}
+          >
+            {t("devicesPage.deviceInfo.ok")}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   );
 };
