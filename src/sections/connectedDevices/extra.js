@@ -56,6 +56,7 @@ export const DeviceExtra = ({ device }) => {
     try {
       await onSocketCloseMonitor("monitor-close", {
         deviceId: device.deviceId,
+        type: "all",
       });
       setViewerVisible(event);
     } catch (error) {
