@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Grid, Typography, CircularProgress } from "@mui/material";
+import { Grid, Typography, CircularProgress, Box } from "@mui/material";
 
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 import { useSocketFunctions } from "src/utils/socket";
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
+
+import Color from "src/theme/colors";
 
 const GalleryManager = ({ label, device, onClose }) => {
   const { t } = useTranslation();
@@ -18,8 +20,44 @@ const GalleryManager = ({ label, device, onClose }) => {
   const [selectedImageId, setSelectedImageId] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const [state, setState] = useState({
+    width: 720,
+    height: 720,
+    x: 100,
+    y: -120,
+    minWidth: 360,
+    minHeight: 360,
+    maxWidth: 720,
+    maxHeight: 720,
+  });
+
   useEffect(() => {
     init();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 720) {
+        setState((prevState) => ({
+          ...prevState,
+          width: window.innerWidth - 20, // Account for padding
+          height: window.innerWidth - 20, // Keep it square
+        }));
+      } else {
+        setState((prevState) => ({
+          ...prevState,
+          width: 720,
+          height: 720,
+        }));
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const onGalleryListResponse = (data) => {
@@ -61,7 +99,6 @@ const GalleryManager = ({ label, device, onClose }) => {
     socket.on(`gallery-one-shared-${device?.deviceId}`, onOneGalleryResponse);
   };
 
-  // Close the monitor modal
   const onCloseModal = async () => {
     try {
       onClose(false);
@@ -71,35 +108,24 @@ const GalleryManager = ({ label, device, onClose }) => {
   };
 
   return (
-    <MonitorViewer
-      initialState={{
-        width: 360,
-        height: 720,
-        x: 100,
-        y: -120,
-        minWidth: 180,
-        minHeight: 360,
-        maxWidth: 360,
-        maxHeight: 720,
-      }}
-      onClose={onCloseModal}
-    >
+    <MonitorViewer initialState={state} onClose={onCloseModal}>
       <div style={{ position: "relative", width: "100%", height: "100%" }}>
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
+            flexDirection: { md: "row", xs: "column" },
+            overflowY: "auto",
             height: "100%",
-            marginTop: "20px",
+            py: { md: 1, xs: 5 },
+            gap: "15px",
           }}
         >
-          {/* Left Part: Image Names */}
           <div
             style={{
-              flexBasis: "30%",
+              flex: "40%",
               overflowY: "auto",
-              backgroundColor: "rgb(28, 37, 54)",
+              border: `solid 1px ${Color.background.border}`,
+              borderRadius: "5px",
             }}
           >
             {getListLoading ? (
@@ -115,7 +141,6 @@ const GalleryManager = ({ label, device, onClose }) => {
                   height: "100%",
                   zIndex: 1,
                   color: "white",
-                  backgroundColor: "#00000069",
                 }}
               >
                 <Grid
@@ -123,7 +148,7 @@ const GalleryManager = ({ label, device, onClose }) => {
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center",
-                    backgroundColor: "#564FEE",
+                    backgroundColor: Color.background.purple,
                     width: "30px",
                     height: "30px",
                     borderRadius: "5px",
@@ -133,7 +158,7 @@ const GalleryManager = ({ label, device, onClose }) => {
                 </Grid>
               </Grid>
             ) : (
-              <div>
+              <div style={{ backgroundColor: Color.background.main }}>
                 {galleryData.length === 0 ? (
                   <Typography style={{ color: "white" }}>
                     {t("devicesPage.managers.gallery-noimage")}
@@ -146,14 +171,14 @@ const GalleryManager = ({ label, device, onClose }) => {
                       style={{
                         cursor: "pointer",
                         marginBottom: "8px",
-                        color: selectedImageId === image.imageId ? "#564FEE" : "white",
+                        color: selectedImageId === image.imageId ? Color.text.purple : "white",
                         padding: "5px 10px",
                         borderRadius: "5px",
                         transition: "background-color 0.3s",
                       }}
                       onMouseEnter={(e) => {
                         if (!selectedImage || selectedImage.imageId !== image.imageId) {
-                          e.currentTarget.style.backgroundColor = "rgba(29, 191, 26, 0.1)";
+                          e.currentTarget.style.backgroundColor = Color.background.purple_opacity;
                         }
                       }}
                       onMouseLeave={(e) => {
@@ -170,7 +195,6 @@ const GalleryManager = ({ label, device, onClose }) => {
             )}
           </div>
 
-          {/* Right Part: Display Selected Image */}
           <div
             style={{
               flexBasis: "70%",
@@ -178,6 +202,8 @@ const GalleryManager = ({ label, device, onClose }) => {
               justifyContent: "center",
               alignItems: "center",
               overflow: "hidden",
+              border: `solid 1px ${Color.background.border}`,
+              borderRadius: "5px",
             }}
           >
             {getImageLoading ? (
@@ -192,7 +218,6 @@ const GalleryManager = ({ label, device, onClose }) => {
                   width: "100%",
                   height: "100%",
                   zIndex: 1,
-                  backgroundColor: "#00000069",
                   color: "white",
                 }}
               >
@@ -231,7 +256,7 @@ const GalleryManager = ({ label, device, onClose }) => {
               </Typography>
             )}
           </div>
-        </div>
+        </Box>
       </div>
     </MonitorViewer>
   );

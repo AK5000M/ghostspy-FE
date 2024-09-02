@@ -200,7 +200,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
           {t("devicesPage.deviceInfo.confirmRemoveTitle")}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{ color: Color.text.primary }}>
+          <DialogContentText sx={{ color: Color.text.secondary }}>
             {t("devicesPage.deviceInfo.confirmRemoveText")}
           </DialogContentText>
         </DialogContent>
