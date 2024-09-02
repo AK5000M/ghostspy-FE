@@ -255,33 +255,50 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
             ref={screenRef}
             {...bind()}
           ></Grid>
-          {skeletonData.map((data, index) => (
-            <Box
-              key={index}
-              className="screen-body"
-              sx={{
-                overflowY: "auto",
-                width: `${data.width * (320 / deviceWidth)}px`,
-                height: `${data.height * (660 / deviceHeight)}px`,
-                left: `${data.xposition * (320 / deviceWidth)}px`,
-                top: `${data.yposition * (660 / deviceHeight)}px`,
-                cursor: data.type === "edit" ? "pointer" : "default",
-                backgroundColor: "black",
-                border: `1px solid ${Color.background.border}`,
-                position: "absolute",
-              }}
-              onClick={() => handleSkeletonClick(data)}
-            >
-              <Typography variant="body1" sx={{ color: Color.text.primary, fontSize: "10px" }}>
-                {data.text}
-              </Typography>
-              {data.type == "edit" && (
-                <Typography variant="body1" sx={{ color: Color.text.secondary, fontSize: "10px" }}>
-                  {data.type}
+
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              backgroundColor: "black",
+              position: "relative",
+              // overflowY: "auto",
+              border: `1px solid ${Color.background.border}`,
+            }}
+          >
+            {skeletonData.map((data, index) => (
+              <Box
+                key={index}
+                className="screen-body"
+                sx={{
+                  width: `${data.width * (320 / deviceWidth)}px`,
+                  height: `${data.height * (660 / deviceHeight)}px`,
+                  left: `${data.xposition * (320 / deviceWidth)}px`,
+                  top: `${data.yposition * (660 / deviceHeight)}px`,
+                  cursor: data.type === "edit" ? "pointer" : "default",
+                  backgroundColor: "black",
+                  border: `1px solid ${Color.background.border}`,
+                  position: "absolute",
+                }}
+                onClick={() => handleSkeletonClick(data)}
+              >
+                <Typography
+                  variant="body1"
+                  sx={{ color: Color.text.primary, fontSize: "10px", textAlign: "center" }}
+                >
+                  {data.text}
                 </Typography>
-              )}
-            </Box>
-          ))}
+                {data.type === "edit" && (
+                  <Typography
+                    variant="body1"
+                    sx={{ color: Color.text.secondary, fontSize: "10px" }}
+                  >
+                    {data.type}
+                  </Typography>
+                )}
+              </Box>
+            ))}
+          </Box>
         </Grid>
         {/* Open Input Panel */}
         {messageOpen && (
