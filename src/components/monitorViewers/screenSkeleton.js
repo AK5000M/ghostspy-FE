@@ -276,7 +276,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
                   left: `${data.xposition * (320 / deviceWidth)}px`,
                   top: `${data.yposition * (660 / deviceHeight)}px`,
                   cursor: data.type === "edit" ? "pointer" : "default",
-                  backgroundColor: "black",
+                  backgroundColor: data?.type == "button" ? "none" : "black",
                   border: `1px solid ${Color.background.border}`,
                   position: "absolute",
                 }}
@@ -285,7 +285,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
                 <Box
                   sx={{
                     display: "flex",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     alignItems: "center",
                     height: "100%",
                   }}
