@@ -54,7 +54,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
               const deviceW = data.response?.deviceWidth;
               const deviceH = data.response?.deviceHeight;
               const skeletonRes = data.response?.skeletonData;
-
+              console.log("Skeleton Res:", { skeletonRes });
               setDeviceWidth(deviceW);
               setDeviceHeight(deviceH);
               setSkeletionData(skeletonRes);
@@ -130,7 +130,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
 
     const intrinsicWidth = 360;
     const intrinsicHeight = (deviceHeight * 360) / deviceWidth;
-    console.log(intrinsicHeight);
+
     const xRate = intrinsicWidth / renderedWidth;
     const yRate = intrinsicHeight / renderedHeight;
 
