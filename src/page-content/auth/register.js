@@ -86,7 +86,6 @@ export const RegisterContent = () => {
               },
             });
             router.push("/dashboard");
-            setLoading(false);
           }
         } else {
           setLoading(false);

@@ -75,7 +75,6 @@ export const LoginContent = () => {
             });
 
             router.push("/dashboard");
-            setLoading(false);
           } else if (result.status == "400") {
             setLoading(false);
             toast.error(t("toast.error.login"), {
