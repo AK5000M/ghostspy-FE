@@ -376,7 +376,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
                 />
               )}
 
-              {messageOpen && (
+              {screenCode && (
                 <Box
                   onMouseDown={preventDrag}
                   onTouchStart={preventDrag}
