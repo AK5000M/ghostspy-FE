@@ -470,7 +470,7 @@ export const DeviceContent = () => {
                           exclusive
                           onChange={onChangeTabMenu}
                           sx={{
-                            backgroundColor: Color.background.main,
+                            backgroundColor: Color.background.purple_opacity,
                             borderRadius: "50px",
                           }}
                         >
