@@ -280,8 +280,8 @@
       "batteryStatus": "Estado de la Batería",
       "netStatus": "Estado de la Conexión",
       "removeDevice": "Quitar un dispositivo",
-      "confirmRemoveTitle": "Eliminar un dispositivo",
-      "confirmRemoveText": "¿Está seguro de que desea eliminar este dispositivo?",
+      "confirmRemoveTitle": "¿Estás seguro?",
+      "confirmRemoveText": "¿Estás seguro de que deseas eliminar este dispositivo? Si lo eliminas, necesitarás reinstalar la aplicación en tu dispositivo móvil.",
       "ok": "OK",
       "cancel": "Cancelar"
     },

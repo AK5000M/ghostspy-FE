@@ -53,8 +53,6 @@ export const DeviceContent = () => {
   const [devices, setDevices] = useState(null);
   const [selectedDevice, setSelectedDevice] = useState(null);
   const [selectedKey, setSelectedKey] = useState(null);
-  const [openModal, setOpenModal] = useState(false);
-  const [qrCode, setQRCode] = useState(null);
 
   const [tabMenuValue, settabMenuValue] = useState(0);
   const toastShownRef = useRef(false);
@@ -88,8 +86,6 @@ export const DeviceContent = () => {
           });
           successToast.current = true; // Set the toast as shown
         }
-
-        setOpenModal(false);
       } else if (data.success == false && data.message == "exist") {
         if (!errorToast.current) {
           // Check if the toast has already been shown
@@ -105,7 +101,6 @@ export const DeviceContent = () => {
           });
           errorToast.current = true; // Set the toast as shown
         }
-        setOpenModal(false);
       } else {
         toast.error(t("toast.error.add-device-error"), {
           position: "bottom-center",
@@ -170,6 +165,7 @@ export const DeviceContent = () => {
       if (selectedDevice != null) {
         await onSocketCloseMonitor("monitor-close", {
           deviceId: selectedDevice?.deviceId,
+          type: "all",
         });
       }
 
@@ -202,7 +198,6 @@ export const DeviceContent = () => {
 
   // Tab Menus
   const onChangeTabMenu = (event, newValue) => {
-    console.log(newValue);
     settabMenuValue(newValue);
   };
 

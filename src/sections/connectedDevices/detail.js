@@ -196,7 +196,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
           },
         }}
       >
-        <DialogTitle sx={{ color: Color.text.red_gray01 }}>
+        <DialogTitle sx={{ display: "flex", alignItems: "center", color: Color.text.primary }}>
           {t("devicesPage.deviceInfo.confirmRemoveTitle")}
         </DialogTitle>
         <DialogContent>

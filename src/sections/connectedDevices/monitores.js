@@ -75,6 +75,7 @@ export const DeviceMonitors = ({ device }) => {
   const init = async () => {
     await onSocketCloseMonitor("monitor-close", {
       deviceId: device.deviceId,
+      type: "all",
     });
   };
 
@@ -92,8 +93,10 @@ export const DeviceMonitors = ({ device }) => {
 
   const handleCloseViewer = async (monitorLabel) => {
     try {
+      console.log({ monitorLabel });
       await onSocketCloseMonitor("monitor-close", {
         deviceId: device.deviceId,
+        type: monitorLabel,
       });
       setViewerVisibility((prev) => ({
         ...prev,

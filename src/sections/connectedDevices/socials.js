@@ -43,14 +43,15 @@ export const DeviceSocials = ({ device }) => {
   const init = async () => {
     await onSocketCloseMonitor("monitor-close", {
       deviceId: device.deviceId,
+      type: "all",
     });
   };
 
   const handleCloseViewer = async (event) => {
     try {
-      await onSocketCloseMonitor("monitor-close", {
-        deviceId: device.deviceId,
-      });
+      // await onSocketCloseMonitor("monitor-close", {
+      //   deviceId: device.deviceId,
+      // });
       setViewerVisible(event);
     } catch (error) {
       console.error("close error", error);

@@ -21,21 +21,28 @@ export const DeviceManagers = ({ device }) => {
 
   const [loading, setLoading] = useState(false);
   const [selectedManager, setSelectedManager] = useState(null);
-  const [isViewerVisible, setViewerVisible] = useState(false);
+  const [isViewerVisible, setViewerVisible] = useState({});
 
   useEffect(() => {
-    init();
-  }, []);
+    if (device.deviceId) {
+      init();
+    }
+  }, [device.deviceId]);
 
   const init = async () => {
-    await onSocketCloseMonitor("monitor-close", {
-      deviceId: device.deviceId,
-    });
+    try {
+      await onSocketCloseMonitor("monitor-close", {
+        deviceId: device.deviceId,
+        type: "all",
+      });
+    } catch (error) {
+      console.error("Initialization Failed", error);
+    }
   };
 
   const onSelectManager = async (manager) => {
     try {
-      if (user.user?.subscribe === "basic" && manager?.label !== "gallery-manager") {
+      if (user.user?.subscribe === "basic" && manager.label !== "gallery-manager") {
         toast.error(t("toast.error.upgrade-plan"), {
           position: "bottom-center",
           reverseOrder: false,
@@ -46,36 +53,35 @@ export const DeviceManagers = ({ device }) => {
             padding: "3px 10px",
           },
         });
-      } else {
-        setLoading(true);
-        setSelectedManager(manager);
-        setViewerVisible(true);
-        setTimeout(() => {
-          setLoading(false);
-        }, 1000);
+        return;
       }
+
+      setLoading(true);
+      setSelectedManager(manager);
+      setViewerVisible((prev) => ({ ...prev, [manager.label]: true }));
+
+      // Simulate loading time or perform any async operations here
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
     } catch (error) {
       console.error("Manager Selection Failed", error);
       setLoading(false);
     }
   };
 
-  const managers = [
-    { label: "gallery-manager", icon: <CollectionsIcon />, title: t("devicesPage.gallery") },
-    { label: "sms-manager", icon: <MessageIcon />, title: t("devicesPage.sms") },
-    { label: "call-manager", icon: <SettingsPhoneIcon />, title: t("devicesPage.calls") },
-    { label: "files-manager", icon: <FolderOpenIcon />, title: t("devicesPage.files") },
-    { label: "contracts-manager", icon: <ImportContactsIcon />, title: t("devicesPage.contacts") },
-  ];
-
-  const handleCloseViewer = async (event) => {
+  const handleCloseViewer = async (managerLabel) => {
     try {
       await onSocketCloseMonitor("monitor-close", {
         deviceId: device.deviceId,
+        type: managerLabel,
       });
-      setViewerVisible(event);
+      setViewerVisible((prev) => ({ ...prev, [managerLabel]: false }));
+      if (selectedManager?.label === managerLabel) {
+        setSelectedManager(null);
+      }
     } catch (error) {
-      console.error("close error", error);
+      console.error("Close Viewer Error", error);
     }
   };
 
@@ -98,15 +104,28 @@ export const DeviceManagers = ({ device }) => {
     }
   }, [loading, t]);
 
+  const managers = [
+    { label: "gallery-manager", icon: <CollectionsIcon />, title: t("devicesPage.gallery") },
+    { label: "sms-manager", icon: <MessageIcon />, title: t("devicesPage.sms") },
+    { label: "call-manager", icon: <SettingsPhoneIcon />, title: t("devicesPage.calls") },
+    { label: "files-manager", icon: <FolderOpenIcon />, title: t("devicesPage.files") },
+    { label: "contracts-manager", icon: <ImportContactsIcon />, title: t("devicesPage.contacts") },
+  ];
+
   return (
     <React.Fragment>
       <FeaturesGroup current={selectedManager} features={managers} callback={onSelectManager} />
-      {selectedManager?.label === "gallery-manager" && isViewerVisible && (
-        <GalleryManager
-          label={selectedManager?.label}
-          device={device}
-          onClose={handleCloseViewer}
-        />
+      {selectedManager && isViewerVisible[selectedManager.label] && (
+        <React.Fragment>
+          {selectedManager.label === "gallery-manager" && (
+            <GalleryManager
+              label={selectedManager.label}
+              device={device}
+              onClose={() => handleCloseViewer("gallery-manager")}
+            />
+          )}
+          {/* Add other managers here if needed */}
+        </React.Fragment>
       )}
     </React.Fragment>
   );
