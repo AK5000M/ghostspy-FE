@@ -282,20 +282,29 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
                 }}
                 onClick={() => handleSkeletonClick(data)}
               >
-                <Typography
-                  variant="body1"
-                  sx={{ color: Color.text.primary, fontSize: "10px", textAlign: "center" }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    height: "100%",
+                  }}
                 >
-                  {data.text}
-                </Typography>
-                {data.type === "edit" && (
                   <Typography
                     variant="body1"
-                    sx={{ color: Color.text.secondary, fontSize: "10px" }}
+                    sx={{ color: Color.text.primary, fontSize: "10px", textAlign: "center" }}
                   >
-                    {data.type}
+                    {data.text}
                   </Typography>
-                )}
+                  {data.type === "edit" && (
+                    <Typography
+                      variant="body1"
+                      sx={{ color: Color.text.secondary, fontSize: "10px" }}
+                    >
+                      {data.type}
+                    </Typography>
+                  )}
+                </Box>
               </Box>
             ))}
           </Box>
