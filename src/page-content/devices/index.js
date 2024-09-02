@@ -235,7 +235,7 @@ export const DeviceContent = () => {
               <Box
                 sx={{
                   width: "100%",
-                  height: { md: "300px", xs: "150px" },
+                  height: { md: "300px", xs: "250px" },
                   backgroundColor: Color.background.main_gray01,
                   border: `solid 1px ${Color.background.border}`,
                   borderRadius: "5px",
@@ -264,13 +264,7 @@ export const DeviceContent = () => {
                   </Typography>
                 </Box>
 
-                <List
-                  sx={{
-                    maxHeight: "230px",
-                    minHeight: "100px",
-                    overflowY: "auto",
-                  }}
-                >
+                <List sx={{ height: "80%", overflowY: "scroll" }}>
                   {deviceListLoading ? (
                     <div
                       style={{
@@ -310,12 +304,11 @@ export const DeviceContent = () => {
                           display: "flex",
                           justifyContent: "space-between",
                           alignItems: "center",
-                          borderRadius: "5px",
-                          color: Color.text.primary,
                           cursor: "pointer",
                           py: "10px",
                           px: "5px",
                           borderRight: "5px",
+                          color: Color.text.primary,
                           border: `solid 1px ${Color.background.border}`,
                           mb: "5px",
                           "&:hover": {
