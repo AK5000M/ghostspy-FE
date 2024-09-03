@@ -187,17 +187,25 @@
     "newDevices": "Novos Dispositivos",
     "systemStatus": "Status do Sistema",
     "introduce": {
-      "greeting": "Bem-vindo ao GHOSTSPY - Sua Nova Jornada de Conexão!",
-      "introduce": "Estamos empolgados em recebê-lo ao GHOSTSPY, onde a conectividade e a praticidade se unem para transformar sua experiência com dispositivos Android. Aqui, você encontrará uma plataforma que simplifica o espelhamento e a gestão dos seus dispositivos, trazendo-os para o seu PC de forma fácil e eficiente.",
+      "greeting": "Olá, sejam bem-vindos ao lançamento do nosso mais novo sistema de monitoramento, o GhostSpy!",
+      "introduce": "Gostaríamos de expressar nossa sincera gratidão pelo seu apoio contínuo e por confiar nos nossos projetos. É graças a vocês que conseguimos alcançar este marco significativo, e estamos entusiasmados em apresentar o GhostSpy, uma ferramenta poderosa e intuitiva para monitoramento de dispositivos.",
       "reason": "Explore todas as possibilidades que o GHOSTSPY oferece:",
       "feature": {
-        "mirroring": "<span style='font-weight: 600; color: #564FEE;'>Espelhamento Simplificado: </span>Com apenas alguns cliques, você pode trazer a tela do seu dispositivo Android para o seu PC, permitindo uma visualização ampliada e uma experiência de uso mais confortável.",
-        "remoteControl": "<span style='font-weight: 600; color: #564FEE;'>Controle Remoto:</span> Assuma o controle total do seu dispositivo Android diretamente do seu PC. Navegue pelos aplicativos, responda mensagens e gerencie seu dispositivo de forma conveniente e intuitiva.",
-        "multiDevice": "<span style='font-weight: 600; color: #564FEE;'>Suporte a Múltiplos Dispositivos: </span>Conecte diversos dispositivos Android ao mesmo tempo e alterne entre eles com facilidade, garantindo uma gestão eficiente e sem complicações.",
-        "friendlyInterface": "<span style='font-weight: 600; color: #564FEE;'>Interface Amigável: </span>Com uma interface intuitiva e fácil de usar, o GHOSTSPY é acessível para usuários de todos os níveis de experiência. Não é necessário nenhum conhecimento técnico - basta começar a explorar!",
-        "secure": "<span style='font-weight: 600; color: #564FEE;'>Seguro e Privado: </span>Sua segurança e privacidade são nossas prioridades. Utilizamos os mais avançados protocolos de criptografia para garantir a proteção dos seus dados durante todas as suas interações."
+        "title": "Confira abaixo a lista das funcionalidades atuais do GhostSpy:",
+        "screen-monitor": "• <span style='font-weight: 600; color: white; '>Monitoramento de Tela: </span>Acompanhe em tempo real o que está sendo exibido na tela do dispositivo.",
+        "screen-skeleton": "• <span style='font-weight: 600; color: white;'>Monitoramento de Esqueleto da Tela: </span> Obtenha uma visão estruturada das atividades na tela.",
+        "camera-monitor": "• <span style='font-weight: 600; color: white;'>Monitoramento de Câmera: </span>Capture e visualize imagens da câmera do dispositivo.",
+        "mic-monitor": "• <span style='font-weight: 600; color: white;'>Monitoramento de Microfone: </span>Escute o que está sendo captado pelo microfone do dispositivo.",
+        "key-log": "• <span style='font-weight: 600; color: white;'>Monitoramento de Teclas (Key Logs): </span>Registre e analise todas as teclas digitadas.",
+        "gallery-manager": "• <span style='font-weight: 600; color: white;'>Gerenciador de Galeria: </span> Acesse e organize todas as imagens e vídeos armazenados no dispositivo.",
+        "real-location": "• <span style='font-weight: 600; color: white;'>Monitoramento de Localização em Tempo Real: </span>Veja a localização exata do dispositivo em tempo real.",
+        "call-history": "• <span style='font-weight: 600; color: white;'>Monitoramento de Histórico de Chamadas: </span>Revise e acompanhe todas as chamadas realizadas e recebidas.",
+        "privacy-mode": "• <span style='font-weight: 600; color: white;'>Modo de Privacidade - Tela Preta: </span> Ative uma tela preta no dispositivo para garantir total privacidade durante o monitoramento."
       },
-      "under": "Deixe o GHOSTSPY ser seu parceiro na jornada de aproveitar ao máximo seus dispositivos Android. Estamos aqui para simplificar sua vida digital e proporcionar uma experiência de uso verdadeiramente integrada. Então, prepare-se para uma nova era de conectividade e descubra tudo o que o GHOSTSPY pode fazer por você!"
+      "feedback": "Estamos ansiosos para ver como a ghostspy ira facilitar suas necessidades de monitoramento e gestão. Seu feedback é essencial para nós, então, por favor, compartilhe suas experiências e sugestões para continuarmos aprimorando o GhostSpy.",
+      "thanks": "Mais uma vez, obrigado por estar conosco nesta jornada.",
+      "under": "Atenciosamente",
+      "supporter": "Go1ano - GhostSpy"
     }
   },
 
