@@ -307,6 +307,12 @@
       "modalExplain": "Por favor, escaneie o código QR para adicionar um novo dispositivo",
       "close": "Fechar"
     },
+    "app-monitor": {
+      "appname": "Nome do Aplicativo",
+      "packagename": "Nome do Pacote",
+      "status": "Status",
+      "installed": "Instalado"
+    },
     "vncModal": {
       "waiting": "Solicitando acesso ao servidor VNC..."
     }

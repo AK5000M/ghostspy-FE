@@ -300,6 +300,12 @@
       "modalExplain": "Please Scan QR Code to Add New Device",
       "close": "Close"
     },
+    "app-monitor": {
+      "appname": "App Name",
+      "packagename": "Package Name",
+      "status": "Status",
+      "installed": "Installed"
+    },
     "vncModal": {
       "waiting": "Requesting VNC server access..."
     }
