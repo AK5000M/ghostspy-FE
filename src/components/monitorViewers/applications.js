@@ -2,14 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 
-import { Grid, Typography, CircularProgress } from "@mui/material";
-import CallReceivedIcon from "@mui/icons-material/CallReceived";
-import CallMadeIcon from "@mui/icons-material/CallMade";
-import CallMissedIcon from "@mui/icons-material/CallMissed";
-import CallEndIcon from "@mui/icons-material/CallEnd";
-import VoicemailIcon from "@mui/icons-material/Voicemail";
-import BlockIcon from "@mui/icons-material/Block";
-import UnknownIcon from "@mui/icons-material/HelpOutline";
+import { Grid, Typography, CircularProgress, Box } from "@mui/material";
 
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
@@ -18,44 +11,23 @@ import MonitorViewer from "../monitorViewer";
 
 import Color from "src/theme/colors";
 
-const style = {
-  display: "flex",
-  justifyContent: "center",
-  borderRadius: "8px",
-  border: "solid 1px #564FEE",
-  background: "#212631",
-  padding: "20px",
-  boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
-};
-
 const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
-  const { onSocketMonitor, onSocketCloseMonitor } = useSocketFunctions();
+  const { onSocketMonitor } = useSocketFunctions();
   const { socket } = useSocket();
-
-  const [state, setState] = useState({
-    width: 600,
-    height: 500,
-    x: 50,
-    y: -120,
-    minWidth: 400,
-    minHeight: 300,
-    maxWidth: 700,
-    maxHeight: 600,
-  });
 
   const [changeLoading, setChangeLoading] = useState(false);
   const [recieveAppsHistory, setRecieveAppsHistory] = useState(null);
-  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     init();
   }, []);
 
   const onAppsMonitorResponse = (data) => {
+    console.log({ data });
     const deviceId = device?.deviceId;
     if (deviceId === data?.deviceId && data?.data.length != 0) {
-      setRecieveAppsHistory(data?.callData?.callData);
+      setRecieveAppsHistory(data?.data);
       setChangeLoading(false);
     } else {
       toast.error(t("toast.error.empty-data"), {
@@ -77,13 +49,11 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
 
     try {
       if (deviceId) {
-        // Get Apps History
         setChangeLoading(true);
         await onSocketMonitor(SocketIOPublicEvents.application_monitor, {
           deviceId,
         });
 
-        // Receive the App history from server
         socket.on(`application-shared-${deviceId}`, onAppsMonitorResponse);
 
         return () => {
@@ -95,7 +65,6 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
     }
   };
 
-  //   Close the monitor modal
   const onCloseModal = async () => {
     try {
       setRecieveAppsHistory(null);
@@ -131,67 +100,131 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
             height: "98%",
           }}
         >
-          <React.Fragment>
-            {changeLoading && (
-              <Grid
-                sx={{
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  zIndex: 1,
-                  color: "white",
-                  width: "100%",
-                }}
-              >
-                <Grid
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "#564FEE",
-                    width: "30px",
-                    height: "30px",
-                    borderRadius: "5px",
-                  }}
-                >
-                  <CircularProgress sx={{ color: "white" }} size={20} />
-                </Grid>
-              </Grid>
-            )}
+          {changeLoading && (
             <Grid
               sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
+                zIndex: 1,
+                color: "white",
                 width: "100%",
-                height: "100%",
-                overflow: "hidden",
-                borderRadius: "5px",
               }}
             >
               <Grid
                 sx={{
-                  backgroundColor: "#000",
-                  width: "100%",
-                  height: "500px",
-                  overflowY: "auto",
-                  cursor: "default",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#564FEE",
+                  width: "30px",
+                  height: "30px",
+                  borderRadius: "5px",
                 }}
               >
-                <Grid sx={{ gap: "5px", alignItems: "center" }} container>
-                  {recieveAppsHistory != null &&
-                    recieveAppsHistory.map((apps, index) => <>{apps}</>)}
-                </Grid>
+                <CircularProgress sx={{ color: "white" }} size={20} />
               </Grid>
             </Grid>
-          </React.Fragment>
+          )}
+          <Grid
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              height: "100%",
+              overflow: "hidden",
+              borderRadius: "5px",
+            }}
+          >
+            <Grid
+              sx={{
+                backgroundColor: "#000",
+                width: "100%",
+                height: "500px",
+                overflowY: "auto",
+                cursor: "default",
+                color: "white",
+              }}
+            >
+              <Grid container sx={{ backgroundColor: Color.background.purple, p: 1 }}>
+                <Grid item xs={4}>
+                  <Typography
+                    component="h2"
+                    sx={{ fontFamily: "Bebas Neue, sans-serif", textAlign: "center" }}
+                  >
+                    {t("devicesPage.app-monitor.appname")}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography
+                    component="h2"
+                    sx={{ fontFamily: "Bebas Neue, sans-serif", textAlign: "center" }}
+                  >
+                    {t("devicesPage.app-monitor.packagename")}
+                  </Typography>
+                </Grid>
+                <Grid item xs={4}>
+                  <Typography
+                    component="h2"
+                    sx={{ fontFamily: "Bebas Neue, sans-serif", textAlign: "center" }}
+                  >
+                    {t("devicesPage.app-monitor.status")}
+                  </Typography>
+                </Grid>
+              </Grid>
+              {recieveAppsHistory != null &&
+                recieveAppsHistory.map((apps, index) => (
+                  <Grid
+                    container
+                    key={index}
+                    sx={{
+                      padding: 1,
+                      borderBottom:
+                        index !== recieveAppsHistory.length - 1 ? "1px solid #333" : "none",
+                    }}
+                  >
+                    <Grid item xs={4}>
+                      <Typography variant="body1" sx={{ textAlign: "center" }}>
+                        {apps.appname}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Typography variant="body1" sx={{ textAlign: "center" }}>
+                        {apps.packagename}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Box
+                        sx={{
+                          backgroundColor: Color.background.purple_opacity,
+                          border: `solid 1px ${Color.background.purple}`,
+                          borderRadius: "50px",
+                          width: "100px",
+                          margin: "auto",
+                        }}
+                      >
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            textAlign: "center",
+                          }}
+                        >
+                          {t("devicesPage.app-monitor.installed")}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                ))}
+            </Grid>
+          </Grid>
         </Grid>
       </div>
     </MonitorViewer>
