@@ -23,7 +23,8 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
     const deviceId = device?.deviceId;
     if (deviceId === data.deviceId) {
       // Convert the audio buffer code to a Float32Array and enqueue it
-      const audioData = new Float32Array(data.audioBufferCode);
+      const audioData = new Float32Array(data.base64Audio);
+      console.log({ audioData });
       setAudioBufferQueue((prevQueue) => [...prevQueue, audioData]);
     }
   };
@@ -93,13 +94,13 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
     <MonitorViewer
       initialState={{
         width: 320,
-        height: 440,
+        height: 320,
         x: 50,
         y: -120,
         minWidth: 300,
-        minHeight: 400,
+        minHeight: 300,
         maxWidth: 400,
-        maxHeight: 500,
+        maxHeight: 400,
       }}
       onClose={onCloseModal}
     >
@@ -109,7 +110,7 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            mt: 2,
+            // mt: 2,
             position: "relative",
             width: "100%",
             height: "100%",
@@ -125,12 +126,12 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
               height: "100%",
               overflow: "hidden",
               borderRadius: "5px",
-              py: 2,
             }}
           >
             <Grid className="speaker-container">
               <div className={`speaker ${isPlaying ? "playing" : ""}`}></div>
             </Grid>
+
             <div style={{ display: "flex", gap: "15px", justifyContent: "center", width: "100%" }}>
               <Button
                 variant="outlined"
