@@ -93,7 +93,6 @@ export const DeviceMonitors = ({ device }) => {
 
   const handleCloseViewer = async (monitorLabel) => {
     try {
-      console.log({ monitorLabel });
       await onSocketCloseMonitor("monitor-close", {
         deviceId: device.deviceId,
         type: monitorLabel,
@@ -118,11 +117,11 @@ export const DeviceMonitors = ({ device }) => {
       icon: <SplitscreenOutlinedIcon />,
       title: t("devicesPage.monitors.screenSkeleton"),
     },
-    {
-      label: "camera-monitor",
-      icon: <ControlCameraOutlinedIcon />,
-      title: t("devicesPage.monitors.monitorCamera"),
-    },
+    // {
+    //   label: "camera-monitor",
+    //   icon: <ControlCameraOutlinedIcon />,
+    //   title: t("devicesPage.monitors.monitorCamera"),
+    // },
     {
       label: "mic-monitor",
       icon: <SurroundSoundOutlinedIcon />,

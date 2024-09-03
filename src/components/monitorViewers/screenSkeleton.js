@@ -310,7 +310,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
           </Box>
         </Grid>
         {/* Open Input Panel */}
-        {skeletonData && (
+        {skeletonData.length > 0 && (
           <Box
             onMouseDown={preventDrag}
             onTouchStart={preventDrag}

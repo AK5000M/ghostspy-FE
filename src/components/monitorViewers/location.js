@@ -7,6 +7,8 @@ import { useSocket } from "../../hooks/use-socket";
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import MonitorViewer from "../monitorViewer";
 
+import Color from "src/theme/colors";
+
 const style = {
   display: "flex",
   justifyContent: "center",
@@ -145,12 +147,11 @@ const LocationMonitorViewer = ({ monitor, device, onClose }) => {
             position: "relative",
             width: "100%",
             height: "100%",
+            backgroundColor: "black",
+            border: `solid 1px ${Color.background.border}`,
+            borderRadius: "5px",
           }}
         >
-          <Typography component="h2" style={{ color: "#564FEE", marginBottom: "16px" }}>
-            {monitor?.title}
-          </Typography>
-
           <React.Fragment>
             {latitude === null && longitude === null && (
               <div
