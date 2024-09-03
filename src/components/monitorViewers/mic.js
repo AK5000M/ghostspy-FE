@@ -94,13 +94,13 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
     <MonitorViewer
       initialState={{
         width: 320,
-        height: 320,
+        height: 360,
         x: 50,
         y: -120,
         minWidth: 300,
-        minHeight: 300,
+        minHeight: 340,
         maxWidth: 400,
-        maxHeight: 400,
+        maxHeight: 460,
       }}
       onClose={onCloseModal}
     >
