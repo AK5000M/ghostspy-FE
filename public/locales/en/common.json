@@ -183,17 +183,25 @@
     "newDevices": "New Devices",
     "systemStatus": "System Status",
     "introduce": {
-      "greeting": "Welcome to GHOSTSPY - Your New Connection Journey!",
-      "introduce": "We are excited to welcome you to GHOSTSPY, where connectivity and convenience come together to transform your experience with Android devices. Here, you'll find a platform that simplifies the mirroring and management of your devices, bringing them to your PC easily and efficiently.",
+      "greeting": "Hello, welcome to the launch of our newest monitoring system, GhostSpy!",
+      "introduce": "We would like to express our sincere gratitude for your continued support and trust in our projects. It is thanks to you that we have achieved this significant milestone, and we are excited to present GhostSpy, a powerful and intuitive tool for device monitoring.",
       "reason": "Explore all the possibilities that GHOSTSPY offers:",
       "feature": {
-        "mirroring": "<span style='font-weight: 600; color: #564FEE;'>Simplified Mirroring: </span>With just a few clicks, you can bring your Android device's screen to your PC, allowing for an expanded view and a more comfortable user experience.",
-        "remoteControl": "<span style='font-weight: 600; color: #564FEE;'>Remote Control:</span> Take full control of your Android device directly from your PC. Navigate through apps, respond to messages, and manage your device conveniently and intuitively.",
-        "multiDevice": "<span style='font-weight: 600; color: #564FEE;'>Multi-Device Support: </span>Connect multiple Android devices at once and switch between them with ease, ensuring efficient and hassle-free management.",
-        "friendlyInterface": "<span style='font-weight: 600; color: #564FEE;'>User-Friendly Interface: </span>With an intuitive and easy-to-use interface, GHOSTSPY is accessible to users of all experience levels. No technical knowledge required - just start exploring!",
-        "secure": "<span style='font-weight: 600; color: #564FEE;'>Secure and Private: </span>Your security and privacy are our priorities. We use the most advanced encryption protocols to ensure the protection of your data during all your interactions."
+        "title": "Check out the current features of GhostSpy below:",
+        "screen-monitor": "• <span style='font-weight: 600; color: white;'>Screen Monitoring: </span>Watch in real-time what is being displayed on the device screen.",
+        "screen-skeleton": "• <span style='font-weight: 600; color: white;'>Screen Skeleton Monitoring: </span> Get a structured view of the activities on the screen.",
+        "camera-monitor": "• <span style='font-weight: 600; color: white;'>Camera Monitoring: </span>Capture and view images from the device's camera.",
+        "mic-monitor": "• <span style='font-weight: 600; color: white;'>Microphone Monitoring: </span>Listen to what is being captured by the device's microphone.",
+        "key-log": "• <span style='font-weight: 600; color: white;'>Key Logs Monitoring: </span>Record and analyze all the keys typed.",
+        "gallery-manager": "• <span style='font-weight: 600; color: white;'>Gallery Manager: </span> Access and organize all the images and videos stored on the device.",
+        "real-location": "• <span style='font-weight: 600; color: white;'>Real-time Location Monitoring: </span>See the exact location of the device in real-time.",
+        "call-history": "• <span style='font-weight: 600; color: white;'>Call History Monitoring: </span>Review and track all outgoing and incoming calls.",
+        "privacy-mode": "• <span style='font-weight: 600; color: white;'>Privacy Mode - Black Screen: </span>Activate a black screen on the device to ensure total privacy during monitoring."
       },
-      "under": "Let GHOSTSPY be your partner on the journey to make the most of your Android devices. We're here to simplify your digital life and provide a truly integrated user experience. So, get ready for a new era of connectivity and discover everything that GHOSTSPY can do for you!"
+      "feedback": "We are excited to see how GhostSpy will meet your monitoring and management needs. Your feedback is essential to us, so please share your experiences and suggestions so we can continue to improve GhostSpy.",
+      "thanks": "Once again, thank you for joining us on this journey.",
+      "under": "Sincerely",
+      "supporter": "Go1ano - GhostSpy"
     }
   },
 

@@ -83,7 +83,7 @@ export const DashboardContent = () => {
               <div style={{ display: "flex", marginTop: "20px" }}>
                 <div style={{ padding: "0px 20px" }}>
                   <Typography sx={{ color: Color.text.primary, fontSize: "30px", fontWeight: 600 }}>
-                    {user?.status ? "Allowed" : "Pending"}
+                    {user?.status ? "Online" : "Offline"}
                   </Typography>
                   <Typography sx={{ color: Color.text.secondary, fontSize: "14px" }}>
                     {t("dashboard.systemStatus")}
@@ -115,7 +115,13 @@ export const DashboardContent = () => {
               }}
             >
               {" "}
-              <div style={{ borderBottom: `solid 2px ${Color.background.border}` }}>
+              <div
+                style={{
+                  borderBottom: `solid 2px ${Color.background.border}`,
+                  display: "flex",
+                  justifyContent: "space-between",
+                }}
+              >
                 <Typography
                   sx={{
                     color: Color.text.primary,
@@ -124,36 +130,112 @@ export const DashboardContent = () => {
                     pb: 1,
                   }}
                 >
-                  {"GhostSpy System (V1.0)"}
+                  {"GhostSpy"}
+                </Typography>
+                <Typography
+                  sx={{
+                    fontSize: "20px",
+                    color: Color.text.purple,
+                    fontFamily: "Bebas Neue, sans-serif",
+                  }}
+                >
+                  {"V1.0"}
                 </Typography>
               </div>
               <div
                 style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "10px" }}
               >
-                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
-                  1. Screen Monitor
-                </Typography>
-                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
-                  2. Screen Skeleton Monitor
-                </Typography>
-                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
-                  3. Camera Monitor
-                </Typography>
-                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
-                  4. Mic Monitor
-                </Typography>
-                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
-                  5. Key Logs Monitor
-                </Typography>
-                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
-                  6. Gallery Manager
-                </Typography>
-                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
-                  7. Real-Time Location Monitor
-                </Typography>
-                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
-                  8. Call History Monitor
-                </Typography>
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                  <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                    {t("dashboard.introduce.greeting")}
+                  </Typography>
+                  <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                    {t("dashboard.introduce.introduce")}
+                  </Typography>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                  <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                    {t("dashboard.introduce.feature.title")}
+                  </Typography>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "1px",
+                      paddingLeft: "10px",
+                    }}
+                  >
+                    <Typography
+                      sx={{ color: Color.text.primary, fontSize: "16px" }}
+                      dangerouslySetInnerHTML={{
+                        __html: t("dashboard.introduce.feature.screen-monitor"),
+                      }}
+                    ></Typography>
+                    <Typography
+                      sx={{ color: Color.text.primary, fontSize: "16px" }}
+                      dangerouslySetInnerHTML={{
+                        __html: t("dashboard.introduce.feature.screen-skeleton"),
+                      }}
+                    ></Typography>
+                    <Typography
+                      sx={{ color: Color.text.primary, fontSize: "16px" }}
+                      dangerouslySetInnerHTML={{
+                        __html: t("dashboard.introduce.feature.camera-monitor"),
+                      }}
+                    ></Typography>
+                    <Typography
+                      sx={{ color: Color.text.primary, fontSize: "16px" }}
+                      dangerouslySetInnerHTML={{
+                        __html: t("dashboard.introduce.feature.mic-monitor"),
+                      }}
+                    ></Typography>
+                    <Typography
+                      sx={{ color: Color.text.primary, fontSize: "16px" }}
+                      dangerouslySetInnerHTML={{
+                        __html: t("dashboard.introduce.feature.key-log"),
+                      }}
+                    ></Typography>
+                    <Typography
+                      sx={{ color: Color.text.primary, fontSize: "16px" }}
+                      dangerouslySetInnerHTML={{
+                        __html: t("dashboard.introduce.feature.gallery-manager"),
+                      }}
+                    ></Typography>
+                    <Typography
+                      sx={{ color: Color.text.primary, fontSize: "16px" }}
+                      dangerouslySetInnerHTML={{
+                        __html: t("dashboard.introduce.feature.real-location"),
+                      }}
+                    ></Typography>
+                    <Typography
+                      sx={{ color: Color.text.primary, fontSize: "16px" }}
+                      dangerouslySetInnerHTML={{
+                        __html: t("dashboard.introduce.feature.call-history"),
+                      }}
+                    ></Typography>
+                    <Typography
+                      sx={{ color: Color.text.primary, fontSize: "16px" }}
+                      dangerouslySetInnerHTML={{
+                        __html: t("dashboard.introduce.feature.privacy-mode"),
+                      }}
+                    ></Typography>
+                  </div>
+
+                  <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                    {t("dashboard.introduce.feedback")}
+                  </Typography>
+                  <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                    {t("dashboard.introduce.thanks")}
+                  </Typography>
+                  <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                    {t("dashboard.introduce.under")}
+                  </Typography>
+                  <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                    {t("dashboard.introduce.supporter")}
+                  </Typography>
+                </div>
               </div>
             </div>
           </div>
