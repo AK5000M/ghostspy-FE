@@ -281,6 +281,9 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
             position: "relative",
             width: "100%",
             height: "100%",
+            backgroundColor: "black",
+            border: `solid 1px ${Color.background.border}`,
+            borderRadius: "5px",
           }}
         >
           {changeLoading && (

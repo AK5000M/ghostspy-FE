@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Rnd } from "react-rnd";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 
@@ -11,8 +10,6 @@ import CallEndIcon from "@mui/icons-material/CallEnd";
 import VoicemailIcon from "@mui/icons-material/Voicemail";
 import BlockIcon from "@mui/icons-material/Block";
 import UnknownIcon from "@mui/icons-material/HelpOutline";
-
-import CloseIcon from "@mui/icons-material/Close";
 
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
@@ -150,7 +147,7 @@ const CallHistoryMonitorViewer = ({ monitor, device, onClose }) => {
       sx={{
         width: "100%",
         p: "10px",
-        borderBottom: "solid 1px rgb(28, 37, 54)",
+        borderBottom: `solid 1px ${Color.background.border}`,
         display: "grid",
         gridTemplateColumns: "30% 10% 20% 30%",
         justifyContent: "space-between",
@@ -188,26 +185,38 @@ const CallHistoryMonitorViewer = ({ monitor, device, onClose }) => {
         gridTemplateColumns: "30% 10% 20% 30%",
         justifyContent: "space-between",
         borderBottom: "solid 1px rgb(28, 37, 54)",
-        backgroundColor: "rgba(29, 191, 26, 0.1)",
+        backgroundColor: Color.background.purple,
       }}
     >
       <Grid>
-        <Typography component="h2" sx={{ color: "#564FEE" }}>
+        <Typography
+          component="h2"
+          sx={{ color: Color.text.primary, fontFamily: "Bebas Neue, sans-serif" }}
+        >
           {t("devicesPage.monitors.call-number")}
         </Typography>
       </Grid>
       <Grid>
-        <Typography component="h2" sx={{ color: "#564FEE" }}>
+        <Typography
+          component="h2"
+          sx={{ color: Color.text.primary, fontFamily: "Bebas Neue, sans-serif" }}
+        >
           {t("devicesPage.monitors.call-type")}
         </Typography>
       </Grid>
       <Grid>
-        <Typography component="h2" sx={{ color: "#564FEE" }}>
+        <Typography
+          component="h2"
+          sx={{ color: Color.text.primary, fontFamily: "Bebas Neue, sans-serif" }}
+        >
           {t("devicesPage.monitors.call-duration")}
         </Typography>
       </Grid>
       <Grid>
-        <Typography component="h2" sx={{ color: "#564FEE" }}>
+        <Typography
+          component="h2"
+          sx={{ color: Color.text.primary, fontFamily: "Bebas Neue, sans-serif" }}
+        >
           {t("devicesPage.monitors.call-date")}
         </Typography>
       </Grid>
@@ -237,13 +246,9 @@ const CallHistoryMonitorViewer = ({ monitor, device, onClose }) => {
             mt: 2,
             position: "relative",
             width: "100%",
-            height: "100%",
+            height: "98%",
           }}
         >
-          <Typography component="h2" sx={{ color: "#564FEE", mb: 2 }}>
-            {monitor?.title}
-          </Typography>
-
           <React.Fragment>
             {changeLoading && (
               <Grid

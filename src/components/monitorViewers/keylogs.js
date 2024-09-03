@@ -108,6 +108,8 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                 justifyContent: "space-between",
                 alignItems: "center",
                 px: 3,
+                backgroundColor: Color.background.purple,
+                py: 1,
               }}
             >
               <Box sx={{ flex: 1 }}>
@@ -149,7 +151,9 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
             </Box>
             <Box
               sx={{
-                backgroundColor: "#000",
+                backgroundColor: "black",
+                border: `solid 1px ${Color.background.border}`,
+                borderRadius: "5px",
                 width: "100%",
                 height: "500px",
                 p: 1,

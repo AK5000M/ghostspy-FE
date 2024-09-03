@@ -264,7 +264,7 @@ export const DeviceContent = () => {
                   </Typography>
                 </Box>
 
-                <List sx={{ height: "80%", overflowY: "scroll" }}>
+                <List sx={{ height: "80%", overflowY: "auto" }}>
                   {deviceListLoading ? (
                     <div
                       style={{

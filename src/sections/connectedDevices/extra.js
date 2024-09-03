@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import dynamic from "next/dynamic";
 
@@ -27,7 +27,10 @@ export const DeviceExtra = ({ device }) => {
   const { onSocketCloseMonitor } = useSocketFunctions();
 
   const [selectedMonitorData, setSelectedMonitorData] = useState(null);
-  const [isViewerVisible, setViewerVisible] = useState(false);
+  const [viewerVisibility, setViewerVisibility] = useState({
+    "location-monitor": false,
+    "call-history-monitor": false,
+  });
 
   const extras = [
     {
@@ -42,25 +45,50 @@ export const DeviceExtra = ({ device }) => {
     },
   ];
 
+  useEffect(() => {
+    if (device.deviceId) {
+      init();
+    }
+  }, [device.deviceId]);
+
+  // When open Extra, close all socket events
+  const init = async () => {
+    try {
+      await onSocketCloseMonitor("monitor-close", {
+        deviceId: device.deviceId,
+        type: "all",
+      });
+    } catch (error) {
+      console.error("Initialization Failed", error);
+    }
+  };
+
   const onSelectedExtra = async (monitor) => {
+    console.log({ monitor });
     try {
       setSelectedMonitorData(monitor);
-      setViewerVisible(true);
+      setViewerVisibility((prev) => ({
+        ...prev,
+        [monitor.label]: true,
+      }));
     } catch (error) {
       console.error("Monitor Selection Failed", error);
       setLoading(false);
     }
   };
 
-  const handleCloseViewer = async (event) => {
+  const handleCloseViewer = async (managerLabel) => {
     try {
       await onSocketCloseMonitor("monitor-close", {
         deviceId: device.deviceId,
-        type: "all",
+        type: managerLabel,
       });
-      setViewerVisible(event);
+      setViewerVisibility((prev) => ({ ...prev, [managerLabel]: false }));
+      if (selectedMonitorData?.label === managerLabel) {
+        setSelectedMonitorData(null);
+      }
     } catch (error) {
-      console.error("close error", error);
+      console.error("Close Viewer Error", error);
     }
   };
 
@@ -69,14 +97,14 @@ export const DeviceExtra = ({ device }) => {
       <LocationMonitorViewer
         monitor={selectedMonitorData}
         device={device}
-        onClose={handleCloseViewer}
+        onClose={() => handleCloseViewer("location-monitor")}
       />
     ),
     "call-history-monitor": (
       <CallHistoryMonitorViewer
         monitor={selectedMonitorData}
         device={device}
-        onClose={handleCloseViewer}
+        onClose={() => handleCloseViewer("call-history-monitor")}
       />
     ),
   };
@@ -85,7 +113,7 @@ export const DeviceExtra = ({ device }) => {
     <React.Fragment>
       <FeaturesGroup current={selectedMonitorData} features={extras} callback={onSelectedExtra} />
 
-      {selectedMonitorData != null && isViewerVisible && monitorViewers[selectedMonitorData.label]}
+      {selectedMonitorData != null && viewerVisibility && monitorViewers[selectedMonitorData.label]}
     </React.Fragment>
   );
 };
