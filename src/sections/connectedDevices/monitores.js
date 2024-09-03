@@ -35,6 +35,12 @@ const MicMonitorViewer = dynamic(() => import("../../components/monitorViewers/m
 const KeyLogsMonitorViewer = dynamic(() => import("../../components/monitorViewers/keylogs"), {
   ssr: false,
 });
+const ApplicationsMonitorViewer = dynamic(
+  () => import("../../components/monitorViewers/applications"),
+  {
+    ssr: false,
+  }
+);
 
 export const DeviceMonitors = ({ device }) => {
   const { t } = useTranslation();
@@ -49,6 +55,7 @@ export const DeviceMonitors = ({ device }) => {
     "camera-monitor": false,
     "mic-monitor": false,
     "key-monitor": false,
+    "application-monitor": false,
   });
 
   useEffect(() => {
@@ -176,6 +183,13 @@ export const DeviceMonitors = ({ device }) => {
           monitor="key-monitor"
           device={device}
           onClose={() => handleCloseViewer("key-monitor")}
+        />
+      )}
+      {viewerVisibility["application-monitor"] && (
+        <ApplicationsMonitorViewer
+          monitor="application-monitor"
+          device={device}
+          onClose={() => handleCloseViewer("application-monitor")}
         />
       )}
     </React.Fragment>
