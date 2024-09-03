@@ -215,6 +215,7 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
                           variant="body1"
                           sx={{
                             textAlign: "center",
+                            fontSize: "14px",
                           }}
                         >
                           {t("devicesPage.app-monitor.installed")}
