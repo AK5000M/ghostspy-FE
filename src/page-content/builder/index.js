@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 
 import { Container, Box, Grid, Typography, Button, CircularProgress } from "@mui/material";
 
+import LinearProgress from "@mui/material/LinearProgress";
+
 import SouthIcon from "@mui/icons-material/South";
 import AppIcon from "./appIcon";
 
@@ -180,13 +182,45 @@ export const BuilderAPKContent = () => {
                       margin: "auto",
                     }}
                   >
-                    <Information onAppNameChange={setAppName} />
-                    <AppIcon onIconChange={setAppIcon} />
+                    {loading ? (
+                      <React.Fragment>
+                        <Box
+                          sx={{
+                            height: "273px",
+                            width: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              color: Color.text.secondary,
+                              fontSize: "14px",
+                              mb: "2px",
+                            }}
+                          >
+                            {t("buildAPKPage.building-apk")}
+                          </Typography>
+                          <Box sx={{ width: "100%" }}>
+                            <LinearProgress />
+                          </Box>
+                        </Box>
+                      </React.Fragment>
+                    ) : (
+                      <React.Fragment>
+                        <Information onAppNameChange={setAppName} />
+                        <AppIcon onIconChange={setAppIcon} />
+                      </React.Fragment>
+                    )}
 
                     <Button
                       variant="contained"
                       sx={{ mt: 3, width: "150px" }}
                       onClick={() => onCreateNewAPK()}
+                      disabled={loading ? true : false}
                     >
                       {loading ? <CircularProgress size={22} /> : t("buildAPKPage.createAPK")}
                     </Button>
@@ -236,7 +270,6 @@ export const BuilderAPKContent = () => {
                     <SouthIcon style={arrowStyles} />
 
                     <Button
-                      disabled
                       variant="contained"
                       sx={{
                         width: "150px",

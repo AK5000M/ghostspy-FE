@@ -321,6 +321,7 @@
   "buildAPKPage": {
     "createAPK": "Criar APK",
     "create-description": "Você pode criar o APK perfeito que deseja e baixá-lo a qualquer momento que quiser.",
+    "building-apk": "Construindo APK...",
     "create-explain": "Escolha um dos aplicativos listados acima para instalar no dispositivo que você deseja monitorar.  Ao lado, você pode pré-visualizar como o aplicativo ficará após a instalação no telefone.",
     "copy-url": "URL copiado",
     "create-apk-option": "Criar Novo APP",

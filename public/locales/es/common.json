@@ -312,6 +312,7 @@
     "devices": "Monitor de Dispositivo",
     "createAPK": "Crear APK",
     "create-description": "Puedes crear el APK perfecto que deseas y descargarlo en cualquier momento que quieras.",
+    "building-apk": "Construcción de APK...",
     "create-explain": "Elige una de las aplicaciones listadas arriba para instalar en el dispositivo que deseas monitorear. Al lado, puedes previsualizar cómo se verá la aplicación después de la instalación en el teléfono.",
     "copy-url": "URL copiada",
     "create-apk-option": "Crear Nueva APP",
