@@ -236,6 +236,7 @@ export const BuilderAPKContent = () => {
                     <SouthIcon style={arrowStyles} />
 
                     <Button
+                      disabled
                       variant="contained"
                       sx={{
                         width: "150px",
