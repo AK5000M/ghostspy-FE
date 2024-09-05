@@ -322,6 +322,7 @@
     "already-created": "Ya has generado el APK y puedes descargarlo aquí.",
     "should-create-apk": "No has creado un nuevo APK, debes crear un APK y luego podrás descargarlo.",
     "open-download-action": "Descargar",
+    "apk-downloading": "APK descargando...",
     "builder": "Constructor de APK",
     "information": "Información",
     "appName": "Nombre de la aplicación",

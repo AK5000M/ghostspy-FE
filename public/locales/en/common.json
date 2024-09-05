@@ -325,6 +325,7 @@
     "already-created": "You have already generated the APK and can download it here.",
     "should-create-apk": "You didn't create new apk, you should create an apk and then can download.",
     "open-download-action": "Download",
+    "apk-downloading": "APK downloading...",
     "builder": "Builder APK",
     "information": "Information",
     "host": "Host / IP",
