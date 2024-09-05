@@ -43,6 +43,6 @@ export const getApkFile = async (data) => {
       return response.data;
     }
   } catch (error) {
-    console.log("get apk action error", error);
+    console.error("get apk action error", error);
   }
 };

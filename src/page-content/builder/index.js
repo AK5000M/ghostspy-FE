@@ -93,16 +93,13 @@ export const BuilderAPKContent = () => {
     try {
       setLoading(true);
       const apkName = user?.user?.apkName;
-      // Make a GET request to fetch the APK file
-      const res = await getApkFile(appName != null ? appName : apkName);
+      const response = await getApkFile(apkName);
 
-      if (res) {
-        // Create a URL for the downloaded file
-        const url = window.URL.createObjectURL(new Blob([res]));
-
+      if (response) {
+        const url = window.URL.createObjectURL(new Blob([response]));
         const link = document.createElement("a");
         link.href = url;
-        link.setAttribute("download", `${appName != null ? appName : apkName}.apk`);
+        link.setAttribute("download", `${apkName}.apk`);
         document.body.appendChild(link);
         link.click();
         link.remove();
@@ -110,7 +107,7 @@ export const BuilderAPKContent = () => {
       }
     } catch (error) {
       setLoading(false);
-      console.log("Download new apk error", error);
+      console.error("Download new apk error", error);
     }
   };
 
