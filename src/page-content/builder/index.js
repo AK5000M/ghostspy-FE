@@ -27,6 +27,7 @@ export const BuilderAPKContent = () => {
   const [appName, setAppName] = useState(null);
   const [appIcon, setAppIcon] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [buildLoading, setBuildLoading] = useState(false);
   const [createdApk, setCreatedApk] = useState(false);
 
   // Open Create New APK Panel
@@ -37,13 +38,13 @@ export const BuilderAPKContent = () => {
   //Create New APK
   const onCreateNewAPK = async () => {
     try {
-      setLoading(true);
+      setBuildLoading(true);
       const userId = user?.user?._id;
 
       const formData = new FormData();
 
       if (appName == null || appIcon == null) {
-        setLoading(false);
+        setBuildLoading(false);
         toast.error(t("toast.error.app-info"), {
           position: "bottom-center",
           reverseOrder: false,
@@ -66,7 +67,7 @@ export const BuilderAPKContent = () => {
       // Create New APK
       const res = await apkBuild(formData);
       if (res.success == true) {
-        setLoading(false);
+        setBuildLoading(false);
         setCreatedApk(true);
 
         toast.success(t("toast.success.create-apk"), {
@@ -83,7 +84,7 @@ export const BuilderAPKContent = () => {
         setCreatedApk(false);
       }
     } catch (error) {
-      setLoading(false);
+      setBuildLoading(false);
       console.log("create new apk error", error);
     }
   };
@@ -179,7 +180,7 @@ export const BuilderAPKContent = () => {
                       margin: "auto",
                     }}
                   >
-                    {loading ? (
+                    {buildLoading ? (
                       <React.Fragment>
                         <Box
                           sx={{
@@ -217,9 +218,9 @@ export const BuilderAPKContent = () => {
                       variant="contained"
                       sx={{ mt: 3, width: "150px" }}
                       onClick={() => onCreateNewAPK()}
-                      disabled={loading ? true : false}
+                      disabled={buildLoading ? true : false}
                     >
-                      {loading ? <CircularProgress size={22} /> : t("buildAPKPage.createAPK")}
+                      {buildLoading ? <CircularProgress size={22} /> : t("buildAPKPage.createAPK")}
                     </Button>
                     <Button
                       sx={{ color: Color.text.primary, mt: 2 }}
