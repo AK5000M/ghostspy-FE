@@ -339,36 +339,24 @@ export const BuilderAPKContent = () => {
                     </div>
 
                     <SouthIcon style={arrowStyles} />
-                    {user?.user?.apk == "created" ? (
-                      <Button
-                        variant="contained"
-                        sx={{
-                          width: "150px",
-                          bgcolor: Color.background.purple,
-                          borderRadius: "5px",
-                          "&:hover": {
-                            bgcolor: Color.background.purple_gray,
-                          },
-                        }}
-                        onClick={() => handleDownloadApk()}
-                      >
-                        {loading ? (
-                          <CircularProgress size={22} />
-                        ) : (
-                          t("buildAPKPage.open-download-action")
-                        )}
-                      </Button>
-                    ) : (
-                      <Button
-                        className="download-button"
-                        variant="outlined"
-                        sx={{ mt: 3, width: "150px" }}
-                        onClick={() => handleDownloadApk()}
-                        disabled
-                      >
-                        {t("buildAPKPage.open-download-action")}
-                      </Button>
-                    )}
+                    <Button
+                      variant={user?.user?.apk === "created" ? "contained" : "outlined"}
+                      sx={{
+                        width: "150px",
+                        bgcolor:
+                          user?.user?.apk === "created" ? Color.background.purple : undefined,
+                        borderRadius: "5px",
+                        mt: user?.user?.apk === "created" ? undefined : 3,
+                        "&:hover":
+                          user?.user?.apk === "created"
+                            ? { bgcolor: Color.background.purple_gray }
+                            : undefined,
+                      }}
+                      onClick={() => handleDownloadApk()}
+                      disabled={user?.user?.apk !== "created"}
+                    >
+                      {t("buildAPKPage.open-download-action")}
+                    </Button>
                   </Box>
                 </Box>
               )}
