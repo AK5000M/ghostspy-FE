@@ -3,6 +3,9 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 
 import { Box, Switch, FormControlLabel, Modal, Typography, TextField, Button } from "@mui/material";
+import ReplyIcon from "@mui/icons-material/Reply";
+import MenuIcon from "@mui/icons-material/Menu";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
@@ -15,7 +18,7 @@ import Color from "src/theme/colors";
 const ScreenToolbar = ({ visible, device, black, lock }) => {
   const { t } = useTranslation();
 
-  const { onScreenSettingEvent } = useSocketFunctions();
+  const { onScreenSettingEvent, onScreenControlEvent } = useSocketFunctions();
   const [blackStatus, setBlackStatus] = useState(black != null ? black : device?.blackScreen);
   const [openMessage, setOpenMessage] = useState(false);
   const [lockStatus, setLockStatus] = useState(lock != null ? lock : device?.lockScreen);
@@ -87,61 +90,109 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
     }
   };
 
+  // Screen Control
+  const onControlScreen = async (event) => {
+    try {
+      await onScreenControlEvent(SocketIOPublicEvents.screen_control_event, {
+        deviceId: device?.deviceId,
+        event: event,
+      });
+    } catch (error) {}
+  };
+
   return (
     <Box
-      className={`toolbar ${visible ? "visible" : "hidden"}`}
       sx={{
         position: "absolute",
-        left: "0px",
-        top: "5px",
-        width: "100%",
-        background: Color.background.secondary,
+        right: { sm: "-170px", xs: "0px" },
+        top: { sm: "0px", xs: "40px" },
+        width: { sm: "140px", xs: "100%" },
+        height: { sm: "100%", xs: "250px" },
         zIndex: 999,
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        p: "10px 20px",
       }}
     >
-      {/* Toolbar content */}
-      <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
-        <li>
-          <FormControlLabel
-            className="back-option"
-            sx={{
-              color: "white",
+      <Box
+        sx={{
+          height: "100%",
+          background: Color.background.secondary,
+          border: `solid 1px ${Color.background.purple}`,
+          py: "20px",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        <Box>
+          {/* Toolbar content */}
+          <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
+            <li>
+              <FormControlLabel
+                className="back-option"
+                sx={{
+                  color: Color.text.primary,
+                }}
+                labelPlacement="start"
+                control={
+                  <Switch
+                    sx={{
+                      "& .MuiSwitch-track": {
+                        backgroundColor: "white",
+                        opacity: 1,
+                      },
 
-              fontSize: "12px",
-              alignItems: "center",
-              justifyContent: "start",
-              display: "flex",
-              flexDirection: "row-reverse",
-            }}
-            labelPlacement="start"
-            control={
-              <Switch color="primary" checked={blackStatus} onChange={onSwitchBlackScreen} />
-            }
-            label={t("devicesPage.monitors.black-setting")}
-          />
-        </li>
+                      "& .MuiSwitch-thumb": {
+                        backgroundColor: Color.background.purple,
+                      },
+                    }}
+                    checked={blackStatus}
+                    onChange={onSwitchBlackScreen}
+                  />
+                }
+                label={t("devicesPage.monitors.black-setting")}
+              />
+            </li>
 
-        <li>
-          <FormControlLabel
-            className="back-option"
-            sx={{
-              color: "white",
-              fontSize: "12px",
-              alignItems: "center",
-              justifyContent: "start",
-              display: "flex",
-              flexDirection: "row-reverse",
-            }}
-            labelPlacement="start"
-            control={<Switch color="primary" checked={lockStatus} onChange={onSwitchLockScreen} />}
-            label={t("devicesPage.monitors.lock-setting")}
-          />
-        </li>
-      </ul>
+            <li>
+              <FormControlLabel
+                className="back-option"
+                sx={{
+                  color: Color.text.primary,
+                }}
+                labelPlacement="start"
+                control={
+                  <Switch color="primary" checked={lockStatus} onChange={onSwitchLockScreen} />
+                }
+                label={t("devicesPage.monitors.lock-setting")}
+              />
+            </li>
+          </ul>
+        </Box>
+
+        {/* Screen Resolution */}
+        <Box>123</Box>
+        {/* Screen Control */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: { sm: "column", xs: "row" },
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "20px",
+          }}
+        >
+          <Box onClick={() => onControlScreen("screen-recent-event")}>
+            <MenuIcon sx={{ color: Color.text.purple, fontSize: "30px", cursor: "pointer" }} />
+          </Box>
+          <Box onClick={() => onControlScreen("screen-home-event")}>
+            <CheckBoxOutlineBlankIcon
+              sx={{ color: Color.text.purple, fontSize: "30px", cursor: "pointer" }}
+            />
+          </Box>
+          <Box onClick={() => onControlScreen("screen-back-event")}>
+            <ReplyIcon sx={{ color: Color.text.purple, fontSize: "30px", cursor: "pointer" }} />
+          </Box>
+        </Box>
+      </Box>
 
       {/* Modal for editing */}
       <Modal open={openMessage}>

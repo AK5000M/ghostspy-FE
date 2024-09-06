@@ -443,18 +443,6 @@ button:hover {
   box-shadow: 1px 1px 10px #000;
 }
 
-.toolbar.visible {
-  height: 100px;
-  opacity: 1;
-  border: solid 1px #564fee;
-}
-
-.toolbar.hidden {
-  height: 0px;
-  opacity: 0;
-  border: none;
-}
-
 .back-option {
   margin-left: 0px !important;
   & > .MuiSwitch-sizeMedium {
