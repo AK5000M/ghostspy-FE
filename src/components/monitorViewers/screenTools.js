@@ -92,15 +92,15 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
       className={`toolbar ${visible ? "visible" : "hidden"}`}
       sx={{
         position: "absolute",
-        left: "10px",
-        top: "30px",
+        left: "0px",
+        top: "5px",
         width: "100%",
         background: Color.background.secondary,
         zIndex: 999,
         display: "flex",
         justifyContent: "space-between",
         alignItems: "flex-start",
-        padding: "10px 20px",
+        p: "10px 20px",
       }}
     >
       {/* Toolbar content */}
@@ -110,6 +110,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
             className="back-option"
             sx={{
               color: "white",
+
               fontSize: "12px",
               alignItems: "center",
               justifyContent: "start",

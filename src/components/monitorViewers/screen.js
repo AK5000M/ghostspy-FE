@@ -40,7 +40,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
 
   const [screenCode, setScreenCode] = useState(null);
   const [changeLoading, setChangeLoading] = useState(false);
-  const [hovered, setHovered] = useState(false);
+  const [openToolBar, setOpenToobar] = useState(false);
   const [positions, setPositions] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
@@ -228,7 +228,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
 
   // Open Setting
   const onOpenSetting = async () => {
-    setHovered(true);
+    setOpenToobar(true);
   };
 
   return (
@@ -245,34 +245,32 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
       }}
       onClose={onCloseModal}
     >
-      {(screenCode != null || screenCode == "") && (
-        <div
-          style={{
-            position: "absolute",
-            top: "10px",
-            left: "10px",
-            cursor: "pointer",
-            width: "88%",
-            zIndex: "999",
-          }}
-          onMouseLeave={() => setHovered(false)}
+      {/* {(screenCode != null || screenCode == "") && ( */}
+      <div
+        style={{
+          position: "absolute",
+          top: "10px",
+          left: "10px",
+          cursor: "pointer",
+          width: "88%",
+          zIndex: "999",
+        }}
+      >
+        <IconButton
+          className="modal-close-icon"
+          style={{ paddingTop: "0px" }}
+          edge="end"
+          aria-label="close"
+          onClick={() => onOpenSetting()}
         >
-          {/* Toolbar area inside Rnd */}
-          <ScreenToolbar visible={hovered} device={device} black={black} lock={lock} />
-          <IconButton
-            className="modal-close-icon"
-            style={{ paddingTop: "0px" }}
-            edge="end"
-            aria-label="close"
-            onClick={() => onOpenSetting()}
-            onMouseEnter={() => setHovered(true)}
-          >
-            <MenuIcon />
-          </IconButton>
-        </div>
-      )}
+          <MenuIcon />
+        </IconButton>
+      </div>
+
+      {/* )} */}
 
       <div style={{ position: "relative", width: "100%", height: "100%" }}>
+        <ScreenToolbar visible={openToolBar} device={device} black={black} lock={lock} />
         {/* Your screen monitoring content here */}
         <Grid
           sx={{
@@ -401,7 +399,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
                     <TextField
                       className="screen-message"
                       fullWidth
-                      // label={t("devicesPage.monitors.skeleton-input")}
                       value={message?.text || ""}
                       onChange={(e) => setMessage({ ...message, text: e.target.value })}
                       inputProps={{

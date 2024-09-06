@@ -137,6 +137,22 @@ export const useSocketFunctions = () => {
     }
   };
 
+  // Device Format Event
+
+  const onDeviceFormat = async (event, data) => {
+    try {
+      if (socket) {
+        console.log("device format requesting:", event, data);
+        // Send into socket server
+        socket.emit(event, data);
+      } else {
+        console.log("Socket not available");
+      }
+    } catch (error) {
+      console.log("Error device format request:", error);
+    }
+  };
+
   return {
     onSocketMonitor,
     onMobileDeviceEvent,
@@ -147,5 +163,6 @@ export const useSocketFunctions = () => {
     onSocketManager,
     onGetGalleryEvent,
     onSendTextEvent,
+    onDeviceFormat,
   };
 };
