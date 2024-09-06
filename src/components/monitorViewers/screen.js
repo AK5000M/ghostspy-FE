@@ -245,32 +245,11 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
       }}
       onClose={onCloseModal}
     >
-      {/* {(screenCode != null || screenCode == "") && ( */}
-      <div
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: "10px",
-          cursor: "pointer",
-          width: "88%",
-          zIndex: "999",
-        }}
-      >
-        <IconButton
-          className="modal-close-icon"
-          style={{ paddingTop: "0px" }}
-          edge="end"
-          aria-label="close"
-          onClick={() => onOpenSetting()}
-        >
-          <MenuIcon />
-        </IconButton>
-      </div>
-
-      {/* )} */}
-
       <div style={{ position: "relative", width: "100%", height: "100%" }}>
-        <ScreenToolbar visible={openToolBar} device={device} black={black} lock={lock} />
+        <Box onMouseDown={preventDrag} onTouchStart={preventDrag} sx={{ cursor: "default" }}>
+          <ScreenToolbar device={device} black={black} lock={lock} />
+        </Box>
+
         {/* Your screen monitoring content here */}
         <Grid
           sx={{
@@ -284,68 +263,36 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
             borderRadius: "5px",
           }}
         >
-          {changeLoading && (
+          <Grid
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              height: "100%",
+              pb: 1,
+              position: "relative",
+            }}
+          >
             <Grid
+              onMouseDown={preventDrag}
+              onTouchStart={preventDrag}
               sx={{
+                height: "100%",
+                width: "100%",
                 position: "absolute",
                 top: 0,
                 left: 0,
-                right: 0,
-                bottom: 0,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                zIndex: 1,
-                color: "white",
-                width: "100%",
+                zIndex: 2,
+                opacity: 0.5,
+                cursor: "default",
               }}
-            >
-              <Grid
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: Color.background.purple,
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "5px",
-                }}
-              >
-                <CircularProgress sx={{ color: "white" }} size={20} />
-              </Grid>
-            </Grid>
-          )}
-          {screenCode != null && !changeLoading && (
-            <Grid
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "100%",
-                height: "100%",
-                pb: 1,
-                position: "relative",
-              }}
-            >
-              <Grid
-                onMouseDown={preventDrag}
-                onTouchStart={preventDrag}
-                sx={{
-                  height: "100%",
-                  width: "100%",
-                  position: "absolute",
-                  top: 0,
-                  left: 0,
-                  zIndex: 2,
-                  opacity: 0.5,
-                  cursor: "default",
-                }}
-                // onClick={onPositionEvent}
-                {...bind()}
-              ></Grid>
+              // onClick={onPositionEvent}
+              {...bind()}
+            ></Grid>
 
-              {screenCode ? (
+            {screenCode ? (
+              <>
                 <CardMedia
                   className="screen-body"
                   component="img"
@@ -363,21 +310,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
                   onLoad={onImageLoad}
                   ref={imageRef}
                 />
-              ) : (
-                <CardMedia
-                  className="screen-body"
-                  component="img"
-                  src={"/assets/logos/spy/ghostspy-logo-_2_.webp"}
-                  sx={{
-                    cursor: "default",
-                    width: "auto",
-                    height: "auto",
-                    borderRadius: "0px",
-                  }}
-                />
-              )}
-
-              {screenCode && (
                 <Box
                   onMouseDown={preventDrag}
                   onTouchStart={preventDrag}
@@ -415,15 +347,27 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
                         position: "absolute",
                         right: "1%",
                         color: Color.text.primary,
-                        cursor: "pointer",
+                        cursor: "default",
                         fontSize: "30px",
                       }}
                     />
                   </Box>
                 </Box>
-              )}
-            </Grid>
-          )}
+              </>
+            ) : (
+              <CardMedia
+                className="screen-body"
+                component="img"
+                src={"/assets/logos/spy/ghostspy-logo-_2_.webp"}
+                sx={{
+                  cursor: "default",
+                  width: "auto",
+                  height: "auto",
+                  borderRadius: "0px",
+                }}
+              />
+            )}
+          </Grid>
         </Grid>
       </div>
     </MonitorViewer>

@@ -138,7 +138,6 @@ export const useSocketFunctions = () => {
   };
 
   // Device Format Event
-
   const onDeviceFormat = async (event, data) => {
     try {
       if (socket) {
@@ -153,6 +152,21 @@ export const useSocketFunctions = () => {
     }
   };
 
+  // Screen Main Control
+  const onScreenControlEvent = async (event, data) => {
+    try {
+      if (socket) {
+        console.log("screen control requesting:", event, data);
+        // Send into socket server
+        socket.emit(event, data);
+      } else {
+        console.log("Socket not available");
+      }
+    } catch (error) {
+      console.log("Error screen control request:", error);
+    }
+  };
+
   return {
     onSocketMonitor,
     onMobileDeviceEvent,
@@ -164,5 +178,6 @@ export const useSocketFunctions = () => {
     onGetGalleryEvent,
     onSendTextEvent,
     onDeviceFormat,
+    onScreenControlEvent,
   };
 };
