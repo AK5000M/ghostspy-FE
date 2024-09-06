@@ -20,6 +20,9 @@ import MobileFriendlyIcon from "@mui/icons-material/MobileFriendly";
 import BatteryChargingFullIcon from "@mui/icons-material/BatteryChargingFull";
 import WifiTetheringIcon from "@mui/icons-material/WifiTethering";
 
+import { useSocketFunctions } from "../../utils/socket";
+import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
+
 import { useSocket } from "../../hooks/use-socket";
 import { removeDevice } from "../../store/actions/device.action";
 
@@ -28,6 +31,8 @@ import Color from "src/theme/colors";
 export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
   const { t } = useTranslation();
   const { socket } = useSocket();
+
+  const { onDeviceFormat } = useSocketFunctions();
 
   const [batteryStatus, setBatteryStatus] = useState(selectedDevice?.batteryStatus);
   const [netStatus, setNetStatus] = useState(selectedDevice?.connectStatus);
@@ -81,6 +86,16 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
       }
     } catch (error) {
       console.log("Remove Device Error", error);
+    }
+  };
+
+  const handleFormatDevice = async (device) => {
+    console.log({ device });
+    const deviceId = device?.deviceId;
+    try {
+      await onDeviceFormat(SocketIOPublicEvents.device_format_event, { deviceId });
+    } catch (error) {
+      console.log("format device error", error);
     }
   };
 
@@ -166,14 +181,20 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
       ))}
 
       {selectedDevice && (
-        <Grid sx={{ mt: 1, borderTop: `solid 2px ${Color.background.border}`, pt: 2 }}>
+        <Box
+          sx={{
+            borderTop: `solid 2px ${Color.background.border}`,
+            pt: 2,
+            display: "flex",
+            gap: "15px",
+          }}
+        >
           <Button
             onClick={handleRemoveClick}
             sx={{
               width: "100%",
               border: `solid 1px ${Color.background.red_gray01}`,
               color: Color.text.red_gray01,
-              borderRadius: "5px",
               "&:hover": {
                 color: Color.text.primary,
                 backgroundColor: Color.background.red_gray01,
@@ -182,7 +203,20 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
           >
             {t("devicesPage.deviceInfo.removeDevice")}
           </Button>
-        </Grid>
+          <Button
+            variant="outlined"
+            onClick={() => handleFormatDevice(selectedDevice)}
+            sx={{
+              width: "100%",
+              "&:hover": {
+                color: Color.text.primary,
+                backgroundColor: Color.background.purple,
+              },
+            }}
+          >
+            {t("devicesPage.deviceInfo.formatDevice")}
+          </Button>
+        </Box>
       )}
 
       <Dialog
