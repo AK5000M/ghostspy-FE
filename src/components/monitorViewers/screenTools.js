@@ -2,7 +2,21 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 
-import { Box, Switch, FormControlLabel, Modal, Typography, TextField, Button } from "@mui/material";
+import {
+  Box,
+  Switch,
+  FormControlLabel,
+  Modal,
+  Typography,
+  TextField,
+  Button,
+  IconButton,
+  FormControl,
+  Select,
+  MenuItem,
+  InputLabel,
+} from "@mui/material";
+
 import ReplyIcon from "@mui/icons-material/Reply";
 import MenuIcon from "@mui/icons-material/Menu";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -18,11 +32,13 @@ import Color from "src/theme/colors";
 const ScreenToolbar = ({ visible, device, black, lock }) => {
   const { t } = useTranslation();
 
-  const { onScreenSettingEvent, onScreenControlEvent } = useSocketFunctions();
+  const { onScreenSettingEvent, onScreenControlEvent, onSocketMonitor } = useSocketFunctions();
   const [blackStatus, setBlackStatus] = useState(black != null ? black : device?.blackScreen);
   const [openMessage, setOpenMessage] = useState(false);
   const [lockStatus, setLockStatus] = useState(lock != null ? lock : device?.lockScreen);
   const [privacyText, setPrivacyText] = useState("");
+  const [selectedFps, setSelectedFps] = useState(null);
+  const [selectQuality, setSelectQuality] = useState(null);
 
   // Black Screen Option
   const onSwitchBlackScreen = async (event) => {
@@ -62,28 +78,14 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
   // Handle the Privacy Screen OK button click
   const onPrivacyScreen = async () => {
     try {
-      if (privacyText != "") {
-        await onScreenSettingEvent(SocketIOPublicEvents.screen_setting_event, {
-          type: "blackScreen",
-          deviceId: device?.deviceId,
-          message: privacyText,
-          status: true,
-        });
-        setBlackStatus(true);
-        setOpenMessage(false);
-      } else {
-        setBlackStatus(false);
-        toast.error(t("toast.error.send-text"), {
-          position: "bottom-center",
-          reverseOrder: false,
-          duration: 5000,
-          style: {
-            backgroundColor: Color.background.red_gray01,
-            borderRadius: "5px",
-            padding: "3px 10px",
-          },
-        });
-      }
+      await onScreenSettingEvent(SocketIOPublicEvents.screen_setting_event, {
+        type: "blackScreen",
+        deviceId: device?.deviceId,
+        message: privacyText,
+        status: true,
+      });
+      setBlackStatus(true);
+      setOpenMessage(false);
     } catch (error) {
       setBlackStatus(false);
       console.log("send text error", error);
@@ -98,6 +100,40 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
         event: event,
       });
     } catch (error) {}
+  };
+
+  // Close
+  const onClosePrivacyText = async () => {
+    setOpenMessage(false);
+    setBlackStatus(false);
+  };
+
+  const onSelectFPS = async (event) => {
+    setSelectedFps(event.target.value);
+    try {
+      const deviceId = device?.deviceId;
+      const fpsValue = event.target.value;
+      await onSocketMonitor(SocketIOPublicEvents.screen_fps_event, {
+        deviceId,
+        fps: fpsValue,
+      });
+    } catch (error) {
+      console.log("select fps error", error);
+    }
+  };
+
+  const onSelectQuality = async (event) => {
+    setSelectQuality(event.target.value);
+    try {
+      const deviceId = device?.deviceId;
+      const qualityValue = event.target.value;
+      await onSocketMonitor(SocketIOPublicEvents.screen_quality_event, {
+        deviceId,
+        quality: qualityValue,
+      });
+    } catch (error) {
+      console.log("select quality error", error);
+    }
   };
 
   return (
@@ -117,60 +153,144 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
           background: Color.background.secondary,
           border: `solid 1px ${Color.background.purple}`,
           py: "20px",
+          px: "5px",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
         }}
       >
-        <Box>
-          {/* Toolbar content */}
-          <ul style={{ listStyle: "none", margin: 0, padding: 0 }}>
-            <li>
-              <FormControlLabel
-                className="back-option"
-                sx={{
-                  color: Color.text.primary,
-                }}
-                labelPlacement="start"
-                control={
-                  <Switch
-                    sx={{
-                      "& .MuiSwitch-track": {
-                        backgroundColor: "white",
-                        opacity: 1,
-                      },
+        {/* Black and Lock */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "flex-start",
+            gap: "20px",
+          }}
+        >
+          <Box>
+            <FormControlLabel
+              className="back-option"
+              sx={{
+                color: Color.text.primary,
+              }}
+              labelPlacement="start"
+              control={
+                <Switch
+                  sx={{
+                    "& .MuiSwitch-track": {
+                      backgroundColor: "white",
+                      opacity: 1,
+                    },
 
-                      "& .MuiSwitch-thumb": {
-                        backgroundColor: Color.background.purple,
-                      },
-                    }}
-                    checked={blackStatus}
-                    onChange={onSwitchBlackScreen}
-                  />
-                }
-                label={t("devicesPage.monitors.black-setting")}
-              />
-            </li>
+                    "& .MuiSwitch-thumb": {
+                      backgroundColor: Color.background.purple,
+                    },
+                  }}
+                  checked={blackStatus}
+                  onChange={onSwitchBlackScreen}
+                />
+              }
+              label={
+                <Typography sx={{ fontSize: "14px" }}>
+                  {t("devicesPage.monitors.black-setting")}
+                </Typography>
+              }
+            />
 
-            <li>
-              <FormControlLabel
-                className="back-option"
-                sx={{
-                  color: Color.text.primary,
-                }}
-                labelPlacement="start"
-                control={
-                  <Switch color="primary" checked={lockStatus} onChange={onSwitchLockScreen} />
-                }
-                label={t("devicesPage.monitors.lock-setting")}
-              />
-            </li>
-          </ul>
+            <FormControlLabel
+              className="back-option"
+              sx={{
+                color: Color.text.primary,
+              }}
+              labelPlacement="start"
+              control={
+                <Switch
+                  sx={{
+                    "& .MuiSwitch-track": {
+                      backgroundColor: "white",
+                      opacity: 1,
+                    },
+
+                    "& .MuiSwitch-thumb": {
+                      backgroundColor: Color.background.purple,
+                    },
+                  }}
+                  checked={lockStatus}
+                  onChange={onSwitchLockScreen}
+                />
+              }
+              label={
+                <Typography sx={{ fontSize: "14px" }}>
+                  {t("devicesPage.monitors.lock-setting")}
+                </Typography>
+              }
+            />
+          </Box>
+          {/* Resolution and FPS */}
+          <Box sx={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+            <Box>
+              <Typography
+                sx={{ fontSize: "14px", color: Color.text.primary, textAlign: "center", mb: 1 }}
+              >
+                FPS
+              </Typography>
+              <Box sx={{ minWidth: 127 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="fps-select-label">Fps</InputLabel>
+                  <Select
+                    className="feedback-selection"
+                    labelId="fps-select-label"
+                    id="fps-select"
+                    value={selectedFps}
+                    label="Fps"
+                    onChange={onSelectFPS}
+                  >
+                    <MenuItem value={5}>5</MenuItem>
+                    <MenuItem value={10}>10</MenuItem>
+                    <MenuItem value={20}>20</MenuItem>
+                    <MenuItem value={40}>40</MenuItem>
+                    <MenuItem value={60}>60</MenuItem>
+                    <MenuItem value={100}>100</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </Box>
+            <Box>
+              <Typography
+                sx={{ fontSize: "14px", color: Color.text.primary, textAlign: "center", mb: 1 }}
+              >
+                Quality
+              </Typography>
+              <Box sx={{ minWidth: 127 }}>
+                <FormControl fullWidth>
+                  <InputLabel id="quality-select-label">Quality</InputLabel>
+                  <Select
+                    className="feedback-selection"
+                    labelId="quality-select-label"
+                    id="quality-select"
+                    value={selectQuality}
+                    label="Quality"
+                    onChange={onSelectQuality}
+                  >
+                    <MenuItem value={20}>20</MenuItem>
+                    <MenuItem value={30}>30</MenuItem>
+                    <MenuItem value={40}>40</MenuItem>
+                    <MenuItem value={50}>50</MenuItem>
+                    <MenuItem value={60}>60</MenuItem>
+                    <MenuItem value={70}>70</MenuItem>
+                    <MenuItem value={80}>80</MenuItem>
+                    <MenuItem value={90}>90</MenuItem>
+                    <MenuItem value={100}>100</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </Box>
+          </Box>
         </Box>
 
-        {/* Screen Resolution */}
-        <Box>123</Box>
-        {/* Screen Control */}
+        {/* Recent, Home, Back Control */}
         <Box
           sx={{
             display: "flex",
@@ -217,7 +337,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
               {t("devicesPage.monitors.privacy-screen-title")}
             </Typography>
             <CloseOutlinedIcon
-              onClick={() => setOpenMessage(false)}
+              onClick={() => onClosePrivacyText()}
               sx={{
                 color: Color.text.primary,
                 cursor: "pointer",

@@ -44,6 +44,8 @@ export const SocketIOPublicEvents = {
   screen_send_text_event: "screen-send-text",
 
   screen_control_event: "screen-control-event",
+  screen_fps_event: "screen-fps-event",
+  screen_quality_event: "screen-quality-event",
 
   // Device Format
   device_format_event: "device-format-event",
