@@ -95,8 +95,7 @@ input {
 
 button {
   font-size: 16px !important;
-  padding: 5px 22px;
-  border-radius: 50px !important;
+  border-radius: 5px !important;
   border-width: 2px !important;
   font-weight: 600 !important;
 }
@@ -470,6 +469,7 @@ button:disabled {
 }
 
 .monitor-toogle-menu {
+  border-radius: 50px !important;
   color: #e6ecf0 !important;
 }
 .monitor-toogle-menu:hover {

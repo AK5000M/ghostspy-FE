@@ -39,12 +39,9 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   });
 
   const [screenCode, setScreenCode] = useState(null);
-  const [changeLoading, setChangeLoading] = useState(false);
-  const [openToolBar, setOpenToobar] = useState(false);
   const [positions, setPositions] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
-  const [messageOpen, setmessageOpen] = useState(false);
   const [message, setMessage] = useState(null);
 
   const black = localStorage.getItem("black");
@@ -57,15 +54,12 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
     const monitorDevice = async () => {
       try {
         if (deviceId) {
-          setChangeLoading(true);
           await onSocketMonitor(monitor, { deviceId });
 
           const handleMonitorResponse = (data) => {
             if (isMounted && monitor === data.type) {
               const base64Image = data.response?.base64Image;
               setScreenCode(base64Image);
-              setChangeLoading(false);
-              setmessageOpen(true);
             }
           };
 
@@ -86,7 +80,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
 
   // send screen text
   const onSendInputText = async () => {
-    setmessageOpen(false);
     try {
       const deviceId = device?.deviceId;
 
@@ -225,11 +218,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
     }
     return memo;
   });
-
-  // Open Setting
-  const onOpenSetting = async () => {
-    setOpenToobar(true);
-  };
 
   return (
     <MonitorViewer
