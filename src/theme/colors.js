@@ -56,6 +56,7 @@ export const text = {
   purple_gray: "#4841db",
   red_gray01: "#ee0979",
   red_gray02: "#e82052",
+  yellow_gray01: "#f7971e",
 };
 
 export const indigo = withAlphas(theme);

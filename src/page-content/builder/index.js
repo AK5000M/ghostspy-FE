@@ -346,24 +346,26 @@ export const BuilderAPKContent = () => {
                         {t("buildAPKPage.apk-downloading")}
                       </Typography>
                     ) : (
-                      <Button
-                        variant={user?.user?.apk === "created" ? "contained" : "outlined"}
-                        sx={{
-                          width: "150px",
-                          bgcolor:
-                            user?.user?.apk === "created" ? Color.background.purple : undefined,
-                          borderRadius: "5px",
-                          mt: user?.user?.apk === "created" ? undefined : 3,
-                          "&:hover":
-                            user?.user?.apk === "created"
-                              ? { bgcolor: Color.background.purple_gray }
-                              : undefined,
-                        }}
-                        onClick={() => handleDownloadApk()}
-                        disabled={user?.user?.apk !== "created"}
-                      >
-                        {t("buildAPKPage.open-download-action")}
-                      </Button>
+                      <React.Fragment>
+                        <Button
+                          variant={user?.user?.apk === "created" ? "contained" : "outlined"}
+                          sx={{
+                            width: "150px",
+                            bgcolor:
+                              user?.user?.apk === "created" ? Color.background.purple : undefined,
+                            borderRadius: "5px",
+                            mt: user?.user?.apk === "created" ? undefined : 3,
+                            "&:hover":
+                              user?.user?.apk === "created"
+                                ? { bgcolor: Color.background.purple_gray }
+                                : undefined,
+                          }}
+                          onClick={() => handleDownloadApk()}
+                          disabled={user?.user?.apk !== "created"}
+                        >
+                          {t("buildAPKPage.open-download-action")}
+                        </Button>
+                      </React.Fragment>
                     )}
                   </Box>
                 </Box>
