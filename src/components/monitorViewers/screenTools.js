@@ -234,13 +234,15 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
               <Typography
                 sx={{ fontSize: "14px", color: Color.text.primary, textAlign: "center", mb: 1 }}
               >
-                FPS
+                {t("devicesPage.monitors.fps")}
               </Typography>
               <Box sx={{ minWidth: 127 }}>
                 <FormControl fullWidth>
-                  <InputLabel id="fps-select-label">Fps</InputLabel>
+                  <InputLabel id="fps-select-label" sx={{ color: Color.text.secondary }}>
+                    Fps
+                  </InputLabel>
                   <Select
-                    className="feedback-selection"
+                    className="screen-selection"
                     labelId="fps-select-label"
                     id="fps-select"
                     value={selectedFps}
@@ -261,13 +263,15 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
               <Typography
                 sx={{ fontSize: "14px", color: Color.text.primary, textAlign: "center", mb: 1 }}
               >
-                Quality
+                {t("devicesPage.monitors.quality")}
               </Typography>
               <Box sx={{ minWidth: 127 }}>
                 <FormControl fullWidth>
-                  <InputLabel id="quality-select-label">Quality</InputLabel>
+                  <InputLabel id="quality-select-label" sx={{ color: Color.text.secondary }}>
+                    {t("devicesPage.monitors.quality")}
+                  </InputLabel>
                   <Select
-                    className="feedback-selection"
+                    className="screen-selection"
                     labelId="quality-select-label"
                     id="quality-select"
                     value={selectQuality}

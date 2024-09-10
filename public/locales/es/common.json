@@ -251,6 +251,8 @@
       "setting": "Configuración",
       "black-setting": "Negra",
       "lock-setting": "Bloqueo",
+      "fps": "FPS",
+      "quality": "Calidad",
       "privacy-screen-title": "Mensaje de bloqueo (opcional)",
       "privacy-screen": "Privacidad Pantalla",
       "mic-play": "Reproducir",

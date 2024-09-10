@@ -27,17 +27,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const { socket } = useSocket();
   const imageRef = useRef(null);
 
-  const [state, setState] = useState({
-    width: 360,
-    height: 720,
-    x: 100,
-    y: -120,
-    minWidth: 180,
-    minHeight: 360,
-    maxWidth: 360,
-    maxHeight: 720,
-  });
-
   const [screenCode, setScreenCode] = useState(null);
   const [positions, setPositions] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
@@ -229,7 +218,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
         minWidth: 180,
         minHeight: 360,
         maxWidth: 360,
-        maxHeight: 720,
+        // maxHeight: 720,
       }}
       onClose={onCloseModal}
     >
