@@ -169,7 +169,14 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
             gap: "20px",
           }}
         >
-          <Box>
+          <Box
+            sx={{
+              width: "100%",
+              display: { sm: "block", xs: "flex" },
+              justifyContent: "center",
+              gap: "100px",
+            }}
+          >
             <FormControlLabel
               className="back-option"
               sx={{
@@ -229,7 +236,15 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
             />
           </Box>
           {/* Resolution and FPS */}
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexDirection: { sm: "column", xs: "row" },
+              justifyContent: "center",
+              gap: "30px",
+            }}
+          >
             <Box>
               <Typography
                 sx={{ fontSize: "14px", color: Color.text.primary, textAlign: "center", mb: 1 }}
@@ -297,6 +312,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
         {/* Recent, Home, Back Control */}
         <Box
           sx={{
+            width: "100%",
             display: "flex",
             flexDirection: { sm: "column", xs: "row" },
             justifyContent: "center",

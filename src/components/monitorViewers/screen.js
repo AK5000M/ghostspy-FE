@@ -32,6 +32,8 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
   const [message, setMessage] = useState(null);
+  const [loadImageWidth, setLoadImageWidth] = useState("");
+  const [loadImageHeight, setLoadImageHeight] = useState("");
 
   const black = localStorage.getItem("black");
   const lock = localStorage.getItem("lock");
@@ -107,33 +109,37 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   };
 
   // Handle image load to get intrinsic and rendered size
-  const onImageLoad = (e) => {
-    const img = e.target;
-    const intrinsicWidth = img.naturalWidth;
-    const intrinsicHeight = img.naturalHeight;
-    const initialWidth = Math.round(intrinsicWidth); // Scale down if necessary
-    const initialHeight = Math.round(intrinsicHeight); // Scale down if necessary
-    const minWidth = Math.round(intrinsicWidth * 0.5);
-    const minHeight = Math.round(intrinsicHeight * 0.5);
-    const maxWidth = intrinsicWidth;
-    const maxHeight = intrinsicHeight;
-
-    setState((prevState) => ({
-      ...prevState,
-      width: initialWidth,
-      height: initialHeight,
-      minWidth,
-      minHeight,
-      maxWidth,
-      maxHeight,
-    }));
-  };
+  // const onImageLoad = (e) => {
+  //   const img = e.target;
+  //   const intrinsicWidth = img.naturalWidth;
+  //   const intrinsicHeight = img.naturalHeight;
+  //   const initialWidth = Math.round(intrinsicWidth); // Scale down if necessary
+  //   const initialHeight = Math.round(intrinsicHeight); // Scale down if necessary
+  //   const minWidth = Math.round(intrinsicWidth * 0.5);
+  //   const minHeight = Math.round(intrinsicHeight * 0.5);
+  //   const maxWidth = intrinsicWidth;
+  //   const maxHeight = intrinsicHeight;
+  //   setLoadImageWidth(intrinsicWidth);
+  //   setLoadImageHeight(intrinsicHeight);
+  //   console.log(intrinsicWidth, initialHeight);
+  //   // setState((prevState) => ({
+  //   //   ...prevState,
+  //   //   width: initialWidth,
+  //   //   height: initialHeight,
+  //   //   minWidth,
+  //   //   minHeight,
+  //   //   maxWidth,
+  //   //   maxHeight,
+  //   // }));
+  // };
 
   const calculatePosition = async (clientX, clientY) => {
     try {
       const img = imageRef.current;
+
       if (img) {
         const rect = img.getBoundingClientRect();
+
         const x = clientX - rect.left;
         const y = clientY - rect.top;
 
@@ -189,6 +195,8 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
       if (positions.length === 0) {
         const { xPosition, yPosition } =
           (await calculatePosition(event.clientX, event.clientY)) || {};
+
+        console.log(xPosition, yPosition);
         if (xPosition >= 0 && yPosition >= 0) {
           await onScreenClickEvent(SocketIOPublicEvents.screen_click_event, {
             deviceId,
@@ -211,14 +219,14 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   return (
     <MonitorViewer
       initialState={{
-        width: 360,
+        width: 380,
         height: 720,
         x: 100,
         y: -120,
-        minWidth: 180,
-        minHeight: 360,
-        maxWidth: 360,
-        // maxHeight: 720,
+        minWidth: 270,
+        minHeight: 540,
+        maxWidth: 380,
+        maxHeight: 720,
       }}
       onClose={onCloseModal}
     >
@@ -232,7 +240,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            position: "relative",
             width: "100%",
             height: "100%",
             backgroundColor: "black",
@@ -248,15 +255,14 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
               width: "100%",
               height: "100%",
               pb: 1,
-              position: "relative",
             }}
           >
             <Grid
               onMouseDown={preventDrag}
               onTouchStart={preventDrag}
               sx={{
-                height: "100%",
                 width: "100%",
+                height: "100%",
                 position: "absolute",
                 top: 0,
                 left: 0,
@@ -264,7 +270,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
                 opacity: 0.5,
                 cursor: "default",
               }}
-              // onClick={onPositionEvent}
               {...bind()}
             ></Grid>
 
@@ -275,7 +280,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
                   component="img"
                   src={`data:image/png;base64, ${screenCode}`}
                   sx={{
-                    cursor: "default",
                     width: "100%",
                     height: "100%",
                     borderRadius: "0px",
@@ -284,52 +288,9 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
                     left: 0,
                     zIndex: 1,
                   }}
-                  onLoad={onImageLoad}
+                  // onLoad={onImageLoad}
                   ref={imageRef}
                 />
-                <Box
-                  onMouseDown={preventDrag}
-                  onTouchStart={preventDrag}
-                  sx={{
-                    position: "absolute",
-                    bottom: { md: "-50px", xs: "0px" },
-                    width: "100%",
-                    zIndex: 99999,
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      position: "relative",
-                    }}
-                  >
-                    <TextField
-                      className="screen-message"
-                      fullWidth
-                      value={message?.text || ""}
-                      onChange={(e) => setMessage({ ...message, text: e.target.value })}
-                      inputProps={{
-                        style: {
-                          backgroundColor: Color.background.main,
-                          padding: "10px 50px 10px 10px",
-                        },
-                      }}
-                    />
-                    <SendOutlinedIcon
-                      onClick={() => onSendInputText()}
-                      sx={{
-                        backgroundColor: Color.background.main,
-                        position: "absolute",
-                        right: "1%",
-                        color: Color.text.primary,
-                        cursor: "default",
-                        fontSize: "30px",
-                      }}
-                    />
-                  </Box>
-                </Box>
               </>
             ) : (
               <CardMedia
@@ -345,6 +306,51 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
               />
             )}
           </Grid>
+          {screenCode && (
+            <Box
+              onMouseDown={preventDrag}
+              onTouchStart={preventDrag}
+              sx={{
+                position: "absolute",
+                bottom: { md: "-50px", xs: "-50px" },
+                width: "100%",
+                zIndex: 99999,
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  // position: "relative",
+                }}
+              >
+                <TextField
+                  className="screen-message"
+                  fullWidth
+                  value={message?.text || ""}
+                  onChange={(e) => setMessage({ ...message, text: e.target.value })}
+                  inputProps={{
+                    style: {
+                      backgroundColor: Color.background.main,
+                      padding: "10px 50px 10px 10px",
+                    },
+                  }}
+                />
+                <SendOutlinedIcon
+                  onClick={() => onSendInputText()}
+                  sx={{
+                    backgroundColor: Color.background.main,
+                    position: "absolute",
+                    right: "1%",
+                    color: Color.text.primary,
+                    cursor: "default",
+                    fontSize: "30px",
+                  }}
+                />
+              </Box>
+            </Box>
+          )}
         </Grid>
       </div>
     </MonitorViewer>
