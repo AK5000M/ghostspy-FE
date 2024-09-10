@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Grid, CircularProgress, Box, TextField, Typography } from "@mui/material";
+import { Grid, CircularProgress, Box, TextField, Typography, CardMedia } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-use-gesture";
 
@@ -196,49 +196,20 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
       }}
       onClose={onCloseModal}
     >
-      <div style={{ position: "relative", width: "100%", height: "100%" }} ref={screenRef}>
+      <div
+        style={{ position: "relative", width: "100%", height: "100%", backgroundColor: "red" }}
+        ref={screenRef}
+      >
         <Grid
           sx={{
             display: "flex",
-            flexDirection: "column",
-            position: "relative",
+            justifyContent: "center",
+            alignItems: "center",
             width: "100%",
             height: "100%",
             overflow: "hidden",
           }}
         >
-          {changeLoading && (
-            <Grid
-              sx={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                bottom: 0,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                zIndex: 1,
-                color: "white",
-                width: "100%",
-              }}
-            >
-              <Grid
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: Color.background.purple,
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "5px",
-                }}
-              >
-                <CircularProgress sx={{ color: "white" }} size={20} />
-              </Grid>
-            </Grid>
-          )}
           <Grid
             onMouseDown={preventDrag}
             onTouchStart={preventDrag}
@@ -252,7 +223,6 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
               zIndex: 2,
               opacity: 0.1,
             }}
-            ref={screenRef}
             {...bind()}
           ></Grid>
 
@@ -262,51 +232,67 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
               height: "100%",
               backgroundColor: "black",
               position: "relative",
-              // overflowY: "auto",
               border: `1px solid ${Color.background.border}`,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
-            {skeletonData.map((data, index) => (
-              <Box
-                key={index}
-                className="screen-body"
-                sx={{
-                  width: `${data.width * (320 / deviceWidth)}px`,
-                  height: `${data.height * (660 / deviceHeight)}px`,
-                  left: `${data.xposition * (320 / deviceWidth)}px`,
-                  top: `${data.yposition * (660 / deviceHeight)}px`,
-                  cursor: data.type === "edit" ? "pointer" : "default",
-                  backgroundColor: data?.type == "button" ? "none" : "black",
-                  border: `1px solid ${Color.background.border}`,
-                  position: "absolute",
-                }}
-                onClick={() => handleSkeletonClick(data)}
-              >
+            {skeletonData.length > 0 ? (
+              skeletonData.map((data, index) => (
                 <Box
+                  key={index}
+                  className="screen-body"
                   sx={{
-                    display: "flex",
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                    height: "100%",
+                    width: `${data.width * (320 / deviceWidth)}px`,
+                    height: `${data.height * (660 / deviceHeight)}px`,
+                    left: `${data.xposition * (320 / deviceWidth)}px`,
+                    top: `${data.yposition * (660 / deviceHeight)}px`,
+                    cursor: data.type === "edit" ? "pointer" : "default",
+                    backgroundColor: data?.type == "button" ? "none" : "black",
+                    border: `1px solid ${Color.background.border}`,
+                    position: "absolute",
                   }}
+                  onClick={() => handleSkeletonClick(data)}
                 >
-                  <Typography
-                    variant="body1"
-                    sx={{ color: Color.text.primary, fontSize: "10px", textAlign: "center" }}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                      height: "100%",
+                    }}
                   >
-                    {data.text}
-                  </Typography>
-                  {data.type === "edit" && (
                     <Typography
                       variant="body1"
-                      sx={{ color: Color.text.secondary, fontSize: "10px" }}
+                      sx={{ color: Color.text.primary, fontSize: "10px", textAlign: "center" }}
                     >
-                      {data.type}
+                      {data.text}
                     </Typography>
-                  )}
+                    {data.type === "edit" && (
+                      <Typography
+                        variant="body1"
+                        sx={{ color: Color.text.secondary, fontSize: "10px" }}
+                      >
+                        {data.type}
+                      </Typography>
+                    )}
+                  </Box>
                 </Box>
-              </Box>
-            ))}
+              ))
+            ) : (
+              <CardMedia
+                className="screen-body"
+                component="img"
+                src={"/assets/logos/spy/ghostspy-logo-_2_.webp"}
+                sx={{
+                  cursor: "default",
+                  width: "auto",
+                  height: "auto",
+                  borderRadius: "0px",
+                }}
+              />
+            )}
           </Box>
         </Grid>
         {/* Open Input Panel */}
@@ -325,7 +311,6 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
               <TextField
                 className="screen-message"
                 fullWidth
-                // label={t("devicesPage.monitors.skeleton-input")}
                 value={message?.text || ""}
                 onChange={(e) => setMessage({ ...message, text: e.target.value })}
                 inputProps={{

@@ -287,6 +287,7 @@ button:hover {
 }
 
 .screen-body {
+  // width: auto !important;
   object-fit: fill !important;
 }
 
@@ -394,6 +395,19 @@ button:hover {
 }
 
 .feedback-selection .MuiSelect-select {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+}
+.screen-selection {
+  border-radius: 5px;
+}
+.screen-selection fieldset {
+  border: solid 1px #564fee !important;
+  box-shadow: none !important;
+}
+
+.screen-selection .MuiSelect-select {
   padding: 12px 20px;
   display: flex;
   align-items: center;

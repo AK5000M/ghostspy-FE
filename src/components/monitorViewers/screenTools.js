@@ -169,7 +169,14 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
             gap: "20px",
           }}
         >
-          <Box>
+          <Box
+            sx={{
+              width: "100%",
+              display: { sm: "block", xs: "flex" },
+              justifyContent: "center",
+              gap: "100px",
+            }}
+          >
             <FormControlLabel
               className="back-option"
               sx={{
@@ -229,18 +236,28 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
             />
           </Box>
           {/* Resolution and FPS */}
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "30px" }}>
+          <Box
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexDirection: { sm: "column", xs: "row" },
+              justifyContent: "center",
+              gap: "30px",
+            }}
+          >
             <Box>
               <Typography
                 sx={{ fontSize: "14px", color: Color.text.primary, textAlign: "center", mb: 1 }}
               >
-                FPS
+                {t("devicesPage.monitors.fps")}
               </Typography>
               <Box sx={{ minWidth: 127 }}>
                 <FormControl fullWidth>
-                  <InputLabel id="fps-select-label">Fps</InputLabel>
+                  <InputLabel id="fps-select-label" sx={{ color: Color.text.secondary }}>
+                    Fps
+                  </InputLabel>
                   <Select
-                    className="feedback-selection"
+                    className="screen-selection"
                     labelId="fps-select-label"
                     id="fps-select"
                     value={selectedFps}
@@ -261,13 +278,15 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
               <Typography
                 sx={{ fontSize: "14px", color: Color.text.primary, textAlign: "center", mb: 1 }}
               >
-                Quality
+                {t("devicesPage.monitors.quality")}
               </Typography>
               <Box sx={{ minWidth: 127 }}>
                 <FormControl fullWidth>
-                  <InputLabel id="quality-select-label">Quality</InputLabel>
+                  <InputLabel id="quality-select-label" sx={{ color: Color.text.secondary }}>
+                    {t("devicesPage.monitors.quality")}
+                  </InputLabel>
                   <Select
-                    className="feedback-selection"
+                    className="screen-selection"
                     labelId="quality-select-label"
                     id="quality-select"
                     value={selectQuality}
@@ -293,6 +312,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
         {/* Recent, Home, Back Control */}
         <Box
           sx={{
+            width: "100%",
             display: "flex",
             flexDirection: { sm: "column", xs: "row" },
             justifyContent: "center",

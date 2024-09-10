@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Rnd } from "react-rnd";
 import CloseIcon from "@mui/icons-material/Close";
-import { IconButton, Modal } from "@mui/material";
+import { IconButton, Modal, Box } from "@mui/material";
 import Color from "src/theme/colors";
 
 const DEFAULT = {
@@ -18,6 +18,7 @@ const DEFAULT = {
 
 const MonitorViewer = ({ children, initialState, onClose }) => {
   const [state, setState] = useState(initialState);
+  const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
   const isMobile = useMediaQuery({ query: "(max-width: 576px)" });
 
   let styles = {
@@ -62,6 +63,14 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
     [onClose]
   );
 
+  const handleMouseEnter = () => {
+    setIsDraggingEnabled(false);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDraggingEnabled(true);
+  };
+
   return (
     <React.Fragment>
       {!isMobile && (
@@ -73,7 +82,7 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
           minHeight={state.minHeight}
           maxWidth={state.maxWidth}
           maxHeight={state.maxHeight}
-          disableDragging={isMobile}
+          disableDragging={!isDraggingEnabled}
           onDragStop={(e, d) => {
             setState((prevState) => ({ ...prevState, x: d.x, y: d.y }));
           }}
@@ -88,14 +97,26 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
         >
           {CloseButton}
 
-          {children}
+          <Box
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            sx={{ width: "100%", height: "100%" }}
+          >
+            {children}
+          </Box>
         </Rnd>
       )}
       {isMobile && (
         <Modal open={isMobile} onClose={() => onClose(false)} style={{ backgroundColor: "#000" }}>
           <React.Fragment>
             {CloseButton}
-            {children}
+            <Box
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+              sx={{ width: "100%", height: "100%" }}
+            >
+              {children}
+            </Box>
           </React.Fragment>
         </Modal>
       )}
