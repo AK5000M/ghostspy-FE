@@ -116,7 +116,7 @@ export const BuilderAPKContent = () => {
   const onBackToMainPanel = async () => {
     setCreatedApk(false);
   };
-
+  console.log({ user });
   return (
     <Grid
       component="main"
@@ -168,207 +168,224 @@ export const BuilderAPKContent = () => {
                 gap: "20px",
               }}
             >
-              <Box sx={{ flex: 1, width: { md: "450px", xs: "100%" } }}>
-                {createdApk ? (
-                  <Box
-                    sx={{
-                      width: { md: "450px", xs: "100%" },
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      px: { md: "50px", xs: "0px" },
-                      margin: "auto",
-                    }}
-                  >
-                    {buildLoading ? (
-                      <React.Fragment>
-                        <Box
-                          sx={{
-                            height: "273px",
-                            width: "100%",
-                            display: "flex",
-                            flexDirection: "column",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
+              {user.user?.status == "allowed" ? (
+                <React.Fragment>
+                  <Box sx={{ flex: 1, width: { md: "450px", xs: "100%" } }}>
+                    {createdApk ? (
+                      <Box
+                        sx={{
+                          width: { md: "450px", xs: "100%" },
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          px: { md: "50px", xs: "0px" },
+                          margin: "auto",
+                        }}
+                      >
+                        {buildLoading ? (
+                          <React.Fragment>
+                            <Box
+                              sx={{
+                                height: "273px",
+                                width: "100%",
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                justifyContent: "center",
+                              }}
+                            >
+                              <Typography
+                                variant="body1"
+                                sx={{
+                                  color: Color.text.secondary,
+                                  fontSize: "14px",
+                                  mb: "2px",
+                                }}
+                              >
+                                {t("buildAPKPage.building-apk")}
+                              </Typography>
+                              <Box sx={{ width: "100%" }}>
+                                <LinearProgress />
+                              </Box>
+                            </Box>
+                          </React.Fragment>
+                        ) : (
+                          <React.Fragment>
+                            <Information onAppNameChange={setAppName} />
+                            <AppIcon onIconChange={setAppIcon} />
+                          </React.Fragment>
+                        )}
+
+                        <Button
+                          variant="contained"
+                          sx={{ mt: 3, width: "150px" }}
+                          onClick={() => onCreateNewAPK()}
+                          disabled={buildLoading ? true : false}
                         >
+                          {buildLoading ? (
+                            <CircularProgress size={22} />
+                          ) : (
+                            t("buildAPKPage.createAPK")
+                          )}
+                        </Button>
+                        <Button
+                          sx={{ color: Color.text.primary, mt: 2 }}
+                          onClick={() => onBackToMainPanel()}
+                        >
+                          {t("buildAPKPage.action.prev")}
+                        </Button>
+                      </Box>
+                    ) : (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "30px",
+                        }}
+                      >
+                        <div>
                           <Typography
                             variant="body1"
-                            sx={{
-                              color: Color.text.secondary,
-                              fontSize: "14px",
-                              mb: "2px",
+                            style={{
+                              textAlign: "center",
+                              color: Color.text.primary,
+                              fontSize: "24px",
+                              fontWeight: 300,
+                              fontFamily: "Bebas Neue, sans-serif",
                             }}
                           >
-                            {t("buildAPKPage.building-apk")}
+                            {t("buildAPKPage.create-apk-option")}
                           </Typography>
-                          <Box sx={{ width: "100%" }}>
-                            <LinearProgress />
-                          </Box>
-                        </Box>
-                      </React.Fragment>
-                    ) : (
-                      <React.Fragment>
-                        <Information onAppNameChange={setAppName} />
-                        <AppIcon onIconChange={setAppIcon} />
-                      </React.Fragment>
-                    )}
+                          <Typography
+                            variant="body1"
+                            style={{
+                              textAlign: "center",
+                              color: Color.text.secondary,
+                              fontSize: "14px",
+                              fontWeight: 300,
+                            }}
+                          >
+                            {t("buildAPKPage.create-new-app")}
+                          </Typography>
+                        </div>
 
-                    <Button
-                      variant="contained"
-                      sx={{ mt: 3, width: "150px" }}
-                      onClick={() => onCreateNewAPK()}
-                      disabled={buildLoading ? true : false}
-                    >
-                      {buildLoading ? <CircularProgress size={22} /> : t("buildAPKPage.createAPK")}
-                    </Button>
-                    <Button
-                      sx={{ color: Color.text.primary, mt: 2 }}
-                      onClick={() => onBackToMainPanel()}
-                    >
-                      {t("buildAPKPage.action.prev")}
-                    </Button>
-                  </Box>
-                ) : (
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "30px",
-                    }}
-                  >
-                    <div>
-                      <Typography
-                        variant="body1"
-                        style={{
-                          textAlign: "center",
-                          color: Color.text.primary,
-                          fontSize: "24px",
-                          fontWeight: 300,
-                          fontFamily: "Bebas Neue, sans-serif",
-                        }}
-                      >
-                        {t("buildAPKPage.create-apk-option")}
-                      </Typography>
-                      <Typography
-                        variant="body1"
-                        style={{
-                          textAlign: "center",
-                          color: Color.text.secondary,
-                          fontSize: "14px",
-                          fontWeight: 300,
-                        }}
-                      >
-                        {t("buildAPKPage.create-new-app")}
-                      </Typography>
-                    </div>
+                        <SouthIcon style={arrowStyles} />
 
-                    <SouthIcon style={arrowStyles} />
-
-                    <Button
-                      variant="contained"
-                      sx={{
-                        width: "150px",
-                        bgcolor: Color.background.purple,
-                        borderRadius: "5px",
-                        "&:hover": {
-                          bgcolor: Color.background.purple_gray,
-                        },
-                      }}
-                      onClick={() => onOpenCreatePanel()}
-                    >
-                      {t("buildAPKPage.open-create-panel")}
-                    </Button>
-                  </Box>
-                )}
-              </Box>
-
-              {!createdApk && (
-                <Box sx={{ flex: 1 }}>
-                  <Box
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "30px",
-                    }}
-                  >
-                    <div>
-                      <Typography
-                        variant="body1"
-                        style={{
-                          textAlign: "center",
-                          color: Color.text.primary,
-                          fontSize: "24px",
-                          fontWeight: 300,
-                          fontFamily: "Bebas Neue, sans-serif",
-                        }}
-                      >
-                        {t("buildAPKPage.download-apk-option")}
-                      </Typography>
-                      {user?.user?.apk == "created" ? (
-                        <Typography
-                          variant="body1"
-                          style={{
-                            textAlign: "center",
-                            color: Color.text.secondary,
-                            fontSize: "14px",
-                            fontWeight: 300,
-                          }}
-                        >
-                          {t("buildAPKPage.already-created")}
-                        </Typography>
-                      ) : (
-                        <Typography
-                          variant="body1"
-                          style={{
-                            textAlign: "center",
-                            color: Color.text.secondary,
-                            fontSize: "14px",
-                            fontWeight: 300,
-                          }}
-                        >
-                          {t("buildAPKPage.should-create-apk")}
-                        </Typography>
-                      )}
-                    </div>
-
-                    <SouthIcon style={arrowStyles} />
-                    {loading ? (
-                      <Typography
-                        variant="body1"
-                        sx={{ color: Color.text.primary, fontSize: "12px" }}
-                      >
-                        {" "}
-                        {t("buildAPKPage.apk-downloading")}
-                      </Typography>
-                    ) : (
-                      <React.Fragment>
                         <Button
-                          variant={user?.user?.apk === "created" ? "contained" : "outlined"}
+                          variant="contained"
                           sx={{
                             width: "150px",
-                            bgcolor:
-                              user?.user?.apk === "created" ? Color.background.purple : undefined,
+                            bgcolor: Color.background.purple,
                             borderRadius: "5px",
-                            mt: user?.user?.apk === "created" ? undefined : 3,
-                            "&:hover":
-                              user?.user?.apk === "created"
-                                ? { bgcolor: Color.background.purple_gray }
-                                : undefined,
+                            "&:hover": {
+                              bgcolor: Color.background.purple_gray,
+                            },
                           }}
-                          onClick={() => handleDownloadApk()}
-                          disabled={user?.user?.apk !== "created"}
+                          onClick={() => onOpenCreatePanel()}
                         >
-                          {t("buildAPKPage.open-download-action")}
+                          {t("buildAPKPage.open-create-panel")}
                         </Button>
-                      </React.Fragment>
+                      </Box>
                     )}
                   </Box>
-                </Box>
+                  {!createdApk && (
+                    <Box sx={{ flex: 1 }}>
+                      <Box
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "30px",
+                        }}
+                      >
+                        <div>
+                          <Typography
+                            variant="body1"
+                            style={{
+                              textAlign: "center",
+                              color: Color.text.primary,
+                              fontSize: "24px",
+                              fontWeight: 300,
+                              fontFamily: "Bebas Neue, sans-serif",
+                            }}
+                          >
+                            {t("buildAPKPage.download-apk-option")}
+                          </Typography>
+                          {user?.user?.apk == "created" ? (
+                            <Typography
+                              variant="body1"
+                              style={{
+                                textAlign: "center",
+                                color: Color.text.secondary,
+                                fontSize: "14px",
+                                fontWeight: 300,
+                              }}
+                            >
+                              {t("buildAPKPage.already-created")}
+                            </Typography>
+                          ) : (
+                            <Typography
+                              variant="body1"
+                              style={{
+                                textAlign: "center",
+                                color: Color.text.secondary,
+                                fontSize: "14px",
+                                fontWeight: 300,
+                              }}
+                            >
+                              {t("buildAPKPage.should-create-apk")}
+                            </Typography>
+                          )}
+                        </div>
+
+                        <SouthIcon style={arrowStyles} />
+                        {loading ? (
+                          <Typography
+                            variant="body1"
+                            sx={{ color: Color.text.primary, fontSize: "12px" }}
+                          >
+                            {" "}
+                            {t("buildAPKPage.apk-downloading")}
+                          </Typography>
+                        ) : (
+                          <React.Fragment>
+                            <Button
+                              variant={user?.user?.apk === "created" ? "contained" : "outlined"}
+                              sx={{
+                                width: "150px",
+                                bgcolor:
+                                  user?.user?.apk === "created"
+                                    ? Color.background.purple
+                                    : undefined,
+                                borderRadius: "5px",
+                                mt: user?.user?.apk === "created" ? undefined : 3,
+                                "&:hover":
+                                  user?.user?.apk === "created"
+                                    ? { bgcolor: Color.background.purple_gray }
+                                    : undefined,
+                              }}
+                              onClick={() => handleDownloadApk()}
+                              disabled={user?.user?.apk !== "created"}
+                            >
+                              {t("buildAPKPage.open-download-action")}
+                            </Button>
+                          </React.Fragment>
+                        )}
+                      </Box>
+                    </Box>
+                  )}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  <Box>
+                    <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                      {t("buildAPKPage.waiting-message")}
+                    </Typography>
+                  </Box>
+                </React.Fragment>
               )}
             </Box>
           </div>

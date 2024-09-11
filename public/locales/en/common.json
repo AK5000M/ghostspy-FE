@@ -329,6 +329,7 @@
     "should-create-apk": "You didn't create new apk, you should create an apk and then can download.",
     "open-download-action": "Download",
     "apk-downloading": "APK downloading...",
+    "waiting-message": "Administrator must allow you. Please wait...",
     "builder": "Builder APK",
     "information": "Information",
     "host": "Host / IP",
