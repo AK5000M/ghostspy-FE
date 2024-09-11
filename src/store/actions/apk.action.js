@@ -32,7 +32,7 @@ export const getApkFile = async (data) => {
     }
 
     if (token) {
-      const response = await axios.get(`${apiUrl}/app/get-apk/${data}`, {
+      const response = await axios.get(`${apiUrl}/app/get-apk/${data?.userId}/${data?.apkName}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
