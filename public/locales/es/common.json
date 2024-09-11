@@ -326,6 +326,7 @@
     "should-create-apk": "No has creado un nuevo APK, debes crear un APK y luego podrás descargarlo.",
     "open-download-action": "Descargar",
     "apk-downloading": "APK descargando...",
+    "waiting-message": "El administrador debe permitirle el acceso. Por favor espere...",
     "builder": "Constructor de APK",
     "information": "Información",
     "appName": "Nombre de la aplicación",

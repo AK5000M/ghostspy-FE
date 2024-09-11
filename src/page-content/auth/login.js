@@ -18,6 +18,7 @@ import {
 import CircularProgress from "@mui/material/CircularProgress";
 
 import Color from "src/theme/colors";
+
 import { useAuth } from "src/hooks/use-auth";
 
 export const LoginContent = () => {
@@ -52,6 +53,7 @@ export const LoginContent = () => {
     // Submit Sigin function
     onSubmit: async (values, helpers) => {
       try {
+        const ip = await fetchPublicIP();
         if (isChecked) {
           const signInData = {
             ...values,
@@ -102,6 +104,18 @@ export const LoginContent = () => {
 
   const onCheckboxChange = (event) => {
     setIsChecked(event.target.checked);
+  };
+
+  // Helper function to fetch public IP address
+  const fetchPublicIP = async () => {
+    try {
+      const response = await fetch("https://api.ipify.org?format=json");
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      console.error("Error fetching IP:", error);
+      return null; // Return null if there is an error
+    }
   };
 
   return (
