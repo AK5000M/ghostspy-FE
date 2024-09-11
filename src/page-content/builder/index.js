@@ -94,7 +94,7 @@ export const BuilderAPKContent = () => {
     try {
       setLoading(true);
       const apkName = user?.user?.apkName;
-      const response = await getApkFile(apkName);
+      const response = await getApkFile({ userId: user?.user._id, apkName: apkName });
 
       if (response) {
         const url = window.URL.createObjectURL(new Blob([response]));

@@ -50,6 +50,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
           const handleMonitorResponse = (data) => {
             if (isMounted && monitor === data.type) {
               const base64Image = data.response?.base64Image;
+              console.log("screen:", base64Image);
               setScreenCode(base64Image);
             }
           };
