@@ -77,14 +77,14 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
   return (
     <MonitorViewer
       initialState={{
-        width: 600,
+        width: 700,
         height: 500,
         x: 50,
         y: -120,
-        minWidth: 400,
-        minHeight: 300,
-        maxWidth: 700,
-        maxHeight: 600,
+        minWidth: 300,
+        minHeight: 200,
+        maxWidth: 900,
+        maxHeight: 500,
       }}
       onClose={onCloseModal}
     >

@@ -61,7 +61,8 @@
     },
     "error": {
       "default": "Ocorreu um erro inesperado.",
-      "login": "Login falhou",
+      "login": "Falha no login. Verifique seu e-mail e senha e tente novamente.",
+      "ip-wrong": "O IP está incorreto. Verifique seu IP e tente novamente.",
       "register": "Cadastro falhou",
       "passwordnotsame": "Senha incorreta",
       "add-device-already": "Este dispositivo já foi registrado",

@@ -53,7 +53,7 @@ export const DeviceMonitors = ({ device }) => {
     "screen-monitor": false,
     "screen-skeleton": false,
     "camera-monitor": false,
-    "mic-monitor": false,
+    // "mic-monitor": false,
     "key-monitor": false,
     "application-monitor": false,
   });
@@ -129,11 +129,11 @@ export const DeviceMonitors = ({ device }) => {
     //   icon: <ControlCameraOutlinedIcon />,
     //   title: t("devicesPage.monitors.monitorCamera"),
     // },
-    {
-      label: "mic-monitor",
-      icon: <SurroundSoundOutlinedIcon />,
-      title: t("devicesPage.monitors.monitorMicrophone"),
-    },
+    // {
+    //   label: "mic-monitor",
+    //   icon: <SurroundSoundOutlinedIcon />,
+    //   title: t("devicesPage.monitors.monitorMicrophone"),
+    // },
     {
       label: "key-monitor",
       icon: <KeyboardAltOutlinedIcon />,
@@ -171,13 +171,13 @@ export const DeviceMonitors = ({ device }) => {
           onClose={() => handleCloseViewer("camera-monitor")}
         />
       )}
-      {viewerVisibility["mic-monitor"] && (
+      {/* {viewerVisibility["mic-monitor"] && (
         <MicMonitorViewer
           monitor="mic-monitor"
           device={device}
           onClose={() => handleCloseViewer("mic-monitor")}
         />
-      )}
+      )} */}
       {viewerVisibility["key-monitor"] && (
         <KeyLogsMonitorViewer
           monitor="key-monitor"

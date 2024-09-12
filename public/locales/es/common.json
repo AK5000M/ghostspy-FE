@@ -58,7 +58,8 @@
     },
     "error": {
       "default": "Ocurrió un error inesperado.",
-      "login": "Inicio de sesión fallido",
+      "login": "Inicio de sesión fallido. Verifique su correo electrónico y contraseña y vuelva a intentarlo.",
+      "ip-wrong": "La IP es incorrecta. Verifique su IP y vuelva a intentarlo.",
       "register": "Registro fallido",
       "passwordnotsame": "La contraseña es incorrecta",
       "add-device-already": "Este dispositivo ya ha sido registrado",
