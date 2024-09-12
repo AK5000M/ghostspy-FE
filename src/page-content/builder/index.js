@@ -116,7 +116,7 @@ export const BuilderAPKContent = () => {
   const onBackToMainPanel = async () => {
     setCreatedApk(false);
   };
-  console.log({ user });
+
   return (
     <Grid
       component="main"
@@ -380,8 +380,15 @@ export const BuilderAPKContent = () => {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <Box>
-                    <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                    <Typography
+                      sx={{
+                        color: Color.text.yellow_gray01,
+                        fontSize: "16px",
+                        maxWidth: "50%",
+                        textAlign: "center",
+                      }}
+                    >
                       {t("buildAPKPage.waiting-message")}
                     </Typography>
                   </Box>

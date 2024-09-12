@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+
 import { styled, useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
 import { withAuthGuard } from "src/hocs/with-auth-guard";
 import { SideNav } from "./side-nav";
 import { TopNav } from "./top-nav";
 import useOutsideClick from "../../hooks/use-outside-click";
-import Color from "src/theme/colors";
 
 const SIDE_NAV_WIDTH = 200;
 
@@ -28,6 +28,7 @@ const LayoutContainer = styled("div")({
 
 export const Layout = withAuthGuard((props) => {
   const { children } = props;
+
   const pathname = usePathname();
   const [openNav, setOpenNav] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -62,7 +63,6 @@ export const Layout = withAuthGuard((props) => {
           setCollapsed={setCollapsed}
         />
       </div>
-
       <LayoutRoot
         collapsed={collapsed}
         style={{

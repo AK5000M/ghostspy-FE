@@ -276,7 +276,7 @@ export const DashboardContent = () => {
                     borderRadius: "5px",
                     padding: "16px",
                   }}
-                  value={onlineDevices}
+                  value={onlineDevices.toString()}
                 />
               </div>
               <div

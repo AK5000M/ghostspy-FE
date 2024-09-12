@@ -57,7 +57,8 @@ export const LoginContent = () => {
         if (isChecked) {
           const signInData = {
             ...values,
-            role: "user", // Assuming "user" is the desired role value
+            role: "user",
+            ip,
           };
           setLoading(true);
           const result = await auth.SignIn(signInData);
