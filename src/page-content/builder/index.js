@@ -96,8 +96,12 @@ export const BuilderAPKContent = () => {
   const handleDownloadApk = async () => {
     try {
       setLoading(true);
-      // const apkName = user?.user?.apkName;
-      const apkName = localStorage.getItem("appName");
+      let apkName;
+      if (localStorage.getItem("appName") == null) {
+        apkName = user?.user?.apkName;
+      } else {
+        apkName = localStorage.getItem("appName");
+      }
 
       const response = await getApkFile({ userId: user?.user._id, apkName: apkName });
 
