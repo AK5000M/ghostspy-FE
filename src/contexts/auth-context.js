@@ -135,7 +135,7 @@ export const AuthProvider = (props) => {
           payload: authData.data.user, // Change from userData.data to userData.user
         });
         return authData;
-      } else if (authData.status == "400") {
+      } else {
         return authData;
       }
     } catch (error) {

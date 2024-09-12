@@ -8,6 +8,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 
 import SouthIcon from "@mui/icons-material/South";
 import AppIcon from "./appIcon";
+import DoNotTouchOutlinedIcon from "@mui/icons-material/DoNotTouchOutlined";
 
 import Color from "src/theme/colors";
 import { useAuth } from "src/hooks/use-auth";
@@ -116,7 +117,7 @@ export const BuilderAPKContent = () => {
   const onBackToMainPanel = async () => {
     setCreatedApk(false);
   };
-  console.log({ user });
+
   return (
     <Grid
       component="main"
@@ -380,8 +381,25 @@ export const BuilderAPKContent = () => {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <Box>
-                    <Typography sx={{ color: Color.text.primary, fontSize: "16px" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <DoNotTouchOutlinedIcon
+                      sx={{ color: Color.text.yellow_gray01, fontSize: "50px", mb: 2 }}
+                    />
+                    <Typography
+                      sx={{
+                        color: Color.text.yellow_gray01,
+                        fontSize: "16px",
+                        maxWidth: "50%",
+                        textAlign: "center",
+                      }}
+                    >
                       {t("buildAPKPage.waiting-message")}
                     </Typography>
                   </Box>

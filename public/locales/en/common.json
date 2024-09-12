@@ -59,7 +59,8 @@
     },
     "error": {
       "default": "An unexpected error occurred.",
-      "login": "Login failed",
+      "login": "Login failed. Please check your email and password and try again.",
+      "ip-wrong": "The IP is incorrect. Please check your IP and try again.",
       "register": "Register failed",
       "passwordnotsame": "Password is incorrect",
       "add-device-already": "This device has already been registered",
@@ -329,7 +330,7 @@
     "should-create-apk": "You didn't create new apk, you should create an apk and then can download.",
     "open-download-action": "Download",
     "apk-downloading": "APK downloading...",
-    "waiting-message": "Administrator must allow you. Please wait...",
+    "waiting-message": "Your account is still pending approval. Please contact an administrator to request permission to create a new app.",
     "builder": "Builder APK",
     "information": "Information",
     "host": "Host / IP",

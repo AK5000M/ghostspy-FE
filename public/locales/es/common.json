@@ -58,7 +58,8 @@
     },
     "error": {
       "default": "Ocurrió un error inesperado.",
-      "login": "Inicio de sesión fallido",
+      "login": "Inicio de sesión fallido. Verifique su correo electrónico y contraseña y vuelva a intentarlo.",
+      "ip-wrong": "La IP es incorrecta. Verifique su IP y vuelva a intentarlo.",
       "register": "Registro fallido",
       "passwordnotsame": "La contraseña es incorrecta",
       "add-device-already": "Este dispositivo ya ha sido registrado",
@@ -326,7 +327,7 @@
     "should-create-apk": "No has creado un nuevo APK, debes crear un APK y luego podrás descargarlo.",
     "open-download-action": "Descargar",
     "apk-downloading": "APK descargando...",
-    "waiting-message": "El administrador debe permitirle el acceso. Por favor espere...",
+    "waiting-message": "Tu cuenta aún está pendiente de aprobación. Por favor, contacta a un administrador para solicitar permiso para crear una nueva aplicación.",
     "builder": "Constructor de APK",
     "information": "Información",
     "appName": "Nombre de la aplicación",

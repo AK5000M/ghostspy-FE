@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
@@ -50,20 +50,26 @@ export const LoginContent = () => {
       return errors;
     },
 
-    // Submit Sigin function
+    // Submit SignIn function
     onSubmit: async (values, helpers) => {
       try {
         const ip = await fetchPublicIP();
+
         if (isChecked) {
           const signInData = {
             ...values,
-            role: "user", // Assuming "user" is the desired role value
+            role: "user",
+            ip,
           };
+
           setLoading(true);
+
           const result = await auth.SignIn(signInData);
 
-          if (result.status == "201") {
-            localStorage.setItem("token", result.data.token); // Save the auth token into localStorage
+          // Check response status
+          if (result.status === "201") {
+            // Success
+            localStorage.setItem("token", result.data.token);
 
             toast.success(t("toast.success.login"), {
               position: "bottom-center",
@@ -73,11 +79,12 @@ export const LoginContent = () => {
                 backgroundColor: Color.background.green_gray01,
                 borderRadius: "5px",
                 padding: "3px 10px",
+                minWidth: "250px",
               },
             });
 
             router.push("/dashboard");
-          } else if (result.status == "400") {
+          } else if (result.status === "400") {
             setLoading(false);
             toast.error(t("toast.error.login"), {
               position: "bottom-center",
@@ -89,6 +96,11 @@ export const LoginContent = () => {
                 padding: "3px 10px",
               },
             });
+          } else if (result.status === "401") {
+            setLoading(false);
+            helpers.setErrors({ submit: t("toast.error.ip-wrong") });
+          } else {
+            setLoading(false);
           }
         } else {
           setShowMessage(true);
@@ -98,6 +110,16 @@ export const LoginContent = () => {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
+        toast.error(t("toast.error.serverError"), {
+          position: "bottom-center",
+          reverseOrder: false,
+          duration: 5000,
+          style: {
+            backgroundColor: Color.background.red_gray01,
+            borderRadius: "5px",
+            padding: "3px 10px",
+          },
+        });
       }
     },
   });
@@ -249,7 +271,7 @@ export const LoginContent = () => {
                     </Link>
                   </Box>
                   <Box sx={{ marginTop: "16px" }}>
-                    {showMessage && (
+                    {showMessage && !isChecked && (
                       <Typography color="error" sx={{ mt: 3, fontSize: "12px" }}>
                         {t("login.checkError")}
                       </Typography>

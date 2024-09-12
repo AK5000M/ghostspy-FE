@@ -56,8 +56,13 @@ export const RegisterContent = () => {
     onSubmit: async (values, helpers) => {
       setLoading(true);
       try {
+        const ip = await fetchPublicIP();
         if (values.password === values.confirmpassword) {
-          const result = await auth.SignUp(values);
+          const signupData = {
+            ...values,
+            ip,
+          };
+          const result = await auth.SignUp(signupData);
 
           if (result.status === "400") {
             toast.error(t("toast.error.register"), {
@@ -116,6 +121,18 @@ export const RegisterContent = () => {
       ...touchedFields,
       [event.target.name]: true,
     });
+  };
+
+  // Helper function to fetch public IP address
+  const fetchPublicIP = async () => {
+    try {
+      const response = await fetch("https://api.ipify.org?format=json");
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      console.error("Error fetching IP:", error);
+      return null;
+    }
   };
 
   return (
