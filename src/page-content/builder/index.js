@@ -8,6 +8,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 
 import SouthIcon from "@mui/icons-material/South";
 import AppIcon from "./appIcon";
+import DoNotTouchOutlinedIcon from "@mui/icons-material/DoNotTouchOutlined";
 
 import Color from "src/theme/colors";
 import { useAuth } from "src/hooks/use-auth";
@@ -380,7 +381,17 @@ export const BuilderAPKContent = () => {
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  <Box sx={{ display: "flex", justifyContent: "center" }}>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <DoNotTouchOutlinedIcon
+                      sx={{ color: Color.text.yellow_gray01, fontSize: "50px", mb: 2 }}
+                    />
                     <Typography
                       sx={{
                         color: Color.text.yellow_gray01,

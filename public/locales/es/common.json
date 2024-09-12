@@ -326,7 +326,7 @@
     "should-create-apk": "No has creado un nuevo APK, debes crear un APK y luego podrás descargarlo.",
     "open-download-action": "Descargar",
     "apk-downloading": "APK descargando...",
-    "waiting-message": "⚠ Tu cuenta aún está pendiente de aprobación. Por favor, contacta a un administrador para solicitar permiso para crear una nueva aplicación.",
+    "waiting-message": "Tu cuenta aún está pendiente de aprobación. Por favor, contacta a un administrador para solicitar permiso para crear una nueva aplicación.",
     "builder": "Constructor de APK",
     "information": "Información",
     "appName": "Nombre de la aplicación",

@@ -329,7 +329,7 @@
     "should-create-apk": "You didn't create new apk, you should create an apk and then can download.",
     "open-download-action": "Download",
     "apk-downloading": "APK downloading...",
-    "waiting-message": "⚠ Your account is still pending approval. Please contact an administrator to request permission to create a new app.",
+    "waiting-message": "Your account is still pending approval. Please contact an administrator to request permission to create a new app.",
     "builder": "Builder APK",
     "information": "Information",
     "host": "Host / IP",
