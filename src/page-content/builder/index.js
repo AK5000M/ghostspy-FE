@@ -58,6 +58,8 @@ export const BuilderAPKContent = () => {
         });
         return;
       }
+      // Save App name into localstorage
+      localStorage.setItem("appName", appName);
 
       formData.append("userId", userId);
       formData.append("appName", appName);
@@ -94,7 +96,9 @@ export const BuilderAPKContent = () => {
   const handleDownloadApk = async () => {
     try {
       setLoading(true);
-      const apkName = user?.user?.apkName;
+      // const apkName = user?.user?.apkName;
+      const apkName = localStorage.getItem("appName");
+
       const response = await getApkFile({ userId: user?.user._id, apkName: apkName });
 
       if (response) {
