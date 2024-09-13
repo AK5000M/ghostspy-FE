@@ -53,7 +53,8 @@ export const LoginContent = () => {
     // Submit SignIn function
     onSubmit: async (values, helpers) => {
       try {
-        const ip = await fetchPublicIP();
+        // const ip = await fetchPublicIP();
+        const ip = "134.195.198.194";
 
         if (isChecked) {
           const signInData = {
@@ -99,6 +100,18 @@ export const LoginContent = () => {
           } else if (result.status === "401") {
             setLoading(false);
             helpers.setErrors({ submit: t("toast.error.ip-wrong") });
+          } else if (result.status === "403") {
+            setLoading(false);
+            toast.error(t("toast.error.license-expire"), {
+              position: "bottom-center",
+              reverseOrder: false,
+              duration: 5000,
+              style: {
+                backgroundColor: Color.background.red_gray01,
+                borderRadius: "5px",
+                padding: "3px 10px",
+              },
+            });
           } else {
             setLoading(false);
           }
@@ -110,7 +123,7 @@ export const LoginContent = () => {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
         helpers.setSubmitting(false);
-        toast.error(t("toast.error.serverError"), {
+        toast.error(t("toast.error.server-error"), {
           position: "bottom-center",
           reverseOrder: false,
           duration: 5000,
