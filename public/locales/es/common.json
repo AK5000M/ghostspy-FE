@@ -61,6 +61,8 @@
       "login": "Inicio de sesión fallido. Verifique su correo electrónico y contraseña y vuelva a intentarlo.",
       "ip-wrong": "Dirección IP no reconocida. Por favor, contacte al administrador para autorizar el acceso desde esta nueva ubicación.",
       "register": "Registro fallido",
+      "server-error": "Error Interno del Servidor",
+      "license-expire": "No puedes iniciar sesión porque el período de tu licencia ya ha expirado.",
       "passwordnotsame": "La contraseña es incorrecta",
       "add-device-already": "Este dispositivo ya ha sido registrado",
       "add-device-error": "La solicitud del sistema no fue válida",

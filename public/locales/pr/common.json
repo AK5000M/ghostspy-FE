@@ -64,6 +64,8 @@
       "login": "Falha no login. Verifique seu e-mail e senha e tente novamente.",
       "ip-wrong": "Endereço IP não reconhecido. Por favor, entre em contato com o administrador para autorizar o acesso a partir deste novo local.",
       "register": "Cadastro falhou",
+      "server-error": "Erro do Servidor Interno",
+      "license-expire": "Você não pode fazer login porque o período da sua licença já expirou.",
       "passwordnotsame": "Senha incorreta",
       "add-device-already": "Este dispositivo já foi registrado",
       "add-device-error": "A solicitação do sistema era inválida",
