@@ -53,8 +53,7 @@ export const LoginContent = () => {
     // Submit SignIn function
     onSubmit: async (values, helpers) => {
       try {
-        // const ip = await fetchPublicIP();
-        const ip = "134.195.198.194";
+        const ip = await fetchPublicIP();
 
         if (isChecked) {
           const signInData = {
