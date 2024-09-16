@@ -53,13 +53,13 @@ export const LoginContent = () => {
     // Submit SignIn function
     onSubmit: async (values, helpers) => {
       try {
-        const ip = await fetchPublicIP();
+        // const ip = await fetchPublicIP();
 
         if (isChecked) {
           const signInData = {
             ...values,
             role: "user",
-            ip,
+            // ip,
           };
 
           setLoading(true);
@@ -96,10 +96,12 @@ export const LoginContent = () => {
                 padding: "3px 10px",
               },
             });
-          } else if (result.status === "401") {
-            setLoading(false);
-            helpers.setErrors({ submit: t("toast.error.ip-wrong") });
-          } else if (result.status === "403") {
+          }
+          // else if (result.status === "401") {
+          //   setLoading(false);
+          //   helpers.setErrors({ submit: t("toast.error.ip-wrong") });
+          // }
+          else if (result.status === "403") {
             setLoading(false);
             toast.error(t("toast.error.license-expire"), {
               position: "bottom-center",

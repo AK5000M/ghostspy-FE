@@ -89,13 +89,41 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
     }
   };
 
+  // Device Format
   const handleFormatDevice = async (device) => {
-    console.log({ device });
     const deviceId = device?.deviceId;
     try {
       await onDeviceFormat(SocketIOPublicEvents.device_format_event, { deviceId });
+
+      // Format Res from BE
+      const handleFormatResponse = (data) => {
+        if (deviceId === data.deviceId && device.type == "formatted") {
+          // Check if the toast has already been shown
+          toast.success(t("toast.success.device-format"), {
+            position: "bottom-center",
+            reverseOrder: false,
+            style: {
+              borderRadius: "5px",
+              padding: "5px 10px",
+              fontSize: "16px",
+            },
+          });
+        }
+      };
+
+      socket.on(`device-format-shared-${deviceId}`, handleFormatResponse);
     } catch (error) {
-      console.log("format device error", error);
+      // Check if the toast has already been shown
+      toast.error(t("toast.error.device-format"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
     }
   };
 

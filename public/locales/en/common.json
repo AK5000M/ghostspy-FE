@@ -55,7 +55,8 @@
       "add-device": "A new device has been added successfully",
       "delete-device": "The device has been deleted.",
       "send-message": "Message has been sent successfully",
-      "create-apk": "You have crated new apk successfully, you can download an apk in download panel."
+      "create-apk": "You have crated new apk successfully, you can download an apk in download panel.",
+      "device-format": "Device formatted successfully."
     },
     "error": {
       "default": "An unexpected error occurred.",
@@ -78,7 +79,8 @@
       "send-message": "Message sending failed.",
       "upgrade-plan": "This function is available on a premium subscription",
       "app-info": "Please enter the app name and app icon correctly",
-      "send-text": "Message required."
+      "send-text": "Message required.",
+      "device-format": "Device format failed."
     }
   },
 

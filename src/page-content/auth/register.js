@@ -56,11 +56,11 @@ export const RegisterContent = () => {
     onSubmit: async (values, helpers) => {
       setLoading(true);
       try {
-        const ip = await fetchPublicIP();
+        // const ip = await fetchPublicIP();
         if (values.password === values.confirmpassword) {
           const signupData = {
             ...values,
-            ip,
+            // ip,
           };
           const result = await auth.SignUp(signupData);
 
