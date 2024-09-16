@@ -57,7 +57,8 @@
       "add-device": "Um novo dispositivo foi adicionado com sucesso",
       "delete-device": "O dispositivo foi excluído.",
       "send-message": "A mensagem foi enviada com sucesso",
-      "create-apk": "Você criou um novo APK com sucesso; pode baixar o APK no painel de downloads."
+      "create-apk": "Você criou um novo APK com sucesso; pode baixar o APK no painel de downloads.",
+      "device-format": "Dispositivo formatado com sucesso."
     },
     "error": {
       "default": "Ocorreu um erro inesperado.",
@@ -80,7 +81,8 @@
       "send-message-failed": "Falha ao enviar a mensagem",
       "upgrade-plan": "Esta função está disponível em uma assinatura premium.",
       "app-info": "Por favor, insira o nome do aplicativo e o ícone do aplicativo corretamente",
-      "send-text": "Mensagem obrigatória."
+      "send-text": "Mensagem obrigatória.",
+      "device-format": "Falha na formatação do dispositivo."
     }
   },
 

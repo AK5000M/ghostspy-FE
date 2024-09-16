@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Grid, CircularProgress, Box, TextField, Typography, CardMedia } from "@mui/material";
+import { Grid, Box, TextField, Typography, CardMedia } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-use-gesture";
 
