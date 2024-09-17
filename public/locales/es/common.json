@@ -211,6 +211,7 @@
   },
 
   "devicesPage": {
+    "title": "Monitor de Dispositivos",
     "devices": "Dispositivos",
     "none-app": "Ninguno",
     "noDevice": "No hay dispositivos registrados",

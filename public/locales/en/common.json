@@ -213,6 +213,7 @@
   },
 
   "devicesPage": {
+    "title": "Device Monitor",
     "devices": "Devices",
     "none-app": "None",
     "noDevice": "No devices registered",
