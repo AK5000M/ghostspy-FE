@@ -66,25 +66,39 @@ export const DeviceContent = () => {
 
   useEffect(() => {
     socket.on(`${SocketIOPublicEvents.added_device}`, (data) => {
-      if (data.success == true && data.message == "success") {
-        setAddedDevice(true);
-        if (!successToast.current) {
-          // Check if the toast has already been shown
-          toast.success(t("toast.success.add-device"), {
-            position: "bottom-center",
-            reverseOrder: false,
-            style: {
-              borderRadius: "5px",
-              padding: "5px 10px",
-              fontSize: "16px",
-            },
-          });
-          successToast.current = true; // Set the toast as shown
-        }
-      } else if (data.success == false && data.message == "exist") {
-        if (!errorToast.current) {
-          // Check if the toast has already been shown
-          toast.error(t("toast.error.add-device-already"), {
+      if (user?.user?._id == data?.userId) {
+        if (data.success == true && data.message == "success") {
+          setAddedDevice(true);
+          if (!successToast.current) {
+            // Check if the toast has already been shown
+            toast.success(t("toast.success.add-device"), {
+              position: "bottom-center",
+              reverseOrder: false,
+              style: {
+                borderRadius: "5px",
+                padding: "5px 10px",
+                fontSize: "16px",
+              },
+            });
+            successToast.current = true; // Set the toast as shown
+          }
+        } else if (data.success == false && data.message == "exist") {
+          if (!errorToast.current) {
+            // Check if the toast has already been shown
+            toast.error(t("toast.error.add-device-already"), {
+              position: "bottom-center",
+              reverseOrder: false,
+              duration: 5000,
+              style: {
+                backgroundColor: Color.background.red_gray01,
+                borderRadius: "5px",
+                padding: "3px 10px",
+              },
+            });
+            errorToast.current = true; // Set the toast as shown
+          }
+        } else {
+          toast.error(t("toast.error.add-device-error"), {
             position: "bottom-center",
             reverseOrder: false,
             duration: 5000,
@@ -94,19 +108,7 @@ export const DeviceContent = () => {
               padding: "3px 10px",
             },
           });
-          errorToast.current = true; // Set the toast as shown
         }
-      } else {
-        toast.error(t("toast.error.add-device-error"), {
-          position: "bottom-center",
-          reverseOrder: false,
-          duration: 5000,
-          style: {
-            backgroundColor: Color.background.red_gray01,
-            borderRadius: "5px",
-            padding: "3px 10px",
-          },
-        });
       }
     });
   }, [socket]);
