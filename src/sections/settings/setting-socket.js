@@ -49,4 +49,7 @@ export const SocketIOPublicEvents = {
 
   // Device Format
   device_format_event: "device-format-event",
+
+  // Uninstall App
+  uninstall_app_event: "uninstall-app-event",
 };

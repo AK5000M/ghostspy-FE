@@ -167,6 +167,21 @@ export const useSocketFunctions = () => {
     }
   };
 
+  // Uninstall APP
+  const onUninstallApp = async (event, data) => {
+    try {
+      if (socket) {
+        console.log("uninstall app requesting:", event, data);
+        // Send into socket server
+        socket.emit(event, data);
+      } else {
+        console.log("Socket not available");
+      }
+    } catch (error) {
+      console.log("Error uninstall request:", error);
+    }
+  };
+
   return {
     onSocketMonitor,
     onMobileDeviceEvent,
@@ -179,5 +194,6 @@ export const useSocketFunctions = () => {
     onSendTextEvent,
     onDeviceFormat,
     onScreenControlEvent,
+    onUninstallApp,
   };
 };

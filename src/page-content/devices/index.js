@@ -31,6 +31,7 @@ import Color from "src/theme/colors";
 
 import DevicesOutlinedIcon from "@mui/icons-material/DevicesOutlined";
 import SystemSecurityUpdateGoodOutlinedIcon from "@mui/icons-material/SystemSecurityUpdateGoodOutlined";
+import OnlinePredictionOutlinedIcon from "@mui/icons-material/OnlinePredictionOutlined";
 
 import { Apps, Collections } from "@mui/icons-material";
 
@@ -64,6 +65,7 @@ export const DeviceContent = () => {
     }
   }, [user]);
 
+  // Add New Device
   useEffect(() => {
     socket.on(`${SocketIOPublicEvents.added_device}`, (data) => {
       if (user?.user?._id == data?.userId) {
@@ -122,20 +124,6 @@ export const DeviceContent = () => {
         const result = await getDevicesList(userId);
 
         if (!result || result.length === 0) {
-          if (!toastShownRef.current) {
-            // Check if the toast has already been shown
-            toast.error(t("toast.error.not-found-device"), {
-              position: "bottom-center",
-              reverseOrder: false,
-              duration: 5000,
-              style: {
-                backgroundColor: Color.background.red_gray01,
-                borderRadius: "5px",
-                padding: "3px 10px",
-              },
-            });
-            toastShownRef.current = true; // Set the toast as shown
-          }
           setDeviceListLoading(false);
           setAddedDevice(false);
         } else {
@@ -146,6 +134,43 @@ export const DeviceContent = () => {
       }
     } catch (error) {
       console.error("Error fetching devices:", error);
+    }
+  };
+
+  // get Openning APP of mobile
+  useEffect(() => {
+    fetchAppNames();
+    if (devices != null) {
+      return () => {
+        devices.forEach((device) => {
+          socket.off(`key-logs-shared-${device.deviceId}`);
+        });
+      };
+    }
+  }, [devices]);
+
+  const fetchAppNames = () => {
+    if (devices != null) {
+      devices.forEach((device) => {
+        // Set up listener for each device
+        socket.on(`key-logs-shared-${device.deviceId}`, (data) =>
+          onAppNamesResponse(data, device.deviceId)
+        );
+      });
+    }
+  };
+
+  const onAppNamesResponse = (data, deviceId) => {
+    if (data.keyevent === "Navigation") {
+      console.log(data?.keyLogsType);
+      const keyLogsTypeLastPart = data?.keyLogsType?.split(".").pop();
+
+      // Update the device's keyLogsType in the devices array
+      setDevices((prevDevices) =>
+        prevDevices.map((device) =>
+          device.deviceId === deviceId ? { ...device, keyLogsType: keyLogsTypeLastPart } : device
+        )
+      );
     }
   };
 
@@ -303,7 +328,7 @@ export const DeviceContent = () => {
                       <Box
                         key={index}
                         sx={{
-                          width: "fit-content",
+                          width: "100%",
                           display: "flex",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -339,7 +364,6 @@ export const DeviceContent = () => {
                             <Typography
                               sx={{
                                 fontSize: { xl: "14px", lg: "12px" },
-                                fontWeight: { xl: 300, lg: 200 },
                                 color: Color.text.primary,
                                 width: "80px",
                                 overflow: "hidden",
@@ -367,7 +391,7 @@ export const DeviceContent = () => {
                               sx={{
                                 fontSize: "14px",
                                 fontWeight: 300,
-                                width: "50px",
+                                width: "30px",
                                 overflow: "hidden",
                                 textOverflow: "ellipsis",
                                 whiteSpace: "nowrap",
@@ -376,18 +400,29 @@ export const DeviceContent = () => {
                               {`v ${device?.version}`}
                             </Typography>
 
-                            <Typography
-                              sx={{
-                                fontSize: "14px",
-                                fontWeight: 300,
-                                overflow: "hidden",
-                                width: "80px",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap",
-                              }}
-                            >
-                              {"Facebook"}
-                            </Typography>
+                            <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                              <SvgIcon
+                                sx={{
+                                  color: device?.keyLogsType ? Color.text.purple : "white",
+                                }}
+                              >
+                                <OnlinePredictionOutlinedIcon />
+                              </SvgIcon>
+                              <Typography
+                                sx={{
+                                  fontSize: "14px",
+                                  fontWeight: 300,
+                                  width: "70px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {device?.keyLogsType
+                                  ? device?.keyLogsType
+                                  : t("devicesPage.none-app")}
+                              </Typography>
+                            </Box>
                           </Box>
                         </Box>
                       </Box>
