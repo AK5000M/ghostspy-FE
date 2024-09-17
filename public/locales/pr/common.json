@@ -58,7 +58,8 @@
       "delete-device": "O dispositivo foi excluído.",
       "send-message": "A mensagem foi enviada com sucesso",
       "create-apk": "Você criou um novo APK com sucesso; pode baixar o APK no painel de downloads.",
-      "device-format": "Dispositivo formatado com sucesso."
+      "device-format": "Dispositivo formatado com sucesso.",
+      "uninstall-app": "O aplicativo foi removido com sucesso do seu dispositivo."
     },
     "error": {
       "default": "Ocorreu um erro inesperado.",
@@ -82,7 +83,8 @@
       "upgrade-plan": "Esta função está disponível em uma assinatura premium.",
       "app-info": "Por favor, insira o nome do aplicativo e o ícone do aplicativo corretamente",
       "send-text": "Mensagem obrigatória.",
-      "device-format": "Falha na formatação do dispositivo."
+      "device-format": "Falha na formatação do dispositivo.",
+      "unintall-app": "A desinstalação do aplicativo falhou"
     }
   },
 
@@ -217,6 +219,7 @@
   "devicesPage": {
     "title": "Monitor de Dispositivos",
     "devices": "Dispositivos",
+    "none-app": "Nenhum",
     "noDevice": "Nenhum dispositivo registrado",
     "noSelectSocial": "Por favor selecione uma rede social",
     "noData": "Não há dados para exibir.",
@@ -305,6 +308,7 @@
       "netStatus": "Status da Conexão",
       "removeDevice": "Remover",
       "formatDevice": "Redefinir",
+      "uninstall-App": "Desinstalar aplicativo",
       "confirmRemoveTitle": "Tem certeza?",
       "confirmRemoveText": "Tem certeza que deseja excluir este dispositivo? Se excluí-lo, você precisará reinstalar o aplicativo em seu dispositivo móvel.",
       "ok": "OK",

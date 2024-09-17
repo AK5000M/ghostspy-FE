@@ -56,7 +56,8 @@
       "delete-device": "The device has been deleted.",
       "send-message": "Message has been sent successfully",
       "create-apk": "You have crated new apk successfully, you can download an apk in download panel.",
-      "device-format": "Device formatted successfully."
+      "device-format": "Device formatted successfully.",
+      "uninstall-app": "The app has been successfully removed from a device."
     },
     "error": {
       "default": "An unexpected error occurred.",
@@ -80,7 +81,8 @@
       "upgrade-plan": "This function is available on a premium subscription",
       "app-info": "Please enter the app name and app icon correctly",
       "send-text": "Message required.",
-      "device-format": "Device format failed."
+      "device-format": "Device format failed.",
+      "unintall-app": "Failed to uninstall app."
     }
   },
 
@@ -212,6 +214,7 @@
 
   "devicesPage": {
     "devices": "Devices",
+    "none-app": "None",
     "noDevice": "No devices registered",
     "noSelectSocial": "Please select a social",
     "noData": "There is no data to display.",
@@ -298,6 +301,7 @@
       "netStatus": "Connection Status",
       "removeDevice": "Remove",
       "formatDevice": "Format",
+      "uninstall-App": "Uninstall App",
       "confirmRemoveTitle": "Delete a device",
       "confirmRemoveText": "Are you sure you want to remove this device?",
       "ok": "OK",

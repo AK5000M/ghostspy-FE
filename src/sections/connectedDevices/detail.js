@@ -13,6 +13,7 @@ import {
   DialogTitle,
   Box,
 } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import PermDeviceInformationIcon from "@mui/icons-material/PermDeviceInformation";
 import SystemSecurityUpdateWarningIcon from "@mui/icons-material/SystemSecurityUpdateWarning";
 import DnsIcon from "@mui/icons-material/Dns";
@@ -32,11 +33,14 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
   const { t } = useTranslation();
   const { socket } = useSocket();
 
-  const { onDeviceFormat } = useSocketFunctions();
+  const { onDeviceFormat, onUninstallApp } = useSocketFunctions();
 
   const [batteryStatus, setBatteryStatus] = useState(selectedDevice?.batteryStatus);
   const [netStatus, setNetStatus] = useState(selectedDevice?.connectStatus);
-  const [openModal, setOpenModal] = useState(false); // Modal state
+  const [openModal, setOpenModal] = useState(false);
+
+  const [formatLoading, setFormatLoading] = useState(false);
+  const [uninstallLoading, setUninstallLoading] = useState(false);
 
   useEffect(() => {
     if (selectedDevice) {
@@ -92,6 +96,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
   // Device Format
   const handleFormatDevice = async (device) => {
     const deviceId = device?.deviceId;
+    setFormatLoading(true);
     try {
       await onDeviceFormat(SocketIOPublicEvents.device_format_event, { deviceId });
 
@@ -108,13 +113,58 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
               fontSize: "16px",
             },
           });
+          setFormatLoading(false);
+        } else {
+          setFormatLoading(false);
         }
       };
 
       socket.on(`device-format-shared-${deviceId}`, handleFormatResponse);
     } catch (error) {
+      setFormatLoading(false);
       // Check if the toast has already been shown
       toast.error(t("toast.error.device-format"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
+    }
+  };
+
+  // Uninstall App
+  const handleUninstallApp = async (device) => {
+    const deviceId = device?.deviceId;
+    setUninstallLoading(true);
+    try {
+      await onUninstallApp(SocketIOPublicEvents.uninstall_app_event, { deviceId });
+
+      const handleUninstallResponse = (data) => {
+        if (deviceId === data.deviceId && device.type == "uninstalled") {
+          // Check if the toast has already been shown
+          toast.success(t("toast.success.uninstall-app"), {
+            position: "bottom-center",
+            reverseOrder: false,
+            style: {
+              borderRadius: "5px",
+              padding: "5px 10px",
+              fontSize: "16px",
+            },
+          });
+          setUninstallLoading(false);
+        } else {
+          setUninstallLoading(false);
+        }
+      };
+
+      socket.on(`uninstall-app-shared-${deviceId}`, handleUninstallResponse);
+    } catch (error) {
+      setUninstallLoading(false);
+      toast.error(t("toast.error.unintall-app"), {
         position: "bottom-center",
         reverseOrder: false,
         duration: 5000,
@@ -141,7 +191,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
   };
 
   const DeviceDetailItem = ({ icon: Icon, label, value }) => (
-    <Grid sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
+    <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
       <SvgIcon sx={{ color: Color.text.secondary, fontSize: "20px" }}>
         <Icon />
       </SvgIcon>
@@ -152,7 +202,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
           {value}
         </span>
       </Typography>
-    </Grid>
+    </Box>
   );
 
   const details = [
@@ -193,7 +243,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: "15px",
+        gap: "10px",
         maxHeight: "500px",
         minHeight: "100px",
         overflowY: "auto",
@@ -209,41 +259,74 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
       ))}
 
       {selectedDevice && (
-        <Box
-          sx={{
-            borderTop: `solid 2px ${Color.background.border}`,
-            pt: 2,
-            display: "flex",
-            gap: "15px",
-          }}
-        >
-          <Button
-            onClick={handleRemoveClick}
+        <Box sx={{ borderTop: `solid 2px ${Color.background.border}`, pt: 2 }}>
+          <Box
             sx={{
-              width: "100%",
-              border: `solid 1px ${Color.background.red_gray01}`,
-              color: Color.text.red_gray01,
-              "&:hover": {
-                color: Color.text.primary,
-                backgroundColor: Color.background.red_gray01,
-              },
+              display: "flex",
+              gap: "15px",
+              mb: 2,
             }}
           >
-            {t("devicesPage.deviceInfo.removeDevice")}
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={() => handleFormatDevice(selectedDevice)}
+            <Button
+              onClick={handleRemoveClick}
+              sx={{
+                width: "100%",
+                border: `solid 1px ${Color.background.red_gray01}`,
+                color: Color.text.red_gray01,
+                "&:hover": {
+                  color: Color.text.primary,
+                  backgroundColor: Color.background.red_gray01,
+                },
+              }}
+            >
+              {t("devicesPage.deviceInfo.removeDevice")}
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => handleFormatDevice(selectedDevice)}
+              sx={{
+                width: "100%",
+                "&:hover": {
+                  color: Color.text.primary,
+                  backgroundColor: Color.background.purple,
+                },
+              }}
+              disabled={formatLoading ? true : false}
+            >
+              {formatLoading ? (
+                <CircularProgress size={28} />
+              ) : (
+                t("devicesPage.deviceInfo.formatDevice")
+              )}
+            </Button>
+          </Box>
+          <Box
             sx={{
-              width: "100%",
-              "&:hover": {
-                color: Color.text.primary,
-                backgroundColor: Color.background.purple,
-              },
+              display: "flex",
             }}
           >
-            {t("devicesPage.deviceInfo.formatDevice")}
-          </Button>
+            <Button
+              variant="outlined"
+              onClick={() => handleUninstallApp(selectedDevice)}
+              sx={{
+                width: "100%",
+                borderColor: Color.background.yellow_gray01,
+                color: Color.background.yellow_gray01,
+                "&:hover": {
+                  color: Color.text.primary,
+                  borderColor: Color.background.yellow_gray01,
+                  backgroundColor: Color.background.yellow_gray01,
+                },
+              }}
+              disabled={uninstallLoading ? true : false}
+            >
+              {uninstallLoading ? (
+                <CircularProgress size={28} />
+              ) : (
+                t("devicesPage.deviceInfo.uninstall-App")
+              )}
+            </Button>
+          </Box>
         </Box>
       )}
 

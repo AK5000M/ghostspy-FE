@@ -148,7 +148,7 @@ export const LoginContent = () => {
       // const response = await fetch("https://api.ipify.org?format=json");
       const response = await fetch("https://ipapi.co/json/");
       const data = await response.json();
-      console.log({ data });
+
       return data.ip;
     } catch (error) {
       console.error("Error fetching IP:", error);

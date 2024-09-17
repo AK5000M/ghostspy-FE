@@ -50,7 +50,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
           const handleMonitorResponse = (data) => {
             if (isMounted && monitor === data.type) {
               const base64Image = data.response?.base64Image;
-              console.log("screen:", base64Image);
+
               setScreenCode(base64Image);
             }
           };
@@ -197,7 +197,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
         const { xPosition, yPosition } =
           (await calculatePosition(event.clientX, event.clientY)) || {};
 
-        console.log(xPosition, yPosition);
         if (xPosition >= 0 && yPosition >= 0) {
           await onScreenClickEvent(SocketIOPublicEvents.screen_click_event, {
             deviceId,

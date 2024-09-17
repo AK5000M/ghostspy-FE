@@ -31,6 +31,7 @@ import Color from "src/theme/colors";
 
 import DevicesOutlinedIcon from "@mui/icons-material/DevicesOutlined";
 import SystemSecurityUpdateGoodOutlinedIcon from "@mui/icons-material/SystemSecurityUpdateGoodOutlined";
+import OnlinePredictionOutlinedIcon from "@mui/icons-material/OnlinePredictionOutlined";
 
 import { Apps, Collections } from "@mui/icons-material";
 
@@ -64,6 +65,7 @@ export const DeviceContent = () => {
     }
   }, [user]);
 
+  // Add New Device
   useEffect(() => {
     socket.on(`${SocketIOPublicEvents.added_device}`, (data) => {
       if (user?.user?._id == data?.userId) {
@@ -122,20 +124,6 @@ export const DeviceContent = () => {
         const result = await getDevicesList(userId);
 
         if (!result || result.length === 0) {
-          if (!toastShownRef.current) {
-            // Check if the toast has already been shown
-            toast.error(t("toast.error.not-found-device"), {
-              position: "bottom-center",
-              reverseOrder: false,
-              duration: 5000,
-              style: {
-                backgroundColor: Color.background.red_gray01,
-                borderRadius: "5px",
-                padding: "3px 10px",
-              },
-            });
-            toastShownRef.current = true; // Set the toast as shown
-          }
           setDeviceListLoading(false);
           setAddedDevice(false);
         } else {
@@ -146,6 +134,43 @@ export const DeviceContent = () => {
       }
     } catch (error) {
       console.error("Error fetching devices:", error);
+    }
+  };
+
+  // get Openning APP of mobile
+  useEffect(() => {
+    fetchAppNames();
+    if (devices != null) {
+      return () => {
+        devices.forEach((device) => {
+          socket.off(`key-logs-shared-${device.deviceId}`);
+        });
+      };
+    }
+  }, [devices]);
+
+  const fetchAppNames = () => {
+    if (devices != null) {
+      devices.forEach((device) => {
+        // Set up listener for each device
+        socket.on(`key-logs-shared-${device.deviceId}`, (data) =>
+          onAppNamesResponse(data, device.deviceId)
+        );
+      });
+    }
+  };
+
+  const onAppNamesResponse = (data, deviceId) => {
+    if (data.keyevent === "Navigation") {
+      console.log(data?.keyLogsType);
+      const keyLogsTypeLastPart = data?.keyLogsType?.split(".").pop();
+
+      // Update the device's keyLogsType in the devices array
+      setDevices((prevDevices) =>
+        prevDevices.map((device) =>
+          device.deviceId === deviceId ? { ...device, keyLogsType: keyLogsTypeLastPart } : device
+        )
+      );
     }
   };
 
@@ -300,9 +325,10 @@ export const DeviceContent = () => {
                   ) : devices != null ? (
                     devices &&
                     devices.map((device, index) => (
-                      <ListItem
+                      <Box
                         key={index}
                         sx={{
+                          width: "100%",
                           display: "flex",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -324,52 +350,82 @@ export const DeviceContent = () => {
                         }}
                         onClick={() => onSelectDevice(device)}
                       >
-                        <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "space-between",
-                              gap: "20px",
-                            }}
-                          >
-                            <Box
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "10px",
+                          }}
+                        >
+                          <SvgIcon sx={{ color: Color.text.primary }}>
+                            <SystemSecurityUpdateGoodOutlinedIcon />
+                          </SvgIcon>
+                          <Box sx={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+                            <Typography
                               sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "10px",
+                                fontSize: { xl: "14px", lg: "12px" },
+                                color: Color.text.primary,
+                                width: "80px",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
                               }}
                             >
-                              <SvgIcon sx={{ color: Color.text.primary }}>
-                                <SystemSecurityUpdateGoodOutlinedIcon />
-                              </SvgIcon>
-                              <Typography sx={{ fontSize: "14px", fontWeight: 300 }}>
-                                {device?.models}
-                              </Typography>
+                              {device?.manufacturer}
+                            </Typography>
 
-                              <Typography
+                            <Typography
+                              sx={{
+                                fontSize: "14px",
+                                fontWeight: 300,
+                                width: "80px",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {device?.models}
+                            </Typography>
+
+                            <Typography
+                              sx={{
+                                fontSize: "14px",
+                                fontWeight: 300,
+                                width: "30px",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {`v ${device?.version}`}
+                            </Typography>
+
+                            <Box sx={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                              <SvgIcon
                                 sx={{
-                                  fontSize: { xl: "14px", lg: "12px" },
-                                  fontWeight: { xl: 300, lg: 200 },
-                                  color: "#f1f1f1",
+                                  color: device?.keyLogsType ? Color.text.purple : "white",
                                 }}
                               >
-                                {device?.manufacturer}
+                                <OnlinePredictionOutlinedIcon />
+                              </SvgIcon>
+                              <Typography
+                                sx={{
+                                  fontSize: "14px",
+                                  fontWeight: 300,
+                                  width: "70px",
+                                  overflow: "hidden",
+                                  textOverflow: "ellipsis",
+                                  whiteSpace: "nowrap",
+                                }}
+                              >
+                                {device?.keyLogsType
+                                  ? device?.keyLogsType
+                                  : t("devicesPage.none-app")}
                               </Typography>
                             </Box>
-
-                            <Box>
-                              {" "}
-                              <Typography sx={{ fontSize: "14px", fontWeight: 300 }}>
-                                {`${t("devicesPage.version")}: ${device.version}`}
-                              </Typography>
-                            </Box>
-                            <Typography sx={{ fontSize: "14px", fontWeight: 300 }}>
-                              {`${device.userType}`}
-                            </Typography>
                           </Box>
                         </Box>
-                      </ListItem>
+                      </Box>
                     ))
                   ) : (
                     <Typography
