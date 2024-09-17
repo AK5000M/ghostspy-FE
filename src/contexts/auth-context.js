@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useReducer, useRef } from "react"
 import PropTypes from "prop-types";
 import toast from "react-hot-toast";
 import jsCookie from "js-cookie";
+import { useRouter } from "next/router";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -62,14 +63,15 @@ const reducer = (state, action) =>
 export const AuthContext = createContext({ undefined });
 
 export const AuthProvider = (props) => {
+  const router = useRouter();
   const { children } = props;
   const [state, dispatch] = useReducer(reducer, initialState);
   const initialized = useRef(false);
 
   const initialize = async () => {
-    if (initialized.current) {
-      return;
-    }
+    // if (initialized.current) {
+    //   return;
+    // }
 
     initialized.current = true;
 
@@ -112,7 +114,7 @@ export const AuthProvider = (props) => {
   useEffect(() => {
     // window.location.href = "/home";
     initialize();
-  }, []);
+  }, [router?.pathname]);
 
   // SignIn function with api
   const SignIn = async (data) => {
@@ -127,19 +129,23 @@ export const AuthProvider = (props) => {
 
       const authData = await response.json();
 
-      if (authData.status == "201") {
+      if (authData.status === "201") {
         jsCookie.set("token", authData.data.token, { expires: 10 * 60 * 60 * 1000 });
         jsCookie.set("userId", authData.data.user._id, { expires: 10 * 60 * 60 * 1000 });
         dispatch({
           type: HANDLERS.SIGN_IN,
-          payload: authData.data.user, // Change from userData.data to userData.user
+          payload: authData.data.user,
         });
         return authData;
+      } else if (authData.status === "401") {
+        // Handle unauthorized response
+        // Redirect to login or show an appropriate message
+        window.location.href = "/auth/login?message=sessionExpired";
       } else {
         return authData;
       }
     } catch (error) {
-      throw new Error(error.message || "Failed to signIn");
+      throw new Error(error.message || "Failed to sign in");
     }
   };
 
