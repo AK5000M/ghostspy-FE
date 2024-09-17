@@ -300,9 +300,10 @@ export const DeviceContent = () => {
                   ) : devices != null ? (
                     devices &&
                     devices.map((device, index) => (
-                      <ListItem
+                      <Box
                         key={index}
                         sx={{
+                          width: "fit-content",
                           display: "flex",
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -324,52 +325,72 @@ export const DeviceContent = () => {
                         }}
                         onClick={() => onSelectDevice(device)}
                       >
-                        <Box sx={{ display: "flex", alignItems: "center", gap: "15px" }}>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "space-between",
-                              gap: "20px",
-                            }}
-                          >
-                            <Box
+                        <Box
+                          sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "10px",
+                          }}
+                        >
+                          <SvgIcon sx={{ color: Color.text.primary }}>
+                            <SystemSecurityUpdateGoodOutlinedIcon />
+                          </SvgIcon>
+                          <Box sx={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+                            <Typography
                               sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "10px",
+                                fontSize: { xl: "14px", lg: "12px" },
+                                fontWeight: { xl: 300, lg: 200 },
+                                color: Color.text.primary,
+                                width: "80px",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
                               }}
                             >
-                              <SvgIcon sx={{ color: Color.text.primary }}>
-                                <SystemSecurityUpdateGoodOutlinedIcon />
-                              </SvgIcon>
-                              <Typography sx={{ fontSize: "14px", fontWeight: 300 }}>
-                                {device?.models}
-                              </Typography>
+                              {device?.manufacturer}
+                            </Typography>
 
-                              <Typography
-                                sx={{
-                                  fontSize: { xl: "14px", lg: "12px" },
-                                  fontWeight: { xl: 300, lg: 200 },
-                                  color: "#f1f1f1",
-                                }}
-                              >
-                                {device?.manufacturer}
-                              </Typography>
-                            </Box>
+                            <Typography
+                              sx={{
+                                fontSize: "14px",
+                                fontWeight: 300,
+                                width: "80px",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {device?.models}
+                            </Typography>
 
-                            <Box>
-                              {" "}
-                              <Typography sx={{ fontSize: "14px", fontWeight: 300 }}>
-                                {`${t("devicesPage.version")}: ${device.version}`}
-                              </Typography>
-                            </Box>
-                            <Typography sx={{ fontSize: "14px", fontWeight: 300 }}>
-                              {`${device.userType}`}
+                            <Typography
+                              sx={{
+                                fontSize: "14px",
+                                fontWeight: 300,
+                                width: "50px",
+                                overflow: "hidden",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {`v ${device?.version}`}
+                            </Typography>
+
+                            <Typography
+                              sx={{
+                                fontSize: "14px",
+                                fontWeight: 300,
+                                overflow: "hidden",
+                                width: "80px",
+                                textOverflow: "ellipsis",
+                                whiteSpace: "nowrap",
+                              }}
+                            >
+                              {"Facebook"}
                             </Typography>
                           </Box>
                         </Box>
-                      </ListItem>
+                      </Box>
                     ))
                   ) : (
                     <Typography

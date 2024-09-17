@@ -13,6 +13,7 @@ import {
   DialogTitle,
   Box,
 } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import PermDeviceInformationIcon from "@mui/icons-material/PermDeviceInformation";
 import SystemSecurityUpdateWarningIcon from "@mui/icons-material/SystemSecurityUpdateWarning";
 import DnsIcon from "@mui/icons-material/Dns";
@@ -37,6 +38,8 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
   const [batteryStatus, setBatteryStatus] = useState(selectedDevice?.batteryStatus);
   const [netStatus, setNetStatus] = useState(selectedDevice?.connectStatus);
   const [openModal, setOpenModal] = useState(false); // Modal state
+
+  const [formatLoading, setFormatLoading] = useState(false);
 
   useEffect(() => {
     if (selectedDevice) {
@@ -92,6 +95,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
   // Device Format
   const handleFormatDevice = async (device) => {
     const deviceId = device?.deviceId;
+    setFormatLoading(true);
     try {
       await onDeviceFormat(SocketIOPublicEvents.device_format_event, { deviceId });
 
@@ -108,11 +112,15 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
               fontSize: "16px",
             },
           });
+          setFormatLoading(false);
+        } else {
+          setFormatLoading(false);
         }
       };
 
       socket.on(`device-format-shared-${deviceId}`, handleFormatResponse);
     } catch (error) {
+      setFormatLoading(false);
       // Check if the toast has already been shown
       toast.error(t("toast.error.device-format"), {
         position: "bottom-center",
@@ -241,8 +249,13 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
                 backgroundColor: Color.background.purple,
               },
             }}
+            disabled={formatLoading ? true : false}
           >
-            {t("devicesPage.deviceInfo.formatDevice")}
+            {formatLoading ? (
+              <CircularProgress size={28} />
+            ) : (
+              t("devicesPage.deviceInfo.formatDevice")
+            )}
           </Button>
         </Box>
       )}
