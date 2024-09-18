@@ -11,12 +11,12 @@ export const getKeyLogs = async (data) => {
     }
 
     if (token) {
-      const response = await axios.get(`${apiUrl}/app/get-apk/${data?.userId}/${data?.apkName}`, {
+      const response = await axios.get(`${apiUrl}/keylogs/get/${data?.deviceId}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        responseType: "blob",
+        responseType: "json",
       });
 
       return response.data;

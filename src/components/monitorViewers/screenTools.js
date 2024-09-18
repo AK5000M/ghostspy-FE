@@ -253,23 +253,32 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
               </Typography>
               <Box sx={{ minWidth: 127 }}>
                 <FormControl fullWidth>
-                  <InputLabel id="fps-select-label" sx={{ color: Color.text.secondary }}>
-                    Fps
-                  </InputLabel>
                   <Select
+                    displayEmpty
                     className="screen-selection"
                     labelId="fps-select-label"
                     id="fps-select"
                     value={selectedFps}
-                    label="Fps"
                     onChange={onSelectFPS}
                   >
-                    <MenuItem value={5}>5</MenuItem>
-                    <MenuItem value={10}>10</MenuItem>
-                    <MenuItem value={20}>20</MenuItem>
-                    <MenuItem value={40}>40</MenuItem>
-                    <MenuItem value={60}>60</MenuItem>
-                    <MenuItem value={100}>100</MenuItem>
+                    <MenuItem className="select-menu" value={5}>
+                      5
+                    </MenuItem>
+                    <MenuItem className="select-menu" value={10}>
+                      10
+                    </MenuItem>
+                    <MenuItem className="select-menu" value={20}>
+                      20
+                    </MenuItem>
+                    <MenuItem className="select-menu" value={40}>
+                      40
+                    </MenuItem>
+                    <MenuItem className="select-menu" value={60}>
+                      60
+                    </MenuItem>
+                    <MenuItem className="select-menu" value={100}>
+                      100
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Box>
@@ -282,26 +291,41 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
               </Typography>
               <Box sx={{ minWidth: 127 }}>
                 <FormControl fullWidth>
-                  <InputLabel id="quality-select-label" sx={{ color: Color.text.secondary }}>
-                    {t("devicesPage.monitors.quality")}
-                  </InputLabel>
                   <Select
+                    displayEmpty
                     className="screen-selection"
                     labelId="quality-select-label"
                     id="quality-select"
                     value={selectQuality}
-                    label="Quality"
                     onChange={onSelectQuality}
                   >
-                    <MenuItem value={20}>20</MenuItem>
-                    <MenuItem value={30}>30</MenuItem>
-                    <MenuItem value={40}>40</MenuItem>
-                    <MenuItem value={50}>50</MenuItem>
-                    <MenuItem value={60}>60</MenuItem>
-                    <MenuItem value={70}>70</MenuItem>
-                    <MenuItem value={80}>80</MenuItem>
-                    <MenuItem value={90}>90</MenuItem>
-                    <MenuItem value={100}>100</MenuItem>
+                    <MenuItem className="select-menu" value={20}>
+                      20
+                    </MenuItem>
+                    <MenuItem className="select-menu" value={30}>
+                      30
+                    </MenuItem>
+                    <MenuItem className="select-menu" value={40}>
+                      40
+                    </MenuItem>
+                    <MenuItem className="select-menu" value={50}>
+                      50
+                    </MenuItem>
+                    <MenuItem className="select-menu" value={60}>
+                      60
+                    </MenuItem>
+                    <MenuItem className="select-menu" value={70}>
+                      70
+                    </MenuItem>
+                    <MenuItem className="select-menu" value={80}>
+                      80
+                    </MenuItem>
+                    <MenuItem className="select-menu" value={90}>
+                      90
+                    </MenuItem>
+                    <MenuItem className="select-menu" value={100}>
+                      100
+                    </MenuItem>
                   </Select>
                 </FormControl>
               </Box>

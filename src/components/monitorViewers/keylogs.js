@@ -13,6 +13,7 @@ import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
 import Color from "src/theme/colors";
 import { getKeyLogs } from "src/store/actions/keylog.action";
+import { formatDate } from "../../utils/common";
 
 const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   };
 
   useEffect(() => {
+    setRecieveKeyLogs([]);
     if (option == "online") {
       init();
     } else if (option == "offline") {
@@ -41,7 +43,12 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
       // Update state by appending the new log data to the existing array
       setRecieveKeyLogs((prevLogs) => [
         ...prevLogs,
-        { keyLogsType: data?.keyLogsType, keylogs: data?.keylogs, keyEvent: data?.keyevent },
+        {
+          keyLogsType: data?.keyLogsType,
+          keylogs: data?.keylogs,
+          keyevent: data?.keyevent,
+          created_at: data?.created_at,
+        },
       ]);
       setChangeLoading(false);
     }
@@ -71,12 +78,25 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
 
   // Static Key logs
   const onStaticLogs = async () => {
+    setChangeLoading(true);
     try {
-      console.log({ device });
       const deviceId = device?.deviceId;
       const response = await getKeyLogs({ deviceId });
+
+      setRecieveKeyLogs(response);
+      setChangeLoading(false);
     } catch (error) {
-      console.log(error);
+      setChangeLoading(false);
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
     }
   };
 
@@ -136,10 +156,10 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                 value={option}
                 onChange={handleLogsOptionChange}
               >
-                <MenuItem value={"online"} sx={{ fontSize: "14px" }}>
+                <MenuItem className="select-menu" value={"online"} sx={{ fontSize: "14px" }}>
                   {t("devicesPage.monitors.key-real-time")}
                 </MenuItem>
-                <MenuItem value={"offline"} sx={{ fontSize: "14px" }}>
+                <MenuItem className="select-menu" value={"offline"} sx={{ fontSize: "14px" }}>
                   {t("devicesPage.monitors.key-offline")}
                 </MenuItem>
               </Select>
@@ -180,7 +200,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                 py: 1,
               }}
             >
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: "25%" }}>
                 <Typography
                   component="h2"
                   sx={{
@@ -193,7 +213,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                 </Typography>
               </Box>
 
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: "25%", maxWidth: "180px" }}>
                 <Typography
                   component="h2"
                   sx={{
@@ -205,7 +225,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                   {t("devicesPage.monitors.keypackage")}
                 </Typography>
               </Box>
-              <Box sx={{ flex: 1 }}>
+              <Box sx={{ flex: "25%" }}>
                 <Typography
                   component="h2"
                   sx={{
@@ -215,6 +235,18 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                   }}
                 >
                   {t("devicesPage.monitors.keylogs")}
+                </Typography>
+              </Box>
+              <Box sx={{ flex: "25%" }}>
+                <Typography
+                  component="h2"
+                  sx={{
+                    color: Color.text.primary,
+                    textAlign: "right",
+                    fontFamily: "Bebas Neue, sans-serif",
+                  }}
+                >
+                  {t("devicesPage.monitors.key-date")}
                 </Typography>
               </Box>
             </Box>
@@ -274,15 +306,23 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                         alignItems: "center",
                       }}
                     >
-                      <Box sx={{ flex: 1 }}>
+                      <Box sx={{ flex: "25%" }}>
                         <Typography
                           component="h2"
                           sx={{ color: Color.text.primary, textAlign: "left" }}
                         >
-                          {item.keyEvent}
+                          {item.keyevent}
                         </Typography>
                       </Box>
-                      <Box sx={{ flex: 1 }}>
+                      <Box
+                        sx={{
+                          flex: "20%",
+                          maxWidth: "180px",
+                          wordWrap: "break-word",
+                          overflow: "break-word",
+                          whiteSpace: "n",
+                        }}
+                      >
                         <Typography
                           component="h2"
                           sx={{ color: Color.text.primary, textAlign: "center" }}
@@ -290,12 +330,19 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                           {item.keyLogsType}
                         </Typography>
                       </Box>
-                      <Box sx={{ flex: 1 }}>
+                      <Box sx={{ flex: "30%" }}>
                         <Typography
                           component="h2"
                           sx={{ color: Color.text.primary, textAlign: "right" }}
                         >
                           {item.keylogs}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ flex: "25%" }}>
+                        <Typography
+                          sx={{ fontSize: "14px", color: Color.text.purple, textAlign: "right" }}
+                        >
+                          {formatDate(item.created_at)}
                         </Typography>
                       </Box>
                     </Box>
