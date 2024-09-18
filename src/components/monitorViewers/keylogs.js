@@ -20,7 +20,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const { onSocketMonitor, onSocketCloseMonitor } = useSocketFunctions();
   const { socket } = useSocket();
 
-  const [option, setOption] = useState("online");
+  const [option, setOption] = useState(0);
   const [changeLoading, setChangeLoading] = useState(false);
   const [recieveKeyLogs, setRecieveKeyLogs] = useState([]);
 
@@ -30,9 +30,9 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
 
   useEffect(() => {
     setRecieveKeyLogs([]);
-    if (option == "online") {
+    if (option == 0) {
       init();
-    } else if (option == "offline") {
+    } else if (option == 1) {
       onStaticLogs();
     }
   }, [option]);
@@ -156,10 +156,10 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                 value={option}
                 onChange={handleLogsOptionChange}
               >
-                <MenuItem className="select-menu" value={"online"} sx={{ fontSize: "14px" }}>
+                <MenuItem className="select-menu" value={0} sx={{ fontSize: "14px" }}>
                   {t("devicesPage.monitors.key-real-time")}
                 </MenuItem>
-                <MenuItem className="select-menu" value={"offline"} sx={{ fontSize: "14px" }}>
+                <MenuItem className="select-menu" value={1} sx={{ fontSize: "14px" }}>
                   {t("devicesPage.monitors.key-offline")}
                 </MenuItem>
               </Select>
