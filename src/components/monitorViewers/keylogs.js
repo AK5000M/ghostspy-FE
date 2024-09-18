@@ -12,7 +12,7 @@ import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
 import Color from "src/theme/colors";
-import { getKeyLogs } from "src/store/actions/keylogs.action";
+import { getKeyLogs } from "src/store/actions/keylog.action";
 
 const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
