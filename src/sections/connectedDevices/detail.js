@@ -305,7 +305,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
               display: "flex",
             }}
           >
-            {/* <Button
+            <Button
               variant="outlined"
               onClick={() => handleUninstallApp(selectedDevice)}
               sx={{
@@ -325,7 +325,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
               ) : (
                 t("devicesPage.deviceInfo.uninstall-App")
               )}
-            </Button> */}
+            </Button>
           </Box>
         </Box>
       )}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 
-import { Grid, Typography, CircularProgress, Box } from "@mui/material";
+import { Grid, Typography, CardMedia, Box } from "@mui/material";
 
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
@@ -117,19 +117,17 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
                 width: "100%",
               }}
             >
-              <Grid
+              <CardMedia
+                className="screen-body"
+                component="img"
+                src={"/assets/logos/spy/ghostspy-logo-_2_.webp"}
                 sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "#564FEE",
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "5px",
+                  cursor: "default",
+                  width: "auto",
+                  height: "auto",
+                  borderRadius: "0px",
                 }}
-              >
-                <CircularProgress sx={{ color: "white" }} size={20} />
-              </Grid>
+              />
             </Grid>
           )}
           <Grid

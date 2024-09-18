@@ -413,6 +413,20 @@ button:hover {
   align-items: center;
 }
 
+.key-selection {
+  border-radius: 5px;
+}
+.key-selection fieldset {
+  border: solid 1px #564fee !important;
+  box-shadow: none !important;
+}
+
+.key-selection .MuiSelect-select {
+  padding: 12px 10px;
+  display: flex;
+  align-items: center;
+}
+
 .message-enter {
   opacity: 0;
   transform: translateY(20px);
