@@ -37,8 +37,8 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
   const [openMessage, setOpenMessage] = useState(false);
   const [lockStatus, setLockStatus] = useState(lock != null ? lock : device?.lockScreen);
   const [privacyText, setPrivacyText] = useState("");
-  const [selectedFps, setSelectedFps] = useState(null);
-  const [selectQuality, setSelectQuality] = useState(null);
+  const [selectedFps, setSelectedFps] = useState(5);
+  const [selectQuality, setSelectQuality] = useState(20);
 
   // Black Screen Option
   const onSwitchBlackScreen = async (event) => {
@@ -118,7 +118,16 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
         fps: fpsValue,
       });
     } catch (error) {
-      console.log("select fps error", error);
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
     }
   };
 
@@ -132,7 +141,16 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
         quality: qualityValue,
       });
     } catch (error) {
-      console.log("select quality error", error);
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
     }
   };
 

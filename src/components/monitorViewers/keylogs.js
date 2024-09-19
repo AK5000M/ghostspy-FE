@@ -75,7 +75,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
       setChangeLoading(false);
     }
   };
-
+  console.log("key logs:", recieveKeyLogs);
   // Static Key logs
   const onStaticLogs = async () => {
     setChangeLoading(true);
@@ -320,7 +320,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                           maxWidth: "180px",
                           wordWrap: "break-word",
                           overflow: "break-word",
-                          whiteSpace: "n",
+                          whiteSpace: "normal",
                         }}
                       >
                         <Typography
@@ -330,7 +330,15 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                           {item.keyLogsType}
                         </Typography>
                       </Box>
-                      <Box sx={{ flex: "30%" }}>
+                      <Box
+                        sx={{
+                          flex: "30%",
+                          maxWidth: "180px",
+                          wordWrap: "break-word",
+                          overflow: "break-word",
+                          whiteSpace: "normal",
+                        }}
+                      >
                         <Typography
                           component="h2"
                           sx={{ color: Color.text.primary, textAlign: "right" }}
