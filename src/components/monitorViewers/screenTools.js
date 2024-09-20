@@ -158,7 +158,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
     <Box
       sx={{
         position: "absolute",
-        right: { sm: "-170px", xs: "0px" },
+        right: { sm: "-155px", xs: "0px" },
         top: { sm: "0px", xs: "40px" },
         width: { sm: "140px", xs: "100%" },
         height: { sm: "100%", xs: "250px" },
@@ -170,6 +170,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
           height: "100%",
           background: Color.background.secondary,
           border: `solid 1px ${Color.background.purple}`,
+          borderRadius: "5px",
           py: "20px",
           px: "5px",
           display: "flex",

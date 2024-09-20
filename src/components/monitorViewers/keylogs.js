@@ -130,7 +130,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
         <Box
           sx={{
             position: "absolute",
-            right: "-180px",
+            right: "-165px",
             top: "0%",
             backgroundColor: Color.background.secondary,
             border: `solid 1px ${Color.background.purple}`,
