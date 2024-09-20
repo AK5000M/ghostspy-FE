@@ -18,6 +18,7 @@ import {
 import CircularProgress from "@mui/material/CircularProgress";
 
 import Color from "src/theme/colors";
+import Header from "../../components/header";
 
 import { useAuth } from "src/hooks/use-auth";
 
@@ -167,6 +168,8 @@ export const LoginContent = () => {
         backgroundPosition: "center",
       }}
     >
+      {" "}
+      <Header />
       <Box
         sx={{
           display: "flex",
@@ -176,7 +179,7 @@ export const LoginContent = () => {
           mb: "85px",
         }}
       >
-        <Container maxWidth="lg" sx={{ py: 3 }}>
+        <Container maxWidth="md" sx={{ py: 3 }}>
           <Box
             sx={{
               display: "flex",
@@ -184,9 +187,8 @@ export const LoginContent = () => {
               alignItems: { xs: "center", md: "center" },
               justifyContent: "space-between",
               backgroundColor: Color.background.main,
-              p: 3,
               borderRadius: "5px",
-              gap: "15px",
+              border: `solid 1px ${Color.background.purple}`,
             }}
           >
             {/* First Part - 5/10 */}
@@ -197,7 +199,8 @@ export const LoginContent = () => {
                 backgroundImage: `linear-gradient(rgb(19 19 20 / 0%), rgb(19 19 20 / 0%)), url("/assets/background/sm-bg.webp")`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                borderRadius: "10px",
+                borderTopLeftRadius: "5px",
+                borderBottomLeftRadius: "5px",
                 height: "60vh",
                 display: "flex",
                 alignItems: "flex-end",
@@ -219,11 +222,12 @@ export const LoginContent = () => {
               <img
                 src="/assets/logos/spy/ghostspy-logo-_2_.webp"
                 alt="Logo"
-                style={{ width: "180px" }}
+                style={{ width: "180px", marginBottom: "20px" }}
               />
               <Box
                 sx={{
-                  padding: { md: "30px", xs: "0px" },
+                  px: { md: "20px", xs: "10px" },
+                  py: { md: "10px", xs: "30px" },
                   width: "100%",
                 }}
               >
@@ -232,9 +236,9 @@ export const LoginContent = () => {
                   sx={{
                     mb: 4,
                     color: Color.text.primary,
-                    fontSize: "24px",
+                    fontSize: "22px",
                     fontFamily: "Anton SC, sans-serif",
-                    textAlign: "left",
+                    textAlign: "center",
                   }}
                 >
                   {t("login.sigin-title")}
