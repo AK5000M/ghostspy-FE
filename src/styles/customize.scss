@@ -83,12 +83,16 @@ input {
 }
 
 .modal-close-icon {
-  color: #e6ecf0 !important;
-  background-color: unset !important;
+  color: #564fee !important;
+  background-color: #0f1535 !important;
+  border: solid 1px #564fee;
+  border-radius: 50%;
+  padding: 2px;
+  z-index: 10000 !important;
 }
 .modal-close-icon:hover {
-  color: #a7acb1 !important;
-  background-color: unset !important;
+  color: #7973e7 !important;
+  border: solid 1px #7973e7;
 }
 
 // Button Styles

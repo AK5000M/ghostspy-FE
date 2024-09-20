@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { Button, Stack, TextField, Typography, Box, Container, Link } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
+import Header from "../../components/header";
 import { useAuth } from "src/hooks/use-auth";
 import Color from "src/theme/colors";
 
@@ -147,6 +148,7 @@ export const RegisterContent = () => {
         backgroundPosition: "center",
       }}
     >
+      <Header />
       <Box
         sx={{
           display: "flex",
@@ -156,7 +158,7 @@ export const RegisterContent = () => {
           mb: "85px",
         }}
       >
-        <Container maxWidth="lg" sx={{ py: 3 }}>
+        <Container maxWidth="md" sx={{ py: 3 }}>
           <Box
             sx={{
               display: "flex",
@@ -164,9 +166,8 @@ export const RegisterContent = () => {
               alignItems: { xs: "center", md: "center" },
               justifyContent: "space-between",
               backgroundColor: Color.background.main,
-              p: 3,
+              border: `solid 1px ${Color.background.purple}`,
               borderRadius: "5px",
-              gap: "15px",
             }}
           >
             {/* First Part - 5/10 */}
@@ -184,11 +185,12 @@ export const RegisterContent = () => {
               <img
                 src="/assets/logos/spy/ghostspy-logo-_2_.webp"
                 alt="Logo"
-                style={{ width: "180px" }}
+                style={{ width: "180px", marginBottom: "20px" }}
               />
               <Box
                 sx={{
-                  padding: { md: "30px", xs: "0px" },
+                  px: { md: "20px", xs: "10px" },
+                  py: { md: "10px", xs: "30px" },
                   width: "100%",
                 }}
               >
@@ -197,9 +199,9 @@ export const RegisterContent = () => {
                   sx={{
                     mb: 4,
                     color: Color.text.primary,
-                    fontSize: "24px",
+                    fontSize: "22px",
                     fontFamily: "Anton SC, sans-serif",
-                    textAlign: "left",
+                    textAlign: "center",
                   }}
                 >
                   {t("register.sigup-title")}
@@ -314,8 +316,9 @@ export const RegisterContent = () => {
                 backgroundImage: `linear-gradient(rgb(19 19 20 / 0%), rgb(19 19 20 / 0%)), url("/assets/background/1x1_Crie_uma_logo_moderna_e_tecnol_g_5.webp")`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                borderRadius: "10px",
-                height: "60vh",
+                borderTopRightRadius: "5px",
+                borderBottomRightRadius: "5px",
+                height: "75vh",
                 display: "flex",
                 alignItems: "flex-end",
               }}

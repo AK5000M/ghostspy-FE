@@ -24,7 +24,7 @@ const Languages = () => {
         sx={{ mr: 2, color: "white", padding: "1px" }}
         className="lang-selection"
       >
-        <MenuItem value="pr">
+        <MenuItem value="pr" className="select-menu">
           <img
             src={"../assets/flags/brazil_f.png"}
             alt="Brazil Flag"
@@ -32,7 +32,7 @@ const Languages = () => {
           />
           PR
         </MenuItem>
-        <MenuItem value="en">
+        <MenuItem value="en" className="select-menu">
           <img
             src={"../assets/flags/us_f.png"}
             alt="Brazil Flag"
@@ -40,7 +40,7 @@ const Languages = () => {
           />
           EN
         </MenuItem>
-        <MenuItem value="es">
+        <MenuItem value="es" className="select-menu">
           <img
             src={"../assets/flags/es_f.png"}
             alt="Brazil Flag"

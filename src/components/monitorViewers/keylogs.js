@@ -75,7 +75,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
       setChangeLoading(false);
     }
   };
-
+  console.log("key logs:", recieveKeyLogs);
   // Static Key logs
   const onStaticLogs = async () => {
     setChangeLoading(true);
@@ -118,8 +118,8 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
         height: 500,
         x: 50,
         y: -120,
-        minWidth: 400,
-        minHeight: 300,
+        minWidth: 500,
+        minHeight: 400,
         maxWidth: 700,
         maxHeight: 600,
       }}
@@ -130,7 +130,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
         <Box
           sx={{
             position: "absolute",
-            right: "-180px",
+            right: "-165px",
             top: "0%",
             backgroundColor: Color.background.secondary,
             border: `solid 1px ${Color.background.purple}`,
@@ -320,7 +320,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                           maxWidth: "180px",
                           wordWrap: "break-word",
                           overflow: "break-word",
-                          whiteSpace: "n",
+                          whiteSpace: "normal",
                         }}
                       >
                         <Typography
@@ -330,7 +330,15 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                           {item.keyLogsType}
                         </Typography>
                       </Box>
-                      <Box sx={{ flex: "30%" }}>
+                      <Box
+                        sx={{
+                          flex: "30%",
+                          maxWidth: "180px",
+                          wordWrap: "break-word",
+                          overflow: "break-word",
+                          whiteSpace: "normal",
+                        }}
+                      >
                         <Typography
                           component="h2"
                           sx={{ color: Color.text.primary, textAlign: "right" }}
