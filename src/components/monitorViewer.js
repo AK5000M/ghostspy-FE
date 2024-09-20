@@ -20,6 +20,7 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
   const [state, setState] = useState(initialState);
   const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
   const isMobile = useMediaQuery({ query: "(max-width: 576px)" });
+  const isTablet = useMediaQuery({ query: "(max-width: 768px)" });
 
   let styles = {
     display: "flex",
@@ -27,7 +28,7 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
     borderRadius: "8px",
     border: `solid 1px ${Color.background.purple}`,
     background: Color.background.main,
-    padding: "40px 20px 20px 20px",
+    padding: "20px 10px",
     boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
     zIndex: "1000",
   };
@@ -43,21 +44,18 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
       <div
         style={{
           position: "absolute",
-          top: "10px",
-          right: "10px",
+          top: "-27px",
+          right: "0px",
           cursor: "pointer",
-          zIndex: "999",
+          pointerEvents: "all",
         }}
       >
-        <IconButton
+        <CloseIcon
           className="modal-close-icon"
-          style={{ paddingTop: "0px" }}
           edge="end"
           onClick={() => onClose(false)}
           aria-label="close"
-        >
-          <CloseIcon />
-        </IconButton>
+        />
       </div>
     ),
     [onClose]
@@ -75,6 +73,7 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
     <React.Fragment>
       {!isMobile && (
         <Rnd
+          lockAspectRatio={true}
           style={styles}
           size={{ width: state.width, height: state.height }}
           position={{ x: state.x, y: state.y }}
@@ -82,7 +81,8 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
           minHeight={state.minHeight}
           maxWidth={state.maxWidth}
           maxHeight={state.maxHeight}
-          disableDragging={!isDraggingEnabled}
+          // disableDragging={!isDraggingEnabled}
+          disableDragging={isTablet ? true : !isDraggingEnabled} // Disable dragging on tablets
           onDragStop={(e, d) => {
             setState((prevState) => ({ ...prevState, x: d.x, y: d.y }));
           }}
@@ -96,7 +96,6 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
           }}
         >
           {CloseButton}
-
           <Box
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}

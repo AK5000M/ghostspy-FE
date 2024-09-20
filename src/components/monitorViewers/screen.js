@@ -86,6 +86,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
 
   // Close
   const onCloseModal = async () => {
+    console.log("----------close event");
     try {
       setScreenCode(null);
       onClose(false);
@@ -108,6 +109,8 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
       ...position,
     }));
   };
+
+  console.log({ screenCode });
 
   // Handle image load to get intrinsic and rendered size
   // const onImageLoad = (e) => {
@@ -219,13 +222,13 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   return (
     <MonitorViewer
       initialState={{
-        width: 380,
+        width: 360,
         height: 720,
         x: 100,
         y: -120,
         minWidth: 270,
         minHeight: 540,
-        maxWidth: 380,
+        maxWidth: 360,
         maxHeight: 720,
       }}
       onClose={onCloseModal}

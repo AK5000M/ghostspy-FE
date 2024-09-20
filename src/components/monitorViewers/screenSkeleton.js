@@ -189,8 +189,8 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
         height: 720,
         x: 100,
         y: -120,
-        minWidth: 360,
-        minHeight: 720,
+        minWidth: 270,
+        minHeight: 540,
         maxWidth: 360,
         maxHeight: 720,
       }}

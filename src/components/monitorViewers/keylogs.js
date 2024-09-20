@@ -118,8 +118,8 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
         height: 500,
         x: 50,
         y: -120,
-        minWidth: 400,
-        minHeight: 300,
+        minWidth: 500,
+        minHeight: 400,
         maxWidth: 700,
         maxHeight: 600,
       }}

@@ -81,8 +81,8 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
         height: 500,
         x: 50,
         y: -120,
-        minWidth: 300,
-        minHeight: 200,
+        minWidth: 500,
+        minHeight: 400,
         maxWidth: 900,
         maxHeight: 500,
       }}
