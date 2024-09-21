@@ -168,6 +168,7 @@ export const RegisterContent = () => {
               backgroundColor: Color.background.main,
               border: `solid 1px ${Color.background.purple}`,
               borderRadius: "5px",
+              height: "720px",
             }}
           >
             {/* First Part - 5/10 */}
@@ -318,8 +319,8 @@ export const RegisterContent = () => {
                 backgroundPosition: "center",
                 borderTopRightRadius: "5px",
                 borderBottomRightRadius: "5px",
-                height: "75vh",
-                display: "flex",
+                height: "100%",
+                display: { md: "flex", xs: "none" },
                 alignItems: "flex-end",
               }}
             ></Box>

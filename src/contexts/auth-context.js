@@ -119,17 +119,10 @@ export const AuthProvider = (props) => {
   // SignIn function with api
   const SignIn = async (data) => {
     try {
-      const csrfResponse = await fetch(`${apiUrl}/api/csrf-token`, {
-        method: "GET",
-      });
-      console.log({ csrfResponse });
-      const { csrfToken } = await csrfResponse.json();
-
       const response = await fetch(`${apiUrl}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "CSRF-Token": csrfToken,
         },
         body: JSON.stringify(data),
       });

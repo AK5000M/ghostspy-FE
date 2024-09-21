@@ -189,6 +189,7 @@ export const LoginContent = () => {
               backgroundColor: Color.background.main,
               borderRadius: "5px",
               border: `solid 1px ${Color.background.purple}`,
+              height: "550px",
             }}
           >
             {/* First Part - 5/10 */}
@@ -201,8 +202,8 @@ export const LoginContent = () => {
                 backgroundPosition: "center",
                 borderTopLeftRadius: "5px",
                 borderBottomLeftRadius: "5px",
-                height: "60vh",
-                display: "flex",
+                height: "100%",
+                display: { md: "flex", xs: "none" },
                 alignItems: "flex-end",
               }}
             ></Box>
