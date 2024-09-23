@@ -15,6 +15,7 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  Tooltip,
 } from "@mui/material";
 
 import ReplyIcon from "@mui/icons-material/Reply";
@@ -300,7 +301,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
             />
           </Box>
           {/* Resolution and FPS */}
-          <Box
+          {/* <Box
             sx={{
               width: "100%",
               display: "flex",
@@ -395,7 +396,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                 </FormControl>
               </Box>
             </Box>
-          </Box>
+          </Box> */}
         </Box>
 
         <Box
@@ -407,35 +408,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
             alignItems: "center",
             gap: "20px",
           }}
-        >
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Typography
-              sx={{
-                fontSize: "14px",
-                color: Color.text.primary,
-                textAlign: "center",
-                mb: "10px",
-              }}
-            >
-              {t("devicesPage.monitors.refresh")}
-            </Typography>
-            <Box>
-              <RefreshIcon
-                onClick={() => onRefreshScreen()}
-                sx={{
-                  color: Color.background.purple,
-                  border: `solid 1px ${Color.background.purple}`,
-                  fontSize: "30px",
-                  cursor: "pointer",
-                  "&:hover": {
-                    color: "inherit",
-                    backgroundColor: Color.background.purple,
-                  },
-                }}
-              />
-            </Box>
-          </Box>
-        </Box>
+        ></Box>
 
         <Box
           sx={{
@@ -446,66 +419,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
             alignItems: "center",
             gap: "20px",
           }}
-        >
-          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
-            <Box sx={{ display: "flex", justifyContent: "center" }}>
-              <KeyboardArrowUpIcon
-                onClick={() => onControlScreenScroll("up")}
-                sx={{
-                  color: Color.background.purple,
-                  border: `solid 1px ${Color.background.purple}`,
-                  fontSize: "30px",
-                  cursor: "pointer",
-                  "&:hover": {
-                    color: "inherit",
-                    backgroundColor: Color.background.purple,
-                  },
-                }}
-              />
-            </Box>
-            <Box sx={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
-              <KeyboardArrowLeftIcon
-                onClick={() => onControlScreenScroll("left")}
-                sx={{
-                  color: Color.background.purple,
-                  border: `solid 1px ${Color.background.purple}`,
-                  fontSize: "30px",
-                  cursor: "pointer",
-                  "&:hover": {
-                    color: "inherit",
-                    backgroundColor: Color.background.purple,
-                  },
-                }}
-              />
-              <KeyboardArrowDownIcon
-                onClick={() => onControlScreenScroll("down")}
-                sx={{
-                  color: Color.background.purple,
-                  border: `solid 1px ${Color.background.purple}`,
-                  fontSize: "30px",
-                  cursor: "pointer",
-                  "&:hover": {
-                    color: "inherit",
-                    backgroundColor: Color.background.purple,
-                  },
-                }}
-              />
-              <KeyboardArrowRightIcon
-                onClick={() => onControlScreenScroll("bottom")}
-                sx={{
-                  color: Color.background.purple,
-                  border: `solid 1px ${Color.background.purple}`,
-                  fontSize: "30px",
-                  cursor: "pointer",
-                  "&:hover": {
-                    color: "inherit",
-                    backgroundColor: Color.background.purple,
-                  },
-                }}
-              />
-            </Box>
-          </Box>
-        </Box>
+        ></Box>
 
         {/* Recent, Home, Back Control */}
         <Box
@@ -515,23 +429,156 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
             flexDirection: { sm: "column", xs: "row" },
             justifyContent: "center",
             alignItems: "center",
-            gap: "20px",
+            gap: "30px",
           }}
         >
-          <MenuIcon
-            onClick={() => onControlScreen("screen-recent-event")}
-            sx={{ color: Color.text.purple, fontSize: "30px", cursor: "pointer" }}
-          />
+          <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <Box>
+                <Tooltip title={t("devicesPage.monitors.refresh")} placement="top">
+                  <RefreshIcon
+                    onClick={() => onRefreshScreen()}
+                    sx={{
+                      color: Color.background.purple,
+                      border: `solid 1px ${Color.background.purple}`,
+                      fontSize: "30px",
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: "inherit",
+                        backgroundColor: Color.background.purple,
+                      },
+                    }}
+                  />
+                </Tooltip>
+              </Box>
+            </Box>
+            <Box
+              sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}
+            >
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Tooltip title={t("devicesPage.monitors.up")} placement="top">
+                  <IconButton
+                    onClick={() => onControlScreenScroll("up")}
+                    sx={{
+                      width: "30px",
+                      height: "30px",
+                    }}
+                  >
+                    <KeyboardArrowUpIcon
+                      sx={{
+                        color: Color.background.purple,
+                        border: `solid 1px ${Color.background.purple}`,
+                        fontSize: "30px",
+                        cursor: "pointer",
+                        "&:hover": {
+                          color: "inherit",
+                          backgroundColor: Color.background.purple,
+                        },
+                      }}
+                    />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+              <Box sx={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
+                <Tooltip title={t("devicesPage.monitors.left")} placement="left">
+                  <KeyboardArrowLeftIcon
+                    onClick={() => onControlScreenScroll("left")}
+                    sx={{
+                      color: Color.background.purple,
+                      border: `solid 1px ${Color.background.purple}`,
+                      fontSize: "30px",
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: "inherit",
+                        backgroundColor: Color.background.purple,
+                      },
+                    }}
+                  />
+                </Tooltip>
 
-          <CheckBoxOutlineBlankIcon
-            onClick={() => onControlScreen("screen-home-event")}
-            sx={{ color: Color.text.purple, fontSize: "30px", cursor: "pointer" }}
-          />
+                <Tooltip title={t("devicesPage.monitors.down")} placement="bottom">
+                  <KeyboardArrowDownIcon
+                    onClick={() => onControlScreenScroll("down")}
+                    sx={{
+                      color: Color.background.purple,
+                      border: `solid 1px ${Color.background.purple}`,
+                      fontSize: "30px",
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: "inherit",
+                        backgroundColor: Color.background.purple,
+                      },
+                    }}
+                  />
+                </Tooltip>
+                <Tooltip title={t("devicesPage.monitors.right")} placement="right">
+                  <KeyboardArrowRightIcon
+                    onClick={() => onControlScreenScroll("right")}
+                    sx={{
+                      color: Color.background.purple,
+                      border: `solid 1px ${Color.background.purple}`,
+                      fontSize: "30px",
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: "inherit",
+                        backgroundColor: Color.background.purple,
+                      },
+                    }}
+                  />
+                </Tooltip>
+              </Box>
+            </Box>
+          </Box>
 
-          <ReplyIcon
-            onClick={() => onControlScreen("screen-back-event")}
-            sx={{ color: Color.text.purple, fontSize: "30px", cursor: "pointer" }}
-          />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "10px",
+              border: `solid 1px ${Color.background.purple}`,
+              px: 1,
+              py: 2,
+            }}
+          >
+            <MenuIcon
+              onClick={() => onControlScreen("screen-recent-event")}
+              sx={{
+                color: Color.text.purple,
+                fontSize: "30px",
+                cursor: "pointer",
+                "&:hover": {
+                  color: "inherit",
+                  backgroundColor: Color.background.purple,
+                },
+              }}
+            />
+
+            <CheckBoxOutlineBlankIcon
+              onClick={() => onControlScreen("screen-home-event")}
+              sx={{
+                color: Color.text.purple,
+                fontSize: "30px",
+                cursor: "pointer",
+                "&:hover": {
+                  color: "inherit",
+                  backgroundColor: Color.background.purple,
+                },
+              }}
+            />
+
+            <ReplyIcon
+              onClick={() => onControlScreen("screen-back-event")}
+              sx={{
+                color: Color.text.purple,
+                fontSize: "30px",
+                cursor: "pointer",
+                "&:hover": {
+                  color: "inherit",
+                  backgroundColor: Color.background.purple,
+                },
+              }}
+            />
+          </Box>
         </Box>
       </Box>
 
