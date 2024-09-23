@@ -27,6 +27,10 @@ import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import RefreshIcon from "@mui/icons-material/Refresh";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 import Color from "src/theme/colors";
 
@@ -174,6 +178,27 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
       });
     }
   };
+
+  const onControlScreenScroll = async (event) => {
+    try {
+      const deviceId = device?.deviceId;
+      await onSocketMonitor(SocketIOPublicEvents.screen_scroll_event, {
+        deviceId,
+        event,
+      });
+    } catch (error) {
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
+    }
+  };
   return (
     <Box
       sx={{
@@ -282,7 +307,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
               flexDirection: { sm: "column", xs: "row" },
               justifyContent: "center",
               alignItems: "center",
-              gap: "30px",
+              gap: "15px",
             }}
           >
             <Box>
@@ -376,7 +401,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                   fontSize: "14px",
                   color: Color.text.primary,
                   textAlign: "center",
-                  mb: "1px",
+                  mb: "4px",
                 }}
               >
                 {t("devicesPage.monitors.refresh")}
@@ -386,14 +411,86 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                   onClick={() => onRefreshScreen()}
                   sx={{
                     color: Color.background.purple,
-                    fontSize: "40px",
+                    border: `solid 1px ${Color.background.purple}`,
+                    fontSize: "30px",
                     cursor: "pointer",
                     "&:hover": {
-                      color: Color.background.purple_light,
+                      color: "inherit",
+                      backgroundColor: Color.background.purple,
                     },
                   }}
                 />
               </Box>
+            </Box>
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: { sm: "column", xs: "row" },
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "20px",
+          }}
+        >
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
+            <Box sx={{ display: "flex", justifyContent: "center" }}>
+              <KeyboardArrowUpIcon
+                onClick={() => onControlScreenScroll("up")}
+                sx={{
+                  color: Color.background.purple,
+                  border: `solid 1px ${Color.background.purple}`,
+                  fontSize: "30px",
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "inherit",
+                    backgroundColor: Color.background.purple,
+                  },
+                }}
+              />
+            </Box>
+            <Box sx={{ display: "flex", justifyContent: "space-between", gap: "10px" }}>
+              <KeyboardArrowLeftIcon
+                onClick={() => onControlScreenScroll("left")}
+                sx={{
+                  color: Color.background.purple,
+                  border: `solid 1px ${Color.background.purple}`,
+                  fontSize: "30px",
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "inherit",
+                    backgroundColor: Color.background.purple,
+                  },
+                }}
+              />
+              <KeyboardArrowDownIcon
+                onClick={() => onControlScreenScroll("down")}
+                sx={{
+                  color: Color.background.purple,
+                  border: `solid 1px ${Color.background.purple}`,
+                  fontSize: "30px",
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "inherit",
+                    backgroundColor: Color.background.purple,
+                  },
+                }}
+              />
+              <KeyboardArrowRightIcon
+                onClick={() => onControlScreenScroll("bottom")}
+                sx={{
+                  color: Color.background.purple,
+                  border: `solid 1px ${Color.background.purple}`,
+                  fontSize: "30px",
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "inherit",
+                    backgroundColor: Color.background.purple,
+                  },
+                }}
+              />
             </Box>
           </Box>
         </Box>
