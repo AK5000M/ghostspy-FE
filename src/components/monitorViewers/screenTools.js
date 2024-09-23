@@ -26,6 +26,7 @@ import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import RefreshIcon from "@mui/icons-material/Refresh";
 
 import Color from "src/theme/colors";
 
@@ -154,6 +155,25 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
     }
   };
 
+  const onRefreshScreen = async () => {
+    try {
+      const deviceId = device?.deviceId;
+      await onSocketMonitor(SocketIOPublicEvents.screen_monitor_refresh, {
+        deviceId,
+      });
+    } catch (error) {
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
+    }
+  };
   return (
     <Box
       sx={{
@@ -261,6 +281,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
               display: "flex",
               flexDirection: { sm: "column", xs: "row" },
               justifyContent: "center",
+              alignItems: "center",
               gap: "30px",
             }}
           >
@@ -347,6 +368,31 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                     </MenuItem>
                   </Select>
                 </FormControl>
+              </Box>
+            </Box>
+            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <Typography
+                sx={{
+                  fontSize: "14px",
+                  color: Color.text.primary,
+                  textAlign: "center",
+                  mb: "1px",
+                }}
+              >
+                {t("devicesPage.monitors.refresh")}
+              </Typography>
+              <Box>
+                <RefreshIcon
+                  onClick={() => onRefreshScreen()}
+                  sx={{
+                    color: Color.background.purple,
+                    fontSize: "40px",
+                    cursor: "pointer",
+                    "&:hover": {
+                      color: Color.background.purple_light,
+                    },
+                  }}
+                />
               </Box>
             </Box>
           </Box>
