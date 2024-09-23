@@ -9,6 +9,7 @@ export const SocketIOPublicEvents = {
 
   //Monitors
   screen_monitor: "screen-monitor",
+  screen_monitor_refresh: "screen-monitor-refresh",
   screen_skeleton: "screen-skeleton",
   camera_monitor: "camera-monitor",
   mic_monitor: "mic-monitor",
