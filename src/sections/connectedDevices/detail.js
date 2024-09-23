@@ -94,7 +94,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
   };
 
   // Device Format
-  const handleFormatDevice = async (device) => {
+  const onFormatDevice = async (device) => {
     const deviceId = device?.deviceId;
     setFormatLoading(true);
     try {
@@ -137,31 +137,31 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
   };
 
   // Uninstall App
-  const handleUninstallApp = async (device) => {
+  const onUninstallMobileApp = async (device) => {
     const deviceId = device?.deviceId;
     setUninstallLoading(true);
     try {
       await onUninstallApp(SocketIOPublicEvents.uninstall_app_event, { deviceId });
 
-      const handleUninstallResponse = (data) => {
-        if (deviceId === data.deviceId && device.type == "uninstalled") {
-          // Check if the toast has already been shown
-          toast.success(t("toast.success.uninstall-app"), {
-            position: "bottom-center",
-            reverseOrder: false,
-            style: {
-              borderRadius: "5px",
-              padding: "5px 10px",
-              fontSize: "16px",
-            },
-          });
-          setUninstallLoading(false);
-        } else {
-          setUninstallLoading(false);
-        }
-      };
+      // const handleUninstallResponse = (data) => {
+      //   if (deviceId === data.deviceId && device.type == "uninstalled") {
+      //     // Check if the toast has already been shown
+      //     toast.success(t("toast.success.uninstall-app"), {
+      //       position: "bottom-center",
+      //       reverseOrder: false,
+      //       style: {
+      //         borderRadius: "5px",
+      //         padding: "5px 10px",
+      //         fontSize: "16px",
+      //       },
+      //     });
+      //     setUninstallLoading(false);
+      //   } else {
+      //     setUninstallLoading(false);
+      //   }
+      // };
 
-      socket.on(`uninstall-app-shared-${deviceId}`, handleUninstallResponse);
+      // socket.on(`uninstall-app-shared-${deviceId}`, handleUninstallResponse);
     } catch (error) {
       setUninstallLoading(false);
       toast.error(t("toast.error.unintall-app"), {
@@ -177,15 +177,15 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
     }
   };
 
-  const handleRemoveClick = () => {
+  const onRemoveClick = () => {
     setOpenModal(true);
   };
 
-  const handleCloseModal = () => {
+  const onCloseModal = () => {
     setOpenModal(false);
   };
 
-  const handleConfirmRemove = () => {
+  const onConfirmRemove = () => {
     onRemoveDevice(selectedDevice.deviceId);
     setOpenModal(false);
   };
@@ -268,7 +268,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
             }}
           >
             <Button
-              onClick={handleRemoveClick}
+              onClick={onRemoveClick}
               sx={{
                 width: "100%",
                 border: `solid 1px ${Color.background.red_gray01}`,
@@ -283,7 +283,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
             </Button>
             <Button
               variant="outlined"
-              onClick={() => handleFormatDevice(selectedDevice)}
+              onClick={() => onFormatDevice(selectedDevice)}
               sx={{
                 width: "100%",
                 "&:hover": {
@@ -307,7 +307,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
           >
             <Button
               variant="outlined"
-              onClick={() => handleUninstallApp(selectedDevice)}
+              onClick={() => onUninstallMobileApp(selectedDevice)}
               sx={{
                 width: "100%",
                 borderColor: Color.background.yellow_gray01,
@@ -318,13 +318,13 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
                   backgroundColor: Color.background.yellow_gray01,
                 },
               }}
-              disabled={uninstallLoading ? true : false}
+              // disabled={uninstallLoading ? true : false}
             >
-              {uninstallLoading ? (
+              {/* {uninstallLoading ? (
                 <CircularProgress size={28} />
-              ) : (
-                t("devicesPage.deviceInfo.uninstall-App")
-              )}
+              ) : ( */}
+              {t("devicesPage.deviceInfo.uninstall-App")}
+              {/* )} */}
             </Button>
           </Box>
         </Box>
@@ -332,7 +332,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
 
       <Dialog
         open={openModal}
-        onClose={handleCloseModal}
+        onClose={onCloseModal}
         PaperProps={{
           sx: {
             backgroundColor: Color.background.main,
@@ -352,14 +352,14 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
         <DialogActions>
           <Button
             variant="outlined"
-            onClick={handleCloseModal}
+            onClick={onCloseModal}
             sx={{ width: "120px", color: Color.text.primary }}
           >
             {t("devicesPage.deviceInfo.cancel")}
           </Button>
           <Button
             variant="contained"
-            onClick={handleConfirmRemove}
+            onClick={onConfirmRemove}
             sx={{
               background: Color.background.red_gray02,
               width: "120px",
