@@ -395,32 +395,44 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                 </FormControl>
               </Box>
             </Box>
-            <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-              <Typography
+          </Box>
+        </Box>
+
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: { sm: "column", xs: "row" },
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "20px",
+          }}
+        >
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <Typography
+              sx={{
+                fontSize: "14px",
+                color: Color.text.primary,
+                textAlign: "center",
+                mb: "10px",
+              }}
+            >
+              {t("devicesPage.monitors.refresh")}
+            </Typography>
+            <Box>
+              <RefreshIcon
+                onClick={() => onRefreshScreen()}
                 sx={{
-                  fontSize: "14px",
-                  color: Color.text.primary,
-                  textAlign: "center",
-                  mb: "4px",
+                  color: Color.background.purple,
+                  border: `solid 1px ${Color.background.purple}`,
+                  fontSize: "30px",
+                  cursor: "pointer",
+                  "&:hover": {
+                    color: "inherit",
+                    backgroundColor: Color.background.purple,
+                  },
                 }}
-              >
-                {t("devicesPage.monitors.refresh")}
-              </Typography>
-              <Box>
-                <RefreshIcon
-                  onClick={() => onRefreshScreen()}
-                  sx={{
-                    color: Color.background.purple,
-                    border: `solid 1px ${Color.background.purple}`,
-                    fontSize: "30px",
-                    cursor: "pointer",
-                    "&:hover": {
-                      color: "inherit",
-                      backgroundColor: Color.background.purple,
-                    },
-                  }}
-                />
-              </Box>
+              />
             </Box>
           </Box>
         </Box>
@@ -506,17 +518,20 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
             gap: "20px",
           }}
         >
-          <Box onClick={() => onControlScreen("screen-recent-event")}>
-            <MenuIcon sx={{ color: Color.text.purple, fontSize: "30px", cursor: "pointer" }} />
-          </Box>
-          <Box onClick={() => onControlScreen("screen-home-event")}>
-            <CheckBoxOutlineBlankIcon
-              sx={{ color: Color.text.purple, fontSize: "30px", cursor: "pointer" }}
-            />
-          </Box>
-          <Box onClick={() => onControlScreen("screen-back-event")}>
-            <ReplyIcon sx={{ color: Color.text.purple, fontSize: "30px", cursor: "pointer" }} />
-          </Box>
+          <MenuIcon
+            onClick={() => onControlScreen("screen-recent-event")}
+            sx={{ color: Color.text.purple, fontSize: "30px", cursor: "pointer" }}
+          />
+
+          <CheckBoxOutlineBlankIcon
+            onClick={() => onControlScreen("screen-home-event")}
+            sx={{ color: Color.text.purple, fontSize: "30px", cursor: "pointer" }}
+          />
+
+          <ReplyIcon
+            onClick={() => onControlScreen("screen-back-event")}
+            sx={{ color: Color.text.purple, fontSize: "30px", cursor: "pointer" }}
+          />
         </Box>
       </Box>
 
