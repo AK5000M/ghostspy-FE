@@ -36,8 +36,7 @@ const AppIcon = ({ onIconChange }) => {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: 2,
-        mt: 3,
+        gap: 0,
       }}
     >
       <Typography variant="body1" sx={{ color: Color.text.primary }}>

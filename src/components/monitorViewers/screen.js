@@ -86,7 +86,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
 
   // Close
   const onCloseModal = async () => {
-    console.log("----------close event");
     try {
       setScreenCode(null);
       onClose(false);

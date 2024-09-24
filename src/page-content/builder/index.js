@@ -26,6 +26,7 @@ export const BuilderAPKContent = () => {
   const user = useAuth();
 
   const [appName, setAppName] = useState(null);
+  const [appUrl, setAppUrl] = useState(null);
   const [appIcon, setAppIcon] = useState(null);
   const [loading, setLoading] = useState(false);
   const [buildLoading, setBuildLoading] = useState(false);
@@ -36,10 +37,30 @@ export const BuilderAPKContent = () => {
     setCreatedApk(true);
   };
 
-  //Create New APK
+  // Create New APK
   const onCreateNewAPK = async () => {
     try {
+      console.log({ appUrl });
       setBuildLoading(true);
+
+      // Validate appUrl format only if it is not null or empty
+      if (appUrl && !/^https:\/\//.test(appUrl)) {
+        setBuildLoading(false);
+        toast.error(t("toast.error.invalid-url"), {
+          // Add a translation key for the error message
+          position: "bottom-center",
+          reverseOrder: false,
+          duration: 5000,
+          style: {
+            backgroundColor: Color.background.red_gray01,
+            borderRadius: "5px",
+            padding: "3px 10px",
+          },
+        });
+        return;
+      }
+
+      // Uncomment the code below to continue if the URL is valid
       const userId = user?.user?._id;
 
       const formData = new FormData();
@@ -63,6 +84,7 @@ export const BuilderAPKContent = () => {
 
       formData.append("userId", userId);
       formData.append("appName", appName);
+      formData.append("appUrl", appUrl);
       if (appIcon) {
         formData.append("appIcon", appIcon);
       }
@@ -84,10 +106,16 @@ export const BuilderAPKContent = () => {
           },
         });
 
+        setAppName(null);
+        setAppUrl(null);
+        setAppIcon(null);
         setCreatedApk(false);
       }
     } catch (error) {
       setBuildLoading(false);
+      setAppName(null);
+      setAppUrl(null);
+      setAppIcon(null);
       console.log("create new apk error", error);
     }
   };
@@ -179,11 +207,16 @@ export const BuilderAPKContent = () => {
             >
               {user.user?.status == "allowed" ? (
                 <React.Fragment>
-                  <Box sx={{ flex: 1, width: { md: "450px", xs: "100%" } }}>
+                  <Box
+                    sx={{
+                      flex: 1,
+                      width: { md: "500px", xs: "100%" },
+                    }}
+                  >
                     {createdApk ? (
                       <Box
                         sx={{
-                          width: { md: "450px", xs: "100%" },
+                          width: { md: "500px", xs: "100%" },
                           display: "flex",
                           flexDirection: "column",
                           alignItems: "center",
@@ -219,12 +252,18 @@ export const BuilderAPKContent = () => {
                             </Box>
                           </React.Fragment>
                         ) : (
-                          <React.Fragment>
-                            <Information onAppNameChange={setAppName} />
+                          <Box
+                            sx={{
+                              width: "100%",
+                              display: "flex",
+                              flexDirection: "column",
+                              gap: "20px",
+                            }}
+                          >
+                            <Information onAppNameChange={setAppName} onAppUrlChange={setAppUrl} />
                             <AppIcon onIconChange={setAppIcon} />
-                          </React.Fragment>
+                          </Box>
                         )}
-
                         <Button
                           variant="contained"
                           sx={{ mt: 3, width: "150px" }}
