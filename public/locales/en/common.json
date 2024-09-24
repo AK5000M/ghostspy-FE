@@ -82,7 +82,8 @@
       "app-info": "Please enter the app name and app icon correctly",
       "send-text": "Message required.",
       "device-format": "Device format failed.",
-      "unintall-app": "Failed to uninstall app."
+      "unintall-app": "Failed to uninstall app.",
+      "invalid-url": "This is an invalid url"
     }
   },
 
@@ -353,6 +354,7 @@
     "information": "Information",
     "host": "Host / IP",
     "appName": "App Name",
+    "appUrl": "App URL",
     "port": "Port",
     "clientName": "Client Name",
     "appVersion": "App Version",

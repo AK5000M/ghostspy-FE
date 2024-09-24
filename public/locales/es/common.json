@@ -81,7 +81,8 @@
       "app-info": "Por favor ingrese el nombre de la aplicación y el ícono de la aplicación correctamente",
       "send-text": "Mensaje requerido.",
       "device-format": "Error en el formato del dispositivo.",
-      "unintall-app": "Error al desinstalar la aplicación."
+      "unintall-app": "Error al desinstalar la aplicación.",
+      "invalid-url": "Esta es una URL inválida."
     }
   },
 
@@ -349,6 +350,7 @@
     "builder": "Constructor de APK",
     "information": "Información",
     "appName": "Nombre de la aplicación",
+    "appUrl": "URL de la Aplicación",
     "clientName": "Nombre del cliente",
     "appVersion": "Versión de la aplicación",
     "packageName": "Nombre del paquete",
