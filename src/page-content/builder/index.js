@@ -40,7 +40,6 @@ export const BuilderAPKContent = () => {
   // Create New APK
   const onCreateNewAPK = async () => {
     try {
-      console.log({ appUrl });
       setBuildLoading(true);
 
       // Validate appUrl format only if it is not null or empty
