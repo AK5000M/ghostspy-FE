@@ -37,7 +37,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
 
   const black = localStorage.getItem("black");
   const lock = localStorage.getItem("lock");
-  console.log(black, lock);
+
   useEffect(() => {
     const deviceId = device?.deviceId;
     let isMounted = true;
