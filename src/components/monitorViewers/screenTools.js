@@ -112,6 +112,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
   const onClosePrivacyText = async () => {
     setOpenMessage(false);
     setBlackStatus(false);
+    localStorage.setItem("black", false);
   };
 
   const onSelectFPS = async (event) => {
