@@ -37,7 +37,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
 
   const black = localStorage.getItem("black");
   const lock = localStorage.getItem("lock");
-
+  console.log(black, lock);
   useEffect(() => {
     const deviceId = device?.deviceId;
     let isMounted = true;
@@ -108,8 +108,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
       ...position,
     }));
   };
-
-  console.log({ screenCode });
 
   // Handle image load to get intrinsic and rendered size
   // const onImageLoad = (e) => {
