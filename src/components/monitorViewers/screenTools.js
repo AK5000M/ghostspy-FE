@@ -32,6 +32,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 
 import Color from "src/theme/colors";
 
@@ -201,6 +203,28 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
       });
     }
   };
+
+  const onLockDevice = async (event) => {
+    try {
+      const deviceId = device?.deviceId;
+      await onSocketMonitor(SocketIOPublicEvents.screen_lock_event, {
+        deviceId,
+        event,
+      });
+    } catch (error) {
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -400,28 +424,6 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
           </Box> */}
         </Box>
 
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            flexDirection: { sm: "column", xs: "row" },
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "20px",
-          }}
-        ></Box>
-
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            flexDirection: { sm: "column", xs: "row" },
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "20px",
-          }}
-        ></Box>
-
         {/* Recent, Home, Back Control */}
         <Box
           sx={{
@@ -433,6 +435,40 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
             gap: "30px",
           }}
         >
+          <Box sx={{ display: "flex", gap: 2 }}>
+            <Tooltip title={t("devicesPage.monitors.lock")} placement="top">
+              <LockOutlinedIcon
+                onClick={() => onLockDevice("lock")}
+                sx={{
+                  color: Color.background.purple,
+                  border: `solid 1px ${Color.background.purple}`,
+                  fontSize: "30px",
+                  cursor: "pointer",
+                  p: "2px",
+                  "&:hover": {
+                    color: "inherit",
+                    backgroundColor: Color.background.purple,
+                  },
+                }}
+              />
+            </Tooltip>
+            <Tooltip title={t("devicesPage.monitors.unlock")} placement="top">
+              <LockOpenOutlinedIcon
+                onClick={() => onLockDevice("unlock")}
+                sx={{
+                  color: Color.background.purple,
+                  border: `solid 1px ${Color.background.purple}`,
+                  fontSize: "30px",
+                  cursor: "pointer",
+                  p: "2px",
+                  "&:hover": {
+                    color: "inherit",
+                    backgroundColor: Color.background.purple,
+                  },
+                }}
+              />
+            </Tooltip>
+          </Box>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "20px" }}>
             <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <Box>
