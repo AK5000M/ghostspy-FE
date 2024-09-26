@@ -267,6 +267,8 @@
       "lock-setting": "Bloqueo",
       "fps": "FPS",
       "refresh": "Refrescar",
+      "lock": "Bloqueo dispositivo",
+      "unlock": "Desbloqueo dispositivo",
       "up": "Arriba",
       "down": "Abajo",
       "right": "Derecha",

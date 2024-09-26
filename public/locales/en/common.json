@@ -270,6 +270,8 @@
       "fps": "FPS",
       "quality": "Quality",
       "refresh": "Refresh",
+      "lock": "Device Lock",
+      "unlock": "Device Unlock",
       "up": "Up",
       "down": "Down",
       "right": "Right",
