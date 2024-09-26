@@ -38,6 +38,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   }, [option]);
 
   const onKeyMonitorResponse = (data) => {
+    console.log("key log data:", data);
     const deviceId = device?.deviceId;
     if (deviceId === data.deviceId) {
       // Update state by appending the new log data to the existing array
@@ -75,16 +76,13 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
       setChangeLoading(false);
     }
   };
-  console.log("key logs:", recieveKeyLogs);
+
   // Static Key logs
   const onStaticLogs = async () => {
     setChangeLoading(true);
     try {
       const deviceId = device?.deviceId;
       const response = await getKeyLogs({ deviceId });
-
-      setRecieveKeyLogs(response);
-      setChangeLoading(false);
     } catch (error) {
       setChangeLoading(false);
       toast.error(t("toast.error.server-error"), {
