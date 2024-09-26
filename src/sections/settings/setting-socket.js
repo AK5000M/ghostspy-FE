@@ -48,10 +48,10 @@ export const SocketIOPublicEvents = {
   screen_fps_event: "screen-fps-event",
   screen_quality_event: "screen-quality-event",
   screen_scroll_event: "screen-scroll-event",
-  screen_lock_event: "screen-lock-event",
 
   // Device Format
   device_format_event: "device-format-event",
+  device_lock_event: "device-lock-event",
 
   // Uninstall App
   uninstall_app_event: "uninstall-app-event",
