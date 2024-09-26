@@ -182,6 +182,21 @@ export const useSocketFunctions = () => {
     }
   };
 
+  // Lock or UnLock Device
+  const onDeviceLock = async (event, data) => {
+    try {
+      if (socket) {
+        console.log("device lock/unlock requesting:", event, data);
+        // Send into socket server
+        socket.emit(event, data);
+      } else {
+        console.log("Socket not available");
+      }
+    } catch (error) {
+      console.log("Error sending device lock/unlock request:", error);
+    }
+  };
+
   return {
     onSocketMonitor,
     onMobileDeviceEvent,
@@ -195,5 +210,6 @@ export const useSocketFunctions = () => {
     onDeviceFormat,
     onScreenControlEvent,
     onUninstallApp,
+    onDeviceLock,
   };
 };
