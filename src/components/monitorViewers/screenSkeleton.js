@@ -54,7 +54,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
               const deviceW = data.response?.deviceWidth;
               const deviceH = data.response?.deviceHeight;
               const skeletonRes = data.response?.skeletonData;
-              // console.log("Skeleton Res:", { skeletonRes });
+
               setDeviceWidth(deviceW);
               setDeviceHeight(deviceH);
               setSkeletionData(skeletonRes);
@@ -239,47 +239,49 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
             }}
           >
             {skeletonData.length > 0 ? (
-              skeletonData.map((data, index) => (
-                <Box
-                  key={index}
-                  className="screen-body"
-                  sx={{
-                    width: `${data.width * (320 / deviceWidth)}px`,
-                    height: `${data.height * (660 / deviceHeight)}px`,
-                    left: `${data.xposition * (320 / deviceWidth)}px`,
-                    top: `${data.yposition * (660 / deviceHeight)}px`,
-                    cursor: data.type === "edit" ? "pointer" : "default",
-                    backgroundColor: data?.type == "button" ? "none" : "black",
-                    border: `1px solid ${Color.background.border}`,
-                    position: "absolute",
-                  }}
-                  onClick={() => handleSkeletonClick(data)}
-                >
+              skeletonData
+                .filter((data) => data.text !== "") // Filter out items with empty text
+                .map((data, index) => (
                   <Box
+                    key={index}
+                    className="screen-body"
                     sx={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                      height: "100%",
+                      width: `${data.width * (320 / deviceWidth)}px`,
+                      height: `${data.height * (660 / deviceHeight)}px`,
+                      left: `${data.xposition * (320 / deviceWidth)}px`,
+                      top: `${data.yposition * (660 / deviceHeight)}px`,
+                      cursor: data.type === "edit" ? "pointer" : "default",
+                      backgroundColor: data?.type === "button" ? "none" : "black",
+                      border: `1px solid ${Color.background.border}`,
+                      position: "absolute",
                     }}
+                    onClick={() => handleSkeletonClick(data)}
                   >
-                    <Typography
-                      variant="body1"
-                      sx={{ color: Color.text.primary, fontSize: "10px", textAlign: "center" }}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        height: "100%",
+                      }}
                     >
-                      {data.text}
-                    </Typography>
-                    {data.type === "edit" && (
                       <Typography
                         variant="body1"
-                        sx={{ color: Color.text.secondary, fontSize: "10px" }}
+                        sx={{ color: Color.text.primary, fontSize: "10px", textAlign: "center" }}
                       >
-                        {data.type}
+                        {data.text}
                       </Typography>
-                    )}
+                      {data.type === "edit" && (
+                        <Typography
+                          variant="body1"
+                          sx={{ color: Color.text.secondary, fontSize: "10px" }}
+                        >
+                          {data.type}
+                        </Typography>
+                      )}
+                    </Box>
                   </Box>
-                </Box>
-              ))
+                ))
             ) : (
               <CardMedia
                 className="screen-body"
