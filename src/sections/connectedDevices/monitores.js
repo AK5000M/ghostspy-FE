@@ -8,6 +8,7 @@ import SurroundSoundOutlinedIcon from "@mui/icons-material/SurroundSoundOutlined
 import KeyboardAltOutlinedIcon from "@mui/icons-material/KeyboardAltOutlined";
 import AndroidOutlinedIcon from "@mui/icons-material/AndroidOutlined";
 import SplitscreenOutlinedIcon from "@mui/icons-material/SplitscreenOutlined";
+import KeyboardHideOutlinedIcon from "@mui/icons-material/KeyboardHideOutlined";
 
 import { useAuth } from "src/hooks/use-auth";
 import { useSocketFunctions } from "../../utils/socket";
@@ -35,6 +36,12 @@ const MicMonitorViewer = dynamic(() => import("../../components/monitorViewers/m
 const KeyLogsMonitorViewer = dynamic(() => import("../../components/monitorViewers/keylogs"), {
   ssr: false,
 });
+const OfflineKeyLogsMonitorViewer = dynamic(
+  () => import("../../components/monitorViewers/offlineKeylogs"),
+  {
+    ssr: false,
+  }
+);
 const ApplicationsMonitorViewer = dynamic(
   () => import("../../components/monitorViewers/applications"),
   {
@@ -55,6 +62,7 @@ export const DeviceMonitors = ({ device }) => {
     // "camera-monitor": false,
     // "mic-monitor": false,
     "key-monitor": false,
+    "offline-key-monitor": false,
     "application-monitor": false,
   });
 
@@ -140,6 +148,11 @@ export const DeviceMonitors = ({ device }) => {
       title: t("devicesPage.monitors.keyRegister"),
     },
     {
+      label: "offline-key-monitor",
+      icon: <KeyboardHideOutlinedIcon />,
+      title: t("devicesPage.monitors.offline-keylogs"),
+    },
+    {
       label: SocketIOPublicEvents.application_monitor,
       icon: <AndroidOutlinedIcon />,
       title: t("devicesPage.applications"),
@@ -183,6 +196,13 @@ export const DeviceMonitors = ({ device }) => {
           monitor="key-monitor"
           device={device}
           onClose={() => handleCloseViewer("key-monitor")}
+        />
+      )}
+      {viewerVisibility["offline-key-monitor"] && (
+        <OfflineKeyLogsMonitorViewer
+          monitor="offline-key-monitor"
+          device={device}
+          onClose={() => handleCloseViewer("offline-key-monitor")}
         />
       )}
       {viewerVisibility["application-monitor"] && (

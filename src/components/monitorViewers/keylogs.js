@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { Typography, CardMedia, Box } from "@mui/material";
 
@@ -62,7 +63,16 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
           isMounted = false;
         };
       } catch (error) {
-        console.error("Error monitoring device:", error);
+        toast.error(t("toast.error.server-error"), {
+          position: "bottom-center",
+          reverseOrder: false,
+          duration: 5000,
+          style: {
+            backgroundColor: Color.background.red_gray01,
+            borderRadius: "5px",
+            padding: "3px 10px",
+          },
+        });
         setChangeLoading(false);
       }
     };

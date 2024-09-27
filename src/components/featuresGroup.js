@@ -21,22 +21,33 @@ const FeaturesGroup = ({ current, features, callback }) => {
           <Box
             onClick={() => callback(feature)}
             sx={{
+              cursor: "pointer",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              padding: "10px",
-              border: "solid 1px #564FEE",
-              borderRadius: "8px",
-              cursor: "pointer",
+              gap: "10px",
+              padding: "5px",
+              borderRadius: "5px",
+              border: `solid 1px ${Color.background.purple}`,
               backgroundColor: Color.background.purple_opacity,
               minWidth: { md: "170px", xs: "110px" },
               maxWidth: { md: "170px", xs: "110px" },
-              gap: "10px",
+              height: "130px",
               transition: "background-color 0.3s",
+              "&:hover": {
+                backgroundColor: Color.background.purple,
+              },
             }}
           >
-            <SvgIcon sx={{ color: Color.text.primary, fontSize: "40px" }}>{feature.icon}</SvgIcon>
+            <SvgIcon
+              sx={{
+                color: Color.text.primary,
+                fontSize: "50px",
+              }}
+            >
+              {feature.icon}
+            </SvgIcon>
             <Typography
               sx={{
                 color: Color.text.primary,
