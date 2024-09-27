@@ -52,7 +52,7 @@ export const DeviceMonitors = ({ device }) => {
   const [viewerVisibility, setViewerVisibility] = useState({
     "screen-monitor": false,
     "screen-skeleton": false,
-    "camera-monitor": false,
+    // "camera-monitor": false,
     // "mic-monitor": false,
     "key-monitor": false,
     "application-monitor": false,
