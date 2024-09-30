@@ -203,66 +203,72 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
               </Typography>
             </Box>
           ) : (
-            recieveKeyLogs.map((log, index) => (
-              <Box
-                key={index}
-                onClick={() => handleLogClick(log)}
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  px: "5px",
-                  py: "2px",
-                  mb: "5px",
-                  backgroundColor: log === selectedLog ? Color.background.purple_opacity : "none",
-                  "&:hover": {
-                    backgroundColor: Color.background.purple_opacity,
-                  },
-                }}
-              >
-                <Typography
+            recieveKeyLogs
+              .sort((a, b) => {
+                const dateA = new Date(a.filename.split(".")[0]); // Extract date from filename
+                const dateB = new Date(b.filename.split(".")[0]);
+                return dateB - dateA;
+              })
+              .map((log, index) => (
+                <Box
+                  key={index}
+                  onClick={() => handleLogClick(log)}
                   sx={{
-                    width: "100%",
-                    cursor: "default",
-                    color: log === selectedLog ? Color.text.primary : Color.text.primary,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: "5px",
+                    py: "2px",
+                    mb: "5px",
+                    backgroundColor: log === selectedLog ? Color.background.purple_opacity : "none",
+                    "&:hover": {
+                      backgroundColor: Color.background.purple_opacity,
+                    },
                   }}
                 >
-                  {log.filename}
-                </Typography>
-
-                {/* Icons: Download and Remove */}
-                <Box sx={{ display: "flex", alignItems: "center", gap: "7px" }}>
-                  <DownloadIcon
-                    onClick={() => onKeyLogsDownload(log.filename, log.content)}
+                  <Typography
                     sx={{
-                      color: Color.background.purple,
-                      border: `solid 1px ${Color.background.purple}`,
-                      fontSize: "20px",
-                      cursor: "pointer",
-                      "&:hover": {
-                        color: "inherit",
-                        backgroundColor: Color.background.purple,
-                      },
+                      width: "100%",
+                      cursor: "default",
+                      color: log === selectedLog ? Color.text.primary : Color.text.primary,
                     }}
-                  />
+                  >
+                    {log.filename}
+                  </Typography>
 
-                  {/* Delete Icon */}
-                  <DeleteIcon
-                    onClick={() => onKeyLogFilesRemove(log.filename)}
-                    sx={{
-                      color: Color.background.red_gray01,
-                      border: `solid 1px ${Color.background.red_gray01}`,
-                      fontSize: "20px",
-                      cursor: "pointer",
-                      "&:hover": {
-                        color: "inherit",
-                        backgroundColor: Color.background.red_gray01,
-                      },
-                    }}
-                  />
+                  {/* Icons: Download and Remove */}
+                  <Box sx={{ display: "flex", alignItems: "center", gap: "7px" }}>
+                    <DownloadIcon
+                      onClick={() => onKeyLogsDownload(log.filename, log.content)}
+                      sx={{
+                        color: Color.background.purple,
+                        border: `solid 1px ${Color.background.purple}`,
+                        fontSize: "20px",
+                        cursor: "pointer",
+                        "&:hover": {
+                          color: "inherit",
+                          backgroundColor: Color.background.purple,
+                        },
+                      }}
+                    />
+
+                    {/* Delete Icon */}
+                    <DeleteIcon
+                      onClick={() => onKeyLogFilesRemove(log.filename)}
+                      sx={{
+                        color: Color.background.red_gray01,
+                        border: `solid 1px ${Color.background.red_gray01}`,
+                        fontSize: "20px",
+                        cursor: "pointer",
+                        "&:hover": {
+                          color: "inherit",
+                          backgroundColor: Color.background.red_gray01,
+                        },
+                      }}
+                    />
+                  </Box>
                 </Box>
-              </Box>
-            ))
+              ))
           )}
         </Box>
 
@@ -281,7 +287,7 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
         >
           {selectedLog ? (
             <Box>
-              <Typography variant="h6">{selectedLog.filename}</Typography>
+              <Typography variant="h6">{selectedLog.filename.replace(".txt", "")}</Typography>
               <pre>{selectedLog.content}</pre>
             </Box>
           ) : (
