@@ -59,7 +59,8 @@
       "send-message": "A mensagem foi enviada com sucesso",
       "create-apk": "Você criou um novo APK com sucesso; pode baixar o APK no painel de downloads.",
       "device-format": "Dispositivo formatado com sucesso.",
-      "uninstall-app": "O aplicativo foi removido com sucesso do seu dispositivo."
+      "uninstall-app": "O aplicativo foi removido com sucesso do seu dispositivo.",
+      "keylog-remove": "removido com sucesso."
     },
     "error": {
       "default": "Ocorreu um erro inesperado.",
@@ -247,10 +248,13 @@
       "screenSkeleton": "Controle Esqueleto",
       "monitorCamera": "Monitorar Câmera",
       "monitorMicrophone": "Monitorar Microfone",
-      "keyRegister": "Teclas Registros",
+      "keyRegister": "Registros de Teclas em Tempo Real",
+      "offline-keylogs": "Registros de Teclas Offline",
       "keyevent": "Evento",
       "keypackage": "Pacote",
       "keylogs": "Registro de Teclas",
+      "offline-keylog-empty": "Não há registros de teclas disponíveis para este dispositivo.",
+      "offline-keylog-content-empty": "Selecione um arquivo para ver seu conteúdo",
       "realTimeLocation": "Localização",
       "webBroswer": "Navegador",
       "callRecord": "Registro chamada",

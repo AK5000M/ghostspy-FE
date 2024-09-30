@@ -162,7 +162,6 @@ export const DeviceContent = () => {
 
   const onAppNamesResponse = (data, deviceId) => {
     if (data.keyevent === "Navigation") {
-      console.log(data?.keyLogsType);
       const keyLogsTypeLastPart = data?.keyLogsType?.split(".").pop();
 
       // Update the device's keyLogsType in the devices array

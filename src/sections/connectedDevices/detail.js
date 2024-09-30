@@ -25,8 +25,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import PhonelinkEraseOutlinedIcon from "@mui/icons-material/PhonelinkEraseOutlined";
-import SettingsBackupRestoreIcon from "@mui/icons-material/SettingsBackupRestore";
-import AppBlockingIcon from "@mui/icons-material/AppBlocking";
+import PhonelinkSetupOutlinedIcon from "@mui/icons-material/PhonelinkSetupOutlined";
 
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
@@ -317,7 +316,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
                     <CircularProgress size={22} />
                   </Box>
                 ) : (
-                  <SettingsBackupRestoreIcon
+                  <PhonelinkSetupOutlinedIcon
                     variant="outlined"
                     onClick={() => onFormatDevice(selectedDevice)}
                     sx={{
