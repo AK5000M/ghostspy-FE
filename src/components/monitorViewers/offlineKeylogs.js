@@ -21,6 +21,42 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const [recieveKeyLogs, setRecieveKeyLogs] = useState([]);
   const [selectedLog, setSelectedLog] = useState(null); // For storing the selected file content
 
+  const [state, setState] = useState({
+    width: 720,
+    height: 720,
+    x: 100,
+    y: -120,
+    minWidth: 360,
+    minHeight: 360,
+    maxWidth: 720,
+    maxHeight: 720,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 720) {
+        setState((prevState) => ({
+          ...prevState,
+          width: window.innerWidth - 20, // Account for padding
+          height: window.innerWidth - 20, // Keep it square
+        }));
+      } else {
+        setState((prevState) => ({
+          ...prevState,
+          width: 720,
+          height: 720,
+        }));
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   useEffect(() => {
     setRecieveKeyLogs([]);
     init();
@@ -127,14 +163,21 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
       onClose={onCloseModal}
     >
       <Box
-        sx={{ position: "relative", display: "flex", width: "100%", height: "100%", gap: "10px" }}
+        sx={{
+          position: "relative",
+          display: "flex",
+          flexDirection: { md: "row", xs: "column" },
+          width: "100%",
+          height: "100%",
+          gap: "10px",
+        }}
       >
         {/* Left part: List of TXT files */}
         <Box
           sx={{
-            width: "30%",
+            width: { md: "30%", xs: "100%" },
             borderRight: `1px solid ${Color.background.border}`,
-            height: "100%",
+            height: { md: "100%", xs: "50%" },
             overflowY: "auto",
             p: 1,
             border: `solid 1px ${Color.background.border}`,
@@ -226,7 +269,7 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
         {/* Right part: Show content of the selected TXT file */}
         <Box
           sx={{
-            width: "70%",
+            width: { md: "70%", xs: "100%" },
             height: "100%",
             p: 2,
             overflowY: "auto",

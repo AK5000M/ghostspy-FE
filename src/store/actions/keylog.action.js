@@ -33,7 +33,6 @@ export const removeKeyLogsFile = async (data) => {
       token = localStorage.getItem("token");
     }
     if (token) {
-      console.log({ data });
       const response = await axios.post(`${apiUrl}/keylogs/remove/`, data, {
         headers: {
           "Content-Type": "application/json",
