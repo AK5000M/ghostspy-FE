@@ -301,6 +301,15 @@ button:hover {
   }
 }
 
+.detail-field {
+  .MuiInputBase-root {
+    border: solid 1px #564fee !important;
+  }
+  input {
+    padding-top: 8px !important;
+  }
+}
+
 /* ----------------------------------------
  * Spinner
  * ----------------------------------------

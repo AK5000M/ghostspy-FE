@@ -275,6 +275,8 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
         maxHeight: "500px",
         minHeight: "100px",
         overflowY: "auto",
+        py: 3,
+        px: 2,
       }}
     >
       {details.map((detail, index) => (
