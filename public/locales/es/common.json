@@ -56,7 +56,8 @@
       "send-message": "El mensaje se ha enviado correctamente",
       "create-apk": "Has creado un nuevo APK con éxito; puedes descargar el APK en el panel de descargas.",
       "device-format": "Dispositivo formateado correctamente.",
-      "uninstall-app": "La aplicación se ha eliminado correctamente de su dispositivo."
+      "uninstall-app": "La aplicación se ha eliminado correctamente de su dispositivo.",
+      "keylog-remove": "eliminado con éxito."
     },
     "error": {
       "default": "Ocurrió un error inesperado.",
@@ -244,6 +245,8 @@
       "keyevent": "Evento",
       "keypackage": "Paquete",
       "keylogs": "Registros de Teclas",
+      "offline-keylog-empty": "No hay registros de teclas disponibles para este dispositivo.",
+      "offline-keylog-content-empty": "Selecciona un archivo para ver su contenido",
       "realTimeLocation": "Ubicación",
       "webBroswer": "Navegador Web",
       "callRecord": "Registro llamadas",

