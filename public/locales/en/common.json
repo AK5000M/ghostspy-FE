@@ -313,6 +313,8 @@
       "deviceName": "Device Name",
       "androidVersion": "Android Version",
       "information": "Information",
+      "download": "Download",
+      "remove-file": "Remove",
       "batteryStatus": "Battery Status",
       "netStatus": "Connection Status",
       "removeDevice": "Device Delete",

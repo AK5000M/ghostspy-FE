@@ -311,7 +311,7 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                   </Tooltip>
 
                   {/* Delete Icon */}
-                  <Tooltip title={t("devicesPage.deviceInfo.delete")} placement="top">
+                  <Tooltip title={t("devicesPage.deviceInfo.remove-file")} placement="top">
                     <ClearOutlinedIcon
                       onClick={() => onKeyLogFilesRemove(date)}
                       sx={{
