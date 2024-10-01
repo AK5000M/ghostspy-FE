@@ -80,8 +80,8 @@ export const generateRandomPackage = () => {
   return randomPackage;
 };
 
-// Foramt Date
-export const formatDate = (dateString) => {
+// Foramt DateTime
+export const formatDateTime = (dateString) => {
   const date = new Date(dateString);
   const day = String(date.getDate()).padStart(2, "0");
   const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -89,4 +89,21 @@ export const formatDate = (dateString) => {
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
   return `${day}/${month}/${year} ${hours}:${minutes}`;
+};
+
+// Format DateTime to DD/MM/YYYY
+export const formatDate = (dateString) => {
+  const date = new Date(dateString);
+
+  // Check if the date is valid
+  if (isNaN(date.getTime())) {
+    return "Invalid Date";
+  }
+
+  // Use UTC methods to avoid time zone issues
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0"); // Months are 0-based
+  const year = date.getUTCFullYear();
+
+  return `${day}/${month}/${year}`;
 };
