@@ -325,7 +325,8 @@
       "confirmRemoveTitle": "Delete a device",
       "confirmRemoveText": "Are you sure you want to remove this device?",
       "ok": "OK",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "edit": "Edit"
     },
     "addNewDevice": {
       "addbutton": "+ Add New",

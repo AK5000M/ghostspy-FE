@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { Typography, CardMedia, Box, Tooltip } from "@mui/material";
+import { Typography, Box, Tooltip } from "@mui/material";
 
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";

@@ -52,6 +52,30 @@ export const getSelectedDeviceInformation = async (deviceId) => {
   }
 };
 
+// Update Device Name
+export const updateDeviceName = async (data) => {
+  try {
+    let token;
+    if (typeof window !== "undefined") {
+      // Check if running on the client side
+      token = localStorage.getItem("token");
+    }
+
+    if (token) {
+      const response = await axios.post(`${apiUrl}/device/update/deviceName`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return response.data;
+    }
+  } catch (error) {
+    console.log("remove device action error", error);
+  }
+};
+
 // Remove Device
 export const removeDevice = async (deviceId) => {
   try {

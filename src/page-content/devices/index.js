@@ -227,6 +227,11 @@ export const DeviceContent = () => {
     fetchDevices();
   };
 
+  // update Device Name
+  const updatedDevice = () => {
+    fetchDevices();
+  };
+
   return (
     <div
       component="main"
@@ -458,6 +463,7 @@ export const DeviceContent = () => {
                 <DeviceDetails
                   selectedDevice={selectedDevice != null && selectedDevice}
                   onDeviceRemoved={handleDeviceRemove}
+                  updatedDevice={updatedDevice}
                 />
               </Box>
             </div>
