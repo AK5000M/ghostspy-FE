@@ -317,6 +317,8 @@
       "deviceInformation": "Informações do Aparelho",
       "model": "Modelo",
       "deviceName": "Nome do Aparelho",
+      "download": "Baixar",
+      "remove-file": "Remover",
       "androidVersion": "Versão do Android",
       "information": "Informações",
       "info-edit": "Information Edit",

@@ -311,6 +311,8 @@
       "deviceName": "Nombre del Dispositivo",
       "androidVersion": "Versión de Android",
       "information": "Información",
+      "download": "Descargar",
+      "remove-file": "Eliminar",
       "batteryStatus": "Estado de la Batería",
       "netStatus": "Estado de la Conexión",
       "removeDevice": "Eliminar dispositivo",
