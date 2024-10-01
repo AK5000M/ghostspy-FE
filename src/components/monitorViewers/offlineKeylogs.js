@@ -27,7 +27,7 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const [changeLoading, setChangeLoading] = useState(false);
   const [keylogsDateList, setKeyLogsDateList] = useState([]);
   const [recieveKeyLogs, setRecieveKeyLogs] = useState([]);
-  const [selectedKeylog, setselectedKeylog] = useState(null); // For storing the selected file content
+  const [selectedKeylog, setselectedKeylog] = useState(null);
 
   const [state, setState] = useState({
     width: 720,
@@ -69,6 +69,7 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
     setRecieveKeyLogs([]);
     init();
   }, [monitor]);
+
   // Load Keylogs List
   const init = async () => {
     setChangeLoading(true);
@@ -159,16 +160,16 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   };
 
   // Remove keylogs file
-  const onKeyLogFilesRemove = async (filename) => {
+  const onKeyLogFilesRemove = async (date) => {
     const deviceId = device?.deviceId;
 
     const res = await removeKeyLogsFile({
       deviceId,
-      filename,
+      date,
     });
 
     if (res?.status === 200) {
-      toast.success(`${filename} ${t("toast.success.keylog-remove")}`, {
+      toast.success(`${date} ${t("toast.success.keylog-remove")}`, {
         position: "bottom-center",
         reverseOrder: false,
         duration: 5000,
@@ -180,10 +181,11 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
         },
       });
 
-      // Remove the file from the state
-      setRecieveKeyLogs((prevLogs) => prevLogs.filter((log) => log.filename !== filename));
-      // Clear the selection if the removed file was selected
-      if (selectedKeylog && selectedKeylog.filename === filename) {
+      // Remove the file from the keylogs date list
+      setKeyLogsDateList((prevLogs) => prevLogs.filter((logDate) => logDate !== date));
+
+      if (selectedKeylog === date) {
+        setRecieveKeyLogs([]);
         setselectedKeylog(null);
       }
     } else {
@@ -345,14 +347,33 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
             <Box>
               <Typography variant="h6">{selectedKeylog}</Typography>
               {recieveKeyLogs.map((logs, index) => (
-                <Typography key={index} sx={{ color: Color.text.secondary }}>
-                  {formatDateTime(logs?.created_at)} -{" "}
-                  <span style={{ color: Color.text.purple_light, fontWeight: 600 }}>
+                <Box
+                  key={index}
+                  sx={{
+                    color: Color.text.secondary,
+                    display: "flex",
+                    justifyContent: "flex-start",
+                  }}
+                >
+                  <Typography component="span" sx={{ color: Color.text.secondary }}>
+                    {formatDateTime(logs?.created_at)}
+                  </Typography>
+                  {"  "}
+                  <Typography
+                    component="span"
+                    sx={{ color: Color.text.purple_light, fontWeight: 600, ml: 1 }}
+                  >
                     {logs?.keylogs}
-                  </span>
-                  {" /"}
-                  {logs?.keyLogsType} {"/"} {logs?.keyevent}
-                </Typography>
+                  </Typography>
+                  {"  "}
+                  <Typography component="span" sx={{ color: Color.text.secondary, ml: 2 }}>
+                    {logs?.keyLogsType}
+                  </Typography>
+                  {" / "}
+                  <Typography component="span" sx={{ color: Color.text.secondary, ml: 2 }}>
+                    {logs?.keyevent}
+                  </Typography>
+                </Box>
               ))}
             </Box>
           ) : (
