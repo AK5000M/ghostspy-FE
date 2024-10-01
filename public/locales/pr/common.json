@@ -319,6 +319,7 @@
       "deviceName": "Nome do Aparelho",
       "androidVersion": "Versão do Android",
       "information": "Informações",
+      "info-edit": "Information Edit",
       "batteryStatus": "Status da Bateria",
       "netStatus": "Status da Conexão",
       "removeDevice": "Excluir dispositivo",

@@ -453,8 +453,6 @@ export const DeviceContent = () => {
                   backgroundColor: Color.background.main_gray01,
                   border: `solid 1px ${Color.background.border}`,
                   borderRadius: "5px",
-                  py: 3,
-                  px: 2,
                 }}
               >
                 <DeviceDetails

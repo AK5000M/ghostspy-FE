@@ -8,7 +8,7 @@ import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
 import Color from "src/theme/colors";
-import { formatDate } from "../../utils/common";
+import { formatDateTime } from "../../utils/common";
 
 const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
@@ -238,7 +238,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                           flex: "25%",
                         }}
                       >
-                        {formatDate(item.created_at)}
+                        {formatDateTime(item.created_at)}
                       </Typography>
                     </Box>
                   ))
