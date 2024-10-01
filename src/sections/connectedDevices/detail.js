@@ -13,6 +13,8 @@ import {
   DialogTitle,
   Box,
   Tooltip,
+  IconButton,
+  TextField,
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import PermDeviceInformationIcon from "@mui/icons-material/PermDeviceInformation";
@@ -26,16 +28,19 @@ import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import PhonelinkEraseOutlinedIcon from "@mui/icons-material/PhonelinkEraseOutlined";
 import PhonelinkSetupOutlinedIcon from "@mui/icons-material/PhonelinkSetupOutlined";
+import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
+import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
+import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 
 import { useSocket } from "../../hooks/use-socket";
-import { removeDevice } from "../../store/actions/device.action";
+import { removeDevice, updateDeviceName } from "../../store/actions/device.action";
 
 import Color from "src/theme/colors";
 
-export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
+export const DeviceDetails = ({ selectedDevice, onDeviceRemoved, updatedDevice }) => {
   const { t } = useTranslation();
   const { socket } = useSocket();
 
@@ -46,7 +51,10 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
   const [openModal, setOpenModal] = useState(false);
 
   const [formatLoading, setFormatLoading] = useState(false);
-  const [uninstallLoading, setUninstallLoading] = useState(false);
+  // Add state to track edit mode and manufacturer value
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedManufacturer, setEditedManufacturer] = useState("");
+  const [updateDevice, setUpdateDevice] = useState(null);
 
   useEffect(() => {
     if (selectedDevice) {
@@ -95,7 +103,16 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
         });
       }
     } catch (error) {
-      console.log("Remove Device Error", error);
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
     }
   };
 
@@ -148,26 +165,6 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
     setUninstallLoading(true);
     try {
       await onUninstallApp(SocketIOPublicEvents.uninstall_app_event, { deviceId });
-
-      // const handleUninstallResponse = (data) => {
-      //   if (deviceId === data.deviceId && device.type == "uninstalled") {
-      //     // Check if the toast has already been shown
-      //     toast.success(t("toast.success.uninstall-app"), {
-      //       position: "bottom-center",
-      //       reverseOrder: false,
-      //       style: {
-      //         borderRadius: "5px",
-      //         padding: "5px 10px",
-      //         fontSize: "16px",
-      //       },
-      //     });
-      //     setUninstallLoading(false);
-      //   } else {
-      //     setUninstallLoading(false);
-      //   }
-      // };
-
-      // socket.on(`uninstall-app-shared-${deviceId}`, handleUninstallResponse);
     } catch (error) {
       setUninstallLoading(false);
       toast.error(t("toast.error.unintall-app"), {
@@ -218,18 +215,121 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
     setOpenModal(false);
   };
 
-  const DeviceDetailItem = ({ icon: Icon, label, value }) => (
+  // Handle Device Name
+  const handleManufacturer = (e) => {
+    let value = e.target.value;
+    setEditedManufacturer(value);
+  };
+
+  // Edit Device Information
+  const onEditDeviceOpen = (device) => {
+    setEditedManufacturer(updateDevice ? updateDevice.manufacturer : device?.manufacturer);
+    setIsEditing(true);
+  };
+
+  // Save Device Information
+  const onEditDeviceSave = async (device) => {
+    try {
+      const response = await updateDeviceName({ deviceId: device?.deviceId, editedManufacturer });
+      if (response.status === 200) {
+        setUpdateDevice(response.device);
+        updatedDevice(response.device);
+        setEditedManufacturer(response.device?.manufacturer);
+        setIsEditing(false);
+      }
+    } catch (error) {
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
+    }
+  };
+
+  // Close Device Edit
+  const onEditDeviceClose = () => {
+    setIsEditing(false);
+  };
+
+  const DeviceDetailItem = ({ icon: Icon, label, value, isEditable, onEdit }) => (
     <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
       <SvgIcon sx={{ color: Color.text.secondary, fontSize: "20px" }}>
         <Icon />
       </SvgIcon>
       <Typography sx={{ color: Color.text.secondary, fontSize: "14px", fontWeight: "100" }}>
-        {label}:{" "}
+        {label}
+        {": "}
+      </Typography>
+
+      {isEditable && isEditing ? (
+        <TextField
+          className="detail-field"
+          value={editedManufacturer}
+          onChange={handleManufacturer}
+          size="small"
+          sx={{ fontSize: "14px", fontWeight: "300", width: "150px" }}
+          autoFocus
+        />
+      ) : (
         <span style={{ color: Color.text.primary, fontWeight: "300", fontSize: "14px" }}>
-          {" "}
           {value}
         </span>
-      </Typography>
+      )}
+
+      {isEditable && (
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          {isEditing ? (
+            <Box sx={{ display: "flex", gap: "5px" }}>
+              <SaveOutlinedIcon
+                onClick={() => onEditDeviceSave(selectedDevice)}
+                sx={{
+                  color: Color.text.secondary,
+                  fontSize: "26px",
+                  cursor: "pointer",
+                  p: "2px",
+                  "&:hover": {
+                    color: Color.text.primary,
+                  },
+                }}
+              />
+              <CloseOutlinedIcon
+                onClick={() => onEditDeviceClose()}
+                sx={{
+                  color: Color.text.red_gray01,
+                  fontSize: "26px",
+                  cursor: "pointer",
+                  p: "2px",
+                  "&:hover": {
+                    color: Color.text.red_gray02,
+                  },
+                }}
+              />
+            </Box>
+          ) : (
+            selectedDevice && (
+              <Tooltip title={t("devicesPage.deviceInfo.edit")} placement="top">
+                <DriveFileRenameOutlineOutlinedIcon
+                  onClick={() => onEditDeviceOpen(selectedDevice)}
+                  sx={{
+                    color: Color.text.secondary,
+                    fontSize: "24px",
+                    cursor: "pointer",
+                    p: "2px",
+                    "&:hover": {
+                      color: Color.text.primary,
+                    },
+                  }}
+                />
+              </Tooltip>
+            )
+          )}
+        </Box>
+      )}
     </Box>
   );
 
@@ -242,7 +342,9 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
     {
       icon: DnsIcon,
       label: t("devicesPage.deviceInfo.deviceName"),
-      value: selectedDevice?.manufacturer,
+      value: updateDevice == null ? selectedDevice?.manufacturer : updateDevice.manufacturer,
+      isEditable: true,
+      onEdit: onEditDeviceOpen,
     },
     {
       icon: MobileFriendlyIcon,
@@ -277,6 +379,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
         overflowY: "auto",
         py: 3,
         px: 2,
+        position: "relative",
       }}
     >
       {details.map((detail, index) => (
@@ -285,6 +388,8 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
           icon={detail.icon}
           label={detail.label}
           value={detail.value}
+          isEditable={detail.isEditable}
+          onEdit={detail.onEdit}
         />
       ))}
 
@@ -327,9 +432,9 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
                       borderRadius: "5px",
                       fontSize: "34px",
                       cursor: "pointer",
-                      p: "2px",
+                      p: "4px",
                       "&:hover": {
-                        color: "inherit",
+                        color: Color.text.primary,
                         backgroundColor: Color.background.purple,
                       },
                     }}
@@ -345,9 +450,9 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
                     borderRadius: "5px",
                     fontSize: "34px",
                     cursor: "pointer",
-                    p: "2px",
+                    p: "4px",
                     "&:hover": {
-                      color: "inherit",
+                      color: Color.text.primary,
                       backgroundColor: Color.background.purple,
                     },
                   }}
@@ -362,9 +467,9 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
                     borderRadius: "5px",
                     fontSize: "34px",
                     cursor: "pointer",
-                    p: "2px",
+                    p: "4px",
                     "&:hover": {
-                      color: "inherit",
+                      color: Color.text.primary,
                       backgroundColor: Color.background.purple,
                     },
                   }}
@@ -381,9 +486,9 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
                     borderRadius: "5px",
                     fontSize: "34px",
                     cursor: "pointer",
-                    p: "2px",
+                    p: "4px",
                     "&:hover": {
-                      color: "inherit",
+                      color: Color.text.primary,
                       backgroundColor: Color.background.red_gray01,
                     },
                   }}
@@ -400,9 +505,9 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved }) => {
                     borderRadius: "5px",
                     fontSize: "34px",
                     cursor: "pointer",
-                    p: "2px",
+                    p: "4px",
                     "&:hover": {
-                      color: "inherit",
+                      color: Color.text.primary,
                       backgroundColor: Color.background.yellow_gray01,
                     },
                   }}

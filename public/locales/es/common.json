@@ -323,7 +323,8 @@
       "confirmRemoveTitle": "¿Estás seguro?",
       "confirmRemoveText": "¿Estás seguro de que deseas eliminar este dispositivo? Si lo eliminas, necesitarás reinstalar la aplicación en tu dispositivo móvil.",
       "ok": "OK",
-      "cancel": "Cancelar"
+      "cancel": "Cancelar",
+      "edit": "Editar"
     },
     "addNewDevice": {
       "addbutton": "+ Agregar Nuevo",
