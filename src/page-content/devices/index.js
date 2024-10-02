@@ -244,7 +244,7 @@ export const DeviceContent = () => {
   };
 
   // Tab Menus
-  const onChangeTabMenu = (newValue) => {
+  const onChangeTabMenu = (event, newValue) => {
     settabMenuValue(newValue);
   };
 
@@ -375,7 +375,14 @@ export const DeviceContent = () => {
                             </SvgIcon>
                           )}
 
-                          <Box sx={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignItems: "center",
+                              gap: "10px",
+                            }}
+                          >
                             <Typography
                               sx={{
                                 fontSize: { xl: "14px", lg: "12px" },
