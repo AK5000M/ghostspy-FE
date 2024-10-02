@@ -163,7 +163,7 @@ export const LoginContent = () => {
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
-        backgroundImage: `linear-gradient(rgb(19 19 20 / 50%), rgb(19 19 20 / 60%)), url("/assets/background/background.webp")`,
+        backgroundImage: `linear-gradient(rgb(29 29 195 / 60%), rgb(19 19 20 / 60%)), url("/assets/background/background.webp")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -197,7 +197,7 @@ export const LoginContent = () => {
               sx={{
                 flexBasis: { xs: "100%", md: "50%" },
                 padding: { xs: "0 10px", md: "0 20px", lg: "0 60px" },
-                backgroundImage: `linear-gradient(rgb(19 19 20 / 0%), rgb(19 19 20 / 0%)), url("/assets/background/sm-bg.webp")`,
+                backgroundImage: `linear-gradient(rgb(19 19 20 / 0%), rgb(19 19 20 / 0%)), url("/assets/background/auth.webp")`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 borderTopLeftRadius: "5px",

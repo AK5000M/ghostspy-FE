@@ -8,7 +8,6 @@ import {
   Typography,
   SvgIcon,
   List,
-  ListItem,
   CircularProgress,
   ToggleButtonGroup,
   ToggleButton,
@@ -32,6 +31,7 @@ import Color from "src/theme/colors";
 import DevicesOutlinedIcon from "@mui/icons-material/DevicesOutlined";
 import SystemSecurityUpdateGoodOutlinedIcon from "@mui/icons-material/SystemSecurityUpdateGoodOutlined";
 import OnlinePredictionOutlinedIcon from "@mui/icons-material/OnlinePredictionOutlined";
+import PhonelinkEraseOutlinedIcon from "@mui/icons-material/PhonelinkEraseOutlined";
 
 import { Apps, Collections } from "@mui/icons-material";
 
@@ -43,7 +43,6 @@ export const DeviceContent = () => {
 
   const { onSocketCloseMonitor } = useSocketFunctions();
 
-  const [deviceListLoading, setDeviceListLoading] = useState(false);
   const [monitorListLoading, setMonitorListLoading] = useState(false);
   const [addedDevice, setAddedDevice] = useState(false);
   const [devices, setDevices] = useState(null);
@@ -51,9 +50,9 @@ export const DeviceContent = () => {
   const [selectedKey, setSelectedKey] = useState(null);
 
   const [tabMenuValue, settabMenuValue] = useState(0);
-  const toastShownRef = useRef(false);
   const successToast = useRef(false);
-  const errorToast = useRef(false);
+  const onlineToast = useRef(false);
+  const offlineToast = useRef(false);
 
   useEffect(() => {
     fetchDevices();
@@ -68,7 +67,9 @@ export const DeviceContent = () => {
   // Add New Device
   useEffect(() => {
     socket.on(`${SocketIOPublicEvents.added_device}`, (data) => {
-      if (user?.user?._id == data?.userId) {
+      if (user?.user?._id == data?.device?.userId) {
+        fetchDevices(); // Update Devices
+
         if (data.success == true && data.message == "success") {
           setAddedDevice(true);
           if (!successToast.current) {
@@ -82,22 +83,25 @@ export const DeviceContent = () => {
                 fontSize: "16px",
               },
             });
-            successToast.current = true; // Set the toast as shown
+            successToast.current = true;
           }
         } else if (data.success == false && data.message == "exist") {
-          if (!errorToast.current) {
+          if (!onlineToast.current) {
             // Check if the toast has already been shown
-            toast.error(t("toast.error.add-device-already"), {
-              position: "bottom-center",
+            toast.success(`${data?.device?.manufacturer} ${t("toast.success.online")}`, {
+              position: "bottom-right",
               reverseOrder: false,
               duration: 5000,
               style: {
-                backgroundColor: Color.background.red_gray01,
-                borderRadius: "5px",
-                padding: "3px 10px",
+                border: `solid 1px ${Color.background.purple}`,
+                backgroundColor: Color.background.purple_opacity,
+                color: Color.text.primary,
+                borderRadius: "0px",
+                padding: "2px 10px",
+                fontSize: "16px",
               },
             });
-            errorToast.current = true; // Set the toast as shown
+            onlineToast.current = true;
           }
         } else {
           toast.error(t("toast.error.add-device-error"), {
@@ -113,22 +117,44 @@ export const DeviceContent = () => {
         }
       }
     });
-  }, [socket]);
+
+    // Offline Device
+    socket.on(`offline-shared-${user?.user?._id}`, (data) => {
+      if (data.type == "offline") {
+        fetchDevices();
+        if (!offlineToast.current) {
+          // Check if the toast has already been shown
+          toast.error(`${data?.device?.manufacturer} ${t("toast.success.offline")}`, {
+            position: "bottom-right",
+            reverseOrder: false,
+            duration: 5000,
+            style: {
+              border: `solid 1px ${Color.background.purple}`,
+              backgroundColor: Color.background.purple_opacity,
+              color: Color.text.red_gray01,
+              borderRadius: "0px",
+              padding: "2px 10px",
+              fontSize: "16px",
+            },
+          });
+          offlineToast.current = true;
+        }
+      }
+    });
+  }, [socket, user]);
 
   // Load Devies
   const fetchDevices = async () => {
-    setDeviceListLoading(true);
     try {
       const userId = user?.user?._id;
       if (userId) {
         const result = await getDevicesList(userId);
 
         if (!result || result.length === 0) {
-          setDeviceListLoading(false);
           setAddedDevice(false);
         } else {
           setDevices(result);
-          setDeviceListLoading(false);
+
           setAddedDevice(false);
         }
       }
@@ -296,37 +322,7 @@ export const DeviceContent = () => {
                 </Box>
 
                 <List sx={{ height: "80%", overflowY: "auto" }}>
-                  {deviceListLoading ? (
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: 50,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        zIndex: 1,
-                        width: "100%",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          backgroundColor: Color.background.purple,
-                          width: "30px",
-                          height: "30px",
-                          borderRadius: "5px",
-                        }}
-                      >
-                        <CircularProgress sx={{ color: Color.text.primary }} size={20} />
-                      </div>
-                    </div>
-                  ) : devices != null ? (
+                  {devices != null ? (
                     devices &&
                     devices.map((device, index) => (
                       <Box
@@ -361,10 +357,32 @@ export const DeviceContent = () => {
                             gap: "10px",
                           }}
                         >
-                          <SvgIcon sx={{ color: Color.text.primary }}>
-                            <SystemSecurityUpdateGoodOutlinedIcon />
-                          </SvgIcon>
-                          <Box sx={{ display: "flex", flexDirection: "row", gap: "10px" }}>
+                          {device.online ? (
+                            <SvgIcon
+                              sx={{
+                                color: Color.background.green,
+                              }}
+                            >
+                              <SystemSecurityUpdateGoodOutlinedIcon />
+                            </SvgIcon>
+                          ) : (
+                            <SvgIcon
+                              sx={{
+                                color: Color.background.gray,
+                              }}
+                            >
+                              <PhonelinkEraseOutlinedIcon />
+                            </SvgIcon>
+                          )}
+
+                          <Box
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignItems: "center",
+                              gap: "10px",
+                            }}
+                          >
                             <Typography
                               sx={{
                                 fontSize: { xl: "14px", lg: "12px" },
@@ -432,20 +450,30 @@ export const DeviceContent = () => {
                       </Box>
                     ))
                   ) : (
-                    <Typography
+                    <Box
                       sx={{
+                        width: "100%",
+                        height: "100%",
                         display: "flex",
-                        alignItems: "center",
                         justifyContent: "center",
-                        gap: "15px",
-                        p: 1,
-                        color: "#f1f1f1",
-                        fontSize: "14px",
-                        fontWeight: 100,
+                        alignItems: "center",
                       }}
                     >
-                      {t("devicesPage.noDevice")}
-                    </Typography>
+                      <Typography
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "15px",
+                          p: 1,
+                          color: Color.text.secondary,
+                          fontSize: "14px",
+                          fontWeight: 100,
+                        }}
+                      >
+                        {t("devicesPage.noDevice")}
+                      </Typography>
+                    </Box>
                   )}
                 </List>
               </Box>

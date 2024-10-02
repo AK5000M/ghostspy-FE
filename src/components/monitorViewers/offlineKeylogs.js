@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
-import { Typography, Box, Tooltip } from "@mui/material";
+import { Typography, Box, Tooltip, CardMedia } from "@mui/material";
 
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
@@ -24,7 +24,6 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const { onSocketMonitor } = useSocketFunctions();
   const { socket } = useSocket();
 
-  const [changeLoading, setChangeLoading] = useState(false);
   const [keylogsDateList, setKeyLogsDateList] = useState([]);
   const [recieveKeyLogs, setRecieveKeyLogs] = useState([]);
   const [selectedKeylog, setselectedKeylog] = useState(null);
@@ -72,7 +71,6 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
 
   // Load Keylogs List
   const init = async () => {
-    setChangeLoading(true);
     try {
       if (device) {
         const response = await getOfflineKeyLogsList({ deviceId: device?.deviceId });
@@ -93,7 +91,6 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
           padding: "3px 10px",
         },
       });
-      setChangeLoading(false);
     }
   };
 
@@ -382,13 +379,15 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                 width: "100%",
                 height: "100%",
                 display: "flex",
-                alignItems: "center",
                 justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <Typography sx={{ fontSize: "14px", color: Color.text.secondary }}>
-                {t("devicesPage.monitors.offline-keylog-content-empty")}
-              </Typography>
+              <CardMedia
+                component="img"
+                src="/assets/logos/spy/ghostspy-logo-_2_.webp"
+                sx={{ cursor: "default", width: "auto", height: "auto" }}
+              />
             </Box>
           )}
         </Box>
