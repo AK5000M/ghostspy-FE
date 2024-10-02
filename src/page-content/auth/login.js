@@ -214,7 +214,7 @@ export const LoginContent = () => {
                   objectFit: "cover",
                   borderRadius: "5px",
                 }}
-                src="/assets/background/video ghostspy.mp4"
+                src="/assets/background/video_ghostspy.mp4"
                 autoPlay
                 loop
                 muted
