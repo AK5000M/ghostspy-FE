@@ -93,6 +93,7 @@ export const DeviceContent = () => {
               reverseOrder: false,
               duration: 5000,
               style: {
+                border: `solid 1px ${Color.background.purple}`,
                 backgroundColor: Color.background.purple_opacity,
                 color: Color.text.primary,
                 borderRadius: "0px",
@@ -128,6 +129,7 @@ export const DeviceContent = () => {
             reverseOrder: false,
             duration: 5000,
             style: {
+              border: `solid 1px ${Color.background.purple}`,
               backgroundColor: Color.background.purple_opacity,
               color: Color.text.red_gray01,
               borderRadius: "0px",
@@ -441,20 +443,30 @@ export const DeviceContent = () => {
                       </Box>
                     ))
                   ) : (
-                    <Typography
+                    <Box
                       sx={{
+                        width: "100%",
+                        height: "100%",
                         display: "flex",
-                        alignItems: "center",
                         justifyContent: "center",
-                        gap: "15px",
-                        p: 1,
-                        color: "#f1f1f1",
-                        fontSize: "14px",
-                        fontWeight: 100,
+                        alignItems: "center",
                       }}
                     >
-                      {t("devicesPage.noDevice")}
-                    </Typography>
+                      <Typography
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "15px",
+                          p: 1,
+                          color: Color.text.secondary,
+                          fontSize: "14px",
+                          fontWeight: 100,
+                        }}
+                      >
+                        {t("devicesPage.noDevice")}
+                      </Typography>
+                    </Box>
                   )}
                 </List>
               </Box>

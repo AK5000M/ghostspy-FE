@@ -13,7 +13,6 @@ import {
   DialogTitle,
   Box,
   Tooltip,
-  IconButton,
   TextField,
 } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -400,32 +399,50 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved, updatedDevice }
               display: "flex",
               flexDirection: "column",
               gap: "15px",
-              mb: 2,
             }}
           >
             {/* Device Format,  Lock or UnLock */}
-            <Box sx={{ display: "flex", gap: 2 }}>
-              <Tooltip title={t("devicesPage.deviceInfo.formatDevice")} placement="top">
-                {formatLoading ? (
-                  <Box
-                    sx={{
-                      color: Color.background.purple,
-                      border: `solid 1px ${Color.background.purple}`,
-                      borderRadius: "5px",
-                      cursor: "pointer",
-                      py: "2px",
-                      px: "5px",
-                      height: "33px",
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <CircularProgress size={22} />
-                  </Box>
-                ) : (
-                  <PhonelinkSetupOutlinedIcon
-                    variant="outlined"
-                    onClick={() => onFormatDevice(selectedDevice)}
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+              <Box sx={{ display: "flex", gap: 2 }}>
+                <Tooltip title={t("devicesPage.deviceInfo.formatDevice")} placement="top">
+                  {formatLoading ? (
+                    <Box
+                      sx={{
+                        color: Color.background.purple,
+                        border: `solid 1px ${Color.background.purple}`,
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        py: "2px",
+                        px: "5px",
+                        height: "33px",
+                        display: "flex",
+                        alignItems: "center",
+                      }}
+                    >
+                      <CircularProgress size={22} />
+                    </Box>
+                  ) : (
+                    <PhonelinkSetupOutlinedIcon
+                      variant="outlined"
+                      onClick={() => onFormatDevice(selectedDevice)}
+                      sx={{
+                        color: Color.background.purple,
+                        border: `solid 1px ${Color.background.purple}`,
+                        borderRadius: "5px",
+                        fontSize: "34px",
+                        cursor: "pointer",
+                        p: "4px",
+                        "&:hover": {
+                          color: Color.text.primary,
+                          backgroundColor: Color.background.purple,
+                        },
+                      }}
+                    />
+                  )}
+                </Tooltip>
+                <Tooltip title={t("devicesPage.deviceInfo.lock")} placement="top">
+                  <LockOutlinedIcon
+                    onClick={() => onLockDevice("lock")}
                     sx={{
                       color: Color.background.purple,
                       border: `solid 1px ${Color.background.purple}`,
@@ -439,80 +456,63 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved, updatedDevice }
                       },
                     }}
                   />
-                )}
-              </Tooltip>
-              <Tooltip title={t("devicesPage.deviceInfo.lock")} placement="top">
-                <LockOutlinedIcon
-                  onClick={() => onLockDevice("lock")}
-                  sx={{
-                    color: Color.background.purple,
-                    border: `solid 1px ${Color.background.purple}`,
-                    borderRadius: "5px",
-                    fontSize: "34px",
-                    cursor: "pointer",
-                    p: "4px",
-                    "&:hover": {
-                      color: Color.text.primary,
-                      backgroundColor: Color.background.purple,
-                    },
-                  }}
-                />
-              </Tooltip>
-              <Tooltip title={t("devicesPage.deviceInfo.unlock")} placement="top">
-                <LockOpenOutlinedIcon
-                  onClick={() => onLockDevice("unlock")}
-                  sx={{
-                    color: Color.background.purple,
-                    border: `solid 1px ${Color.background.purple}`,
-                    borderRadius: "5px",
-                    fontSize: "34px",
-                    cursor: "pointer",
-                    p: "4px",
-                    "&:hover": {
-                      color: Color.text.primary,
-                      backgroundColor: Color.background.purple,
-                    },
-                  }}
-                />
-              </Tooltip>
-            </Box>
-            <Box sx={{ display: "flex", gap: 2 }}>
-              <Tooltip title={t("devicesPage.deviceInfo.removeDevice")} placement="top">
-                <PhonelinkEraseOutlinedIcon
-                  onClick={onRemoveClick}
-                  sx={{
-                    border: `solid 1px ${Color.background.red_gray01}`,
-                    color: Color.text.red_gray01,
-                    borderRadius: "5px",
-                    fontSize: "34px",
-                    cursor: "pointer",
-                    p: "4px",
-                    "&:hover": {
-                      color: Color.text.primary,
-                      backgroundColor: Color.background.red_gray01,
-                    },
-                  }}
-                />
-              </Tooltip>
+                </Tooltip>
+                <Tooltip title={t("devicesPage.deviceInfo.unlock")} placement="top">
+                  <LockOpenOutlinedIcon
+                    onClick={() => onLockDevice("unlock")}
+                    sx={{
+                      color: Color.background.purple,
+                      border: `solid 1px ${Color.background.purple}`,
+                      borderRadius: "5px",
+                      fontSize: "34px",
+                      cursor: "pointer",
+                      p: "4px",
+                      "&:hover": {
+                        color: Color.text.primary,
+                        backgroundColor: Color.background.purple,
+                      },
+                    }}
+                  />
+                </Tooltip>
+              </Box>
+              <Box sx={{ display: "flex", gap: 2 }}>
+                <Tooltip title={t("devicesPage.deviceInfo.removeDevice")} placement="top">
+                  <PhonelinkEraseOutlinedIcon
+                    onClick={onRemoveClick}
+                    sx={{
+                      border: `solid 1px ${Color.background.red_gray01}`,
+                      color: Color.text.red_gray01,
+                      borderRadius: "5px",
+                      fontSize: "34px",
+                      cursor: "pointer",
+                      p: "4px",
+                      "&:hover": {
+                        color: Color.text.primary,
+                        backgroundColor: Color.background.red_gray01,
+                      },
+                    }}
+                  />
+                </Tooltip>
 
-              <Tooltip title={t("devicesPage.deviceInfo.uninstall-App")} placement="top">
-                <DeleteForeverOutlinedIcon
-                  variant="outlined"
-                  onClick={() => onUninstallMobileApp(selectedDevice)}
-                  sx={{
-                    color: Color.background.yellow_gray01,
-                    border: `solid 1px ${Color.background.yellow_gray01}`,
-                    borderRadius: "5px",
-                    fontSize: "34px",
-                    cursor: "pointer",
-                    p: "4px",
-                    "&:hover": {
-                      color: Color.text.primary,
-                      backgroundColor: Color.background.yellow_gray01,
-                    },
-                  }}
-                />
-              </Tooltip>
+                <Tooltip title={t("devicesPage.deviceInfo.uninstall-App")} placement="top">
+                  <DeleteForeverOutlinedIcon
+                    variant="outlined"
+                    onClick={() => onUninstallMobileApp(selectedDevice)}
+                    sx={{
+                      color: Color.background.yellow_gray01,
+                      border: `solid 1px ${Color.background.yellow_gray01}`,
+                      borderRadius: "5px",
+                      fontSize: "34px",
+                      cursor: "pointer",
+                      p: "4px",
+                      "&:hover": {
+                        color: Color.text.primary,
+                        backgroundColor: Color.background.yellow_gray01,
+                      },
+                    }}
+                  />
+                </Tooltip>
+              </Box>
             </Box>
           </Box>
         </Box>
