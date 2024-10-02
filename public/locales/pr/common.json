@@ -60,7 +60,9 @@
       "create-apk": "Você criou um novo APK com sucesso; pode baixar o APK no painel de downloads.",
       "device-format": "Dispositivo formatado com sucesso.",
       "uninstall-app": "O aplicativo foi removido com sucesso do seu dispositivo.",
-      "keylog-remove": "removido com sucesso."
+      "keylog-remove": "removido com sucesso.",
+      "online": "está online.",
+      "offline": "está offline."
     },
     "error": {
       "default": "Ocorreu um erro inesperado.",

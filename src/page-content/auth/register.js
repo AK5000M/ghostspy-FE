@@ -143,7 +143,7 @@ export const RegisterContent = () => {
         display: "flex",
         flexDirection: "column",
         minHeight: { md: "100vh", xs: "auto" },
-        backgroundImage: `linear-gradient(rgb(19 19 20 / 50%), rgb(19 19 20 / 60%)), url("/assets/background/background.webp")`,
+        backgroundImage: `linear-gradient(rgb(19 19 20 / 50%), rgb(29 29 195 / 60%)), url("/assets/background/background.webp")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -314,7 +314,7 @@ export const RegisterContent = () => {
               sx={{
                 flexBasis: { xs: "100%", md: "50%" },
                 padding: { xs: "0 10px", md: "0 20px", lg: "0 60px" },
-                backgroundImage: `linear-gradient(rgb(19 19 20 / 0%), rgb(19 19 20 / 0%)), url("/assets/background/1x1_Crie_uma_logo_moderna_e_tecnol_g_5.webp")`,
+                backgroundImage: `linear-gradient(rgb(19 19 20 / 0%), rgb(19 19 20 / 0%)), url("/assets/background/register_bg.webp")`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 borderTopRightRadius: "5px",

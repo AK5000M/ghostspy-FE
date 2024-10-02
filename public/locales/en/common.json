@@ -58,7 +58,9 @@
       "create-apk": "You have crated new apk successfully, you can download an apk in download panel.",
       "device-format": "Device formatted successfully.",
       "uninstall-app": "The app has been successfully removed from a device.",
-      "keylog-remove": "removed successfully."
+      "keylog-remove": "removed successfully.",
+      "online": "is online.",
+      "offline": "is offline."
     },
     "error": {
       "default": "An unexpected error occurred.",
