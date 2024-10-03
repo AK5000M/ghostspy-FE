@@ -2,7 +2,7 @@ import { SvgIcon } from "@mui/material";
 
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import MonitorHeartOutlinedIcon from "@mui/icons-material/MonitorHeartOutlined";
-import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import DownloadingOutlinedIcon from "@mui/icons-material/DownloadingOutlined";
 import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
 
 export const items = [
@@ -29,7 +29,7 @@ export const items = [
     path: "/builder",
     icon: (
       <SvgIcon style={{ fontSize: "24px" }}>
-        <DownloadOutlinedIcon />
+        <DownloadingOutlinedIcon />
       </SvgIcon>
     ),
   },
