@@ -313,17 +313,29 @@ export const RegisterContent = () => {
             <Box
               sx={{
                 flexBasis: { xs: "100%", md: "50%" },
-                padding: { xs: "0 10px", md: "0 20px", lg: "0 60px" },
-                backgroundImage: `linear-gradient(rgb(19 19 20 / 0%), rgb(19 19 20 / 0%)), url("/assets/background/register_bg.webp")`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
+
                 borderTopRightRadius: "5px",
                 borderBottomRightRadius: "5px",
                 height: "100%",
                 display: { md: "flex", xs: "none" },
                 alignItems: "flex-end",
               }}
-            ></Box>
+            >
+              {" "}
+              <video
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  borderRadius: "5px",
+                }}
+                src="/assets/background/video2_ghostspy.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+            </Box>
           </Box>
         </Container>
       </Box>

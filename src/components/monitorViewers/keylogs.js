@@ -28,7 +28,6 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
       setChangeLoading(true);
       try {
         await onSocketMonitor(SocketIOPublicEvents.key_monitor, { deviceId: device.deviceId });
-
         const onKeyMonitorResponse = (data) => {
           if (isMounted && device?.deviceId === data.deviceId) {
             setRecieveKeyLogs((prevLogs) => {
