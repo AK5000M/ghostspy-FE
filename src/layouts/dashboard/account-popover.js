@@ -68,14 +68,14 @@ export const AccountPopover = (props) => {
           },
         }}
       >
-        <MenuItem
+        {/* <MenuItem
           onClick={onOpenProfile}
           sx={{ display: "flex", gap: "5px", alignItems: "center" }}
         >
           {" "}
           <AccountCircleIcon />
           {t("profileMenu.profile")}
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem onClick={onSignOut} sx={{ display: "flex", gap: "5px", alignItems: "center" }}>
           <ExitToAppIcon />
           {t("profileMenu.signOut")}
