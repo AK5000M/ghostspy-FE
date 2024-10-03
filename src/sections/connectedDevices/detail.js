@@ -161,11 +161,9 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved, updatedDevice }
   // Uninstall App
   const onUninstallMobileApp = async (device) => {
     const deviceId = device?.deviceId;
-    setUninstallLoading(true);
     try {
       await onUninstallApp(SocketIOPublicEvents.uninstall_app_event, { deviceId });
     } catch (error) {
-      setUninstallLoading(false);
       toast.error(t("toast.error.unintall-app"), {
         position: "bottom-center",
         reverseOrder: false,

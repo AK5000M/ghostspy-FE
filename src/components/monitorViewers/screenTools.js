@@ -424,7 +424,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                       fontSize: "30px",
                       cursor: "pointer",
                       "&:hover": {
-                        color: "inherit",
+                        color: Color.text.primary,
                         backgroundColor: Color.background.purple,
                       },
                     }}
@@ -451,7 +451,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                         fontSize: "30px",
                         cursor: "pointer",
                         "&:hover": {
-                          color: "inherit",
+                          color: Color.text.primary,
                           backgroundColor: Color.background.purple,
                         },
                       }}
@@ -469,7 +469,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                       fontSize: "30px",
                       cursor: "pointer",
                       "&:hover": {
-                        color: "inherit",
+                        color: Color.text.primary,
                         backgroundColor: Color.background.purple,
                       },
                     }}
@@ -485,7 +485,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                       fontSize: "30px",
                       cursor: "pointer",
                       "&:hover": {
-                        color: "inherit",
+                        color: Color.text.primary,
                         backgroundColor: Color.background.purple,
                       },
                     }}
@@ -500,7 +500,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                       fontSize: "30px",
                       cursor: "pointer",
                       "&:hover": {
-                        color: "inherit",
+                        color: Color.text.primary,
                         backgroundColor: Color.background.purple,
                       },
                     }}
@@ -527,7 +527,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                 fontSize: "30px",
                 cursor: "pointer",
                 "&:hover": {
-                  color: "inherit",
+                  color: Color.text.primary,
                   backgroundColor: Color.background.purple,
                 },
               }}
@@ -540,7 +540,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                 fontSize: "30px",
                 cursor: "pointer",
                 "&:hover": {
-                  color: "inherit",
+                  color: Color.text.primary,
                   backgroundColor: Color.background.purple,
                 },
               }}
@@ -553,7 +553,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                 fontSize: "30px",
                 cursor: "pointer",
                 "&:hover": {
-                  color: "inherit",
+                  color: Color.text.primary,
                   backgroundColor: Color.background.purple,
                 },
               }}
@@ -598,7 +598,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
               fullWidth
               label={t("devicesPage.monitors.skeleton-input")}
               value={privacyText}
-              onChange={(e) => setPrivacyText(e.target.value)} // Update the state with the inputted text
+              onChange={(e) => setPrivacyText(e.target.value)}
               required
             />
             <Button
@@ -607,7 +607,7 @@ const ScreenToolbar = ({ visible, device, black, lock }) => {
                 width: "100px",
                 gap: "10px",
               }}
-              onClick={onPrivacyScreen} // Call the onPrivacyScreen function when OK is clicked
+              onClick={onPrivacyScreen}
             >
               <CheckCircleOutlineOutlinedIcon />
               OK
