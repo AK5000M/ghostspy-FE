@@ -26,12 +26,15 @@ const ScreenControlBox = ({ device }) => {
   return (
     <Box
       sx={{
+        width: { sm: "auto", xs: "200px" },
         display: "flex",
-        flexDirection: "column",
-        gap: "10px",
+        flexDirection: { sm: "column", xs: "row" },
+        alignItems: "center",
+        justifyContent: "center",
+        gap: { sm: "10px", xs: "30px" },
         border: `solid 1px ${Color.background.purple}`,
         px: 1,
-        py: 2,
+        py: { sm: 2, xs: "5px" },
       }}
     >
       <MenuIcon

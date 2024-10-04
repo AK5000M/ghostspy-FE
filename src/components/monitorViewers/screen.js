@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Grid, CircularProgress, CardMedia, Box, TextField } from "@mui/material";
+import { useMediaQuery } from "react-responsive";
+
+import { Grid, CircularProgress, CardMedia, Box, TextField, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-use-gesture";
 
 import MenuIcon from "@mui/icons-material/Menu";
-import { IconButton } from "@mui/material";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
+import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
+import KeyboardControlKeyOutlinedIcon from "@mui/icons-material/KeyboardControlKeyOutlined";
 
 import { useSocket } from "../../hooks/use-socket";
 import { useSocketFunctions } from "../../utils/socket";
@@ -17,6 +20,8 @@ import Color from "src/theme/colors";
 
 const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
+  const isMobile = useMediaQuery({ query: "(max-width: 475px)" });
+
   const {
     onSocketMonitor,
     onScreenClickEvent,
@@ -27,6 +32,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const { socket } = useSocket();
   const imageRef = useRef(null);
 
+  const [openIput, setOpenInput] = useState(false);
   const [screenCode, setScreenCode] = useState(null);
   const [positions, setPositions] = useState([]);
   const [isDragging, setIsDragging] = useState(false);
@@ -37,6 +43,12 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
 
   const black = localStorage.getItem("black");
   const lock = localStorage.getItem("lock");
+
+  useEffect(() => {
+    if (!isMobile) {
+      setOpenInput(true);
+    }
+  }, [isMobile]);
 
   useEffect(() => {
     const deviceId = device?.deviceId;
@@ -108,31 +120,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
       ...position,
     }));
   };
-
-  // Handle image load to get intrinsic and rendered size
-  // const onImageLoad = (e) => {
-  //   const img = e.target;
-  //   const intrinsicWidth = img.naturalWidth;
-  //   const intrinsicHeight = img.naturalHeight;
-  //   const initialWidth = Math.round(intrinsicWidth); // Scale down if necessary
-  //   const initialHeight = Math.round(intrinsicHeight); // Scale down if necessary
-  //   const minWidth = Math.round(intrinsicWidth * 0.5);
-  //   const minHeight = Math.round(intrinsicHeight * 0.5);
-  //   const maxWidth = intrinsicWidth;
-  //   const maxHeight = intrinsicHeight;
-  //   setLoadImageWidth(intrinsicWidth);
-  //   setLoadImageHeight(intrinsicHeight);
-  //   console.log(intrinsicWidth, initialHeight);
-  //   // setState((prevState) => ({
-  //   //   ...prevState,
-  //   //   width: initialWidth,
-  //   //   height: initialHeight,
-  //   //   minWidth,
-  //   //   minHeight,
-  //   //   maxWidth,
-  //   //   maxHeight,
-  //   // }));
-  // };
 
   const calculatePosition = async (clientX, clientY) => {
     try {
@@ -216,144 +203,206 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
     return memo;
   });
 
-  return (
-    <MonitorViewer
-      initialState={{
-        width: 360,
-        height: 720,
-        x: 100,
-        y: -120,
-        minWidth: 270,
-        minHeight: 540,
-        maxWidth: 360,
-        maxHeight: 720,
-      }}
-      onClose={onCloseModal}
-    >
-      <div style={{ position: "relative", width: "100%", height: "100%" }}>
-        <Box onMouseDown={preventDrag} onTouchStart={preventDrag} sx={{ cursor: "default" }}>
-          <ScreenToolbar device={device} black={black} lock={lock} />
-        </Box>
+  const onCloseInputBox = () => {
+    setOpenInput(false);
+  };
+  const onOpenInputBox = () => {
+    setOpenInput(true);
+  };
 
-        {/* Your screen monitoring content here */}
-        <Grid
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            width: "100%",
-            height: "100%",
-            backgroundColor: "black",
-            border: `solid 1px ${Color.background.border}`,
-            borderRadius: "5px",
-          }}
-        >
+  return (
+    <>
+      <MonitorViewer
+        initialState={{
+          width: 360,
+          height: 720,
+          x: 100,
+          y: -120,
+          minWidth: 270,
+          minHeight: 540,
+          maxWidth: 360,
+          maxHeight: 720,
+        }}
+        onClose={onCloseModal}
+      >
+        <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
+          <Box onMouseDown={preventDrag} onTouchStart={preventDrag} sx={{ cursor: "default" }}>
+            <ScreenToolbar device={device} black={black} lock={lock} />
+          </Box>
+
+          {/* Your screen monitoring content here */}
           <Grid
             sx={{
               display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              flexDirection: "column",
               width: "100%",
               height: "100%",
-              pb: 1,
+              backgroundColor: "black",
+              border: `solid 1px ${Color.background.border}`,
+              borderRadius: "5px",
             }}
           >
             <Grid
-              onMouseDown={preventDrag}
-              onTouchStart={preventDrag}
               sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
                 width: "100%",
                 height: "100%",
-                position: "absolute",
-                top: 0,
-                left: 0,
-                zIndex: 2,
-                opacity: 0.5,
-                cursor: "default",
+                pb: 1,
               }}
-              {...bind()}
-            ></Grid>
+            >
+              <Grid
+                onMouseDown={preventDrag}
+                onTouchStart={preventDrag}
+                sx={{
+                  width: "100%",
+                  height: "100%",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  zIndex: 2,
+                  opacity: 0.5,
+                  cursor: "default",
+                }}
+                {...bind()}
+              ></Grid>
 
-            {screenCode ? (
-              <>
+              {screenCode ? (
+                <>
+                  <CardMedia
+                    className="screen-body"
+                    component="img"
+                    src={`data:image/png;base64, ${screenCode}`}
+                    sx={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "0px",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      zIndex: 1,
+                    }}
+                    // onLoad={onImageLoad}
+                    ref={imageRef}
+                  />
+                </>
+              ) : (
                 <CardMedia
                   className="screen-body"
                   component="img"
-                  src={`data:image/png;base64, ${screenCode}`}
+                  src={"/assets/logos/spy/ghostspy-logo-_2_.webp"}
                   sx={{
-                    width: "100%",
-                    height: "100%",
+                    cursor: "default",
+                    width: "auto",
+                    height: "auto",
                     borderRadius: "0px",
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    zIndex: 1,
                   }}
-                  // onLoad={onImageLoad}
-                  ref={imageRef}
                 />
+              )}
+            </Grid>
+
+            {screenCode && (
+              <>
+                {isMobile && (
+                  <Box
+                    sx={{
+                      position: "fixed",
+                      bottom: "10px",
+                      right: "5px",
+                      zIndex: 99999,
+                      color: "red",
+                    }}
+                  >
+                    {openIput ? (
+                      <IconButton
+                        onClick={onCloseInputBox}
+                        sx={{
+                          color: Color.text.primary,
+                          cursor: "pointer",
+                          padding: "5px",
+                          backgroundColor: Color.background.secondary,
+                          border: `solid 1px ${Color.background.purple}`,
+                        }}
+                      >
+                        <KeyboardArrowDownOutlinedIcon />
+                      </IconButton>
+                    ) : (
+                      <IconButton
+                        onClick={onOpenInputBox}
+                        sx={{
+                          color: Color.text.primary,
+                          cursor: "pointer",
+                          padding: "5px",
+                          backgroundColor: Color.background.secondary,
+                          border: `solid 1px ${Color.background.purple}`,
+                        }}
+                      >
+                        <KeyboardControlKeyOutlinedIcon />
+                      </IconButton>
+                    )}
+                  </Box>
+                )}
+
+                {openIput && (
+                  <Box
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Box
+                      onMouseDown={preventDrag}
+                      onTouchStart={preventDrag}
+                      sx={{
+                        position: "absolute",
+                        bottom: !isMobile ? "-50px" : "8px",
+                        zIndex: 99999,
+                        width: !isMobile ? "100%" : "230px",
+                        minWidth: "180px",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        <TextField
+                          className="screen-message"
+                          fullWidth
+                          value={message?.text || ""}
+                          onChange={(e) => setMessage({ ...message, text: e.target.value })}
+                          inputProps={{
+                            style: {
+                              backgroundColor: Color.background.main,
+                              padding: "10px 50px 10px 10px",
+                            },
+                          }}
+                        />
+                        <SendOutlinedIcon
+                          onClick={() => onSendInputText()}
+                          sx={{
+                            backgroundColor: Color.background.main,
+                            position: "absolute",
+                            right: "1%",
+                            color: Color.text.primary,
+                            cursor: "default",
+                            fontSize: "30px",
+                          }}
+                        />
+                      </Box>
+                    </Box>
+                  </Box>
+                )}
               </>
-            ) : (
-              <CardMedia
-                className="screen-body"
-                component="img"
-                src={"/assets/logos/spy/ghostspy-logo-_2_.webp"}
-                sx={{
-                  cursor: "default",
-                  width: "auto",
-                  height: "auto",
-                  borderRadius: "0px",
-                }}
-              />
             )}
           </Grid>
-          {screenCode && (
-            <Box
-              onMouseDown={preventDrag}
-              onTouchStart={preventDrag}
-              sx={{
-                position: "absolute",
-                bottom: { md: "-50px", xs: "-50px" },
-                width: "100%",
-                zIndex: 99999,
-              }}
-            >
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  // position: "relative",
-                }}
-              >
-                <TextField
-                  className="screen-message"
-                  fullWidth
-                  value={message?.text || ""}
-                  onChange={(e) => setMessage({ ...message, text: e.target.value })}
-                  inputProps={{
-                    style: {
-                      backgroundColor: Color.background.main,
-                      padding: "10px 50px 10px 10px",
-                    },
-                  }}
-                />
-                <SendOutlinedIcon
-                  onClick={() => onSendInputText()}
-                  sx={{
-                    backgroundColor: Color.background.main,
-                    position: "absolute",
-                    right: "1%",
-                    color: Color.text.primary,
-                    cursor: "default",
-                    fontSize: "30px",
-                  }}
-                />
-              </Box>
-            </Box>
-          )}
-        </Grid>
-      </div>
-    </MonitorViewer>
+        </Box>
+      </MonitorViewer>
+    </>
   );
 };
 
