@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Rnd } from "react-rnd";
 import CloseIcon from "@mui/icons-material/Close";
@@ -6,23 +6,17 @@ import { IconButton, Modal, Box } from "@mui/material";
 import Color from "src/theme/colors";
 
 const DEFAULT = {
-  width: 360,
-  height: 720,
-  minWidth: 180,
-  minHeight: 360,
-  maxWidth: 360,
-  maxHeight: 720,
   x: 0,
-  y: -450,
+  y: -50,
 };
 
 const MonitorViewer = ({ children, initialState, onClose }) => {
   const [state, setState] = useState(initialState);
   const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
-  const isMobile = useMediaQuery({ query: "(max-width: 576px)" });
-  const isTablet = useMediaQuery({ query: "(max-width: 768px)" });
+  const isMobile = useMediaQuery({ query: "(max-width: 475px)" });
+  const isTablet = useMediaQuery({ query: "(max-width: 1024px)" });
 
-  let styles = {
+  const styles = {
     display: "flex",
     justifyContent: "center",
     borderRadius: "8px",
@@ -33,30 +27,31 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
     zIndex: "1000",
   };
 
-  useEffect(() => {
-    if (isMobile) {
-      setState({ ...state, ...DEFAULT });
-    }
-  }, [isMobile]);
+  // Prevent drag on close icon
+  const preventDrag = (e) => {
+    e.stopPropagation();
+  };
 
   const CloseButton = useMemo(
     () => (
-      <div
-        style={{
+      <IconButton
+        onMouseDown={preventDrag}
+        onTouchStart={preventDrag}
+        onClick={() => onClose(false)}
+        sx={{
           position: "absolute",
-          top: "-27px",
-          right: "0px",
+          top: !isMobile ? "-38px" : "5px",
+          right: { sm: "1px", xs: "2px" },
           cursor: "pointer",
           pointerEvents: "all",
+          zIndex: 99999,
+          border: `solid 1px ${Color.background.purple}`,
+          backgroundColor: Color.background.main_gray01,
+          p: "2px",
         }}
       >
-        <CloseIcon
-          className="modal-close-icon"
-          edge="end"
-          onClick={() => onClose(false)}
-          aria-label="close"
-        />
-      </div>
+        <CloseIcon className="modal-close-icon" edge="end" aria-label="close" />
+      </IconButton>
     ),
     [onClose]
   );
@@ -70,7 +65,8 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
   };
 
   return (
-    <React.Fragment>
+    <>
+      {/* Desktop / Non-Mobile Layout */}
       {!isMobile && (
         <Rnd
           lockAspectRatio={true}
@@ -81,8 +77,7 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
           minHeight={state.minHeight}
           maxWidth={state.maxWidth}
           maxHeight={state.maxHeight}
-          // disableDragging={!isDraggingEnabled}
-          disableDragging={isTablet ? true : !isDraggingEnabled} // Disable dragging on tablets
+          disableDragging={isMobile ? true : !isDraggingEnabled}
           onDragStop={(e, d) => {
             setState((prevState) => ({ ...prevState, x: d.x, y: d.y }));
           }}
@@ -105,9 +100,15 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
           </Box>
         </Rnd>
       )}
+
+      {/* Mobile / Tablet Modal Layout */}
       {isMobile && (
-        <Modal open={isMobile} onClose={() => onClose(false)} style={{ backgroundColor: "#000" }}>
-          <React.Fragment>
+        <Modal
+          open={true}
+          onClose={() => onClose(false)} // Trigger the close event
+          sx={{ backgroundColor: "#000" }}
+        >
+          <>
             {CloseButton}
             <Box
               onMouseEnter={handleMouseEnter}
@@ -116,10 +117,10 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
             >
               {children}
             </Box>
-          </React.Fragment>
+          </>
         </Modal>
       )}
-    </React.Fragment>
+    </>
   );
 };
 
