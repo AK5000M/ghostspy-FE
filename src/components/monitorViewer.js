@@ -5,16 +5,16 @@ import CloseIcon from "@mui/icons-material/Close";
 import { IconButton, Modal, Box } from "@mui/material";
 import Color from "src/theme/colors";
 
-const DEFAULT = {
-  width: 360,
-  height: 720,
-  minWidth: 180,
-  minHeight: 360,
-  maxWidth: 360,
-  maxHeight: 720,
-  x: 0,
-  y: -450,
-};
+// const DEFAULT = {
+//   width: 360,
+//   height: 720,
+//   minWidth: 180,
+//   minHeight: 360,
+//   maxWidth: 360,
+//   maxHeight: 720,
+//   x: 0,
+//   y: -450,
+// };
 
 const MonitorViewer = ({ children, initialState, onClose }) => {
   const [state, setState] = useState(initialState);
@@ -33,11 +33,11 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
     zIndex: "1000",
   };
 
-  useEffect(() => {
-    if (isMobile) {
-      setState({ ...state, ...DEFAULT });
-    }
-  }, [isMobile]);
+  // useEffect(() => {
+  //   if (isMobile) {
+  //     setState({ ...state, ...DEFAULT });
+  //   }
+  // }, [isMobile]);
 
   const CloseButton = useMemo(
     () => (
