@@ -208,13 +208,13 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   return (
     <MonitorViewer
       initialState={{
-        width: 800,
-        height: 600,
-        x: 50,
+        width: 700,
+        height: 500,
+        x: 0,
         y: -120,
-        minWidth: 800,
-        minHeight: 600,
-        maxWidth: 800,
+        minWidth: 500,
+        minHeight: 400,
+        maxWidth: 700,
         maxHeight: 600,
       }}
       onClose={onCloseModal}

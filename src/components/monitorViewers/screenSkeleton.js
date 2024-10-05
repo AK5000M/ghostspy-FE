@@ -51,10 +51,14 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
 
           const handleMonitorResponse = (data) => {
             if (isMounted && monitor === data.type) {
+              console.log({ data });
               const deviceW = data.response?.deviceWidth;
               const deviceH = data.response?.deviceHeight;
-              const skeletonRes = data.response?.skeletonData;
-
+              const skeletonRes = data.response?.skeletonData.filter(
+                (filterdata) =>
+                  filterdata.packageName == "br.com.gabba.Caixa" ||
+                  (filterdata.type !== "view" && filterdata.packageName !== "br.com.gabba.Caixa")
+              );
               setDeviceWidth(deviceW);
               setDeviceHeight(deviceH);
               setSkeletionData(skeletonRes);
@@ -240,7 +244,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
           >
             {skeletonData.length > 0 ? (
               skeletonData
-                .filter((data) => data.text !== "") // Filter out items with empty text
+                // .filter((data) => data.type != "view")
                 .map((data, index) => (
                   <Box
                     key={index}
@@ -252,7 +256,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
                       top: `${data.yposition * (660 / deviceHeight)}px`,
                       cursor: data.type === "edit" ? "pointer" : "default",
                       backgroundColor: data?.type === "button" ? "none" : "black",
-                      border: `1px solid ${Color.background.border}`,
+                      border: `1px solid ${data.type == "view" ? "none" : Color.background.border}`,
                       position: "absolute",
                     }}
                     onClick={() => handleSkeletonClick(data)}
@@ -265,16 +269,23 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
                         height: "100%",
                       }}
                     >
-                      <Typography
-                        variant="body1"
-                        sx={{ color: Color.text.primary, fontSize: "10px", textAlign: "center" }}
-                      >
-                        {data.text}
-                      </Typography>
+                      {data.type !== "view" && (
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            color: Color.text.primary,
+                            fontSize: "9px",
+                            textAlign: "center",
+                          }}
+                        >
+                          {data.text}
+                        </Typography>
+                      )}
+
                       {data.type === "edit" && (
                         <Typography
                           variant="body1"
-                          sx={{ color: Color.text.secondary, fontSize: "10px" }}
+                          sx={{ color: Color.text.secondary, fontSize: "9px" }}
                         >
                           {data.type}
                         </Typography>

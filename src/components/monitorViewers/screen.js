@@ -21,6 +21,7 @@ import Color from "src/theme/colors";
 const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
   const isMobile = useMediaQuery({ query: "(max-width: 475px)" });
+  const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" }); // Tablet between 476px and 1024px
 
   const {
     onSocketMonitor,
@@ -226,7 +227,11 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
         onClose={onCloseModal}
       >
         <Box sx={{ position: "relative", width: "100%", height: "100%" }}>
-          <Box onMouseDown={preventDrag} onTouchStart={preventDrag} sx={{ cursor: "default" }}>
+          <Box
+            onMouseDown={preventDrag}
+            onTouchStart={preventDrag}
+            sx={{ cursor: "default", pointerEvents: "auto" }}
+          >
             <ScreenToolbar device={device} black={black} lock={lock} />
           </Box>
 

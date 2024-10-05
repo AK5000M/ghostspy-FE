@@ -5,16 +5,12 @@ import CloseIcon from "@mui/icons-material/Close";
 import { IconButton, Modal, Box } from "@mui/material";
 import Color from "src/theme/colors";
 
-const DEFAULT = {
-  x: 0,
-  y: -50,
-};
-
 const MonitorViewer = ({ children, initialState, onClose }) => {
   const [state, setState] = useState(initialState);
   const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
   const isMobile = useMediaQuery({ query: "(max-width: 475px)" });
-  const isTablet = useMediaQuery({ query: "(max-width: 1024px)" });
+  const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" }); // Tablet between 476px and 1024px
+  const isDesktop = useMediaQuery({ query: "(min-width: 1025px)" });
 
   const styles = {
     display: "flex",
@@ -23,11 +19,10 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
     border: `solid 1px ${Color.background.purple}`,
     background: Color.background.main,
     padding: "20px 10px",
-    boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.3)",
-    zIndex: "1000",
+    boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.3)`,
+    zIndex: 1000,
   };
 
-  // Prevent drag on close icon
   const preventDrag = (e) => {
     e.stopPropagation();
   };
@@ -35,9 +30,17 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
   const CloseButton = useMemo(
     () => (
       <IconButton
-        onMouseDown={preventDrag}
-        onTouchStart={preventDrag}
+        onMouseDown={(e) => {
+          preventDrag(e);
+          setIsDraggingEnabled(false); // Disable dragging on mouse down
+        }}
+        onTouchStart={(e) => {
+          preventDrag(e);
+          setIsDraggingEnabled(false); // Disable dragging on touch start
+        }}
         onClick={() => onClose(false)}
+        onMouseUp={() => setIsDraggingEnabled(true)} // Re-enable dragging on mouse up
+        onTouchEnd={() => setIsDraggingEnabled(true)} // Re-enable dragging on touch end
         sx={{
           position: "absolute",
           top: !isMobile ? "-38px" : "5px",
@@ -53,7 +56,7 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
         <CloseIcon className="modal-close-icon" edge="end" aria-label="close" />
       </IconButton>
     ),
-    [onClose]
+    [onClose, isMobile]
   );
 
   const handleMouseEnter = () => {
@@ -66,8 +69,8 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
 
   return (
     <>
-      {/* Desktop / Non-Mobile Layout */}
-      {!isMobile && (
+      {/* Desktop version: RND with drag enabled */}
+      {isDesktop && (
         <Rnd
           lockAspectRatio={true}
           style={styles}
@@ -77,7 +80,7 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
           minHeight={state.minHeight}
           maxWidth={state.maxWidth}
           maxHeight={state.maxHeight}
-          disableDragging={isMobile ? true : !isDraggingEnabled}
+          disableDragging={!isDraggingEnabled}
           onDragStop={(e, d) => {
             setState((prevState) => ({ ...prevState, x: d.x, y: d.y }));
           }}
@@ -101,13 +104,37 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
         </Rnd>
       )}
 
-      {/* Mobile / Tablet Modal Layout */}
-      {isMobile && (
-        <Modal
-          open={true}
-          onClose={() => onClose(false)} // Trigger the close event
-          sx={{ backgroundColor: "#000" }}
+      {/* Tablet version: RND but with dragging disabled */}
+      {isTablet && (
+        <Rnd
+          lockAspectRatio={true}
+          style={styles}
+          size={{ width: state.width, height: state.height }}
+          position={{ x: state.x, y: state.y }}
+          minWidth={state.minWidth}
+          minHeight={state.minHeight}
+          maxWidth={state.maxWidth}
+          maxHeight={state.maxHeight}
+          disableDragging={true}
+          onResizeStop={(e, direction, ref, delta, position) => {
+            setState((prevState) => ({
+              ...prevState,
+              width: parseInt(ref.style.width, 10),
+              height: parseInt(ref.style.height, 10),
+              ...position,
+            }));
+          }}
         >
+          {CloseButton}
+          <Box sx={{ width: "100%", height: "100%", display: "flex", justifyContent: "center" }}>
+            {children}
+          </Box>
+        </Rnd>
+      )}
+
+      {/* Mobile version: Modal with no dragging */}
+      {isMobile && (
+        <Modal open={true} onClose={() => onClose(false)} sx={{ backgroundColor: "#000" }}>
           <>
             {CloseButton}
             <Box
