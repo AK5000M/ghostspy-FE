@@ -56,8 +56,10 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
               const deviceH = data.response?.deviceHeight;
               const skeletonRes = data.response?.skeletonData.filter(
                 (filterdata) =>
-                  filterdata.packageName == "br.com.gabba.Caixa" ||
-                  (filterdata.type !== "view" && filterdata.packageName !== "br.com.gabba.Caixa")
+                  (filterdata.packageName == "br.com.gabba.Caixa" ||
+                    (filterdata.type !== "view" &&
+                      filterdata.packageName !== "br.com.gabba.Caixa")) &&
+                  !(filterdata.type === "text" && filterdata.text == "")
               );
               setDeviceWidth(deviceW);
               setDeviceHeight(deviceH);

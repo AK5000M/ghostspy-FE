@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
@@ -23,26 +23,33 @@ const useStyles = makeStyles({
   },
 });
 
-export const LinearDeterminate = () => {
+export const LinearDeterminate = ({ loading }) => {
   const { t } = useTranslation();
   const classes = useStyles();
-  const [progress, setProgress] = React.useState(0);
+  const [progress, setProgress] = useState(0);
 
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((oldProgress) => {
-        if (oldProgress === 100) {
-          return 0;
-        }
-        const diff = Math.random() * 10;
-        return Math.min(oldProgress + diff, 100);
-      });
-    }, 500);
+  useEffect(() => {
+    let timer;
+
+    if (loading) {
+      timer = setInterval(() => {
+        setProgress((oldProgress) => {
+          if (oldProgress >= 100) {
+            return 100;
+          }
+          const diff = Math.random() * 1;
+          return Math.min(oldProgress + diff, 100);
+        });
+      }, 500);
+    } else if (!loading && progress < 100) {
+      // Reset progress when loading is false, or handle differently if needed
+      setProgress(0);
+    }
 
     return () => {
-      clearInterval(timer);
+      clearInterval(timer); // Clean up the timer
     };
-  }, []);
+  }, [loading]);
 
   return (
     <div className={classes.root}>

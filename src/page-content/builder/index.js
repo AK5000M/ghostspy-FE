@@ -246,7 +246,22 @@ export const BuilderAPKContent = () => {
                                 {t("buildAPKPage.building-apk")}
                               </Typography>
                               <Box sx={{ width: "100%" }}>
-                                <LinearProgress />
+                                <LinearProgress
+                                  sx={{
+                                    backgroundColor: Color.text.primary,
+                                    height: "20px",
+                                    borderRadius: "20px",
+                                    boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+                                    "& .MuiLinearProgress-bar": {
+                                      backgroundImage: `linear-gradient(90deg, ${Color.background.purple_light}, ${Color.background.purple})`,
+                                      borderRadius: "20px",
+                                      transition: "width 0.1s ease-in-out",
+                                    },
+                                    "& .MuiLinearProgress-root": {
+                                      overflow: "hidden",
+                                    },
+                                  }}
+                                />
                               </Box>
                             </Box>
                           </React.Fragment>
