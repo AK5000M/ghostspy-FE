@@ -104,6 +104,7 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
         maxWidth: 600,
         maxHeight: 700,
       }}
+      type="camera"
       onClose={onCloseModal}
     >
       {screenCode != null && (

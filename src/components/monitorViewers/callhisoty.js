@@ -235,6 +235,7 @@ const CallHistoryMonitorViewer = ({ monitor, device, onClose }) => {
         maxWidth: 700,
         maxHeight: 600,
       }}
+      type="history"
       onClose={onCloseModal}
     >
       <div style={{ position: "relative", width: "100%", height: "100%" }}>

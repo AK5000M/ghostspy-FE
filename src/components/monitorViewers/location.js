@@ -136,6 +136,7 @@ const LocationMonitorViewer = ({ monitor, device, onClose }) => {
         maxWidth: 900,
         maxHeight: 800,
       }}
+      type="location"
       onClose={onCloseModal}
     >
       <div style={{ position: "relative", width: "100%", height: "100%" }}>

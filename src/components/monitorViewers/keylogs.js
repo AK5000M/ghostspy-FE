@@ -10,11 +10,13 @@ import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
 import Color from "src/theme/colors";
 import { formatDateTime } from "../../utils/common";
+import { fontSize } from "@mui/system";
 
 const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
   const { onSocketMonitor } = useSocketFunctions();
   const { socket } = useSocket();
+  const isMobile = useMediaQuery({ query: "(max-width: 475px)" });
   const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" }); // Tablet between 476px and 1024px
 
   const [changeLoading, setChangeLoading] = useState(false);
@@ -98,6 +100,7 @@ const KeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
         maxWidth: 700,
         maxHeight: 600,
       }}
+      type="keylog"
       onClose={onCloseModal}
     >
       <Box sx={{ position: "relative", width: "100%", height: "100%" }}>

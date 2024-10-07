@@ -219,6 +219,7 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
         maxWidth: 700,
         maxHeight: 600,
       }}
+      type="offline-keylog"
       onClose={onCloseModal}
     >
       <Box
