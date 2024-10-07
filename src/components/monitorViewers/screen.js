@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 
-import { Grid, CircularProgress, CardMedia, Box, TextField, IconButton } from "@mui/material";
+import { Grid, CardMedia, Box, TextField, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-use-gesture";
 
-import MenuIcon from "@mui/icons-material/Menu";
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import KeyboardControlKeyOutlinedIcon from "@mui/icons-material/KeyboardControlKeyOutlined";
@@ -23,13 +22,8 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 475px)" });
   const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" }); // Tablet between 476px and 1024px
 
-  const {
-    onSocketMonitor,
-    onScreenClickEvent,
-    onScreenDragEvent,
-    onSocketCloseMonitor,
-    onSendTextEvent,
-  } = useSocketFunctions();
+  const { onSocketMonitor, onScreenClickEvent, onScreenDragEvent, onSendTextEvent } =
+    useSocketFunctions();
   const { socket } = useSocket();
   const imageRef = useRef(null);
 
@@ -39,8 +33,6 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
   const [isDragging, setIsDragging] = useState(false);
   const [mouseDown, setMouseDown] = useState(false);
   const [message, setMessage] = useState(null);
-  const [loadImageWidth, setLoadImageWidth] = useState("");
-  const [loadImageHeight, setLoadImageHeight] = useState("");
 
   const black = localStorage.getItem("black");
   const lock = localStorage.getItem("lock");
