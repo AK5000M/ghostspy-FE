@@ -218,7 +218,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
           width: 360,
           height: 720,
           x: 100,
-          y: -120,
+          y: isTablet ? 100 : -120,
           minWidth: 270,
           minHeight: 540,
           maxWidth: 360,

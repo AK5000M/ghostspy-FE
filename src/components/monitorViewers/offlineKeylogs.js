@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
 import { Typography, Box, Tooltip, CardMedia } from "@mui/material";
 
 import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
@@ -23,6 +24,7 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
   const { onSocketMonitor } = useSocketFunctions();
   const { socket } = useSocket();
+  const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" }); // Tablet between 476px and 1024px
 
   const [keylogsDateList, setKeyLogsDateList] = useState([]);
   const [recieveKeyLogs, setRecieveKeyLogs] = useState([]);
@@ -208,11 +210,11 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   return (
     <MonitorViewer
       initialState={{
-        width: 700,
+        width: isTablet ? 500 : 700,
         height: 500,
-        x: 0,
-        y: -120,
-        minWidth: 500,
+        x: isTablet ? 20 : 50,
+        y: isTablet ? -400 : -120,
+        minWidth: isTablet ? 400 : 500,
         minHeight: 400,
         maxWidth: 700,
         maxHeight: 600,
