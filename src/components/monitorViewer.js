@@ -1,27 +1,29 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Rnd } from "react-rnd";
 import CloseIcon from "@mui/icons-material/Close";
 import { IconButton, Modal, Box } from "@mui/material";
 import Color from "src/theme/colors";
 
+const styles = {
+  display: "flex",
+  justifyContent: "center",
+  borderRadius: "8px",
+  border: `solid 1px ${Color.background.purple}`,
+  background: Color.background.main,
+  padding: "20px 10px",
+  boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.3)`,
+  zIndex: 1000,
+};
+
 const MonitorViewer = ({ children, initialState, onClose }) => {
+  console.log({ children });
   const [state, setState] = useState(initialState);
   const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
+
   const isMobile = useMediaQuery({ query: "(max-width: 475px)" });
   const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" }); // Tablet between 476px and 1024px
   const isDesktop = useMediaQuery({ query: "(min-width: 1025px)" });
-
-  const styles = {
-    display: "flex",
-    justifyContent: "center",
-    borderRadius: "8px",
-    border: `solid 1px ${Color.background.purple}`,
-    background: Color.background.main,
-    padding: "20px 10px",
-    boxShadow: `0px 4px 10px rgba(0, 0, 0, 0.3)`,
-    zIndex: 1000,
-  };
 
   const preventDrag = (e) => {
     e.stopPropagation();
@@ -110,7 +112,7 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
           lockAspectRatio={true}
           style={styles}
           size={{ width: state.width, height: state.height }}
-          position={{ x: state.x, y: state.y }}
+          position={{ x: (window.innerWidth - state.width) / 2, y: state.y }}
           minWidth={state.minWidth}
           minHeight={state.minHeight}
           maxWidth={state.maxWidth}

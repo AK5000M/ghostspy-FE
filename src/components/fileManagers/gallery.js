@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useMediaQuery } from "react-responsive";
+
 import { Grid, Typography, CircularProgress, Box } from "@mui/material";
 
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
@@ -14,6 +16,8 @@ const GalleryManager = ({ label, device, onClose }) => {
   const { socket } = useSocket();
   const { onSocketManager, onGetGalleryEvent } = useSocketFunctions();
 
+  const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" }); // Tablet between 476px and 1024px
+
   const [getListLoading, setGetListLoading] = useState(false);
   const [getImageLoading, setGetImageLoading] = useState(false);
   const [galleryData, setGalleryData] = useState([]);
@@ -21,14 +25,14 @@ const GalleryManager = ({ label, device, onClose }) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const [state, setState] = useState({
-    width: 720,
-    height: 720,
-    x: 100,
-    y: -120,
-    minWidth: 360,
-    minHeight: 360,
-    maxWidth: 720,
-    maxHeight: 720,
+    width: isTablet ? 500 : 700,
+    height: isTablet ? 600 : 500,
+    x: isTablet ? 20 : 50,
+    y: isTablet ? -400 : -120,
+    minWidth: isTablet ? 400 : 500,
+    minHeight: 400,
+    maxWidth: 700,
+    maxHeight: 600,
   });
 
   useEffect(() => {

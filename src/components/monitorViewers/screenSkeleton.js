@@ -1,4 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useMediaQuery } from "react-responsive";
+
 import { Grid, Box, TextField, Typography, CardMedia } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-use-gesture";
@@ -14,6 +16,7 @@ import Color from "src/theme/colors";
 
 const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
+  const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" }); // Tablet between 476px and 1024px
   const { onSocketMonitor, onScreenClickEvent, onScreenDragEvent, onSendTextEvent } =
     useSocketFunctions();
   const { socket } = useSocket();
@@ -194,7 +197,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
         width: 360,
         height: 720,
         x: 100,
-        y: -120,
+        y: isTablet ? -400 : -120,
         minWidth: 270,
         minHeight: 540,
         maxWidth: 360,
