@@ -16,6 +16,7 @@ import Color from "src/theme/colors";
 
 const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
+  const isMobile = useMediaQuery({ query: "(max-width: 475px)" });
   const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" }); // Tablet between 476px and 1024px
   const { onSocketMonitor, onScreenClickEvent, onScreenDragEvent, onSendTextEvent } =
     useSocketFunctions();
@@ -203,6 +204,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
         maxWidth: 360,
         maxHeight: 720,
       }}
+      type="skeleton"
       onClose={onCloseModal}
     >
       <div
@@ -320,7 +322,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
             onTouchStart={preventDrag}
             sx={{
               position: "absolute",
-              bottom: { md: "-50px", xs: "0px" },
+              bottom: isMobile ? "0px" : "-50px",
               width: "100%",
               zIndex: 99999,
             }}

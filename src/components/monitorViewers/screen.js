@@ -224,6 +224,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
           maxWidth: 360,
           maxHeight: 720,
         }}
+        type="screen"
         onClose={onCloseModal}
       >
         <Box sx={{ position: "relative", width: "100%", height: "100%" }}>

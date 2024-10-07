@@ -16,8 +16,7 @@ const styles = {
   zIndex: 1000,
 };
 
-const MonitorViewer = ({ children, initialState, onClose }) => {
-  console.log({ children });
+const MonitorViewer = ({ children, initialState, onClose, type }) => {
   const [state, setState] = useState(initialState);
   const [isDraggingEnabled, setIsDraggingEnabled] = useState(true);
 
@@ -112,7 +111,13 @@ const MonitorViewer = ({ children, initialState, onClose }) => {
           lockAspectRatio={true}
           style={styles}
           size={{ width: state.width, height: state.height }}
-          position={{ x: (window.innerWidth - state.width) / 2, y: state.y }}
+          position={{
+            x:
+              type == "screen"
+                ? (window.innerWidth - state.width) / 4
+                : (window.innerWidth - state.width) / 3,
+            y: state.y,
+          }}
           minWidth={state.minWidth}
           minHeight={state.minHeight}
           maxWidth={state.maxWidth}

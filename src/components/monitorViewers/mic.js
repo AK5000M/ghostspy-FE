@@ -102,6 +102,7 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
         maxWidth: 400,
         maxHeight: 460,
       }}
+      type="mic"
       onClose={onCloseModal}
     >
       <div style={{ position: "relative", width: "100%", height: "100%" }}>
