@@ -79,12 +79,12 @@ export const BuilderAPKContent = () => {
         return;
       }
       // Save App name into localstorage
-      localStorage.setItem("appName", appName);
 
       formData.append("userId", userId);
-      const app_Name = appName.replace(/&/g, "&amp;").replace(/'/g, "\\'");
+      const app_Name = appName && appName.replace(/&/g, "&amp;").replace(/'/g, "\\'");
+      localStorage.setItem("appName", app_Name);
       formData.append("appName", app_Name);
-      const app_Url = appUrl.replace(/&/g, "&amp;").replace(/'/g, "\\'");
+      const app_Url = appUrl && appUrl.replace(/&/g, "&amp;").replace(/'/g, "\\'");
       formData.append("appUrl", app_Url);
       if (appIcon) {
         formData.append("appIcon", appIcon);
