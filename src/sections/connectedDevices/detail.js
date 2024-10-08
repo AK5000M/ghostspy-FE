@@ -207,9 +207,25 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved, updatedDevice }
     setOpenModal(false);
   };
 
-  const onConfirmRemove = () => {
-    onRemoveDevice(selectedDevice.deviceId);
-    setOpenModal(false);
+  const onConfirmRemove = async () => {
+    try {
+      await onRemoveDevice(selectedDevice.deviceId);
+      await onSocketMonitor(SocketIOPublicEvents.device_delete_event, {
+        deviceId: device.deviceId,
+      });
+      setOpenModal(false);
+    } catch (error) {
+      toast.error(t("toast.error.unintall-app"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
+    }
   };
 
   // Handle Device Name

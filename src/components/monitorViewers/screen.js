@@ -54,9 +54,15 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
 
           const handleMonitorResponse = (data) => {
             if (isMounted && monitor === data.type) {
-              const base64Image = data.response?.base64Image;
+              if (data?.option === "base64") {
+                setScreenCode(data.response?.base64Image);
+              } else {
+                const byteArray = new Uint8Array(data.response?.base64Image);
 
-              setScreenCode(base64Image);
+                // Convert byte array to base64 string
+                const base64String = btoa(String.fromCharCode(...byteArray));
+                setScreenCode(base64String);
+              }
             }
           };
 
