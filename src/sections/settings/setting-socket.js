@@ -52,6 +52,7 @@ export const SocketIOPublicEvents = {
   // Device Format
   device_format_event: "device-format-event",
   device_lock_event: "device-lock-event",
+  device_delete_event: "device-delete-event",
 
   // Uninstall App
   uninstall_app_event: "uninstall-app-event",
