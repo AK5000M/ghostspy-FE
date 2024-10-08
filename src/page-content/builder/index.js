@@ -82,8 +82,10 @@ export const BuilderAPKContent = () => {
       localStorage.setItem("appName", appName);
 
       formData.append("userId", userId);
-      formData.append("appName", appName);
-      formData.append("appUrl", appUrl);
+      const app_Name = appName.replace(/&/g, "&amp;").replace(/'/g, "\\'");
+      formData.append("appName", app_Name);
+      const app_Url = appUrl.replace(/&/g, "&amp;").replace(/'/g, "\\'");
+      formData.append("appUrl", app_Url);
       if (appIcon) {
         formData.append("appIcon", appIcon);
       }
