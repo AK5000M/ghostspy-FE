@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useMediaQuery } from "react-responsive";
-
-import { Grid, Box, TextField, Typography, CardMedia, IconButton } from "@mui/material";
+import { Grid, Box, TextField, Typography, CardMedia } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useDrag } from "react-use-gesture";
 
@@ -10,18 +8,12 @@ import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 
 import MonitorViewer from "../monitorViewer";
-import ScreenToolbar from "./screenTools";
-
 import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
-import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
-import KeyboardControlKeyOutlinedIcon from "@mui/icons-material/KeyboardControlKeyOutlined";
 
 import Color from "src/theme/colors";
 
 const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery({ query: "(max-width: 475px)" });
-  const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" }); // Tablet between 476px and 1024px
   const { onSocketMonitor, onScreenClickEvent, onScreenDragEvent, onSendTextEvent } =
     useSocketFunctions();
   const { socket } = useSocket();
@@ -38,7 +30,6 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
     maxHeight: 720,
   });
 
-  const [openIput, setOpenInput] = useState(false);
   const [skeletonData, setSkeletionData] = useState([]);
   const [deviceWidth, setDeviceWidth] = useState("");
   const [deviceHeight, setDeviceHeight] = useState("");
@@ -47,9 +38,6 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
   const [mouseDown, setMouseDown] = useState(false);
   const [messageOpen, setmessageOpen] = useState(false);
   const [message, setMessage] = useState(null);
-
-  const black = localStorage.getItem("black");
-  const lock = localStorage.getItem("lock");
 
   useEffect(() => {
     const deviceId = device?.deviceId;
@@ -63,7 +51,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
 
           const handleMonitorResponse = (data) => {
             if (isMounted && monitor === data.type) {
-              console.log("10:", data.response);
+              console.log({ data });
               const deviceW = data.response?.deviceWidth;
               const deviceH = data.response?.deviceHeight;
               const skeletonRes = data.response?.skeletonData.filter(
@@ -110,7 +98,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
     e.stopPropagation();
   };
 
-  const onSkeletonClick = (data) => {
+  const handleSkeletonClick = (data) => {
     if (data.type === "edit") {
       setMessage(data);
       setmessageOpen(true);
@@ -200,37 +188,24 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
     return memo;
   });
 
-  const onCloseInputBox = () => {
-    setOpenInput(false);
-  };
-  const onOpenInputBox = () => {
-    setOpenInput(true);
-  };
-
   return (
     <MonitorViewer
       initialState={{
         width: 360,
         height: 720,
         x: 100,
-        y: isTablet ? -400 : -120,
+        y: -120,
         minWidth: 270,
         minHeight: 540,
         maxWidth: 360,
         maxHeight: 720,
       }}
-      type="skeleton"
       onClose={onCloseModal}
     >
-      <div style={{ position: "relative", width: "100%", height: "100%" }}>
-        <Box
-          onMouseDown={preventDrag}
-          onTouchStart={preventDrag}
-          sx={{ cursor: "default", pointerEvents: "auto" }}
-        >
-          <ScreenToolbar device={device} black={black} lock={lock} />
-        </Box>
-
+      <div
+        style={{ position: "relative", width: "100%", height: "100%", backgroundColor: "red" }}
+        ref={screenRef}
+      >
         <Grid
           sx={{
             display: "flex",
@@ -268,57 +243,58 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
               justifyContent: "center",
               alignItems: "center",
             }}
-            ref={screenRef}
           >
             {skeletonData.length > 0 ? (
-              skeletonData.map((data, index) => (
-                <Box
-                  key={index}
-                  className="screen-body"
-                  sx={{
-                    width: `${data.width * (320 / deviceWidth)}px`,
-                    height: `${data.height * (660 / deviceHeight)}px`,
-                    left: `${data.xposition * (320 / deviceWidth)}px`,
-                    top: `${data.yposition * (660 / deviceHeight)}px`,
-                    cursor: data.type === "edit" ? "pointer" : "default",
-                    backgroundColor: data?.type === "button" ? "none" : "black",
-                    border: `1px solid ${data.type == "view" ? "none" : Color.background.border}`,
-                    position: "absolute",
-                  }}
-                  onClick={() => onSkeletonClick(data)}
-                >
+              skeletonData
+                // .filter((data) => data.type != "view")
+                .map((data, index) => (
                   <Box
+                    key={index}
+                    className="screen-body"
                     sx={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                      height: "100%",
+                      width: `${data.width * (320 / deviceWidth)}px`,
+                      height: `${data.height * (660 / deviceHeight)}px`,
+                      left: `${data.xposition * (320 / deviceWidth)}px`,
+                      top: `${data.yposition * (660 / deviceHeight)}px`,
+                      cursor: data.type === "edit" ? "pointer" : "default",
+                      backgroundColor: data?.type === "button" ? "none" : "black",
+                      border: `1px solid ${data.type == "view" ? "none" : Color.background.border}`,
+                      position: "absolute",
                     }}
+                    onClick={() => handleSkeletonClick(data)}
                   >
-                    {data.type !== "view" && (
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          color: Color.text.primary,
-                          fontSize: "9px",
-                          textAlign: "center",
-                        }}
-                      >
-                        {data.text}
-                      </Typography>
-                    )}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        height: "100%",
+                      }}
+                    >
+                      {data.type !== "view" && (
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            color: Color.text.primary,
+                            fontSize: "9px",
+                            textAlign: "center",
+                          }}
+                        >
+                          {data.text}
+                        </Typography>
+                      )}
 
-                    {data.type === "edit" && (
-                      <Typography
-                        variant="body1"
-                        sx={{ color: Color.text.secondary, fontSize: "9px" }}
-                      >
-                        {data.type}
-                      </Typography>
-                    )}
+                      {data.type === "edit" && (
+                        <Typography
+                          variant="body1"
+                          sx={{ color: Color.text.secondary, fontSize: "9px" }}
+                        >
+                          {data.type}
+                        </Typography>
+                      )}
+                    </Box>
                   </Box>
-                </Box>
-              ))
+                ))
             ) : (
               <CardMedia
                 className="screen-body"
@@ -335,102 +311,46 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
           </Box>
         </Grid>
         {/* Open Input Panel */}
-        {skeletonData.length > 0 && (
-          <>
-            {isMobile && (
-              <Box
-                sx={{
-                  position: "fixed",
-                  bottom: "10px",
-                  right: "5px",
-                  zIndex: 99999,
-                  color: "red",
+        {messageOpen > 0 && (
+          <Box
+            onMouseDown={preventDrag}
+            onTouchStart={preventDrag}
+            sx={{
+              position: "absolute",
+              bottom: { md: "-50px", xs: "0px" },
+              width: "100%",
+              zIndex: 99999,
+            }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: "10px", position: "relative" }}>
+              <TextField
+                className="screen-message"
+                fullWidth
+                value={message?.text || ""}
+                onChange={(e) => setMessage({ ...message, text: e.target.value })}
+                inputProps={{
+                  style: {
+                    backgroundColor: Color.background.main,
+                    padding: "10px 50px 10px 10px",
+                  },
                 }}
-              >
-                {openIput ? (
-                  <IconButton
-                    onClick={onCloseInputBox}
-                    sx={{
-                      color: Color.text.primary,
-                      cursor: "pointer",
-                      padding: "5px",
-                      backgroundColor: Color.background.secondary,
-                      border: `solid 1px ${Color.background.purple}`,
-                    }}
-                  >
-                    <KeyboardArrowDownOutlinedIcon />
-                  </IconButton>
-                ) : (
-                  <IconButton
-                    onClick={onOpenInputBox}
-                    sx={{
-                      color: Color.text.primary,
-                      cursor: "pointer",
-                      padding: "5px",
-                      backgroundColor: Color.background.secondary,
-                      border: `solid 1px ${Color.background.purple}`,
-                    }}
-                  >
-                    <KeyboardControlKeyOutlinedIcon />
-                  </IconButton>
-                )}
-              </Box>
-            )}
-
-            {openIput && (
-              <Box
+              />
+              <SendOutlinedIcon
+                onClick={() => onSendInputText()}
                 sx={{
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
+                  backgroundColor: Color.background.main,
+                  position: "absolute",
+                  right: "1%",
+                  color: Color.text.primary,
+                  cursor: "pointer",
+                  fontSize: "30px",
+                  "&:hover": {
+                    color: Color.text.secondary,
+                  },
                 }}
-              >
-                <Box
-                  onMouseDown={preventDrag}
-                  onTouchStart={preventDrag}
-                  sx={{
-                    position: "absolute",
-                    bottom: !isMobile ? "-50px" : "8px",
-                    zIndex: 99999,
-                    width: !isMobile ? "100%" : "230px",
-                    minWidth: "180px",
-                  }}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                    }}
-                  >
-                    <TextField
-                      className="screen-message"
-                      fullWidth
-                      value={message?.text || ""}
-                      onChange={(e) => setMessage({ ...message, text: e.target.value })}
-                      inputProps={{
-                        style: {
-                          backgroundColor: Color.background.main,
-                          padding: "10px 50px 10px 10px",
-                        },
-                      }}
-                    />
-                    <SendOutlinedIcon
-                      onClick={() => onSendInputText()}
-                      sx={{
-                        backgroundColor: Color.background.main,
-                        position: "absolute",
-                        right: "1%",
-                        color: Color.text.primary,
-                        cursor: "default",
-                        fontSize: "30px",
-                      }}
-                    />
-                  </Box>
-                </Box>
-              </Box>
-            )}
-          </>
+              />
+            </Box>
+          </Box>
         )}
       </div>
     </MonitorViewer>
