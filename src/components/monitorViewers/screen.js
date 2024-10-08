@@ -387,7 +387,7 @@ const ScreenMonitorViewer = ({ monitor, device, onClose }) => {
                             position: "absolute",
                             right: "1%",
                             color: Color.text.primary,
-                            cursor: "default",
+                            cursor: "pointer",
                             fontSize: "30px",
                           }}
                         />
