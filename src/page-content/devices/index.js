@@ -70,7 +70,7 @@ export const DeviceContent = () => {
       if (user?.user?._id == data?.device?.userId) {
         fetchDevices(); // Update Devices
 
-        if (data.success == true && data.message == "success") {
+        if (data.success == true && data.message == "deviceAdded") {
           setAddedDevice(true);
           if (!successToast.current) {
             // Check if the toast has already been shown
@@ -85,7 +85,7 @@ export const DeviceContent = () => {
             });
             successToast.current = true;
           }
-        } else if (data.success == false && data.message == "exist") {
+        } else if (data.success == false && data.message == "deviceExists") {
           if (!onlineToast.current) {
             // Check if the toast has already been shown
             toast.success(`${data?.device?.manufacturer} ${t("toast.success.online")}`, {
@@ -103,6 +103,17 @@ export const DeviceContent = () => {
             });
             onlineToast.current = true;
           }
+        } else if (data.success == false && data.message == "deviceLimitReached") {
+          toast.error(t("toast.error.enough-add-device"), {
+            position: "bottom-center",
+            reverseOrder: false,
+            duration: 5000,
+            style: {
+              backgroundColor: Color.background.red_gray01,
+              borderRadius: "5px",
+              padding: "3px 10px",
+            },
+          });
         } else {
           toast.error(t("toast.error.add-device-error"), {
             position: "bottom-center",
