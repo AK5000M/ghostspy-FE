@@ -165,7 +165,7 @@ export const RegisterContent = () => {
               flexDirection: { xs: "column", md: "row" },
               alignItems: { xs: "center", md: "center" },
               justifyContent: "space-between",
-              backgroundColor: Color.background.main,
+              backgroundColor: Color.background.main_gray01,
               border: `solid 1px ${Color.background.purple}`,
               borderRadius: "5px",
               height: "720px",
