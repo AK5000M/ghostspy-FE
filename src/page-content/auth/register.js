@@ -143,7 +143,7 @@ export const RegisterContent = () => {
         display: "flex",
         flexDirection: "column",
         minHeight: { md: "100vh", xs: "auto" },
-        backgroundImage: `linear-gradient(rgb(19 19 20 / 50%), rgb(29 29 195 / 60%)), url("/assets/background/background.webp")`,
+        backgroundImage: `linear-gradient(rgb(19 19 20 / 71%), rgb(29 29 195 / 85%)), url(/assets/background/6057272.webp)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
