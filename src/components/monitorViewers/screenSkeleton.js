@@ -69,7 +69,6 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
 
           const handleMonitorResponse = (data) => {
             if (isMounted && monitor === data.type) {
-              console.log("10:", data.response);
               const deviceW = data.response?.deviceWidth;
               const deviceH = data.response?.deviceHeight;
               const skeletonRes = data.response?.skeletonData.filter(
@@ -79,7 +78,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
                       filterdata.packageName !== "br.com.gabba.Caixa")) &&
                   !(filterdata.type === "text" && filterdata.text == "")
               );
-              console.log({ skeletonRes });
+
               setDeviceWidth(deviceW);
               setDeviceHeight(deviceH);
               setSkeletionData(skeletonRes);
