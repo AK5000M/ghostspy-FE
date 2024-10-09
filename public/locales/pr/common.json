@@ -198,25 +198,112 @@
     "newDevices": "Novos Dispositivos",
     "systemStatus": "Status do Sistema",
     "introduce": {
-      "greeting": "Olá, sejam bem-vindos ao lançamento do nosso mais novo sistema de monitoramento, o GhostSpy!",
-      "introduce": "Gostaríamos de expressar nossa sincera gratidão pelo seu apoio contínuo e por confiar nos nossos projetos. É graças a vocês que conseguimos alcançar este marco significativo, e estamos entusiasmados em apresentar o GhostSpy, uma ferramenta poderosa e intuitiva para monitoramento de dispositivos.",
-      "reason": "Explore todas as possibilidades que o GHOSTSPY oferece:",
-      "feature": {
-        "title": "Confira abaixo a lista das funcionalidades atuais do GhostSpy:",
-        "screen-monitor": "• <span style='font-weight: 600; color: white; '>Monitoramento de Tela: </span>Acompanhe em tempo real o que está sendo exibido na tela do dispositivo.",
-        "screen-skeleton": "• <span style='font-weight: 600; color: white;'>Monitoramento de Esqueleto da Tela: </span> Obtenha uma visão estruturada das atividades na tela.",
-        "camera-monitor": "• <span style='font-weight: 600; color: white;'>Monitoramento de Câmera: </span>Capture e visualize imagens da câmera do dispositivo.",
-        "mic-monitor": "• <span style='font-weight: 600; color: white;'>Monitoramento de Microfone: </span>Escute o que está sendo captado pelo microfone do dispositivo.",
-        "key-log": "• <span style='font-weight: 600; color: white;'>Monitoramento de Teclas (Key Logs): </span>Registre e analise todas as teclas digitadas.",
-        "gallery-manager": "• <span style='font-weight: 600; color: white;'>Gerenciador de Galeria: </span> Acesse e organize todas as imagens e vídeos armazenados no dispositivo.",
-        "real-location": "• <span style='font-weight: 600; color: white;'>Monitoramento de Localização em Tempo Real: </span>Veja a localização exata do dispositivo em tempo real.",
-        "call-history": "• <span style='font-weight: 600; color: white;'>Monitoramento de Histórico de Chamadas: </span>Revise e acompanhe todas as chamadas realizadas e recebidas.",
-        "privacy-mode": "• <span style='font-weight: 600; color: white;'>Modo de Privacidade - Tela Preta: </span> Ative uma tela preta no dispositivo para garantir total privacidade durante o monitoramento."
-      },
-      "feedback": "Estamos ansiosos para ver como a ghostspy ira facilitar suas necessidades de monitoramento e gestão. Seu feedback é essencial para nós, então, por favor, compartilhe suas experiências e sugestões para continuarmos aprimorando o GhostSpy.",
-      "thanks": "Mais uma vez, obrigado por estar conosco nesta jornada.",
-      "under": "Atenciosamente",
-      "supporter": "Go1ano - GhostSpy"
+      "versions": [
+        {
+          "version": "Versão 3.2",
+          "greeting": "Bem-vindo à versão 3.2 do GhostSpy!",
+          "introduce": "Nesta versão, trazemos várias melhorias e novos recursos...",
+          "title": "👻 GhostSpy 3.2 - O que há de novo:",
+          "features": [
+            {
+              "title": "▪ Aumento da Capacidade do Servidor",
+              "description": "Atualizamos nossos servidores para oferecer um controle mais rápido e suave, garantindo desempenho ideal para todos os usuários."
+            },
+            {
+              "title": "▪ Nova Interface de Usuário",
+              "description": "Introduzimos um design renovado para a tela inicial e o processo de registro, proporcionando uma experiência mais moderna e intuitiva."
+            },
+            {
+              "title": "▪ Aprimoramento na Ocultação de Permissões",
+              "description": "Adicionamos uma sobreposição que oculta automaticamente as permissões e outra que impede a remoção acidental do aplicativo."
+            },
+            {
+              "title": "▪ Keylogger Offline",
+              "description": "Agora você pode capturar todos os registros de teclas, mesmo sem monitoramento ativo, e baixá-los diretamente do painel em um arquivo .txt."
+            },
+            {
+              "title": "▪ Otimização do Keylogger",
+              "description": "Melhoramos o desempenho e corrigimos falhas que impediam a captura de alguns dados."
+            },
+            {
+              "title": "▪ Leitor de Esqueleto Otimizado",
+              "description": "O leitor de esqueleto está ainda mais rápido e preciso, melhorando o controle geral."
+            },
+            {
+              "title": "▪ Otimização Estrutural",
+              "description": "Todo o sistema foi otimizado para garantir uma experiência de usuário mais fluida e eficiente."
+            },
+            {
+              "title": "▪ Layout Aprimorado para Dispositivos Móveis",
+              "description": "O layout foi melhorado para controle em smartphones, tablets e iPads, permitindo monitoramento contínuo a partir desses dispositivos."
+            },
+            {
+              "title": "▪ Controle de Tela Aprimorado",
+              "description": "Alteramos a estrutura do código, eliminando uma perda de 30% no desempenho. Agora o controle de tela está 40x mais rápido e fluido."
+            },
+            {
+              "title": "▪ Proteção Contra Desinstalação",
+              "description": "Reforçamos a proteção contra remoção, tornando o aplicativo impossível de ser desinstalado sem autorização."
+            },
+            {
+              "title": "▪ Desinstalação Remota",
+              "description": "Agora você pode remover o aplicativo remotamente através da função Remover Dispositivo, Excluir Aplicativo no painel de controle."
+            }
+          ],
+          "feedback": "Nosso objetivo é facilitar ainda mais suas operações...",
+          "thanks": "Obrigado por confiar no GhostSpy.",
+          "under": "Atenciosamente",
+          "supporter": "Equipe GhostSpy"
+        },
+        {
+          "version": "Versão 1.0",
+          "greeting": "Olá, sejam bem-vindos ao lançamento do nosso mais novo sistema de monitoramento, o GhostSpy!",
+          "introduce": "Gostaríamos de expressar nossa sincera gratidão pelo seu apoio contínuo e por confiar nos nossos projetos. É graças a vocês que conseguimos alcançar este marco significativo, e estamos entusiasmados em apresentar o GhostSpy, uma ferramenta poderosa e intuitiva para monitoramento de dispositivos.",
+          "title": "Confira abaixo a lista das funcionalidades atuais do GhostSpy:",
+          "features": [
+            {
+              "title": "▪ Monitoramento de Tela",
+              "description": "Acompanhe em tempo real o que está sendo exibido na tela do dispositivo."
+            },
+            {
+              "title": "▪ Monitoramento de Esqueleto da Tela",
+              "description": "Obtenha uma visão estruturada das atividades na tela."
+            },
+            {
+              "title": "▪ Monitoramento de Câmera",
+              "description": "Capture e visualize imagens da câmera do dispositivo."
+            },
+            {
+              "title": "▪ Monitoramento de Microfone",
+              "description": "Escute o que está sendo captado pelo microfone do dispositivo."
+            },
+            {
+              "title": "▪ Monitoramento de Teclas (Key Logs)",
+              "description": "Registre e analise todas as teclas digitadas."
+            },
+            {
+              "title": "▪ Gerenciador de Galeria",
+              "description": "Acesse e organize todas as imagens e vídeos armazenados no dispositivo."
+            },
+            {
+              "title": "▪ Monitoramento de Localização em Tempo Real",
+              "description": "Veja a localização exata do dispositivo em tempo real."
+            },
+            {
+              "title": "▪ Monitoramento de Histórico de Chamadas",
+              "description": "Revise e acompanhe todas as chamadas realizadas e recebidas."
+            },
+            {
+              "title": "▪ Modo de Privacidade - Tela Preta",
+              "description": "Ative uma tela preta no dispositivo para garantir total privacidade durante o monitoramento."
+            }
+          ],
+          "feedback": "Estamos ansiosos para ver como a ghostspy ira facilitar suas necessidades de monitoramento e gestão. Seu feedback é essencial para nós, então, por favor, compartilhe suas experiências e sugestões para continuarmos aprimorando o GhostSpy.",
+          "thanks": "Mais uma vez, obrigado por estar conosco nesta jornada.",
+          "under": "Atenciosamente",
+          "supporter": "Go1ano - GhostSpy"
+        }
+      ]
     }
   },
 
