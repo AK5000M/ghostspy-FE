@@ -43,7 +43,7 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved, updatedDevice }
   const { t } = useTranslation();
   const { socket } = useSocket();
 
-  const { onDeviceFormat, onUninstallApp, onDeviceLock } = useSocketFunctions();
+  const { onDeviceFormat, onUninstallApp, onDeviceLock, onSocketMonitor } = useSocketFunctions();
 
   const [batteryStatus, setBatteryStatus] = useState(selectedDevice?.batteryStatus);
   const [netStatus, setNetStatus] = useState(selectedDevice?.connectStatus);
@@ -78,7 +78,11 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved, updatedDevice }
   const onRemoveDevice = async (deviceId) => {
     try {
       const result = await removeDevice(deviceId);
+
       if (result.success) {
+        await onSocketMonitor(SocketIOPublicEvents.device_delete_event, {
+          deviceId: deviceId,
+        });
         toast.success(t("toast.success.delete-device"), {
           position: "bottom-center",
           reverseOrder: false,
@@ -210,12 +214,10 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved, updatedDevice }
   const onConfirmRemove = async () => {
     try {
       await onRemoveDevice(selectedDevice.deviceId);
-      await onSocketMonitor(SocketIOPublicEvents.device_delete_event, {
-        deviceId: device.deviceId,
-      });
+
       setOpenModal(false);
     } catch (error) {
-      toast.error(t("toast.error.unintall-app"), {
+      toast.error(t("toast.error.server-error"), {
         position: "bottom-center",
         reverseOrder: false,
         duration: 5000,
