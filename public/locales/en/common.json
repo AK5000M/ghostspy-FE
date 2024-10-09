@@ -72,6 +72,7 @@
       "passwordnotsame": "Password is incorrect",
       "add-device-already": "This device has already been registered",
       "add-device-error": "The system request was invalid",
+      "enough-add-device": "You can no longer add new devices because your device limit is already full.",
       "delete-device-error": "The device has not been deleted.",
       "not-found-device": "No devices found",
       "must-buy-plan": "You must subscribe to add new devices.",

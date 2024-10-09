@@ -71,6 +71,7 @@
       "passwordnotsame": "La contraseña es incorrecta",
       "add-device-already": "Este dispositivo ya ha sido registrado",
       "add-device-error": "La solicitud del sistema no fue válida",
+      "enough-add-device": "Ya no puedes agregar nuevos dispositivos porque tu límite de dispositivos ya está completo.",
       "delete-device-error": "El dispositivo no ha sido eliminado.",
       "not-found-device": "No se encontraron dispositivos",
       "must-buy-plan": "Debes suscribirte para agregar nuevos dispositivos.",

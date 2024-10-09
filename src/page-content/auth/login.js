@@ -186,7 +186,7 @@ export const LoginContent = () => {
               flexDirection: { xs: "column", md: "row" },
               alignItems: { xs: "center", md: "center" },
               justifyContent: "space-between",
-              backgroundColor: Color.background.main,
+              backgroundColor: Color.background.main_gray01,
               borderRadius: "5px",
               border: `solid 1px ${Color.background.purple}`,
               height: "550px",
@@ -196,12 +196,6 @@ export const LoginContent = () => {
             <Box
               sx={{
                 flexBasis: { xs: "100%", md: "50%" },
-                // padding: { xs: "0 10px", md: "0 20px", lg: "0 60px" },
-                // backgroundImage: `linear-gradient(rgb(19 19 20 / 0%), rgb(19 19 20 / 0%)), url("/assets/background/auth.webp")`,
-                // backgroundSize: "cover",
-                // backgroundPosition: "center",
-                // borderTopLeftRadius: "5px",
-                // borderBottomLeftRadius: "5px",
                 height: "100%",
                 display: { md: "flex", xs: "none" },
                 alignItems: "flex-end",
