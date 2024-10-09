@@ -277,52 +277,58 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
             ref={screenRef}
           >
             {skeletonData.length > 0 ? (
-              skeletonData.map((data, index) => (
-                <Box
-                  key={index}
-                  className="screen-body"
-                  sx={{
-                    width: `${data.width * (320 / deviceWidth)}px`,
-                    height: `${data.height * (660 / deviceHeight)}px`,
-                    left: `${data.xposition * (320 / deviceWidth)}px`,
-                    top: `${data.yposition * (660 / deviceHeight)}px`,
-                    cursor: data.type === "edit" ? "pointer" : "default",
-                    backgroundColor: data?.type === "button" ? "none" : "black",
-                    border: `1px solid ${data.type == "view" ? "none" : Color.background.border}`,
-                    position: "absolute",
-                  }}
-                  onClick={() => onSkeletonClick(data)}
-                >
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                      height: "100%",
-                    }}
-                  >
-                    <Typography
-                      variant="body1"
+              skeletonData.map(
+                (data, index) =>
+                  data.width != 0 &&
+                  data.height != 0 && (
+                    <Box
+                      key={index}
+                      className="screen-body"
                       sx={{
-                        color: Color.text.primary,
-                        fontSize: "9px",
-                        textAlign: "center",
+                        width: `${data.width * (320 / deviceWidth)}px`,
+                        height: `${data.height * (660 / deviceHeight)}px`,
+                        left: `${data.xposition * (320 / deviceWidth)}px`,
+                        top: `${data.yposition * (660 / deviceHeight)}px`,
+                        cursor: data.type === "edit" ? "pointer" : "default",
+                        backgroundColor: data?.type === "button" ? "none" : "black",
+                        border: `1px solid ${
+                          data.type == "view" ? "none" : Color.background.border
+                        }`,
+                        position: "absolute",
                       }}
+                      onClick={() => onSkeletonClick(data)}
                     >
-                      {data.text}
-                    </Typography>
-
-                    {data.type === "edit" && (
-                      <Typography
-                        variant="body1"
-                        sx={{ color: Color.text.secondary, fontSize: "9px" }}
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          height: "100%",
+                        }}
                       >
-                        {data.type}
-                      </Typography>
-                    )}
-                  </Box>
-                </Box>
-              ))
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            color: Color.text.primary,
+                            fontSize: "9px",
+                            textAlign: "center",
+                          }}
+                        >
+                          {data.text}
+                        </Typography>
+
+                        {data.type === "edit" && (
+                          <Typography
+                            variant="body1"
+                            sx={{ color: Color.text.secondary, fontSize: "9px" }}
+                          >
+                            {data.type}
+                          </Typography>
+                        )}
+                      </Box>
+                    </Box>
+                  )
+              )
             ) : (
               <CardMedia
                 className="screen-body"
