@@ -79,6 +79,7 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
                       filterdata.packageName !== "br.com.gabba.Caixa")) &&
                   !(filterdata.type === "text" && filterdata.text == "")
               );
+              console.log({ skeletonRes });
               setDeviceWidth(deviceW);
               setDeviceHeight(deviceH);
               setSkeletionData(skeletonRes);
@@ -301,18 +302,16 @@ const ScreenMonitorSkeleton = ({ monitor, device, onClose }) => {
                       height: "100%",
                     }}
                   >
-                    {data.type !== "view" && (
-                      <Typography
-                        variant="body1"
-                        sx={{
-                          color: Color.text.primary,
-                          fontSize: "9px",
-                          textAlign: "center",
-                        }}
-                      >
-                        {data.text}
-                      </Typography>
-                    )}
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        color: Color.text.primary,
+                        fontSize: "9px",
+                        textAlign: "center",
+                      }}
+                    >
+                      {data.text}
+                    </Typography>
 
                     {data.type === "edit" && (
                       <Typography

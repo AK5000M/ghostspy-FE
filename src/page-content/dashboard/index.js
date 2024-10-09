@@ -139,7 +139,7 @@ export const DashboardContent = () => {
                     fontFamily: "Bebas Neue, sans-serif",
                   }}
                 >
-                  {"V1.0"}
+                  {"v3.2"}
                 </Typography>
               </div>
               <div
