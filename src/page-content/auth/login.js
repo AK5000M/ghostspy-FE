@@ -163,7 +163,7 @@ export const LoginContent = () => {
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
-        backgroundImage: `linear-gradient(rgb(29 29 195 / 60%), rgb(19 19 20 / 60%)), url("/assets/background/background.webp")`,
+        backgroundImage: `linear-gradient(rgb(29 29 195 / 78%), rgb(19 19 20 / 81%)), url(/assets/background/6020105.webp)`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
