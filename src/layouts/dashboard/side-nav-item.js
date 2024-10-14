@@ -70,7 +70,7 @@ export const SideNavItem = (props) => {
         {!collapsed && (
           <Typography
             sx={{
-              fontSize: "18px",
+              fontSize: "16px",
               color: Color.text.main,
               ...(active && {
                 color: Color.text.primary,

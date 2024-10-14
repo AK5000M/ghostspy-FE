@@ -30,7 +30,9 @@
     "support": "Suporte",
     "updatePlan": "Assinatura",
     "explainTitle": "Fique atualizado com atualizações",
-    "explainPlan": "Junte-se ao nosso canal e veja as atualizações de assinatura para se manter informado!"
+    "explainPlan": "Junte-se ao nosso canal e veja as atualizações de assinatura para se manter informado!",
+    "get-in": "BAIXE AGORA",
+    "google-play": "Play Store"
   },
 
   "validation": {
@@ -433,8 +435,12 @@
     "app-monitor": {
       "appname": "Nome do Aplicativo",
       "packagename": "Nome do Pacote",
-      "status": "Status",
-      "installed": "Instalado"
+      "status": "Action",
+      "installed": "Instalado",
+      "open": "Abrir",
+      "opened": "Aberto",
+      "lock": "Bloquear",
+      "unlock": "Desbloquear"
     },
     "vncModal": {
       "waiting": "Solicitando acesso ao servidor VNC..."

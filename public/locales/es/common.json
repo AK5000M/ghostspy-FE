@@ -27,7 +27,9 @@
     "support": "Soporte",
     "updatePlan": "Suscripción",
     "explainTitle": "Mantente al día con las actualizaciones",
-    "explainPlan": "¡Únete a nuestro canal y consulta las actualizaciones de suscripción para mantenerte informado!"
+    "explainPlan": "¡Únete a nuestro canal y consulta las actualizaciones de suscripción para mantenerte informado!",
+    "get-in": "DESCÁRGALO",
+    "google-play": "Play Store"
   },
 
   "validation": {
