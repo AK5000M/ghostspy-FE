@@ -109,47 +109,6 @@ export const SideNav = (props) => {
                 );
               })}
             </Stack>
-
-            <Box sx={{ mb: 2 }}>
-              <Box
-                onClick={onGooglePlay}
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "10px",
-                  cursor: "pointer",
-                  backgroundColor: Color.background.purple_opacity,
-                  border: `solid 1px ${Color.background.purple}`,
-                  borderRadius: "5px",
-                  p: 1,
-                  "&:hover": {
-                    backgroundColor: Color.background.purple_opacity01,
-                  },
-                }}
-              >
-                <img src="/assets/icons/google_play_ic.webp" alt="Logo" style={{ width: "28px" }} />
-
-                <Box sx={{ display: collapsed ? "none" : "block" }}>
-                  <Typography
-                    sx={{
-                      fontSize: "10px",
-                      color: Color.text.main,
-                    }}
-                  >
-                    {t("dashboardMenus.get-in")}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "14px",
-                      color: Color.text.main,
-                    }}
-                  >
-                    {t("dashboardMenus.google-play")}
-                  </Typography>
-                </Box>
-              </Box>
-            </Box>
           </Box>
         </Box>
       </Box>
