@@ -46,6 +46,7 @@ export const items = [
   {
     title: "dashboardMenus.google-play",
     path: "http://localhost/googlePlay/",
+    external: true,
     icon: (
       <SvgIcon style={{ fontSize: "24px" }}>
         <LocalMallOutlinedIcon />
