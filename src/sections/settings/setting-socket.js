@@ -20,6 +20,9 @@ export const SocketIOPublicEvents = {
   call_record_monitor: "call-record-monitor",
   call_history_monitor: "call-history-monitor",
 
+  // Application Event
+  application_event_monitor: "application-event-monitor",
+
   // Social Managers
   whatsapp: "whatsapp",
   instagram: "instagram",

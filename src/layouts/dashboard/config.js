@@ -4,6 +4,7 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import MonitorHeartOutlinedIcon from "@mui/icons-material/MonitorHeartOutlined";
 import DownloadingOutlinedIcon from "@mui/icons-material/DownloadingOutlined";
 import HelpCenterOutlinedIcon from "@mui/icons-material/HelpCenterOutlined";
+import LocalMallOutlinedIcon from "@mui/icons-material/LocalMallOutlined";
 
 export const items = [
   {
@@ -39,6 +40,15 @@ export const items = [
     icon: (
       <SvgIcon style={{ fontSize: "24px" }}>
         <HelpCenterOutlinedIcon />
+      </SvgIcon>
+    ),
+  },
+  {
+    title: "dashboardMenus.google-play",
+    path: "http://localhost/googlePlay/",
+    icon: (
+      <SvgIcon style={{ fontSize: "24px" }}>
+        <LocalMallOutlinedIcon />
       </SvgIcon>
     ),
   },

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import toast from "react-hot-toast";
 import { useMediaQuery } from "react-responsive";
 
-import { Grid, Typography, CardMedia, Box } from "@mui/material";
+import { Grid, Typography, CardMedia, Box, Button } from "@mui/material";
 
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
@@ -16,17 +16,19 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
   const { onSocketMonitor } = useSocketFunctions();
   const { socket } = useSocket();
-  const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" }); // Tablet between 476px and 1024px
+  const isMobile = useMediaQuery({ query: "(max-width: 475px)" });
+  const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" });
 
   const [changeLoading, setChangeLoading] = useState(false);
   const [recieveAppsHistory, setRecieveAppsHistory] = useState(null);
+  const [openStatus, setOpenStatus] = useState(false);
+  const [lockStatus, setLockStatus] = useState(false);
 
   useEffect(() => {
     init();
   }, []);
 
   const onAppsMonitorResponse = (data) => {
-    console.log({ data });
     const deviceId = device?.deviceId;
     if (deviceId === data?.deviceId && data?.data.length != 0) {
       setRecieveAppsHistory(data?.data);
@@ -63,7 +65,47 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
         };
       }
     } catch (error) {
-      console.error("Error monitoring device:", error);
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
+    }
+  };
+
+  // App Open, Lock/UnLock
+  const onEventApp = async (app, type) => {
+    if (type == "open") {
+      setOpenStatus(true);
+    } else if (type == "lock") {
+      setLockStatus(true);
+    } else if (type == "unlock") {
+      setLockStatus(false);
+    }
+    try {
+      const deviceId = device?.deviceId;
+
+      await onSocketMonitor(SocketIOPublicEvents.application_event_monitor, {
+        deviceId,
+        type,
+        app,
+      });
+    } catch (error) {
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
     }
   };
 
@@ -156,7 +198,7 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
               }}
             >
               <Grid container sx={{ backgroundColor: Color.background.purple, p: 1 }}>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                   <Typography
                     component="h2"
                     sx={{ fontFamily: "Bebas Neue, sans-serif", textAlign: "center" }}
@@ -164,7 +206,7 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
                     {t("devicesPage.app-monitor.appname")}
                   </Typography>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={3}>
                   <Typography
                     component="h2"
                     sx={{ fontFamily: "Bebas Neue, sans-serif", textAlign: "center" }}
@@ -172,7 +214,7 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
                     {t("devicesPage.app-monitor.packagename")}
                   </Typography>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={6}>
                   <Typography
                     component="h2"
                     sx={{ fontFamily: "Bebas Neue, sans-serif", textAlign: "center" }}
@@ -189,38 +231,106 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
                     sx={{
                       padding: 1,
                       borderBottom:
-                        index !== recieveAppsHistory.length - 1 ? "1px solid #333" : "none",
+                        index !== recieveAppsHistory.length - 1
+                          ? `solid 1px ${Color.background.border}`
+                          : "none",
                     }}
                   >
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
                       <Typography variant="body1" sx={{ textAlign: "center" }}>
                         {apps.appname}
                       </Typography>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={3}>
                       <Typography variant="body1" sx={{ textAlign: "center" }}>
                         {apps.packagename}
                       </Typography>
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={6}>
                       <Box
                         sx={{
-                          backgroundColor: Color.background.purple_opacity,
-                          border: `solid 1px ${Color.background.purple}`,
-                          borderRadius: "50px",
-                          width: "100px",
-                          margin: "auto",
+                          display: "flex",
+                          flexDirection: isMobile && "column",
+                          justifyContent: "center",
+                          alignItems: !isMobile ? "center" : "flex-end",
+                          gap: "20px",
                         }}
                       >
-                        <Typography
-                          variant="body1"
+                        <Box
+                          onClick={() => !openStatus && onEventApp(apps, "open")}
                           sx={{
-                            textAlign: "center",
-                            fontSize: "14px",
+                            cursor: "pointer",
+                            backgroundColor: Color.background.purple,
+                            border: `solid 1px ${Color.background.purple}`,
+                            borderRadius: "1px",
+                            width: "100px",
+                            "&:hover": {
+                              backgroundColor: Color.background.purple_light,
+                            },
                           }}
                         >
-                          {t("devicesPage.app-monitor.installed")}
-                        </Typography>
+                          <Typography
+                            variant="body1"
+                            sx={{
+                              textAlign: "center",
+                              fontSize: "14px",
+                            }}
+                          >
+                            {!openStatus
+                              ? t("devicesPage.app-monitor.open")
+                              : t("devicesPage.app-monitor.opened")}
+                          </Typography>
+                        </Box>
+
+                        {!lockStatus ? (
+                          <Box
+                            onClick={() => onEventApp(apps, "lock")}
+                            sx={{
+                              cursor: "pointer",
+                              backgroundColor: Color.background.red_gray01,
+                              border: `solid 1px ${Color.background.red_gray01}`,
+                              borderRadius: "1px",
+                              width: "100px",
+                              "&:hover": {
+                                backgroundColor: Color.background.red_gray02,
+                              },
+                            }}
+                          >
+                            <Typography
+                              variant="body1"
+                              sx={{
+                                textAlign: "center",
+                                fontSize: "14px",
+                              }}
+                            >
+                              {t("devicesPage.app-monitor.lock")}
+                            </Typography>
+                          </Box>
+                        ) : (
+                          <Box
+                            onClick={() => onEventApp(apps, "unlock")}
+                            sx={{
+                              cursor: "pointer",
+                              backgroundColor: Color.background.red_gray01,
+                              border: `solid 1px ${Color.background.red_gray01}`,
+                              borderRadius: "1px",
+                              width: "100px",
+                              "&:hover": {
+                                backgroundColor: Color.background.red_gray02,
+                              },
+                            }}
+                          >
+                            <Typography
+                              variant="body1"
+                              sx={{
+                                textAlign: "center",
+                                fontSize: "14px",
+                              }}
+                            >
+                              {t("devicesPage.app-monitor.unlock")}
+                            </Typography>
+                          </Box>
+                        )}
                       </Box>
                     </Grid>
                   </Grid>

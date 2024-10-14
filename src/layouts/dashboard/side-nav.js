@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { usePathname } from "next/navigation";
 import PropTypes from "prop-types";
 
-import { Box, Drawer, Stack, useMediaQuery, IconButton, Tooltip } from "@mui/material";
+import { Box, Drawer, Stack, useMediaQuery, IconButton, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
@@ -21,6 +21,10 @@ export const SideNav = (props) => {
 
   const onControlMenu = () => {
     setCollapsed((prev) => !prev);
+  };
+
+  const onGooglePlay = () => {
+    console.log("google play");
   };
 
   const content = (
@@ -70,33 +74,83 @@ export const SideNav = (props) => {
             py: 3,
           }}
         >
-          <Stack
-            component="ul"
-            spacing={0.5}
+          <Box
             sx={{
-              listStyle: "none",
-              p: 0,
-              m: 0,
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
             }}
           >
-            {items.map((item) => {
-              const active = item.path ? pathname === item.path : false;
+            <Stack
+              component="ul"
+              spacing={0.5}
+              sx={{
+                listStyle: "none",
+                p: 0,
+                m: 0,
+              }}
+            >
+              {items.map((item) => {
+                const active = item.path ? pathname === item.path : false;
 
-              return (
-                <SideNavItem
-                  active={active}
-                  disabled={item.disabled}
-                  external={item.external}
-                  icon={item.icon}
-                  key={item.title}
-                  path={item.path}
-                  title={item.title}
-                  collapsed={collapsed}
-                  onClose={onClose} // Pass the onClose function here
-                />
-              );
-            })}
-          </Stack>
+                return (
+                  <SideNavItem
+                    active={active}
+                    disabled={item.disabled}
+                    external={item.external}
+                    icon={item.icon}
+                    key={item.title}
+                    path={item.path}
+                    title={item.title}
+                    collapsed={collapsed}
+                    onClose={onClose}
+                  />
+                );
+              })}
+            </Stack>
+
+            <Box sx={{ mb: 2 }}>
+              <Box
+                onClick={onGooglePlay}
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "10px",
+                  cursor: "pointer",
+                  backgroundColor: Color.background.purple_opacity,
+                  border: `solid 1px ${Color.background.purple}`,
+                  borderRadius: "5px",
+                  p: 1,
+                  "&:hover": {
+                    backgroundColor: Color.background.purple_opacity01,
+                  },
+                }}
+              >
+                <img src="/assets/icons/google_play_ic.webp" alt="Logo" style={{ width: "28px" }} />
+
+                <Box sx={{ display: collapsed ? "none" : "block" }}>
+                  <Typography
+                    sx={{
+                      fontSize: "10px",
+                      color: Color.text.main,
+                    }}
+                  >
+                    {t("dashboardMenus.get-in")}
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "14px",
+                      color: Color.text.main,
+                    }}
+                  >
+                    {t("dashboardMenus.google-play")}
+                  </Typography>
+                </Box>
+              </Box>
+            </Box>
+          </Box>
         </Box>
       </Box>
     </Scrollbar>
