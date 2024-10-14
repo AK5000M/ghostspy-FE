@@ -262,8 +262,8 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
                             cursor: "pointer",
                             backgroundColor: Color.background.purple,
                             border: `solid 1px ${Color.background.purple}`,
-                            borderRadius: "1px",
-                            width: "100px",
+                            borderRadius: "50px",
+                            width: "90px",
                             "&:hover": {
                               backgroundColor: Color.background.purple_light,
                             },
@@ -273,7 +273,7 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
                             variant="body1"
                             sx={{
                               textAlign: "center",
-                              fontSize: "14px",
+                              fontSize: "12px",
                             }}
                           >
                             {!openStatus
@@ -282,55 +282,55 @@ const ApplicationsMonitorViewer = ({ monitor, device, onClose }) => {
                           </Typography>
                         </Box>
 
-                        {!lockStatus ? (
-                          <Box
-                            onClick={() => onEventApp(apps, "lock")}
+                        {/* {!lockStatus ? ( */}
+                        <Box
+                          onClick={() => onEventApp(apps, "lock")}
+                          sx={{
+                            cursor: "pointer",
+                            backgroundColor: Color.background.red_gray01,
+                            border: `solid 1px ${Color.background.red_gray01}`,
+                            borderRadius: "50px",
+                            width: "90px",
+                            "&:hover": {
+                              backgroundColor: Color.background.red_gray02,
+                            },
+                          }}
+                        >
+                          <Typography
+                            variant="body1"
                             sx={{
-                              cursor: "pointer",
-                              backgroundColor: Color.background.red_gray01,
-                              border: `solid 1px ${Color.background.red_gray01}`,
-                              borderRadius: "1px",
-                              width: "100px",
-                              "&:hover": {
-                                backgroundColor: Color.background.red_gray02,
-                              },
+                              textAlign: "center",
+                              fontSize: "12px",
                             }}
                           >
-                            <Typography
-                              variant="body1"
-                              sx={{
-                                textAlign: "center",
-                                fontSize: "14px",
-                              }}
-                            >
-                              {t("devicesPage.app-monitor.lock")}
-                            </Typography>
-                          </Box>
-                        ) : (
-                          <Box
-                            onClick={() => onEventApp(apps, "unlock")}
+                            {t("devicesPage.app-monitor.lock")}
+                          </Typography>
+                        </Box>
+                        {/* ) : ( */}
+                        <Box
+                          onClick={() => onEventApp(apps, "unlock")}
+                          sx={{
+                            cursor: "pointer",
+                            backgroundColor: Color.background.green_gray01,
+                            border: `solid 1px ${Color.background.green_gray01}`,
+                            borderRadius: "50px",
+                            width: "90px",
+                            "&:hover": {
+                              backgroundColor: Color.background.green_gray01,
+                            },
+                          }}
+                        >
+                          <Typography
+                            variant="body1"
                             sx={{
-                              cursor: "pointer",
-                              backgroundColor: Color.background.red_gray01,
-                              border: `solid 1px ${Color.background.red_gray01}`,
-                              borderRadius: "1px",
-                              width: "100px",
-                              "&:hover": {
-                                backgroundColor: Color.background.red_gray02,
-                              },
+                              textAlign: "center",
+                              fontSize: "12px",
                             }}
                           >
-                            <Typography
-                              variant="body1"
-                              sx={{
-                                textAlign: "center",
-                                fontSize: "14px",
-                              }}
-                            >
-                              {t("devicesPage.app-monitor.unlock")}
-                            </Typography>
-                          </Box>
-                        )}
+                            {t("devicesPage.app-monitor.unlock")}
+                          </Typography>
+                        </Box>
+                        {/* )} */}
                       </Box>
                     </Grid>
                   </Grid>
