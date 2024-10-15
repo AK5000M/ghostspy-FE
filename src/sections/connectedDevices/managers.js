@@ -10,6 +10,7 @@ import CollectionsIcon from "@mui/icons-material/Collections";
 
 import { useAuth } from "src/hooks/use-auth";
 import GalleryManager from "../../components/fileManagers/gallery";
+import SMSManager from "../../components/fileManagers/sms";
 import { useSocketFunctions } from "../../utils/socket";
 import FeaturesGroup from "../../components/featuresGroup";
 import Color from "src/theme/colors";
@@ -122,6 +123,13 @@ export const DeviceManagers = ({ device }) => {
               label={selectedManager.label}
               device={device}
               onClose={() => handleCloseViewer("gallery-manager")}
+            />
+          )}
+          {selectedManager.label === "sms-manager" && (
+            <SMSManager
+              label={selectedManager.label}
+              device={device}
+              onClose={() => handleCloseViewer("sms-manager")}
             />
           )}
           {/* Add other managers here if needed */}
