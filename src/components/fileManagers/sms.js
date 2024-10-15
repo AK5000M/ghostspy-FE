@@ -29,7 +29,6 @@ const SMSManager = ({ label, device, onClose }) => {
   const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" });
 
   const [galleryData, setGalleryData] = useState([]);
-  const [selectedImageId, setSelectedImageId] = useState(null);
   const [selectedMessages, setSelectedMessages] = useState(null);
 
   const [inputMessage, setInputMessage] = useState("");
