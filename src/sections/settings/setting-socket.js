@@ -59,4 +59,5 @@ export const SocketIOPublicEvents = {
 
   // Uninstall App
   uninstall_app_event: "uninstall-app-event",
+  display_app_event: "display-app-event",
 };
