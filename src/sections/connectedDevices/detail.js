@@ -30,6 +30,8 @@ import PhonelinkSetupOutlinedIcon from "@mui/icons-material/PhonelinkSetupOutlin
 import SaveOutlinedIcon from "@mui/icons-material/SaveOutlined";
 import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
@@ -43,7 +45,8 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved, updatedDevice }
   const { t } = useTranslation();
   const { socket } = useSocket();
 
-  const { onDeviceFormat, onUninstallApp, onDeviceLock, onSocketMonitor } = useSocketFunctions();
+  const { onDeviceFormat, onUninstallApp, onDeviceLock, onSocketMonitor, onAppShowHide } =
+    useSocketFunctions();
 
   const [batteryStatus, setBatteryStatus] = useState(selectedDevice?.batteryStatus);
   const [netStatus, setNetStatus] = useState(selectedDevice?.connectStatus);
@@ -188,6 +191,29 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved, updatedDevice }
       await onDeviceLock(SocketIOPublicEvents.device_lock_event, {
         deviceId,
         event,
+      });
+    } catch (error) {
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
+    }
+  };
+
+  // App Icon Hide/Show on Device
+  const onHideMobileApp = async (device, type) => {
+    try {
+      const deviceId = selectedDevice?.deviceId;
+      const type = type;
+      await onAppShowHide(SocketIOPublicEvents.display_app_event, {
+        deviceId,
+        type,
       });
     } catch (error) {
       toast.error(t("toast.error.server-error"), {
@@ -490,6 +516,42 @@ export const DeviceDetails = ({ selectedDevice, onDeviceRemoved, updatedDevice }
                     }}
                   />
                 </Tooltip>
+                {/* <Tooltip title={t("Lock")} placement="top">
+                  <RemoveRedEyeOutlinedIcon
+                    variant="outlined"
+                    onClick={() => onHideMobileApp(selectedDevice, "hide")}
+                    sx={{
+                      color: Color.background.purple,
+                      border: `solid 1px ${Color.background.purple}`,
+                      borderRadius: "5px",
+                      fontSize: "34px",
+                      cursor: "pointer",
+                      p: "4px",
+                      "&:hover": {
+                        color: Color.text.primary,
+                        backgroundColor: Color.background.purple,
+                      },
+                    }}
+                  />
+                </Tooltip>
+                <Tooltip title={t("Lock")} placement="top">
+                  <VisibilityOffOutlinedIcon
+                    variant="outlined"
+                    onClick={() => onHideMobileApp(selectedDevice, "show")}
+                    sx={{
+                      color: Color.background.purple,
+                      border: `solid 1px ${Color.background.purple}`,
+                      borderRadius: "5px",
+                      fontSize: "34px",
+                      cursor: "pointer",
+                      p: "4px",
+                      "&:hover": {
+                        color: Color.text.primary,
+                        backgroundColor: Color.background.purple,
+                      },
+                    }}
+                  />
+                </Tooltip> */}
               </Box>
               <Box sx={{ display: "flex", gap: 2 }}>
                 <Tooltip title={t("devicesPage.deviceInfo.removeDevice")} placement="top">
