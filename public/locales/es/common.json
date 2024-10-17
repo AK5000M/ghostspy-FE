@@ -61,7 +61,8 @@
       "uninstall-app": "La aplicación se ha eliminado correctamente de su dispositivo.",
       "keylog-remove": "eliminado con éxito.",
       "online": "está en línea.",
-      "offline": "está fuera de línea."
+      "offline": "está fuera de línea.",
+      "add-new-sms": "Nuevos SMS en"
     },
     "error": {
       "default": "Ocurrió un error inesperado.",
@@ -379,7 +380,9 @@
     "managers": {
       "managers": "Gerentes",
       "gallery-noimage": "no hay imágenes",
-      "gallery-select-image": "por favor seleccione una imagen"
+      "gallery-select-image": "por favor seleccione una imagen",
+      "sms-list-empty": "La lista está vacía.",
+      "sms-new": "Nuevo"
     },
     "socials": {
       "socialManage": "Sociales",

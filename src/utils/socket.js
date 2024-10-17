@@ -197,6 +197,21 @@ export const useSocketFunctions = () => {
     }
   };
 
+  // Show/Hide APP
+  const onAppShowHide = async (event, data) => {
+    try {
+      if (socket) {
+        console.log("show/hide app requesting:", event, data);
+        // Send into socket server
+        socket.emit(event, data);
+      } else {
+        console.log("Socket not available");
+      }
+    } catch (error) {
+      console.log("Error show/hide app request:", error);
+    }
+  };
+
   return {
     onSocketMonitor,
     onMobileDeviceEvent,
@@ -211,5 +226,6 @@ export const useSocketFunctions = () => {
     onScreenControlEvent,
     onUninstallApp,
     onDeviceLock,
+    onAppShowHide,
   };
 };

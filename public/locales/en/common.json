@@ -62,7 +62,8 @@
       "uninstall-app": "The app has been successfully removed from a device.",
       "keylog-remove": "removed successfully.",
       "online": "is online.",
-      "offline": "is offline."
+      "offline": "is offline.",
+      "add-new-sms": "New SMS in"
     },
     "error": {
       "default": "An unexpected error occurred.",
@@ -381,7 +382,9 @@
     "managers": {
       "managers": "Managers",
       "gallery-noimage": "noImages",
-      "gallery-select-image": "please select a image"
+      "gallery-select-image": "please select a image",
+      "sms-list-empty": "The list is empty.",
+      "sms-new": "New"
     },
     "socials": {
       "socialManage": "Social",
