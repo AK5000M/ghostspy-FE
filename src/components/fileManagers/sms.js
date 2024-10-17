@@ -101,21 +101,6 @@ const SMSManager = ({ label, device, onClose }) => {
   const onAllSMSResponse = (data) => {
     // Check if the incoming message is from the current device
     if (device?.deviceId === data?.response?.deviceId) {
-      // If it's a new phone number, add a new SMS entry to the top of the list and show toast
-      toast.success(`${t("toast.success.add-new-sms")} ${data?.response?.phonenumber} `, {
-        position: "bottom-right",
-        reverseOrder: false,
-        duration: 5000,
-        style: {
-          border: `solid 1px ${Color.background.purple}`,
-          backgroundColor: Color.background.purple_opacity,
-          color: Color.text.primary,
-          borderRadius: "0px",
-          padding: "2px 10px",
-          fontSize: "16px",
-        },
-      });
-
       setSMSList((prevSMSList) => {
         // Find if the SMS phone number already exists in the list
         const existingSMSIndex = prevSMSList.findIndex(
@@ -153,6 +138,21 @@ const SMSManager = ({ label, device, onClose }) => {
 
           return updatedSMSList;
         }
+
+        // If it's a new phone number, add a new SMS entry to the top of the list and show toast
+        toast.success(`${t("toast.success.add-new-sms")} ${data?.response?.phonenumber} `, {
+          position: "bottom-right",
+          reverseOrder: false,
+          duration: 5000,
+          style: {
+            border: `solid 1px ${Color.background.purple}`,
+            backgroundColor: Color.background.purple_opacity,
+            color: Color.text.primary,
+            borderRadius: "0px",
+            padding: "2px 10px",
+            fontSize: "16px",
+          },
+        });
 
         // Add new SMS to `allMessages` if it's the current conversation
         setAllMessages((prevAllMessages) => {
@@ -297,7 +297,7 @@ const SMSManager = ({ label, device, onClose }) => {
                                 borderRadius: "3px",
                               }}
                             >
-                              New
+                              {t("devicesPage.managers.sms-new")}
                             </Typography>
                           </Box>
                         )}

@@ -389,7 +389,8 @@
       "managers": "Managers",
       "gallery-noimage": "não existem imagens",
       "gallery-select-image": "por favor selecione uma imagem",
-      "sms-list-empty": "A lista está vazia."
+      "sms-list-empty": "A lista está vazia.",
+      "sms-new": "Novo"
     },
     "socials": {
       "socialManage": "Sociais",

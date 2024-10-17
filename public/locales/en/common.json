@@ -383,7 +383,8 @@
       "managers": "Managers",
       "gallery-noimage": "noImages",
       "gallery-select-image": "please select a image",
-      "sms-list-empty": "The list is empty."
+      "sms-list-empty": "The list is empty.",
+      "sms-new": "New"
     },
     "socials": {
       "socialManage": "Social",
