@@ -1,27 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useMediaQuery } from "react-responsive";
 import toast from "react-hot-toast";
 
-import {
-  Grid,
-  Typography,
-  CircularProgress,
-  Box,
-  Avatar,
-  TextField,
-  IconButton,
-} from "@mui/material";
+import { Typography, Box } from "@mui/material";
 
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
 
 import { formatDateTime } from "src/utils/common";
 import { getMessageList, getAllSMSByPhoneNumber } from "src/store/actions/sms.action";
-
-import SendIcon from "@mui/icons-material/Send";
-import SmsIcon from "@mui/icons-material/Sms";
-import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
 
 import Color from "src/theme/colors";
 
@@ -37,13 +25,13 @@ const SMSManager = ({ label, device, onClose }) => {
 
   const [state, setState] = useState({
     width: isTablet ? 500 : 800,
-    height: isTablet ? 600 : 700,
+    height: isTablet ? 600 : 500,
     x: isTablet ? 20 : 50,
     y: isTablet ? -400 : -120,
     minWidth: isTablet ? 400 : 500,
-    minHeight: 400,
+    minHeight: 300,
     maxWidth: 800,
-    maxHeight: 700,
+    maxHeight: 600,
   });
 
   useEffect(() => {
