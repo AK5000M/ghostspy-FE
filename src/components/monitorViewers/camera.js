@@ -29,6 +29,7 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
   const onCameraMonitorResponse = (data) => {
     const deviceId = device?.deviceId;
     if (deviceId === data.deviceId) {
+      console.log("camera byte code", data.base64Image);
       const byteArray = new Uint8Array(data?.base64Image);
 
       // Convert byte array to base64 string
@@ -38,6 +39,8 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
       setChangeLoading(false);
     }
   };
+
+  console.log("camear screen code", screenCode);
 
   const init = async (activeCamera, activeQuality) => {
     const currentCamera = activeCamera;
