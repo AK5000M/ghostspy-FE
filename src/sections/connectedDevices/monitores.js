@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import dynamic from "next/dynamic";
 
 import FullscreenOutlinedIcon from "@mui/icons-material/FullscreenOutlined";
-import ControlCameraOutlinedIcon from "@mui/icons-material/ControlCameraOutlined";
+import LinkedCameraOutlinedIcon from "@mui/icons-material/LinkedCameraOutlined";
 import SurroundSoundOutlinedIcon from "@mui/icons-material/SurroundSoundOutlined";
 import KeyboardAltOutlinedIcon from "@mui/icons-material/KeyboardAltOutlined";
 import AndroidOutlinedIcon from "@mui/icons-material/AndroidOutlined";
@@ -59,7 +59,7 @@ export const DeviceMonitors = ({ device }) => {
   const [viewerVisibility, setViewerVisibility] = useState({
     "screen-monitor": false,
     "screen-skeleton": false,
-    // "camera-monitor": false,
+    "camera-monitor": false,
     // "mic-monitor": false,
     "key-monitor": false,
     "offline-key-monitor": false,
@@ -132,11 +132,11 @@ export const DeviceMonitors = ({ device }) => {
       icon: <SplitscreenOutlinedIcon />,
       title: t("devicesPage.monitors.screenSkeleton"),
     },
-    // {
-    //   label: "camera-monitor",
-    //   icon: <ControlCameraOutlinedIcon />,
-    //   title: t("devicesPage.monitors.monitorCamera"),
-    // },
+    {
+      label: "camera-monitor",
+      icon: <LinkedCameraOutlinedIcon />,
+      title: t("devicesPage.monitors.monitorCamera"),
+    },
     // {
     //   label: "mic-monitor",
     //   icon: <SurroundSoundOutlinedIcon />,
