@@ -50,7 +50,7 @@ const MonitorViewer = ({ children, initialState, onClose, type }) => {
           pointerEvents: "all",
           zIndex: 99999,
           border: `solid 1px ${Color.background.purple}`,
-          backgroundColor: Color.background.main_gray01,
+          backgroundColor: Color.background.main,
           p: "2px",
         }}
       >
