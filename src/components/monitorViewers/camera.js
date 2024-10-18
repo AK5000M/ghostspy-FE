@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Grid, CircularProgress } from "@mui/material";
 import { useTranslation } from "react-i18next";
-
-import MenuIcon from "@mui/icons-material/Menu";
-import { IconButton } from "@mui/material";
+import { useMediaQuery } from "react-responsive";
 
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
@@ -16,6 +14,9 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
   const { onSocketMonitor } = useSocketFunctions();
   const { socket } = useSocket();
+
+  const isMobile = useMediaQuery({ query: "(max-width: 475px)" });
+  const isTablet = useMediaQuery({ query: "(max-width: 1024px) and (min-width: 476px)" }); // Tablet between 476px and 1024px
 
   const [activeCamera, setActiveCamera] = useState("backCamera");
   const [activeQuality, setActiveQuality] = useState(10);
@@ -104,8 +105,8 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
       initialState={{
         width: 400,
         height: 500,
-        x: 50,
-        y: -120,
+        x: isTablet ? 0 : 100,
+        y: isTablet ? -400 : -120,
         minWidth: 300,
         minHeight: 400,
         maxWidth: 600,
@@ -114,13 +115,11 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
       type="camera"
       onClose={onCloseModal}
     >
-      {/* {screenCode != null && ( */}
       <div
         style={{
           position: "absolute",
-          bottom: "-65px",
+          bottom: !isMobile ? "-65px" : "10px",
           left: "0px",
-          cursor: "pointer",
           width: "100%",
           zIndex: "999",
           backgroundColor: Color.background.main,
@@ -128,7 +127,6 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
           borderRadius: "5px",
         }}
       >
-        {/* Toolbar area inside Rnd */}
         <CameraToolbar
           screenCode={screenCode}
           activeCamera={activeCamera}
@@ -138,7 +136,6 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
           onQualityChange={onQualityChange}
         />
       </div>
-      {/* )} */}
 
       <div style={{ position: "relative", width: "100%", height: "100%" }}>
         <Grid
