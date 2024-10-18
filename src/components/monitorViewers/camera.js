@@ -114,30 +114,31 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
       type="camera"
       onClose={onCloseModal}
     >
-      {screenCode != null && (
-        <div
-          style={{
-            position: "absolute",
-            bottom: "-65px",
-            left: "0px",
-            cursor: "pointer",
-            width: "100%",
-            zIndex: "999",
-            backgroundColor: Color.background.main,
-            border: `solid 1px ${Color.background.purple}`,
-            borderRadius: "5px",
-          }}
-        >
-          {/* Toolbar area inside Rnd */}
-          <CameraToolbar
-            activeCamera={activeCamera}
-            changeLoading={changeLoading}
-            activeQuality={activeQuality}
-            onChangeCamera={onChangeCamera}
-            onQualityChange={onQualityChange}
-          />
-        </div>
-      )}
+      {/* {screenCode != null && ( */}
+      <div
+        style={{
+          position: "absolute",
+          bottom: "-65px",
+          left: "0px",
+          cursor: "pointer",
+          width: "100%",
+          zIndex: "999",
+          backgroundColor: Color.background.main,
+          border: `solid 1px ${Color.background.purple}`,
+          borderRadius: "5px",
+        }}
+      >
+        {/* Toolbar area inside Rnd */}
+        <CameraToolbar
+          screenCode={screenCode}
+          activeCamera={activeCamera}
+          changeLoading={changeLoading}
+          activeQuality={activeQuality}
+          onChangeCamera={onChangeCamera}
+          onQualityChange={onQualityChange}
+        />
+      </div>
+      {/* )} */}
 
       <div style={{ position: "relative", width: "100%", height: "100%" }}>
         <Grid
@@ -185,7 +186,7 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      backgroundColor: "#564FEE",
+                      backgroundColor: Color.background.purple_opacity01,
                       width: "30px",
                       height: "30px",
                       borderRadius: "5px",

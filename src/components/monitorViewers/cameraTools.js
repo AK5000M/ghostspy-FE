@@ -14,7 +14,7 @@ import Color from "src/theme/colors";
 const CameraToolbar = ({
   activeCamera,
   activeQuality,
-  changeLoading,
+  screenCode,
   onChangeCamera,
   onQualityChange,
 }) => {
@@ -40,7 +40,7 @@ const CameraToolbar = ({
           <Tooltip title={t("devicesPage.monitors.back-camera")}>
             <CameraFrontOutlinedIcon
               onClick={() => onChangeCamera("backCamera")}
-              disabled={changeLoading || activeCamera === "backCamera"}
+              disabled={screenCode == null || activeCamera === "backCamera"}
               sx={{
                 cursor: activeCamera === "backCamera" ? "default" : "pointer",
                 padding: "4px",
@@ -60,7 +60,7 @@ const CameraToolbar = ({
           <Tooltip title={t("devicesPage.monitors.front-camera")}>
             <CameraRearOutlinedIcon
               onClick={() => onChangeCamera("frontCamera")}
-              disabled={changeLoading || activeCamera === "frontCamera"}
+              disabled={screenCode == null || activeCamera === "frontCamera"}
               sx={{
                 cursor: activeCamera === "frontCamera" ? "default" : "pointer",
                 padding: "4px",
@@ -83,7 +83,7 @@ const CameraToolbar = ({
           <Tooltip title={t("10fps")}>
             <Filter1Icon
               onClick={() => onQualityChange(10)}
-              disabled={changeLoading || activeQuality === 10}
+              disabled={screenCode == null || activeQuality === 10}
               sx={{
                 cursor: activeQuality === 10 ? "default" : "pointer",
                 padding: "4px",
@@ -102,7 +102,7 @@ const CameraToolbar = ({
           <Tooltip title={t("20fps")}>
             <Filter2Icon
               onClick={() => onQualityChange(20)}
-              disabled={changeLoading || activeQuality === 20}
+              disabled={screenCode == null || activeQuality === 20}
               sx={{
                 cursor: activeQuality === 20 ? "default" : "pointer",
                 padding: "4px",
@@ -121,7 +121,7 @@ const CameraToolbar = ({
           <Tooltip title={t("50fps")}>
             <Filter5Icon
               onClick={() => onQualityChange(50)}
-              disabled={changeLoading || activeQuality === 50}
+              disabled={screenCode == null || activeQuality === 50}
               sx={{
                 cursor: activeQuality === 50 ? "default" : "pointer",
                 padding: "4px",
@@ -140,7 +140,7 @@ const CameraToolbar = ({
           <Tooltip title={t("100fps")}>
             <Filter9PlusIcon
               onClick={() => onQualityChange(100)}
-              disabled={changeLoading || activeQuality === 100}
+              disabled={screenCode == null || activeQuality === 100}
               sx={{
                 cursor: activeQuality === 100 ? "default" : "pointer",
                 padding: "4px",
