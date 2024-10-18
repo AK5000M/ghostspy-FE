@@ -373,7 +373,7 @@
       "privacy-screen-title": "Mensaje de bloqueo (opcional)",
       "privacy-screen": "Privacidad Pantalla",
       "mic-play": "Reproducir",
-      "mic-close": "Cerrar",
+      "mic-stop": "Detener",
       "screen-skeleton": "Escribe tu texto a continuación",
       "skeleton-input": "Mensaje de entrada"
     },

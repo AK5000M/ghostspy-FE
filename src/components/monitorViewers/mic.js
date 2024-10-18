@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Grid, Typography, Button } from "@mui/material";
+import { Grid, Tooltip } from "@mui/material";
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
+
+import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
+import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
 
 import Color from "src/theme/colors";
 
@@ -16,54 +19,59 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
   const { socket } = useSocket();
   const audioContextRef = useRef(null);
   const sourceRef = useRef(null);
-  const [audioBufferQueue, setAudioBufferQueue] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const onMicMonitorResponse = (data) => {
     const deviceId = device?.deviceId;
     if (deviceId === data.deviceId) {
-      // Convert the audio buffer code to a Float32Array and enqueue it
-      const audioData = new Float32Array(data.base64Audio);
-      console.log({ audioData });
-      setAudioBufferQueue((prevQueue) => [...prevQueue, audioData]);
+      playAudioAction(data.audioCode);
     }
   };
 
-  const playAudioBuffer = async (buffer) => {
+  const playAudioAction = async (audioBufferData) => {
+    // Check if AudioContext already exists
     if (!audioContextRef.current) {
       audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
     }
+
     const audioContext = audioContextRef.current;
 
-    try {
-      const audioBuffer = audioContext.createBuffer(1, buffer.length, audioContext.sampleRate);
-      audioBuffer.copyToChannel(buffer, 0);
-      const source = audioContext.createBufferSource();
-      source.buffer = audioBuffer;
-
-      source.connect(audioContext.destination);
-      source.start();
-      source.onended = () => {
-        setIsPlaying(false);
-        if (audioBufferQueue.length > 0) {
-          setAudioBufferQueue((prevQueue) => prevQueue.slice(1));
-        }
-      };
-      sourceRef.current = source;
-    } catch (error) {
-      console.error("Error playing audio buffer:", error);
+    // Resume the AudioContext in case it is suspended
+    if (audioContext.state === "suspended") {
+      await audioContext.resume();
     }
+
+    // Assuming the incoming audioBufferData is PCM Int16Array
+    const audioData = new Uint16Array(audioBufferData);
+
+    // Create an empty AudioBuffer to hold the audio data
+    const buffer = audioContext.createBuffer(1, audioData.length, 16000);
+    const channelData = buffer.getChannelData(0);
+
+    // Convert PCM data (Int16) to Float32
+    for (let i = 0; i < audioData.length; i++) {
+      let l = audioData[i] % 256;
+      let h = (audioData[i] - l) / 256;
+
+      if (l >= 128) l = l - 255;
+      channelData[i] = (l * 256 + h) / 32768;
+    }
+
+    // Create a buffer source and connect it to the destination (speakers)
+    const source = audioContext.createBufferSource();
+    source.buffer = buffer;
+
+    source.connect(audioContext.destination);
+    source.start();
+
+    // Save the source for stopping audio later
+    sourceRef.current = source;
   };
 
-  useEffect(() => {
-    if (!isPlaying && audioBufferQueue.length > 0) {
-      setIsPlaying(true);
-      playAudioBuffer(audioBufferQueue[0]);
-    }
-  }, [audioBufferQueue, isPlaying]);
-
+  // on Play action of Audio
   const onPlayAudio = async () => {
     const deviceId = device?.deviceId;
+    setIsPlaying(true);
     if (deviceId) {
       await onSocketMonitor(SocketIOPublicEvents.mic_monitor, { deviceId });
       socket.on(`mic-shared-${deviceId}`, onMicMonitorResponse);
@@ -73,28 +81,34 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
     }
   };
 
-  const onCloseAudio = async () => {
-    onClose(false);
-    setAudioBufferQueue([]);
+  // Stop Audio
+  const onStopAudio = () => {
+    setIsPlaying(false);
+
+    // Stop current audio playback
     if (sourceRef.current) {
       sourceRef.current.stop();
+      sourceRef.current = null;
+    }
+
+    const deviceId = device?.deviceId;
+
+    // Stop receiving audio data from the socket
+    if (deviceId) {
+      socket.off(`mic-shared-${deviceId}`);
     }
   };
 
-  const onCloseModal = async () => {
-    try {
-      onClose(false);
-      onCloseAudio();
-    } catch (error) {
-      console.error("Error closing monitor modal:", error);
-    }
+  const onCloseModal = () => {
+    onClose(false);
+    onStopAudio();
   };
 
   return (
     <MonitorViewer
       initialState={{
-        width: 320,
-        height: 360,
+        width: 340,
+        height: 400,
         x: 50,
         y: -120,
         minWidth: 300,
@@ -105,13 +119,21 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
       type="mic"
       onClose={onCloseModal}
     >
-      <div style={{ position: "relative", width: "100%", height: "100%" }}>
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          backgroundImage: `linear-gradient(rgb(29 29 195 / 78%), rgb(19 19 20 / 81%)), url(/assets/background/06320.webp)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <Grid
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            // mt: 2,
             position: "relative",
             width: "100%",
             height: "100%",
@@ -133,25 +155,51 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
               <div className={`speaker ${isPlaying ? "playing" : ""}`}></div>
             </Grid>
 
-            <div style={{ display: "flex", gap: "15px", justifyContent: "center", width: "100%" }}>
-              <Button
-                variant="outlined"
-                onClick={onCloseAudio}
-                sx={{
-                  width: "120px",
-                  color: Color.text.primary,
-                  border: `solid 2px ${Color.text.secondary}`,
-                  "&:hover": {
-                    border: `solid 2px ${Color.text.secondary}`,
-                  },
-                }}
-              >
-                {t("devicesPage.monitors.mic-close")}
-              </Button>
-
-              <Button variant="outlined" onClick={onPlayAudio} sx={{ width: "120px" }}>
-                {t("devicesPage.monitors.mic-play")}
-              </Button>
+            <div
+              style={{
+                display: "flex",
+                gap: "15px",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              {isPlaying ? (
+                <Tooltip title={t("devicesPage.monitors.mic-stop")} placement="top">
+                  <PauseOutlinedIcon
+                    onClick={onStopAudio}
+                    sx={{
+                      width: "120px",
+                      color: Color.background.purple,
+                      border: `solid 1px ${Color.background.purple}`,
+                      fontSize: "46px",
+                      borderRadius: "25px",
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: Color.text.purple_light,
+                        backgroundColor: Color.background.purple_opacity,
+                      },
+                    }}
+                  />
+                </Tooltip>
+              ) : (
+                <Tooltip title={t("devicesPage.monitors.mic-play")} placement="top">
+                  <PlayArrowOutlinedIcon
+                    onClick={onPlayAudio}
+                    sx={{
+                      width: "120px",
+                      color: Color.background.purple,
+                      border: `solid 1px ${Color.background.purple}`,
+                      fontSize: "46px",
+                      borderRadius: "25px",
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: Color.text.purple_light,
+                        backgroundColor: Color.background.purple_opacity,
+                      },
+                    }}
+                  />
+                </Tooltip>
+              )}
             </div>
           </Grid>
         </Grid>
