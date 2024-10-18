@@ -1,8 +1,9 @@
-import { Box, Grid, IconButton, Tooltip } from "@mui/material";
+import React from "react";
+import { Box, Tooltip } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
-import CameraFrontIcon from "@mui/icons-material/CameraFront";
-import CameraRearIcon from "@mui/icons-material/CameraRear";
+import CameraFrontOutlinedIcon from "@mui/icons-material/CameraFrontOutlined";
+import CameraRearOutlinedIcon from "@mui/icons-material/CameraRearOutlined";
 import Filter1Icon from "@mui/icons-material/Filter1";
 import Filter2Icon from "@mui/icons-material/Filter2";
 import Filter5Icon from "@mui/icons-material/Filter5";
@@ -11,7 +12,6 @@ import Filter9PlusIcon from "@mui/icons-material/Filter9Plus";
 import Color from "src/theme/colors";
 
 const CameraToolbar = ({
-  visible,
   activeCamera,
   activeQuality,
   changeLoading,
@@ -19,140 +19,144 @@ const CameraToolbar = ({
   onQualityChange,
 }) => {
   const { t } = useTranslation();
+
   return (
     <Box
-      className={`toolbar ${visible ? "visible" : "hidden"}`}
+      className={`toolbar visible`}
       sx={{
-        position: "absolute",
-        left: "10px",
-        top: "30px",
-        height: 100,
-        width: "100%",
-        background: Color.background.secondary,
-        zIndex: 999,
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "0 20px",
+        display: "contents",
       }}
     >
-      <Grid
+      <Box
         sx={{
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: 1,
+          gap: 3,
+          py: "10px",
         }}
       >
-        <div>
+        <Box sx={{ display: "flex", gap: 1 }}>
           <Tooltip title={t("devicesPage.monitors.back-camera")}>
-            <span>
-              <IconButton
-                onClick={() => onChangeCamera("backCamera")}
-                disabled={changeLoading || activeCamera === "backCamera"}
-                sx={{
-                  color: activeCamera === "backCamera" ? "#564FEE" : "white",
-                  "&:disabled": {
-                    color: activeCamera === "backCamera" ? "#564FEE" : "white",
-                  },
-                }}
-              >
-                <CameraRearIcon />
-              </IconButton>
-            </span>
+            <CameraFrontOutlinedIcon
+              onClick={() => onChangeCamera("backCamera")}
+              disabled={changeLoading || activeCamera === "backCamera"}
+              sx={{
+                cursor: activeCamera === "backCamera" ? "default" : "pointer",
+                padding: "4px",
+                fontSize: "30px",
+                border: `solid 1px ${Color.background.purple}`,
+                color: activeCamera === "backCamera" ? Color.text.primary : Color.background.purple,
+                backgroundColor:
+                  activeCamera === "backCamera" ? Color.background.purple : "initial",
+                "&:hover": {
+                  color: Color.text.primary,
+                  backgroundColor: Color.background.purple,
+                },
+              }}
+            />
           </Tooltip>
-        </div>
-        <div>
+
           <Tooltip title={t("devicesPage.monitors.front-camera")}>
-            <span>
-              <IconButton
-                onClick={() => onChangeCamera("frontCamera")}
-                disabled={changeLoading || activeCamera === "frontCamera"}
-                sx={{
-                  color: activeCamera === "frontCamera" ? "#564FEE" : "white",
-                  "&:disabled": {
-                    color: activeCamera === "frontCamera" ? "#564FEE" : "white",
-                  },
-                }}
-              >
-                <CameraFrontIcon />
-              </IconButton>
-            </span>
+            <CameraRearOutlinedIcon
+              onClick={() => onChangeCamera("frontCamera")}
+              disabled={changeLoading || activeCamera === "frontCamera"}
+              sx={{
+                cursor: activeCamera === "frontCamera" ? "default" : "pointer",
+                padding: "4px",
+                fontSize: "30px",
+                border: `solid 1px ${Color.background.purple}`,
+                color:
+                  activeCamera === "frontCamera" ? Color.text.primary : Color.background.purple,
+                backgroundColor:
+                  activeCamera === "frontCamera" ? Color.background.purple : "initial",
+                "&:hover": {
+                  color: Color.text.primary,
+                  backgroundColor: Color.background.purple,
+                },
+              }}
+            />
           </Tooltip>
-        </div>
-        <div>
+        </Box>
+
+        <Box sx={{ display: "flex", gap: 1 }}>
           <Tooltip title={t("10fps")}>
-            <span>
-              <IconButton
-                onClick={() => onQualityChange(10)}
-                disabled={changeLoading || activeQuality === 10}
-                sx={{
-                  color: activeQuality === 10 ? "#564FEE" : "white",
-                  "&:disabled": {
-                    color: activeQuality === 10 ? "#564FEE" : "white",
-                  },
-                }}
-              >
-                <Filter1Icon />
-              </IconButton>
-            </span>
+            <Filter1Icon
+              onClick={() => onQualityChange(10)}
+              disabled={changeLoading || activeQuality === 10}
+              sx={{
+                cursor: activeQuality === 10 ? "default" : "pointer",
+                padding: "4px",
+                fontSize: "30px",
+                border: `solid 1px ${Color.background.purple}`,
+                color: activeQuality === 10 ? Color.text.primary : Color.background.purple,
+                backgroundColor: activeQuality === 10 ? Color.background.purple : "initial",
+                "&:hover": {
+                  color: Color.text.primary,
+                  backgroundColor: Color.background.purple,
+                },
+              }}
+            />
           </Tooltip>
-        </div>
-        <div>
+
           <Tooltip title={t("20fps")}>
-            <span>
-              <IconButton
-                onClick={() => onQualityChange(20)}
-                disabled={changeLoading || activeQuality === 20}
-                sx={{
-                  color: activeQuality === 20 ? "#564FEE" : "white",
-                  "&:disabled": {
-                    color: activeQuality === 20 ? "#564FEE" : "white",
-                  },
-                }}
-              >
-                <Filter2Icon />
-              </IconButton>
-            </span>
+            <Filter2Icon
+              onClick={() => onQualityChange(20)}
+              disabled={changeLoading || activeQuality === 20}
+              sx={{
+                cursor: activeQuality === 20 ? "default" : "pointer",
+                padding: "4px",
+                fontSize: "30px",
+                border: `solid 1px ${Color.background.purple}`,
+                color: activeQuality === 20 ? Color.text.primary : Color.background.purple,
+                backgroundColor: activeQuality === 20 ? Color.background.purple : "initial",
+                "&:hover": {
+                  color: Color.text.primary,
+                  backgroundColor: Color.background.purple,
+                },
+              }}
+            />
           </Tooltip>
-        </div>
-        <div>
+
           <Tooltip title={t("50fps")}>
-            <span>
-              <IconButton
-                onClick={() => onQualityChange(50)}
-                disabled={changeLoading || activeQuality === 50}
-                sx={{
-                  color: activeQuality === 50 ? "#564FEE" : "white",
-                  "&:disabled": {
-                    color: activeQuality === 50 ? "#564FEE" : "white",
-                  },
-                }}
-              >
-                <Filter5Icon />
-              </IconButton>
-            </span>
+            <Filter5Icon
+              onClick={() => onQualityChange(50)}
+              disabled={changeLoading || activeQuality === 50}
+              sx={{
+                cursor: activeQuality === 50 ? "default" : "pointer",
+                padding: "4px",
+                fontSize: "30px",
+                border: `solid 1px ${Color.background.purple}`,
+                color: activeQuality === 50 ? Color.text.primary : Color.background.purple,
+                backgroundColor: activeQuality === 50 ? Color.background.purple : "initial",
+                "&:hover": {
+                  color: Color.text.primary,
+                  backgroundColor: Color.background.purple,
+                },
+              }}
+            />
           </Tooltip>
-        </div>
-        <div>
+
           <Tooltip title={t("100fps")}>
-            <span>
-              <IconButton
-                onClick={() => onQualityChange(100)}
-                disabled={changeLoading || activeQuality === 100}
-                sx={{
-                  color: activeQuality === 100 ? "#564FEE" : "white",
-                  "&:disabled": {
-                    color: activeQuality === 100 ? "#564FEE" : "white",
-                  },
-                }}
-              >
-                <Filter9PlusIcon />
-              </IconButton>
-            </span>
+            <Filter9PlusIcon
+              onClick={() => onQualityChange(100)}
+              disabled={changeLoading || activeQuality === 100}
+              sx={{
+                cursor: activeQuality === 100 ? "default" : "pointer",
+                padding: "4px",
+                fontSize: "30px",
+                border: `solid 1px ${Color.background.purple}`,
+                color: activeQuality === 100 ? Color.text.primary : Color.background.purple,
+                backgroundColor: activeQuality === 100 ? Color.background.purple : "initial",
+                "&:hover": {
+                  color: Color.text.primary,
+                  backgroundColor: Color.background.purple,
+                },
+              }}
+            />
           </Tooltip>
-        </div>
-      </Grid>
+        </Box>
+      </Box>
     </Box>
   );
 };

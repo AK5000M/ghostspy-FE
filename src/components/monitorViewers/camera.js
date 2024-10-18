@@ -10,6 +10,7 @@ import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
 import CameraToolbar from "./cameraTools";
+import Color from "src/theme/colors";
 
 const CameraMonitorViewer = ({ monitor, device, onClose }) => {
   const { t } = useTranslation();
@@ -20,7 +21,6 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
   const [activeQuality, setActiveQuality] = useState(10);
   const [screenCode, setScreenCode] = useState(null);
   const [changeLoading, setChangeLoading] = useState(false);
-  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     init(activeCamera, activeQuality);
@@ -28,8 +28,7 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
 
   const onCameraMonitorResponse = (data) => {
     const deviceId = device?.deviceId;
-    if (deviceId === data.deviceId) {
-      console.log("camera byte code", data.base64Image);
+    if (deviceId === data.deviceId && activeCamera == data?.cameraType) {
       const byteArray = new Uint8Array(data?.base64Image);
 
       // Convert byte array to base64 string
@@ -37,10 +36,10 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
 
       setScreenCode(base64String);
       setChangeLoading(false);
+    } else {
+      setScreenCode(null);
     }
   };
-
-  console.log("camear screen code", screenCode);
 
   const init = async (activeCamera, activeQuality) => {
     const currentCamera = activeCamera;
@@ -119,32 +118,24 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
         <div
           style={{
             position: "absolute",
-            top: "10px",
-            left: "10px",
+            bottom: "-65px",
+            left: "0px",
             cursor: "pointer",
-            width: "88%",
+            width: "100%",
             zIndex: "999",
+            backgroundColor: Color.background.main,
+            border: `solid 1px ${Color.background.purple}`,
+            borderRadius: "5px",
           }}
-          onMouseLeave={() => setHovered(false)}
         >
           {/* Toolbar area inside Rnd */}
           <CameraToolbar
-            visible={hovered}
             activeCamera={activeCamera}
             changeLoading={changeLoading}
             activeQuality={activeQuality}
             onChangeCamera={onChangeCamera}
             onQualityChange={onQualityChange}
           />
-          <IconButton
-            className="modal-close-icon"
-            style={{ paddingTop: "0px" }}
-            edge="end"
-            aria-label="close"
-            onMouseEnter={() => setHovered(true)}
-          >
-            <MenuIcon />
-          </IconButton>
         </div>
       )}
 
@@ -159,66 +150,63 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
             height: "100%",
           }}
         >
-          {screenCode != null && (
-            <React.Fragment>
-              <Grid
-                sx={{
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "100%",
-                  height: "100%",
-                  overflow: "hidden",
-                  borderRadius: "5px",
-                  backgroundColor: "#000",
-                }}
-              >
-                {changeLoading ? (
+          <React.Fragment>
+            <Grid
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+                height: "100%",
+                overflow: "hidden",
+                borderRadius: "5px",
+                backgroundColor: "#000",
+              }}
+            >
+              {screenCode == null ? (
+                <Grid
+                  sx={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 1,
+                    color: "white",
+                    width: "100%",
+                  }}
+                >
                   <Grid
                     sx={{
-                      position: "absolute",
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
                       display: "flex",
-                      flexDirection: "column",
                       justifyContent: "center",
                       alignItems: "center",
-                      zIndex: 1,
-                      color: "white",
-                      width: "100%",
+                      backgroundColor: "#564FEE",
+                      width: "30px",
+                      height: "30px",
+                      borderRadius: "5px",
                     }}
                   >
-                    <Grid
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        backgroundColor: "#564FEE",
-                        width: "30px",
-                        height: "30px",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      <CircularProgress sx={{ color: "white" }} size={20} />
-                    </Grid>
+                    <CircularProgress sx={{ color: "white" }} size={20} />
                   </Grid>
-                ) : (
-                  <img
-                    src={`data:image/jpeg;base64,${screenCode}`}
-                    style={{
-                      width: "100%",
-                      height: "auto",
-                      transform:
-                        activeCamera === "frontCamera" ? "rotate(-90deg)" : "rotate(90deg)",
-                    }}
-                    alt="Captured Screen"
-                  />
-                )}
-              </Grid>
-            </React.Fragment>
-          )}
+                </Grid>
+              ) : (
+                <img
+                  src={`data:image/jpeg;base64,${screenCode}`}
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    transform: activeCamera === "frontCamera" ? "rotate(-90deg)" : "rotate(90deg)",
+                  }}
+                  alt="Captured Screen"
+                />
+              )}
+            </Grid>
+          </React.Fragment>
         </Grid>
       </div>
     </MonitorViewer>
