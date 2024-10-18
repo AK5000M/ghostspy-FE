@@ -183,7 +183,7 @@ const CameraMonitorViewer = ({ monitor, device, onClose }) => {
                       display: "flex",
                       justifyContent: "center",
                       alignItems: "center",
-                      backgroundColor: Color.background.purple_opacity01,
+                      backgroundColor: Color.background.purple,
                       width: "30px",
                       height: "30px",
                       borderRadius: "5px",

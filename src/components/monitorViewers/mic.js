@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 
-import { Grid, Typography, Button } from "@mui/material";
+import { Grid, Tooltip } from "@mui/material";
 import { useSocketFunctions } from "../../utils/socket";
 import { SocketIOPublicEvents } from "../../sections/settings/setting-socket";
 import { useSocket } from "../../hooks/use-socket";
 import MonitorViewer from "../monitorViewer";
+
+import PlayArrowOutlinedIcon from "@mui/icons-material/PlayArrowOutlined";
+import PauseOutlinedIcon from "@mui/icons-material/PauseOutlined";
 
 import Color from "src/theme/colors";
 
@@ -23,8 +26,8 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
     const deviceId = device?.deviceId;
     if (deviceId === data.deviceId) {
       // Convert the audio buffer code to a Float32Array and enqueue it
-      const audioData = new Float32Array(data.base64Audio);
-      console.log({ audioData });
+      const audioData = new Float32Array(data.byteCode);
+      console.log("audio data=>", { audioData });
       setAudioBufferQueue((prevQueue) => [...prevQueue, audioData]);
     }
   };
@@ -62,6 +65,7 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
     }
   }, [audioBufferQueue, isPlaying]);
 
+  // on Play action of Audio
   const onPlayAudio = async () => {
     const deviceId = device?.deviceId;
     if (deviceId) {
@@ -73,28 +77,33 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
     }
   };
 
-  const onCloseAudio = async () => {
-    onClose(false);
+  // on Stop action of Audio
+  const onStopAudio = () => {
+    setIsPlaying(false);
     setAudioBufferQueue([]);
     if (sourceRef.current) {
       sourceRef.current.stop();
     }
   };
 
-  const onCloseModal = async () => {
-    try {
-      onClose(false);
-      onCloseAudio();
-    } catch (error) {
-      console.error("Error closing monitor modal:", error);
-    }
+  // const onCloseAudio = async () => {
+  //   onClose(false);
+  //   setAudioBufferQueue([]);
+  //   if (sourceRef.current) {
+  //     sourceRef.current.stop();
+  //   }
+  // };
+
+  const onCloseModal = () => {
+    onClose(false);
+    onStopAudio();
   };
 
   return (
     <MonitorViewer
       initialState={{
-        width: 320,
-        height: 360,
+        width: 340,
+        height: 400,
         x: 50,
         y: -120,
         minWidth: 300,
@@ -105,13 +114,21 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
       type="mic"
       onClose={onCloseModal}
     >
-      <div style={{ position: "relative", width: "100%", height: "100%" }}>
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          backgroundImage: `linear-gradient(rgb(29 29 195 / 78%), rgb(19 19 20 / 81%)), url(/assets/background/06320.webp)`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      >
         <Grid
           sx={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            // mt: 2,
             position: "relative",
             width: "100%",
             height: "100%",
@@ -133,25 +150,51 @@ const MicMonitorViewer = ({ monitor, device, onClose }) => {
               <div className={`speaker ${isPlaying ? "playing" : ""}`}></div>
             </Grid>
 
-            <div style={{ display: "flex", gap: "15px", justifyContent: "center", width: "100%" }}>
-              <Button
-                variant="outlined"
-                onClick={onCloseAudio}
-                sx={{
-                  width: "120px",
-                  color: Color.text.primary,
-                  border: `solid 2px ${Color.text.secondary}`,
-                  "&:hover": {
-                    border: `solid 2px ${Color.text.secondary}`,
-                  },
-                }}
-              >
-                {t("devicesPage.monitors.mic-close")}
-              </Button>
-
-              <Button variant="outlined" onClick={onPlayAudio} sx={{ width: "120px" }}>
-                {t("devicesPage.monitors.mic-play")}
-              </Button>
+            <div
+              style={{
+                display: "flex",
+                gap: "15px",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              {isPlaying ? (
+                <Tooltip title={t("devicesPage.monitors.mic-stop")} placement="top">
+                  <PauseOutlinedIcon
+                    onClick={onStopAudio}
+                    sx={{
+                      width: "120px",
+                      color: Color.background.purple,
+                      border: `solid 1px ${Color.background.purple}`,
+                      fontSize: "46px",
+                      borderRadius: "25px",
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: Color.text.purple_light,
+                        backgroundColor: Color.background.purple_opacity,
+                      },
+                    }}
+                  />
+                </Tooltip>
+              ) : (
+                <Tooltip title={t("devicesPage.monitors.mic-play")} placement="top">
+                  <PlayArrowOutlinedIcon
+                    onClick={onPlayAudio}
+                    sx={{
+                      width: "120px",
+                      color: Color.background.purple,
+                      border: `solid 1px ${Color.background.purple}`,
+                      fontSize: "46px",
+                      borderRadius: "25px",
+                      cursor: "pointer",
+                      "&:hover": {
+                        color: Color.text.purple_light,
+                        backgroundColor: Color.background.purple_opacity,
+                      },
+                    }}
+                  />
+                </Tooltip>
+              )}
             </div>
           </Grid>
         </Grid>
