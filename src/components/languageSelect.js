@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Select, MenuItem, Box } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
@@ -6,13 +6,22 @@ import FlagIcon from "@mui/icons-material/Flag";
 
 const Languages = () => {
   const { i18n } = useTranslation();
-  const [language, setLanguage] = useState("pr"); // Default language
+  const [language, setLanguage] = useState(localStorage.getItem("selectedLanguage") || "pr");
 
   const handleChange = (event) => {
-    const selectedLanguage = (event && event.target && event.target.value) || "";
+    const selectedLanguage = event.target.value;
     i18n.changeLanguage(selectedLanguage);
+    localStorage.setItem("selectedLanguage", selectedLanguage);
     setLanguage(selectedLanguage);
   };
+
+  // Sync the language with i18n on component mount if localStorage has a value
+  useEffect(() => {
+    const storedLanguage = localStorage.getItem("selectedLanguage");
+    if (storedLanguage) {
+      i18n.changeLanguage(storedLanguage);
+    }
+  }, [i18n]);
 
   return (
     <Box sx={{ display: { md: "flex" }, alignItems: "center" }}>
@@ -35,7 +44,7 @@ const Languages = () => {
         <MenuItem value="en" className="select-menu">
           <img
             src={"../assets/flags/us_f.png"}
-            alt="Brazil Flag"
+            alt="US Flag"
             style={{ marginRight: "8px", width: "20px" }}
           />
           EN
@@ -43,7 +52,7 @@ const Languages = () => {
         <MenuItem value="es" className="select-menu">
           <img
             src={"../assets/flags/es_f.png"}
-            alt="Brazil Flag"
+            alt="Spain Flag"
             style={{ marginRight: "8px", width: "20px" }}
           />
           ES
