@@ -7,6 +7,7 @@ import FeedbackForm from "./feedbackForm";
 import ChatLastConfrim from "./chatLast";
 
 import SendIcon from "@mui/icons-material/Send";
+import Color from "src/theme/colors";
 
 const ChatWindow = ({
   open,
@@ -71,7 +72,7 @@ const ChatWindow = ({
             borderRadius: "10px",
             boxShadow: 3,
             zIndex: 1300,
-            backgroundColor: "#111927",
+            backgroundColor: Color.background.main,
           }}
         >
           <ChatHeader handleClose={handleClose} selectHuman={selectHuman} />
@@ -79,7 +80,7 @@ const ChatWindow = ({
           <Grid
             ref={gridRef}
             sx={{
-              backgroundColor: "#7677781f",
+              backgroundColor: Color.background.secondary,
               height: "100%",
               px: 1,
               py: 2,
@@ -130,7 +131,7 @@ const ChatWindow = ({
               sx={{
                 px: 2,
                 py: 1,
-                backgroundColor: "#1d2431",
+                backgroundColor: Color.background.purple_opacity,
 
                 borderBottomRightRadius: selectHuman ? "10px" : "0px",
                 borderBottomLeftRadius: selectHuman ? "10px" : "0px",
@@ -143,7 +144,7 @@ const ChatWindow = ({
                   alignItems: "center",
                   justifyContent: "center",
                   borderRadius: "5px",
-                  backgroundColor: "#111927f5",
+                  backgroundColor: Color.background.main,
                   p: "3px",
                 }}
                 onSubmit={(e) => {
