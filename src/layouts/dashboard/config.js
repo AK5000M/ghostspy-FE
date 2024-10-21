@@ -35,21 +35,21 @@ export const items = [
     ),
   },
   {
-    title: "dashboardMenus.support",
-    path: "/support",
-    icon: (
-      <SvgIcon style={{ fontSize: "24px" }}>
-        <HelpCenterOutlinedIcon />
-      </SvgIcon>
-    ),
-  },
-  {
     title: "dashboardMenus.google-play",
     path: "https://storeappweb.com/",
     external: true,
     icon: (
       <SvgIcon style={{ fontSize: "24px" }}>
         <LocalMallOutlinedIcon />
+      </SvgIcon>
+    ),
+  },
+  {
+    title: "dashboardMenus.support",
+    path: "/support",
+    icon: (
+      <SvgIcon style={{ fontSize: "24px" }}>
+        <HelpCenterOutlinedIcon />
       </SvgIcon>
     ),
   },

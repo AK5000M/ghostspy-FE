@@ -510,7 +510,8 @@
     "video": "Clases en Video"
   },
   "supportPage": {
-    "support": "Soporte"
+    "support": "Soporte",
+    "categories": "Categorías"
   },
   "termConditionPage": {
     "title": "Términos y Condiciones y Política de Privacidad",
