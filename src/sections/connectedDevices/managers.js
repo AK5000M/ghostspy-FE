@@ -125,13 +125,13 @@ export const DeviceManagers = ({ device }) => {
               onClose={() => handleCloseViewer("gallery-manager")}
             />
           )}
-          {selectedManager.label === "sms-manager" && (
+          {/* {selectedManager.label === "sms-manager" && (
             <SMSManager
               label={selectedManager.label}
               device={device}
               onClose={() => handleCloseViewer("sms-manager")}
             />
-          )}
+          )} */}
           {/* Add other managers here if needed */}
         </React.Fragment>
       )}

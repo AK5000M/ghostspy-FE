@@ -12,7 +12,11 @@ const ExplainContent = () => {
   };
 
   return (
-    <Grid container spacing={3} sx={{ display: "flex", gap: "40px" }}>
+    <Grid
+      container
+      spacing={3}
+      sx={{ display: "flex", flexWrap: { md: "nowrap", sm: "wrap" }, gap: "40px" }}
+    >
       <Grid
         sx={{
           display: "flex",
@@ -21,7 +25,7 @@ const ExplainContent = () => {
         }}
       >
         <Typography variant="h6" sx={{ color: "white", fontWeight: 400 }}>
-          Categories in this section
+          {t("supportPage.categories")}
         </Typography>
         <List sx={{ py: 2, borderRadius: "5px", width: "100%" }}>
           {Object.keys(categories).map((categoryKey, index) => (
