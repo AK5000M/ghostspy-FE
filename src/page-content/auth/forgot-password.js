@@ -3,8 +3,10 @@ import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import toast from "react-hot-toast";
+
 import { Button, Stack, TextField, Typography, Box, Container, Link } from "@mui/material";
 import { useAuth } from "src/hooks/use-auth";
+import Header from "../../components/header";
 import Color from "src/theme/colors";
 
 export const ForgotPasswordContent = () => {
@@ -16,14 +18,23 @@ export const ForgotPasswordContent = () => {
   const formik = useFormik({
     initialValues: {
       email: "",
+      password: "",
     },
     validate: (values) => {
       const errors = {};
 
+      // Email validation
       if (!values.email) {
         errors.email = t("validation.email");
       } else if (!/\S+@\S+\.\S+/.test(values.email)) {
         errors.email = t("validation.emailInvalid");
+      }
+
+      // Password validation (must be at least 8 characters long)
+      if (!values.password) {
+        errors.password = t("validation.password");
+      } else if (values.password.length < 8) {
+        errors.password = t("validation.passwordMinLength");
       }
 
       return errors;
@@ -32,8 +43,8 @@ export const ForgotPasswordContent = () => {
       try {
         const result = await auth.ForgotPassword(values);
 
-        if (result.status == "200") {
-          toast.success(t("toast.success.forgot-password"), {
+        if (result.status === "200") {
+          toast.success(t("toast.success.reset-password"), {
             position: "bottom-center",
             reverseOrder: false,
             style: {
@@ -44,8 +55,19 @@ export const ForgotPasswordContent = () => {
           });
 
           router.push("/auth/login");
-        } else if (result.status == "404") {
+        } else if (result.status === "404") {
           toast.error(t("toast.error.forgot-password-notfind-user"), {
+            position: "bottom-center",
+            reverseOrder: false,
+            duration: 5000,
+            style: {
+              backgroundColor: Color.background.red_gray01,
+              borderRadius: "5px",
+              padding: "3px 10px",
+            },
+          });
+        } else if (result.status === "403") {
+          toast.error(t("toast.error.not-available-new-password"), {
             position: "bottom-center",
             reverseOrder: false,
             duration: 5000,
@@ -89,11 +111,12 @@ export const ForgotPasswordContent = () => {
         display: "flex",
         flexDirection: "column",
         minHeight: "100vh",
-        backgroundImage: `linear-gradient(rgb(19 19 20 / 50%), rgb(19 19 20 / 60%)), url("/assets/background/background.webp")`,
+        backgroundImage: `linear-gradient(rgb(19 19 20 / 50%), rgb(19 19 20 / 60%)), url("/assets/background/f-1240.webp")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
     >
+      <Header />
       <Box
         sx={{
           display: "flex",
@@ -123,14 +146,15 @@ export const ForgotPasswordContent = () => {
                   textAlign: "left",
                 }}
               >
-                {t("forgot-password.forgotPassword")}
+                {t("home.resetPassword")}
               </Typography>
 
               <div
                 style={{
                   width: "450px",
-                  backgroundColor: "#00000059",
-                  padding: "20px 40px",
+                  backgroundColor: Color.background.main_gray01,
+                  border: `solid 1px ${Color.background.border}`,
+                  padding: "40px 20px",
                   borderRadius: "5px",
                 }}
               >
@@ -155,7 +179,20 @@ export const ForgotPasswordContent = () => {
                       name="email"
                       onBlur={handleBlur}
                       onChange={formik.handleChange}
-                      type="text"
+                      value={formik.values.email}
+                      inputProps={{ style: { color: "white" } }}
+                    />
+                    <TextField
+                      error={!!formik.errors.password && touchedFields.password}
+                      fullWidth
+                      helperText={touchedFields.password && formik.errors.password}
+                      label={t("home.newPassword")}
+                      id="password"
+                      name="password"
+                      onBlur={handleBlur}
+                      onChange={formik.handleChange}
+                      value={formik.values.password}
+                      type="password"
                       inputProps={{ style: { color: "white" } }}
                     />
                   </Stack>

@@ -54,6 +54,7 @@
       "login": "Login successful",
       "register": "Register successfull",
       "forgot-password": "Your request has been accepted. Please check your email",
+      "reset-password": "Your new password has been successfully set. Please try logging in with your new password.",
       "add-device": "A new device has been added successfully",
       "delete-device": "The device has been deleted.",
       "send-message": "Message has been sent successfully",
@@ -84,6 +85,7 @@
       "web-browser-input": "Please enter your details",
       "empty-data": "There is no data",
       "forgot-password-notfind-user": "Email does not exist. Please check your email again",
+      "not-available-new-password": "New password setting isn't available. Please contact with an Administrator.",
       "forgot-password-error": "Internal server error",
       "send-message": "Message sending failed.",
       "upgrade-plan": "This function is available on a premium subscription",
@@ -111,6 +113,7 @@
     "newPassword": "New Password",
     "confirmpassword": "Confirm Password",
     "forgotPassword": "Forgot password?",
+    "resetPassword": "Reset Password",
     "hero-sm-title": " Globally-trusted solutions",
     "hero-title": "Your New Connection Journey!",
     "hero-description": "Let GHOSTSPY be your partner on the journey to make the most of your Android devices. We're here to simplify your digital life and provide a truly integrated user experience. ",
@@ -189,7 +192,7 @@
   "forgot-password": {
     "forgotPassword": "Forgot Password?",
     "continue": "Continue",
-    "description": "Enter your email address and we'll help you reset your password."
+    "description": "Please enter your email address and new password and we will help you reset your password."
   },
 
   "dashboard": {
