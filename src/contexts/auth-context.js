@@ -69,46 +69,52 @@ export const AuthProvider = (props) => {
   const initialized = useRef(false);
 
   const initialize = async () => {
-    // if (initialized.current) {
-    //   return;
-    // }
+    try {
+      // if (initialized.current) {
+      //   return;
+      // }
 
-    initialized.current = true;
+      initialized.current = true;
 
-    let isAuthenticated = false;
-    const existingToken = jsCookie.get("token");
-    const userId = jsCookie.get("userId");
+      let isAuthenticated = false;
+      const existingToken = jsCookie.get("token");
+      const userId = jsCookie.get("userId");
 
-    if (existingToken && userId) {
-      isAuthenticated = true;
+      if (existingToken && userId) {
+        isAuthenticated = true;
 
-      const response = await fetch(`${apiUrl}/user/get/${userId}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + existingToken,
-        },
-      });
-
-      if (response.status == "200") {
-        const userInfo = await response.json();
-
-        dispatch({
-          type: HANDLERS.INITIALIZE,
-          userData: userInfo.data.userInfo,
-          devicesData: userInfo.data.devices,
-          appData: userInfo.data.apps,
+        const response = await fetch(`${apiUrl}/user/get/${userId}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + existingToken,
+          },
         });
-      } else {
-        jsCookie.remove("token");
-        jsCookie.remove("userId");
-        window.location.href = "/auth/login";
-      }
-    }
 
-    dispatch({
-      type: HANDLERS.INITIALIZE,
-    });
+        if (response.status == "200") {
+          const userInfo = await response.json();
+
+          dispatch({
+            type: HANDLERS.INITIALIZE,
+            userData: userInfo.data.userInfo,
+            devicesData: userInfo.data.devices,
+            appData: userInfo.data.apps,
+          });
+        } else {
+          jsCookie.remove("token");
+          jsCookie.remove("userId");
+          window.location.href = "/auth/login";
+        }
+      }
+
+      dispatch({
+        type: HANDLERS.INITIALIZE,
+      });
+    } catch (error) {
+      jsCookie.remove("token");
+      jsCookie.remove("userId");
+      window.location.href = "/auth/login";
+    }
   };
 
   useEffect(() => {
@@ -128,7 +134,6 @@ export const AuthProvider = (props) => {
       });
 
       const authData = await response.json();
-
       if (authData.status === "201") {
         jsCookie.set("token", authData.data.token, { expires: 10 * 60 * 60 * 1000 });
         jsCookie.set("userId", authData.data.user._id, { expires: 10 * 60 * 60 * 1000 });
@@ -145,7 +150,7 @@ export const AuthProvider = (props) => {
         return authData;
       }
     } catch (error) {
-      throw new Error(error.message || "Failed to sign in");
+      throw new Error(error.message || "Failed to sinUp");
     }
   };
 
