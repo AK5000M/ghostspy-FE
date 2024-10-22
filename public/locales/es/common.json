@@ -53,6 +53,7 @@
       "login": "Inicio de sesión exitoso",
       "register": "Registro exitoso",
       "forgot-password": "Su solicitud ha sido aceptada. Por favor, revise su correo electrónico",
+      "reset-password": "Su nueva contraseña se ha establecido correctamente. Intente iniciar sesión con su nueva contraseña.",
       "add-device": "Se ha agregado exitosamente un nuevo dispositivo",
       "delete-device": "El dispositivo ha sido eliminado.",
       "send-message": "El mensaje se ha enviado correctamente",
@@ -83,6 +84,7 @@
       "web-browser-input": "Por favor, ingrese sus datos",
       "empty-data": "No hay datos",
       "forgot-password-notfind-user": "El correo electrónico no existe. Por favor, revise su correo electrónico nuevamente",
+      "not-available-new-password": "A configuração de nova senha não está disponível. Entre em contato com um administrador.",
       "forgot-password-error": "Error interno del servidor",
       "send-message-failed": "Error al enviar el mensaje",
       "upgrade-plan": "Esta función está disponible con una suscripción premium.",
@@ -110,6 +112,7 @@
     "newPassword": "Nueva Contraseña",
     "confirmpassword": "Confirmar contraseña",
     "forgotPassword": "¿Olvidaste tu contraseña?",
+    "resetPassword": "Restablecer contraseña",
     "hero-sm-title": "Soluciones confiables a nivel mundial",
     "hero-title": "¡Tu Nueva Jornada de Conexión!",
     "hero-description": "Deja que GHOSTSPY sea tu socio en el viaje para aprovechar al máximo tus dispositivos Android. Estamos aquí para simplificar tu vida digital y proporcionar una experiencia de usuario verdaderamente integrada.",
@@ -188,7 +191,7 @@
   "forgot-password": {
     "forgotPassword": "¿Olvidó su contraseña?",
     "continue": "Continuar",
-    "description": "Ingrese su dirección de correo electrónico y le ayudaremos a restablecer su contraseña."
+    "description": "Ingrese su dirección de correo electrónico y su nueva contraseña y lo ayudaremos a restablecer su contraseña."
   },
 
   "dashboard": {

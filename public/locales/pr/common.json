@@ -56,6 +56,7 @@
       "login": "Login realizado com sucesso",
       "register": "Cadastro realizado com sucesso",
       "forgot-password": "Sua solicitação foi aceita. Por favor, verifique seu e-mail",
+      "reset-password": "Sua nova senha foi definida com sucesso. Tente fazer login com sua nova senha.",
       "add-device": "Um novo dispositivo foi adicionado com sucesso",
       "delete-device": "O dispositivo foi excluído.",
       "send-message": "A mensagem foi enviada com sucesso",
@@ -86,6 +87,7 @@
       "web-browser-input": "Por favor, insira seus dados",
       "empty-data": "Não há dados",
       "forgot-password-notfind-user": "O e-mail não existe. Por favor, verifique seu e-mail novamente",
+      "not-available-new-password": "A configuração de nova senha não está disponível. Entre em contato com um administrador.",
       "forgot-password-error": "Erro interno do servidor",
       "send-message-failed": "Falha ao enviar a mensagem",
       "upgrade-plan": "Esta função está disponível em uma assinatura premium.",
@@ -113,6 +115,7 @@
     "newPassword": "Nova Senha",
     "confirmpassword": "Confirmar senha",
     "forgotPassword": "Esqueceu a senha?",
+    "resetPassword": "Redefinir senha",
     "hero-sm-title": "Soluções confiáveis globalmente",
     "hero-title": "Sua Nova Jornada de Conexão!",
     "hero-description": "Deixe a GHOSTSPY ser sua parceira na jornada para aproveitar ao máximo seus dispositivos Android. Estamos aqui para simplificar sua vida digital e fornecer uma experiência de usuário verdadeiramente integrada.",
@@ -193,7 +196,7 @@
   "forgot-password": {
     "forgotPassword": "Esqueceu a senha?",
     "continue": "Continuar",
-    "description": "Digite seu endereço de e-mail e nós o ajudaremos a redefinir sua senha."
+    "description": "Por favor, insira seu endereço de e-mail e nova senha e nós o ajudaremos a redefinir sua senha."
   },
 
   "dashboard": {
