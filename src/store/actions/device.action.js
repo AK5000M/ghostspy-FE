@@ -21,7 +21,6 @@ export const getDevicesList = async (userId) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
     return response.data; // Return the data directly
   } catch (error) {
     throw new Error("Error fetching devices");

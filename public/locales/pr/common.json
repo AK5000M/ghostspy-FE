@@ -71,6 +71,7 @@
       "default": "Ocorreu um erro inesperado.",
       "login": "Falha no login. Verifique seu e-mail e senha e tente novamente.",
       "ip-wrong": "Endereço IP não reconhecido. Por favor, entre em contato com o administrador para autorizar o acesso a partir deste novo local.",
+      "access-limitation": "Muitas tentativas de login para este e-mail. Tente novamente após 10 minutos.",
       "register": "Cadastro falhou",
       "server-error": "Erro do Servidor Interno",
       "license-expire": "Você não pode fazer login porque o período da sua licença já expirou.",

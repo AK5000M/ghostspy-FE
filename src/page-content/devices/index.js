@@ -160,7 +160,6 @@ export const DeviceContent = () => {
       const userId = user?.user?._id;
       if (userId) {
         const result = await getDevicesList(userId);
-
         if (!result || result.length === 0) {
           setAddedDevice(false);
         } else {
@@ -170,7 +169,7 @@ export const DeviceContent = () => {
         }
       }
     } catch (error) {
-      console.error("Error fetching devices:", error);
+      console.log("Error fetching devices:", error);
     }
   };
 

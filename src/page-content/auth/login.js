@@ -66,7 +66,7 @@ export const LoginContent = () => {
           setLoading(true);
 
           const result = await auth.SignIn(signInData);
-
+          console.log("auth data=>", result);
           // Check response status
           if (result.status === "201") {
             // Success
@@ -97,12 +97,10 @@ export const LoginContent = () => {
                 padding: "3px 10px",
               },
             });
-          }
-          // else if (result.status === "401") {
-          //   setLoading(false);
-          //   helpers.setErrors({ submit: t("toast.error.ip-wrong") });
-          // }
-          else if (result.status === "403") {
+          } else if (result.error_code === 6) {
+            setLoading(false);
+            helpers.setErrors({ submit: t("toast.error.access-limitation") });
+          } else if (result.status === "403") {
             setLoading(false);
             toast.error(t("toast.error.license-expire"), {
               position: "bottom-center",
