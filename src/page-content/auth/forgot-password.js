@@ -143,7 +143,7 @@ export const ForgotPasswordContent = () => {
                   color: Color.text.primary,
                   fontSize: "24px",
                   fontFamily: "Anton SC, sans-serif",
-                  textAlign: "left",
+                  textAlign: "center",
                 }}
               >
                 {t("home.resetPassword")}
@@ -151,7 +151,7 @@ export const ForgotPasswordContent = () => {
 
               <div
                 style={{
-                  width: "450px",
+                  width: "500px",
                   backgroundColor: Color.background.main_gray01,
                   border: `solid 1px ${Color.background.border}`,
                   padding: "40px 20px",
@@ -161,16 +161,18 @@ export const ForgotPasswordContent = () => {
                 <Typography
                   variant="body1"
                   sx={{
-                    mb: 2,
-                    color: "#f1f1f1",
-                    fontSize: "20px",
+                    mb: 5,
+                    color: Color.text.primary,
+                    fontSize: "18px",
                   }}
                 >
                   {t("forgot-password.description")}
                 </Typography>
+
                 <form noValidate onSubmit={formik.handleSubmit}>
                   <Stack spacing={3}>
                     <TextField
+                      className="text-field"
                       error={!!formik.errors.email && touchedFields.email}
                       fullWidth
                       helperText={touchedFields.email && formik.errors.email}
@@ -183,6 +185,7 @@ export const ForgotPasswordContent = () => {
                       inputProps={{ style: { color: "white" } }}
                     />
                     <TextField
+                      className="text-field"
                       error={!!formik.errors.password && touchedFields.password}
                       fullWidth
                       helperText={touchedFields.password && formik.errors.password}
@@ -201,7 +204,7 @@ export const ForgotPasswordContent = () => {
                     fullWidth
                     size="large"
                     sx={{
-                      mt: 3,
+                      mt: 5,
                       borderRadius: "5px",
                       bgcolor: "#564FEE",
                       "&:hover": {

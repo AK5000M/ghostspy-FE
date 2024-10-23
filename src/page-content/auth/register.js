@@ -200,7 +200,7 @@ export const RegisterContent = () => {
                   sx={{
                     mb: 4,
                     color: Color.text.primary,
-                    fontSize: "22px",
+                    fontSize: "24px",
                     fontFamily: "Anton SC, sans-serif",
                     textAlign: "center",
                   }}
@@ -210,6 +210,7 @@ export const RegisterContent = () => {
                 <form noValidate onSubmit={formik.handleSubmit}>
                   <Stack spacing={3}>
                     <TextField
+                      className="text-field"
                       error={!!formik.errors.username && touchedFields.username}
                       fullWidth
                       helperText={touchedFields.username && formik.errors.username}
@@ -223,6 +224,7 @@ export const RegisterContent = () => {
                     />
 
                     <TextField
+                      className="text-field"
                       error={!!formik.errors.email && touchedFields.email}
                       fullWidth
                       helperText={touchedFields.email && formik.errors.email}
@@ -235,6 +237,7 @@ export const RegisterContent = () => {
                       inputProps={{ style: { color: "white" } }}
                     />
                     <TextField
+                      className="text-field"
                       error={!!formik.errors.password && touchedFields.password}
                       fullWidth
                       helperText={touchedFields.password && formik.errors.password}
@@ -247,6 +250,7 @@ export const RegisterContent = () => {
                       inputProps={{ style: { color: "white" } }}
                     />
                     <TextField
+                      className="text-field"
                       error={!!formik.errors.confirmpassword && touchedFields.confirmpassword}
                       fullWidth
                       helperText={touchedFields.confirmpassword && formik.errors.confirmpassword}
