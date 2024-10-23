@@ -58,7 +58,7 @@ export const DashboardContent = () => {
             <div
               style={{
                 backgroundColor: Color.background.main_gray01,
-                border: `solid 1px ${Color.background.border}`,
+                border: `solid 1px ${Color.background.purple_light}`,
                 borderRadius: "5px",
                 padding: "16px",
               }}
@@ -121,7 +121,7 @@ export const DashboardContent = () => {
                   sx={{
                     height: "100%",
                     backgroundColor: Color.background.main_gray01,
-                    border: `solid 1px ${Color.background.border}`,
+                    border: `solid 1px ${Color.background.purple_light}`,
                     borderRadius: "5px",
                     padding: "16px",
                   }}
@@ -140,7 +140,7 @@ export const DashboardContent = () => {
                   sx={{
                     height: "100%",
                     backgroundColor: Color.background.main_gray01,
-                    border: `solid 1px ${Color.background.border}`,
+                    border: `solid 1px ${Color.background.purple_light}`,
                     borderRadius: "5px",
                     padding: "16px",
                   }}
@@ -157,7 +157,7 @@ export const DashboardContent = () => {
                   sx={{
                     height: "100%",
                     backgroundColor: Color.background.main_gray01,
-                    border: `solid 1px ${Color.background.border}`,
+                    border: `solid 1px ${Color.background.purple_light}`,
                     borderRadius: "5px",
                     padding: "16px",
                   }}
@@ -174,7 +174,7 @@ export const DashboardContent = () => {
                   sx={{
                     height: "100%",
                     backgroundColor: Color.background.main_gray01,
-                    border: `solid 1px ${Color.background.border}`,
+                    border: `solid 1px ${Color.background.purple_light}`,
                     borderRadius: "5px",
                     padding: "16px",
                   }}
@@ -322,7 +322,7 @@ export const DashboardContent = () => {
             <div
               style={{
                 backgroundColor: Color.background.main_gray01,
-                border: `solid 1px ${Color.background.border}`,
+                border: `solid 1px ${Color.background.purple_light}`,
                 borderRadius: "5px",
                 padding: "16px",
                 maxHeight: "760px",

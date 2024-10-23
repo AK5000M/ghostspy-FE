@@ -243,7 +243,7 @@ export const LoginContent = () => {
                   sx={{
                     mb: 4,
                     color: Color.text.primary,
-                    fontSize: "22px",
+                    fontSize: "24px",
                     fontFamily: "Anton SC, sans-serif",
                     textAlign: "center",
                   }}
@@ -253,6 +253,7 @@ export const LoginContent = () => {
                 <form noValidate onSubmit={formik.handleSubmit}>
                   <Stack spacing={3}>
                     <TextField
+                      className="text-field"
                       error={!!formik.errors.email}
                       fullWidth
                       helperText={formik.errors.email}
@@ -265,6 +266,7 @@ export const LoginContent = () => {
                       inputProps={{ style: { color: "white" } }}
                     />
                     <TextField
+                      className="text-field"
                       error={!!formik.errors.password}
                       fullWidth
                       helperText={formik.errors.password}
@@ -306,7 +308,7 @@ export const LoginContent = () => {
                     <FormControlLabel
                       control={<Checkbox checked={isChecked} onChange={onCheckboxChange} />}
                       label={t("buildAPKPage.term")}
-                      sx={{ color: "#f1f1f1" }}
+                      sx={{ color: Color.text.primary }}
                     />
                   </Box>
 
@@ -316,7 +318,6 @@ export const LoginContent = () => {
                     type="submit"
                     variant="contained"
                     sx={{
-                      mt: 2,
                       bgcolor: Color.background.purple,
                       borderRadius: "5px",
                       "&:hover": {

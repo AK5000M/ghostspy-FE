@@ -37,6 +37,7 @@ const Information = ({ onAppNameChange, onAppUrlChange }) => {
       >
         <div style={{ width: "100%" }}>
           <TextField
+            className="text-field"
             fullWidth
             label={t("buildAPKPage.appName")}
             name="AppName"
@@ -58,6 +59,7 @@ const Information = ({ onAppNameChange, onAppUrlChange }) => {
         {showAppUrl && (
           <div style={{ width: "100%" }}>
             <TextField
+              className="text-field"
               fullWidth
               label={t("buildAPKPage.appUrl")}
               name="AppUrl"

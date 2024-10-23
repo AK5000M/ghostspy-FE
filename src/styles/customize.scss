@@ -534,6 +534,15 @@ button:disabled {
   background-color: #564fee !important;
 }
 
+.text-field {
+  .Mui-focused {
+    box-shadow: unset !important;
+  }
+  .Mui-error {
+    box-shadow: unset !important;
+  }
+}
+
 /* animations.css */
 
 .loadingF {
