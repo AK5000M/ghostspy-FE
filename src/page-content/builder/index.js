@@ -194,7 +194,7 @@ export const BuilderAPKContent = () => {
               sx={{
                 width: "100%",
                 backgroundColor: Color.background.main_gray01,
-                border: `solid 1px ${Color.background.border}`,
+                border: `solid 1px ${Color.background.purple_light}`,
                 borderRadius: "5px",
                 padding: "24px",
                 minHeight: "500px",

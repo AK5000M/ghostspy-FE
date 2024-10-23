@@ -66,7 +66,7 @@ export const Layout = withAuthGuard((props) => {
       <LayoutRoot
         collapsed={collapsed}
         style={{
-          backgroundImage: `linear-gradient(rgb(15 21 53), rgb(15 21 53 / 54%)), url("/assets/background/wavy-black-white-background.webp")`,
+          backgroundImage: `linear-gradient(rgb(15 21 53), rgb(15 21 53 / 54%)), url("/assets/background/layout_bg.webp")`,
           backgroundSize: "cover",
           backgroundPosition: "center",
           display: "flex",

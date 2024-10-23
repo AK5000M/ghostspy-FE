@@ -304,7 +304,7 @@ export const DeviceContent = () => {
                   width: "100%",
                   height: { md: "300px", xs: "250px" },
                   backgroundColor: Color.background.main_gray01,
-                  border: `solid 1px ${Color.background.border}`,
+                  border: `solid 1px ${Color.background.purple_light}`,
                   borderRadius: "5px",
                   p: 2,
                 }}
@@ -314,7 +314,7 @@ export const DeviceContent = () => {
                     display: "flex",
                     alignItems: "center",
                     gap: "5px",
-                    borderBottom: `solid 2px ${Color.background.border}`,
+                    borderBottom: `solid 1px ${Color.background.border}`,
                     pb: "5px",
                   }}
                 >
@@ -323,7 +323,7 @@ export const DeviceContent = () => {
                       display: "flex",
                       alignItems: "center",
                       color: Color.text.primary,
-                      fontSize: "24px",
+                      fontSize: "20px",
                       fontFamily: "Bebas Neue, sans-serif",
                     }}
                   >
@@ -345,10 +345,13 @@ export const DeviceContent = () => {
                           cursor: "pointer",
                           py: "10px",
                           px: "5px",
-                          borderRight: "5px",
+                          borderRadius: "3px",
                           color: Color.text.primary,
-                          border: `solid 1px ${Color.background.border}`,
                           mb: "5px",
+                          border:
+                            selectedKey === device?._id
+                              ? `solid 1px ${Color.background.purple}`
+                              : `solid 1px ${Color.background.border}`,
                           "&:hover": {
                             bgcolor: Color.background.purple_opacity,
                             border: `solid 1px ${Color.background.purple}`,
@@ -494,7 +497,7 @@ export const DeviceContent = () => {
                   display: { md: "block", xs: "none" },
                   width: "100%",
                   backgroundColor: Color.background.main_gray01,
-                  border: `solid 1px ${Color.background.border}`,
+                  border: `solid 1px ${Color.background.purple_light}`,
                   borderRadius: "5px",
                 }}
               >
@@ -514,7 +517,7 @@ export const DeviceContent = () => {
                 padding: "16px",
                 borderRadius: "5px",
                 backgroundColor: Color.background.main_gray01,
-                border: `solid 1px ${Color.background.border}`,
+                border: `solid 1px ${Color.background.purple_light}`,
               }}
             >
               <Box

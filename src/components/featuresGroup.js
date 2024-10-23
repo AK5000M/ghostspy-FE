@@ -1,5 +1,4 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { SvgIcon, Typography, Tooltip, Box } from "@mui/material";
 import Color from "../theme/colors";
 
@@ -11,7 +10,7 @@ const FeaturesGroup = ({ current, features, callback }) => {
         flexWrap: "wrap",
         justifyContent: "center",
         alignItems: "center",
-        gap: "20px",
+        gap: "40px",
         marginLeft: 0,
         marginTop: "16px",
       }}
@@ -28,15 +27,15 @@ const FeaturesGroup = ({ current, features, callback }) => {
               alignItems: "center",
               gap: "10px",
               padding: "5px",
-              borderRadius: "5px",
+              borderRadius: "3px",
               border: `solid 1px ${Color.background.purple}`,
-              backgroundColor: Color.background.purple_opacity,
+              backgroundColor: Color.background.purple_opacity01,
               minWidth: { md: "170px", xs: "110px" },
               maxWidth: { md: "170px", xs: "110px" },
               height: "130px",
               transition: "background-color 0.3s",
               "&:hover": {
-                backgroundColor: Color.background.purple,
+                backgroundColor: Color.background.purple_opacity,
               },
             }}
           >
@@ -50,10 +49,13 @@ const FeaturesGroup = ({ current, features, callback }) => {
             </SvgIcon>
             <Typography
               sx={{
+                width: "100px",
                 color: Color.text.primary,
-                fontSize: "16px",
+                fontSize: "12px",
                 fontWeight: 500,
                 textAlign: "center",
+                fontFamily: "Archivo,sans-serif",
+                textTransform: "uppercase",
               }}
             >
               {feature.title}
