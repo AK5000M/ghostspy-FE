@@ -4,13 +4,13 @@ import Color from "../theme/colors";
 
 const FeaturesGroup = ({ current, features, callback }) => {
   return (
-    <div
-      style={{
+    <Box
+      sx={{
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
         alignItems: "center",
-        gap: "40px",
+        gap: { md: "40px", xs: "20px" },
         marginLeft: 0,
         marginTop: "16px",
       }}
@@ -18,38 +18,47 @@ const FeaturesGroup = ({ current, features, callback }) => {
       {features?.map((feature, index) => (
         <Tooltip title={feature.title} arrow key={index}>
           <Box
-            onClick={() => callback(feature)}
             sx={{
               cursor: "pointer",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "center",
               alignItems: "center",
               gap: "10px",
-              padding: "5px",
-              borderRadius: "3px",
-              border: `solid 1px ${Color.background.purple}`,
-              backgroundColor: Color.background.purple_opacity01,
-              minWidth: { md: "170px", xs: "110px" },
-              maxWidth: { md: "170px", xs: "110px" },
-              height: "130px",
-              transition: "background-color 0.3s",
-              "&:hover": {
-                backgroundColor: Color.background.purple_opacity,
-              },
             }}
           >
-            <SvgIcon
+            <Box
+              onClick={() => callback(feature)}
               sx={{
-                color: Color.text.primary,
-                fontSize: "50px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "10px",
+                padding: "5px",
+                borderRadius: "3px",
+                border: `solid 1px ${Color.background.purple}`,
+                backgroundColor: Color.background.purple_opacity01,
+                minWidth: { md: "110px", xs: "90px" },
+                maxWidth: { md: "110px", xs: "90px" },
+                height: "110px",
+                transition: "background-color 0.3s",
+                "&:hover": {
+                  backgroundColor: Color.background.purple_opacity,
+                },
               }}
             >
-              {feature.icon}
-            </SvgIcon>
+              <SvgIcon
+                sx={{
+                  color: Color.text.primary,
+                  fontSize: { md: "50px", xs: "35px" },
+                }}
+              >
+                {feature.icon}
+              </SvgIcon>
+            </Box>
             <Typography
               sx={{
-                width: "100px",
+                textAlign: "center",
                 color: Color.text.primary,
                 fontSize: "12px",
                 fontWeight: 500,
@@ -63,7 +72,7 @@ const FeaturesGroup = ({ current, features, callback }) => {
           </Box>
         </Tooltip>
       ))}
-    </div>
+    </Box>
   );
 };
 

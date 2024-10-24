@@ -619,9 +619,7 @@ export const DeviceContent = () => {
                             sx={{
                               display: "flex",
                               flexDirection: "column",
-                              mt: 2,
-                              height: "500px",
-                              maxHeight: "500px",
+                              mt: { md: 10, xs: 2 },
                             }}
                           >
                             {selectedDevice != null && <DeviceMonitors device={selectedDevice} />}
@@ -633,9 +631,7 @@ export const DeviceContent = () => {
                             sx={{
                               display: "flex",
                               flexDirection: "column",
-                              mt: 2,
-                              height: "500px",
-                              maxHeight: "500px",
+                              mt: { md: 10, xs: 2 },
                             }}
                           >
                             {selectedDevice != null && <DeviceManagers device={selectedDevice} />}
@@ -643,7 +639,9 @@ export const DeviceContent = () => {
                         )}
 
                         {tabMenuValue === 2 && (
-                          <Box sx={{ display: "flex", flexDirection: "column", mt: 2 }}>
+                          <Box
+                            sx={{ display: "flex", flexDirection: "column", mt: { md: 10, xs: 2 } }}
+                          >
                             {selectedDevice != null && <DeviceExtra device={selectedDevice} />}
                           </Box>
                         )}
