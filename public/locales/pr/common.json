@@ -341,12 +341,12 @@
 
     "monitors": {
       "monitors": "Monitores",
-      "screenControl": "Controle de tela",
-      "screenSkeleton": "Controle Esqueleto",
-      "monitorCamera": "Monitorar Câmera",
-      "monitorMicrophone": "Monitorar Microfone",
-      "keyRegister": "Registros de Teclas em Tempo Real",
-      "offline-keylogs": "Registros de Teclas Offline",
+      "screenControl": "Tela",
+      "screenSkeleton": "Esqueleto",
+      "monitorCamera": "Câmera",
+      "monitorMicrophone": "Microfone",
+      "keyRegister": "Keylogs on-line",
+      "offline-keylogs": "Keylogs off-line",
       "keyevent": "Evento",
       "keypackage": "Pacote",
       "keylogs": "Registro de Teclas",
